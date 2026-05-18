@@ -1,0 +1,193 @@
+{
+  "ticker": "MSFT",
+  "tab": "Description",
+  "extracted_at": "2026-05-17T15:50:06.163328+00:00",
+  "url": "https://app.koyfin.com/snapshot/des/eq-kuqeq3",
+  "security_id": "eq-kuqeq3",
+  "business_description": "Microsoft Corporation develops and supports software, services, devices, and solutions worldwide. The Productivity and Business Processes segment offers Microsoft 365 commercial, enterprise mobility + security, windows commercial, power BI, exchange, sharepoint, Microsoft teams, security and compliance, and copilot; Microsoft 365 commercial products, such as Windows commercial on-premises and office licensed services; Microsoft 365 consumer products and cloud services, including Microsoft 365 consumer subscriptions, office licensed on-premises, and other consumer services; LinkedIn; dynamics products and cloud services, such as dynamics 365, cloud-based applications, and on-premises ERP and CRM applications. Its Intelligent Cloud segment provides Server products and cloud services comprising Azure and other cloud services, GitHub, Nuance Healthcare, virtual desktop offerings, and other cloud services; server products, including SQL and windows server, visual studio and system center related client access licenses, and other on-premises offerings; enterprise and partner services, such as enterprise support and nuance professional services, industry solutions, Microsoft partner network, and learning experience. The Personal Computing segment provides windows and devices, such as Windows OEM licensing and devices and surface and PC accessories; gaming services and solutions, such as Xbox hardware, content, and services, first- and third-party content Xbox game pass, subscriptions, and cloud gaming, advertising, and other cloud services; search and news advertising services that includes Bing and Copilot, Microsoft News and Edge, and third-party affiliates. It sells its products through OEMs, distributors, and resellers; and online and retail stores. The company was founded in 1975 and is headquartered in Redmond, Washington.",
+  "company_profile": {
+    "name": "Microsoft Corporation",
+    "year_founded": "1975",
+    "headquarters": "Redmond | Washington | US",
+    "employees": "228,000",
+    "total_return_since_inception": "711,962.47%",
+    "website": "www.microsoft.com",
+    "country": "US",
+    "isin": "US5949181045",
+    "equity_type": "Common Equity",
+    "exchange": "NasdaqGS",
+    "equity_sector": "Information Technology",
+    "industry": "Software",
+    "fiscal_year_end": "Jun 2025",
+    "next_earnings_release": "Thu Jul 30th 2026 (After-Market)"
+  },
+  "price_data": {
+    "last_price": "421.92",
+    "52_week_low": {
+      "date": "Mar 30 2026",
+      "value": "356.28"
+    },
+    "52_week_high": {
+      "date": "Jul 31 2025",
+      "value": "555.45"
+    },
+    "1y_total_return": "-6.35%"
+  },
+  "key_data": {
+    "market_cap": "$3,134.21 B",
+    "enterprise_value": "$3,181.41 B",
+    "shares_out": "7.43 B",
+    "average_10d_volume": "33.37 M",
+    "sales": "$318.27 B",
+    "sales_5y_cagr": "14.75 %",
+    "ebitda": "$184.46 B",
+    "ebitda_5y_cagr": "19.48 %",
+    "net_income": "$125.22 B",
+    "ni_5y_cagr": "17.45 %"
+  },
+  "dividend_info": {
+    "div_yield": "0.86%",
+    "payout_ratio": "20.65%",
+    "dps": "3.56",
+    "dps_5y_cagr": "10.21%"
+  },
+  "related_securities": [
+    {
+      "ticker": "MSFT",
+      "exchange": "Warsaw Stock Exchange"
+    },
+    {
+      "ticker": "MSFT",
+      "exchange": "Bolsa Mexicana de Valores"
+    },
+    {
+      "ticker": "MSFT",
+      "exchange": "SIX Swiss Exchange"
+    },
+    {
+      "ticker": "MSFTCL",
+      "exchange": "Santiago Stock Exchange"
+    },
+    {
+      "ticker": "MSFTUS",
+      "exchange": "Bolsa de Valores de Lima"
+    },
+    {
+      "ticker": "MSF",
+      "exchange": "XETRA Trading Platform"
+    },
+    {
+      "ticker": "000951692",
+      "exchange": "SIX Swiss Exchange"
+    },
+    {
+      "ticker": "1MSFT",
+      "exchange": "Borsa Italiana"
+    },
+    {
+      "ticker": "0QYP",
+      "exchange": "London Stock Exchange"
+    },
+    {
+      "ticker": "MSF",
+      "exchange": "Deutsche Boerse AG"
+    },
+    {
+      "ticker": "MSFTCO",
+      "exchange": "Bolsa de Valores de Colombia"
+    },
+    {
+      "ticker": "MSFT",
+      "exchange": "Wiener Boerse AG"
+    },
+    {
+      "ticker": "MSF",
+      "exchange": "Bulgaria Stock Exchange"
+    },
+    {
+      "ticker": "MSFT",
+      "exchange": "Santiago Stock Exchange"
+    },
+    {
+      "ticker": "MSFTKZ",
+      "exchange": "Kazakhstan Stock Exchange"
+    },
+    {
+      "ticker": "MSFD",
+      "exchange": "BATS 'Chi-X Europe'"
+    },
+    {
+      "ticker": "MSFT03",
+      "exchange": "The Stock Exchange of Thailand"
+    },
+    {
+      "ticker": "ZMSF",
+      "exchange": "Aequitas Neo Exchange"
+    },
+    {
+      "ticker": "MSFT01",
+      "exchange": "The Stock Exchange of Thailand"
+    },
+    {
+      "ticker": "MSFT23",
+      "exchange": "The Stock Exchange of Thailand"
+    },
+    {
+      "ticker": "MSFT06",
+      "exchange": "The Stock Exchange of Thailand"
+    },
+    {
+      "ticker": "MSFT",
+      "exchange": "Buenos Aires Stock Exchange"
+    },
+    {
+      "ticker": "MSFT",
+      "exchange": "The Toronto Stock Exchange"
+    },
+    {
+      "ticker": "MSFT80",
+      "exchange": "The Stock Exchange of Thailand"
+    },
+    {
+      "ticker": "MSFT34",
+      "exchange": "Bolsa de Valores de Sao Paulo"
+    },
+    {
+      "ticker": "MSFT19",
+      "exchange": "The Stock Exchange of Thailand"
+    },
+    {
+      "ticker": "MSF1",
+      "exchange": "Deutsche Boerse AG"
+    },
+    {
+      "ticker": "MSF0",
+      "exchange": "Deutsche Boerse AG"
+    },
+    {
+      "ticker": "MSFTD",
+      "exchange": "Buenos Aires Stock Exchange"
+    },
+    {
+      "ticker": "4338",
+      "exchange": "The Stock Exchange of Hong Kong Ltd."
+    },
+    {
+      "ticker": "MSFT",
+      "exchange": "PFTS Ukraine Stock Exchange"
+    },
+    {
+      "ticker": "MSF",
+      "exchange": "Euronext Brussels"
+    }
+  ],
+  "sections_found": [
+    "business_description",
+    "company_profile",
+    "price_data",
+    "key_data",
+    "dividend_info",
+    "related_securities"
+  ],
+  "sections_missing": []
+}

@@ -1,0 +1,88 @@
+{
+  "ticker": "MSFT",
+  "tab": "Filings",
+  "extractedAt": "2026-05-17T...",
+  "url": "https://app.koyfin.com/news/cf/eq-kuqeq3",
+  "filings": [
+    {
+      "description": "Form 8-K - Current report - Item 5.02 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "May 14 '26",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 144 ~ Coleman Amy - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "May 14 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form SCHEDULE 13G - Statement of Beneficial Ownership by Certain Investors",
+      "formType": "SCHEDULE 13G (Edgar)",
+      "formCode": "SCHEDULE 13G",
+      "isEdgar": true,
+      "date": "Apr 30 '26",
+      "docType": "SCHEDULE"
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Mar 31 2026)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "Apr 29 '26",
+      "docType": "10-Q"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Apr 29 '26",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 4 ~ Coleman Amy - Beneficial Ownership Changes",
+      "formType": "4 (Edgar)",
+      "formCode": "4",
+      "isEdgar": true,
+      "date": "Apr 15 '26",
+      "docType": "4"
+    },
+    {
+      "description": "Form SCHEDULE 13G/A - Statement of Beneficial Ownership by Certain Investors: [Amend]",
+      "formType": "SCHEDULE 13G/A (Edgar)",
+      "formCode": "SCHEDULE 13G/A",
+      "isEdgar": true,
+      "date": "Mar 27 '26",
+      "docType": "SCHEDULE"
+    },
+    {
+      "description": "11-K ~ Annual Report  (ended Dec 31 2025)",
+      "formType": "11-K (Edgar)",
+      "formCode": "11-K",
+      "isEdgar": true,
+      "date": "Mar 23 '26",
+      "docType": "11-K"
+    },
+    {
+      "description": "Form S-8 ~ Registration Statement",
+      "formType": "S-8 (Edgar)",
+      "formCode": "S-8",
+      "isEdgar": true,
+      "date": "Dec 30 '25",
+      "docType": "S-8"
+    },
+    {
+      "description": "10-K ~ Annual Report  (ended Jun 30 2025)",
+      "formType": "10-K (Edgar)",
+      "formCode": "10-K",
+      "isEdgar": true,
+      "date": "Jul 30 '25",
+      "docType": ""
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "ticker": "MSFT",
+  "tab": "Multiples",
+  "extracted_at": "2026-05-17T00:00:00.000Z",
+  "url": "https://app.koyfin.com/fa/00000000-2cfe-4f65-a319-b024e5955d01/eq-kuqeq3",
+  "fiscal_period_type": "Annual (Y)",
+  "columns": ["Fiscal Years", "FY 2016", "FY 2017", "FY 2018", "FY 2019", "FY 2020", "FY 2021", "FY 2022", "FY 2023", "FY 2024", "FY 2025", "Current/LTM"],
+  "sections": [
+    {
+      "name": "Sales | Revenues",
+      "metrics": ["EV / Sales (LTM)", "EV / Sales (NTM)", "Price / Sales (LTM)", "Price / Sales (NTM)"]
+    },
+    {
+      "name": "Earnings",
+      "metrics": ["EV / EBITDA (LTM)", "EV / EBITDA (NTM)", "EV / EBIT (LTM)", "EV / EBIT (NTM)", "Price / Earnings (LTM)", "Price / Earnings (NTM)"]
+    },
+    {
+      "name": "Book Value",
+      "metrics": ["Price / Book (LTM)", "Price / Tangible Book Value (LTM)"]
+    }
+  ],
+  "metrics": [
+    {
+      "metric": "EV / Sales (LTM)",
+      "unit": "x",
+      "values": [null, 3.9, 5.5, 6.8, 7.9, 10.8, 12.5, 9.3, 12.2, 12.9, 13.6, 10.0]
+    },
+    {
+      "metric": "EV / Sales (NTM)",
+      "unit": "x",
+      "values": [null, 3.7, 5.2, 6.4, 7.4, 9.9, 11.3, 8.2, 10.9, 11.3, 12.1, 8.6]
+    },
+    {
+      "metric": "Price / Sales (LTM)",
+      "unit": "x",
+      "values": [null, 4.5, 5.9, 7.3, 8.3, 11.2, 12.8, 9.5, 12.3, 12.8, 13.5, 9.8]
+    },
+    {
+      "metric": "Price / Sales (NTM)",
+      "unit": "x",
+      "values": [null, 4.4, 5.6, 6.8, 7.7, 10.2, 11.6, 8.3, 11.0, 11.2, 12.0, 8.5]
+    },
+    {
+      "metric": "EV / EBITDA (LTM)",
+      "unit": "x",
+      "values": [null, 10.8, 13.7, 16.2, 17.7, 23.0, 25.4, 18.4, 24.5, 23.8, 23.7, 16.1]
+    },
+    {
+      "metric": "EV / EBITDA (NTM)",
+      "unit": "x",
+      "values": [null, 10.5, 12.8, 15.3, 17.2, 22.5, 23.2, 16.4, 22.7, 21.4, 21.4, 13.8]
+    },
+    {
+      "metric": "EV / EBIT (LTM)",
+      "unit": "x",
+      "values": [null, 13.1, 18.0, 21.5, 23.2, 29.2, 30.1, 22.2, 29.1, 28.9, 29.8, 21.4]
+    },
+    {
+      "metric": "EV / EBIT (NTM)",
+      "unit": "x",
+      "values": [null, 12.6, 17.3, 20.0, 22.0, 28.1, 27.9, 19.4, 25.7, 25.8, 26.9, 18.7]
+    },
+    {
+      "metric": "Price / Earnings (LTM)",
+      "unit": "x",
+      "values": [null, 20.7, 22.8, 49.0, 27.0, 36.8, 35.6, 26.1, 36.3, 35.8, 37.6, 25.1]
+    },
+    {
+      "metric": "Price / Earnings (NTM)",
+      "unit": "x",
+      "values": [null, 19.2, 23.3, 26.1, 27.8, 35.8, 34.2, 25.0, 33.2, 33.4, 34.2, 22.8]
+    },
+    {
+      "metric": "Price / Book (LTM)",
+      "unit": "x",
+      "values": [null, 5.8, 6.5, 9.7, 10.2, 13.6, 15.2, 11.3, 12.6, 11.7, 11.1, 7.6]
+    },
+    {
+      "metric": "Price / Tangible Book Value (LTM)",
+      "unit": "x",
+      "values": [null, 8.2, 13.5, 20.6, 19.8, 23.6, 25.5, 21.4, 20.2, 25.8, 18.9, 11.4]
+    }
+  ],
+  "_metadata": {
+    "fiscal_periods_annual": ["FY 2016", "FY 2017", "FY 2018", "FY 2019", "FY 2020", "FY 2021", "FY 2022", "FY 2023", "FY 2024", "FY 2025", "Current/LTM"],
+    "fiscal_periods_quarterly": ["3Q FY2023", "4Q FY2023", "1Q FY2024", "2Q FY2024", "3Q FY2024", "4Q FY2024", "1Q FY2025", "2Q FY2025", "3Q FY2025", "4Q FY2025", "1Q FY2026", "2Q FY2026", "3Q FY2026", "Current/LTM"],
+    "extraction_method": "DOM text node position grouping",
+    "notes": [
+      "Numeric values parsed as floats; null = column does not apply (NTM rows lack Current/LTM)",
+      "First column (index 0) is the 'Fiscal Years' label, always null for data rows",
+      "NTM (Next Twelve Months) rows have 1 fewer data column than LTM rows",
+      "All units are multiples (x); displayed as 'x' suffix in the UI"
+    ]
+  }
+}

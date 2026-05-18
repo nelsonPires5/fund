@@ -1,0 +1,85 @@
+{
+  "ticker": "MSFT",
+  "tab": "Solvency (FA.SOLV)",
+  "extracted_at": "2026-05-17T11:00:00Z",
+  "url": "https://app.koyfin.com/fa/00000000-ca5e-4441-95c7-9905b201c7af/eq-kuqeq3",
+  "period_type": "Annual (Y)",
+  "date_range": "2016 - 2026",
+  "currency": "USD",
+  "headers": ["Fiscal Years", "FY 2016", "FY 2017", "FY 2018", "FY 2019", "FY 2020", "FY 2021", "FY 2022", "FY 2023", "FY 2024", "FY 2025", "Current/LTM"],
+  "groups": [
+    {
+      "name": "Debt Analysis",
+      "metrics": [
+        {
+          "label": "Total Debt / Equity",
+          "values": ["75.8%", "108.9%", "105.8%", "84.5%", "69.4%", "57.9%", "47.1%", "38.5%", "36.4%", "32.7%", "30.3%"]
+        },
+        {
+          "label": "Total Debt / Capital",
+          "values": ["43.1%", "52.1%", "51.4%", "45.8%", "41.0%", "36.7%", "32.0%", "27.8%", "26.7%", "24.6%", "23.2%"]
+        },
+        {
+          "label": "Long-Term Debt / Equity",
+          "values": ["57.4%", "95.6%", "99.1%", "77.3%", "64.4%", "50.3%", "43.5%", "34.2%", "30.9%", "29.3%", "25.8%"]
+        },
+        {
+          "label": "Long-Term Debt / Capital",
+          "values": ["32.7%", "45.8%", "48.1%", "41.9%", "38.0%", "31.9%", "29.5%", "24.7%", "22.7%", "22.1%", "19.8%"]
+        },
+        {
+          "label": "Total Liabilities / Total Assets",
+          "values": ["62.8%", "65.0%", "68.0%", "64.3%", "60.7%", "57.5%", "54.4%", "49.9%", "47.6%", "44.5%", "40.3%"]
+        }
+      ]
+    },
+    {
+      "name": "Interest Rate Coverage",
+      "metrics": [
+        {
+          "label": "EBIT / Interest Expense",
+          "values": ["21.9x", "13.2x", "12.8x", "16.0x", "20.4x", "30.0x", "40.7x", "44.4x", "36.7x", "53.0x", "52.1x"]
+        },
+        {
+          "label": "EBITDA / Interest Expense",
+          "values": ["26.6x", "17.3x", "17.0x", "20.9x", "26.0x", "35.6x", "49.1x", "52.6x", "44.6x", "66.8x", "66.9x"]
+        },
+        {
+          "label": "(EBITDA - Capex) / Interest Expense",
+          "values": ["19.9x", "13.7x", "12.8x", "15.8x", "20.0x", "26.7x", "37.4x", "38.5x", "29.7x", "40.2x", "32.9x"]
+        }
+      ]
+    },
+    {
+      "name": "Debt Coverage",
+      "metrics": [
+        {
+          "label": "Total Debt / EBITDA",
+          "values": ["1.6x", "2.5x", "1.9x", "1.5x", "1.2x", "1.0x", "0.8x", "0.8x", "0.7x", "0.7x", "0.7x"]
+        },
+        {
+          "label": "Net Debt / EBITDA",
+          "values": ["-", "-", "-", "-", "-", "-", "-", "-", "0.2x", "0.1x", "0.2x"]
+        },
+        {
+          "label": "Total Debt / (EBITDA - Capex)",
+          "values": ["2.2x", "3.1x", "2.5x", "2.0x", "1.6x", "1.3x", "1.0x", "1.0x", "1.1x", "1.2x", "1.3x"]
+        },
+        {
+          "label": "Net Debt / (EBITDA - Capex)",
+          "values": ["-", "-", "-", "-", "-", "-", "-", "-", "0.3x", "0.2x", "0.5x"]
+        }
+      ]
+    },
+    {
+      "name": "Bankruptcy Risk",
+      "metrics": [
+        {
+          "label": "Altman Z-Score",
+          "values": ["3.43", "3.17", "3.72", "4.32", "5.58", "7.16", "8.61", "7.68", "8.66", "8.64", "9.28"]
+        }
+      ]
+    }
+  ],
+  "missing_data_handling": "Missing values (where no data available) are represented as '-' in the values array. Net Debt metrics show '-' for earlier years where Net Debt was negative (i.e., cash exceeded debt)."
+}

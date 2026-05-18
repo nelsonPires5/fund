@@ -1,0 +1,53 @@
+{
+  "ticker": "MSFT",
+  "koyfinId": "eq-kuqeq3",
+  "tab": "Security Analysis > Ownership",
+  "extractedAt": "2026-05-17",
+  "subTabs": {
+    "insiderOwnership": {
+      "url": "https://app.koyfin.com/snapshot/own/insider-ownership/eq-kuqeq3",
+      "status": "found",
+      "rowCount": 19,
+      "columns": ["name", "title", "marketValue", "pctMarketcap", "sharesHeld", "positionDate"],
+      "sample": [
+        {"name": "Satya Nadella", "title": "Chairman & CEO", "marketValue": "$378.29M", "pctMarketcap": "0.01%", "sharesHeld": "896,595", "positionDate": "Nov 10, 2025"},
+        {"name": "Amy Hood", "title": "Executive VP & CFO", "marketValue": "$214.26M", "pctMarketcap": "0.01%", "sharesHeld": "507,823", "positionDate": "Mar 02, 2026"},
+        {"name": "Bradford Smith", "title": "President & Vice Chairman", "marketValue": "$166.52M", "pctMarketcap": "0.01%", "sharesHeld": "394,675", "positionDate": "Mar 02, 2026"},
+        {"name": "Sum (Total)", "marketValue": "$1.04B", "pctMarketcap": "0.03%", "sharesHeld": "2,453,538"}
+      ]
+    },
+    "insiderTransactions": {
+      "url": "https://app.koyfin.com/snapshot/own/insider-transactions/eq-kuqeq3",
+      "status": "found",
+      "columns": ["name", "type", "category", "date", "shares", "change", "value"],
+      "sample": [
+        {"name": "Kathleen Hogan", "type": "Open Market Sale", "category": "Disposal", "date": "Mar 06, 2026", "shares": "-12,321", "change": "-8.20%", "value": "$-5.05M"},
+        {"name": "John Stanton", "type": "Open Market Buy", "category": "Acquisition", "date": "Feb 18, 2026", "shares": "5,000", "change": "6.06%", "value": "$1.99M"}
+      ]
+    },
+    "institutions": {
+      "url": "https://app.koyfin.com/snapshot/own/institutional-ownership/institutions/eq-kuqeq3",
+      "status": "found",
+      "rowCount": 33,
+      "columns": ["holder", "value", "pctOut", "shares", "pctPortfolio", "reported"],
+      "sample": [
+        {"holder": "VANGUARD GROUP INC", "value": "$347.21B", "pctOut": "9.66%", "shares": "717,942,580", "pctPortfolio": "5.03%", "reported": "Dec 31, 2025"},
+        {"holder": "BlackRock, Inc.", "value": "$219.63B", "pctOut": "7.99%", "shares": "593,328,571", "pctPortfolio": "3.84%", "reported": "Mar 31, 2026"},
+        {"holder": "State Street Corporation", "value": "$113.53B", "pctOut": "4.13%", "shares": "306,708,289", "pctPortfolio": "3.92%", "reported": "Mar 31, 2026"}
+      ],
+      "top15TotalPctOut": "40.26%"
+    },
+    "mutualFunds": {
+      "url": "https://app.koyfin.com/snapshot/own/institutional-ownership/mutual-funds/eq-kuqeq3",
+      "status": "found",
+      "rowCount": 33,
+      "columns": ["fundName", "category"]
+    },
+    "etfs": {
+      "url": "https://app.koyfin.com/snapshot/own/institutional-ownership/etfs/eq-kuqeq3",
+      "status": "found",
+      "rowCount": 27,
+      "columns": ["fundName", "category"]
+    }
+  }
+}

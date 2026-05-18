@@ -1,0 +1,218 @@
+[
+  {
+    "slug": "overview",
+    "label": "Overview",
+    "group": "Snapshots",
+    "research_use": "first-pass company dashboard: quote, key metrics, performance, valuation, capital structure, estimates, chart, news",
+    "reference": "references/overview.md",
+    "script": "scripts/overview/extract.js"
+  },
+  {
+    "slug": "description",
+    "label": "Description",
+    "group": "Snapshots",
+    "research_use": "business description, profile fields, key data, dividends, related securities",
+    "reference": "references/description.md",
+    "script": "scripts/description/extract.js"
+  },
+  {
+    "slug": "percentile-rank",
+    "label": "Percentile Rank",
+    "group": "Snapshots",
+    "research_use": "relative valuation/quality/performance ranks vs own history and peer cohorts",
+    "reference": "references/percentile-rank.md",
+    "script": "scripts/percentile-rank/extract.js"
+  },
+  {
+    "slug": "dividend",
+    "label": "Dividend",
+    "group": "Snapshots",
+    "research_use": "dividend policy, growth, yield, payout, payment history and no-dividend detection",
+    "reference": "references/dividend.md",
+    "script": "scripts/dividend/extract.js"
+  },
+  {
+    "slug": "ownership",
+    "label": "Ownership",
+    "group": "Snapshots",
+    "research_use": "insider/institutional ownership, transactions, holders, mutual funds and ETFs",
+    "reference": "references/ownership.md",
+    "script": "scripts/ownership/extract.js"
+  },
+  {
+    "slug": "earnings-history",
+    "label": "Earnings History",
+    "group": "Snapshots",
+    "research_use": "reported revenue versus estimates, surprises, price reactions, valuation at report dates",
+    "reference": "references/earnings-history.md",
+    "script": "scripts/earnings-history/extract.js"
+  },
+  {
+    "slug": "actuals-and-consensus",
+    "label": "Actuals and Consensus",
+    "group": "Analyst Estimates",
+    "research_use": "historical actuals and forward consensus by annual/quarterly period",
+    "reference": "references/actuals-and-consensus.md",
+    "script": "scripts/actuals-and-consensus/extract.js"
+  },
+  {
+    "slug": "price-target",
+    "label": "Price Target",
+    "group": "Analyst Estimates",
+    "research_use": "sell-side price targets, ratings distribution, return potential and no-coverage detection",
+    "reference": "references/price-target.md",
+    "script": "scripts/price-target/extract.js"
+  },
+  {
+    "slug": "estimates-overview",
+    "label": "Estimates Overview",
+    "group": "Analyst Estimates",
+    "research_use": "forward sales/EBITDA/EBIT/EPS estimate matrix and next-quarter summary",
+    "reference": "references/estimates-overview.md",
+    "script": "scripts/estimates-overview/extract.js"
+  },
+  {
+    "slug": "estimates-trends",
+    "label": "Estimates Trends",
+    "group": "Analyst Estimates",
+    "research_use": "estimate revisions and analyst-count trend by fiscal year and metric",
+    "reference": "references/estimates-trends.md",
+    "script": "scripts/estimates-trends/extract.js"
+  },
+  {
+    "slug": "highlights",
+    "label": "Highlights",
+    "group": "Financial Analysis",
+    "research_use": "high-level financial, capital structure and cash-flow metrics across periods",
+    "reference": "references/highlights.md",
+    "script": "scripts/highlights/extract.js"
+  },
+  {
+    "slug": "income-statement",
+    "label": "Income Statement",
+    "group": "Financial Analysis",
+    "research_use": "revenue, profit, expense, EPS and supplemental income statement line items",
+    "reference": "references/income-statement.md",
+    "script": "scripts/income-statement/extract.js"
+  },
+  {
+    "slug": "balance-sheet",
+    "label": "Balance Sheet",
+    "group": "Financial Analysis",
+    "research_use": "asset, liability, equity and capital structure line items",
+    "reference": "references/balance-sheet.md",
+    "script": "scripts/balance-sheet/extract.js"
+  },
+  {
+    "slug": "cash-flow",
+    "label": "Cash Flow",
+    "group": "Financial Analysis",
+    "research_use": "operating/investing/financing cash flow, FCF and per-share cash metrics",
+    "reference": "references/cash-flow.md",
+    "script": "scripts/cash-flow/extract.js"
+  },
+  {
+    "slug": "multiples",
+    "label": "Multiples",
+    "group": "Financial Analysis",
+    "research_use": "historical valuation multiples across sales, earnings and book-value families",
+    "reference": "references/multiples.md",
+    "script": "scripts/multiples/extract.js"
+  },
+  {
+    "slug": "enterprise-value",
+    "label": "Enterprise Value",
+    "group": "Financial Analysis",
+    "research_use": "market cap, debt, cash, EV and capital ratio bridge",
+    "reference": "references/enterprise-value.md",
+    "script": "scripts/enterprise-value/extract.js"
+  },
+  {
+    "slug": "profitability",
+    "label": "Profitability",
+    "group": "Financial Analysis",
+    "research_use": "returns, margins, turnover and liquidity metrics",
+    "reference": "references/profitability.md",
+    "script": "scripts/profitability/extract.js"
+  },
+  {
+    "slug": "roic",
+    "label": "ROIC",
+    "group": "Financial Analysis",
+    "research_use": "ROIC formula, NOPAT, invested capital and component breakdown",
+    "reference": "references/roic.md",
+    "script": "scripts/roic/extract.js"
+  },
+  {
+    "slug": "solvency",
+    "label": "Solvency",
+    "group": "Financial Analysis",
+    "research_use": "leverage, interest coverage, debt coverage and bankruptcy-risk metrics",
+    "reference": "references/solvency.md",
+    "script": "scripts/solvency/extract.js"
+  },
+  {
+    "slug": "news",
+    "label": "News",
+    "group": "News, Filings & Transcripts",
+    "research_use": "recent company news feed metadata and source/time/title extraction",
+    "reference": "references/news.md",
+    "script": "scripts/news/extract.js"
+  },
+  {
+    "slug": "press-releases",
+    "label": "Press Releases",
+    "group": "News, Filings & Transcripts",
+    "research_use": "company press release metadata and dates",
+    "reference": "references/press-releases.md",
+    "script": "scripts/press-releases/extract.js"
+  },
+  {
+    "slug": "filings",
+    "label": "Filings",
+    "group": "News, Filings & Transcripts",
+    "research_use": "SEC/EDGAR filing list metadata: form, date, source/title",
+    "reference": "references/filings.md",
+    "script": "scripts/filings/extract.js"
+  },
+  {
+    "slug": "transcripts",
+    "label": "Transcripts",
+    "group": "News, Filings & Transcripts",
+    "research_use": "earnings calls, conferences and special-call transcript metadata",
+    "reference": "references/transcripts.md",
+    "script": "scripts/transcripts/extract.js"
+  },
+  {
+    "slug": "historical",
+    "label": "Historical",
+    "group": "Graphs",
+    "research_use": "historical price chart, overlays, technical indicators and chart data extraction",
+    "reference": "references/historical.md",
+    "script": "scripts/historical/extract.js"
+  },
+  {
+    "slug": "comparison",
+    "label": "Comparison",
+    "group": "Graphs",
+    "research_use": "peer comparison charts across price/performance and valuation metrics",
+    "reference": "references/comparison.md",
+    "script": "scripts/comparison/extract.js"
+  },
+  {
+    "slug": "intraday",
+    "label": "Intraday",
+    "group": "Graphs",
+    "research_use": "intraday OHLCV series, visible data table and market-closed/no-data handling",
+    "reference": "references/intraday.md",
+    "script": "scripts/intraday/extract.js"
+  },
+  {
+    "slug": "performance",
+    "label": "Performance",
+    "group": "Graphs",
+    "research_use": "performance/total-return time series and high/low markers",
+    "reference": "references/performance.md",
+    "script": "scripts/performance/extract.js"
+  }
+]

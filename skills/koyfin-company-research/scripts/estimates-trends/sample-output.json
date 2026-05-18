@@ -1,0 +1,92 @@
+{
+  "ticker": "MSFT",
+  "tab": "Estimates Trends (ERT)",
+  "url": "https://app.koyfin.com/estimates/ert/eq-kuqeq3",
+  "extractedAt": "2026-05-17T17:05:00.000Z",
+  "headers": [
+    "Fiscal Period",
+    "Analyst #",
+    "Estimate Low to High Range",
+    "Average",
+    "YoY Chg %",
+    "EV Multiple",
+    "Price Multiple"
+  ],
+  "groups": [
+    {
+      "metric": "Sales",
+      "rows": [
+        {"Fiscal Period": "FY 2026", "Analyst #": 48, "Estimate Low to High Range": {"low": "$328.73B", "high": "$333.07B"}, "Average": "$329.50B", "YoY Chg %": "16.96%", "EV Multiple": "9.7x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2027", "Analyst #": 53, "Estimate Low to High Range": {"low": "$369.09B", "high": "$406.23B"}, "Average": "$384.00B", "YoY Chg %": "16.54%", "EV Multiple": "8.3x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2028", "Analyst #": 36, "Estimate Low to High Range": {"low": "$429.78B", "high": "$503.41B"}, "Average": "$452.94B", "YoY Chg %": "17.96%", "EV Multiple": "7.0x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2029", "Analyst #": 9, "Estimate Low to High Range": {"low": "$477.30B", "high": "$577.37B"}, "Average": "$528.13B", "YoY Chg %": "16.60%", "EV Multiple": "6.0x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2030", "Analyst #": 7, "Estimate Low to High Range": {"low": "$524.55B", "high": "$710.43B"}, "Average": "$606.74B", "YoY Chg %": "14.88%", "EV Multiple": "5.2x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2031", "Analyst #": 6, "Estimate Low to High Range": {"low": "$571.29B", "high": "$879.29B"}, "Average": "$688.26B", "YoY Chg %": "13.43%", "EV Multiple": "4.6x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2032", "Analyst #": 5, "Estimate Low to High Range": {"low": "$617.10B", "high": "$922.10B"}, "Average": "$730.72B", "YoY Chg %": "6.17%", "EV Multiple": "4.4x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2033", "Analyst #": 5, "Estimate Low to High Range": {"low": "$661.64B", "high": "$1,088.08B"}, "Average": "$817.12B", "YoY Chg %": "11.83%", "EV Multiple": "3.9x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2034", "Analyst #": 5, "Estimate Low to High Range": {"low": "$704.61B", "high": "$1,278.49B"}, "Average": "$909.01B", "YoY Chg %": "11.25%", "EV Multiple": "3.5x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2035", "Analyst #": 5, "Estimate Low to High Range": {"low": "$745.80B", "high": "$1,495.84B"}, "Average": "$1,007.74B", "YoY Chg %": "10.86%", "EV Multiple": "3.2x", "Price Multiple": null}
+      ]
+    },
+    {
+      "metric": "EBITDA",
+      "rows": [
+        {"Fiscal Period": "FY 2026", "Analyst #": 24, "Estimate Low to High Range": {"low": "$184.51B", "high": "$218.92B"}, "Average": "$198.22B", "YoY Chg %": "21.85%", "EV Multiple": "16.0x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2027", "Analyst #": 24, "Estimate Low to High Range": {"low": "$219.28B", "high": "$254.69B"}, "Average": "$239.21B", "YoY Chg %": "20.68%", "EV Multiple": "13.3x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2028", "Analyst #": 16, "Estimate Low to High Range": {"low": "$255.54B", "high": "$315.48B"}, "Average": "$291.17B", "YoY Chg %": "21.72%", "EV Multiple": "10.9x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2029", "Analyst #": 3, "Estimate Low to High Range": {"low": "$326.18B", "high": "$375.14B"}, "Average": "$357.25B", "YoY Chg %": "22.69%", "EV Multiple": "8.9x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2030", "Analyst #": 1, "Estimate Low to High Range": {"low": "$372.85B", "high": "$372.85B"}, "Average": "$372.85B", "YoY Chg %": "4.37%", "EV Multiple": "8.5x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2031", "Analyst #": 1, "Estimate Low to High Range": {"low": "$423.55B", "high": "$423.55B"}, "Average": "$423.55B", "YoY Chg %": "13.60%", "EV Multiple": "7.5x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2032", "Analyst #": 1, "Estimate Low to High Range": {"low": "$478.30B", "high": "$478.30B"}, "Average": "$478.30B", "YoY Chg %": "12.93%", "EV Multiple": "6.7x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2033", "Analyst #": 1, "Estimate Low to High Range": {"low": "$537.07B", "high": "$537.07B"}, "Average": "$537.07B", "YoY Chg %": "12.29%", "EV Multiple": "5.9x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2034", "Analyst #": 1, "Estimate Low to High Range": {"low": "$599.81B", "high": "$599.81B"}, "Average": "$599.81B", "YoY Chg %": "11.68%", "EV Multiple": "5.3x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2035", "Analyst #": 1, "Estimate Low to High Range": {"low": "$666.41B", "high": "$666.41B"}, "Average": "$666.41B", "YoY Chg %": "11.10%", "EV Multiple": "4.8x", "Price Multiple": null}
+      ]
+    },
+    {
+      "metric": "EBIT",
+      "rows": [
+        {"Fiscal Period": "FY 2026", "Analyst #": 46, "Estimate Low to High Range": {"low": "$152.84B", "high": "$157.41B"}, "Average": "$153.66B", "YoY Chg %": "19.55%", "EV Multiple": "20.7x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2027", "Analyst #": 50, "Estimate Low to High Range": {"low": "$170.50B", "high": "$190.00B"}, "Average": "$178.64B", "YoY Chg %": "16.25%", "EV Multiple": "17.8x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2028", "Analyst #": 34, "Estimate Low to High Range": {"low": "$190.75B", "high": "$236.26B"}, "Average": "$209.72B", "YoY Chg %": "17.40%", "EV Multiple": "15.2x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2029", "Analyst #": 7, "Estimate Low to High Range": {"low": "$228.51B", "high": "$259.34B"}, "Average": "$246.10B", "YoY Chg %": "17.35%", "EV Multiple": "12.9x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2030", "Analyst #": 5, "Estimate Low to High Range": {"low": "$261.57B", "high": "$309.81B"}, "Average": "$285.81B", "YoY Chg %": "16.14%", "EV Multiple": "11.1x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2031", "Analyst #": 3, "Estimate Low to High Range": {"low": "$293.98B", "high": "$401.82B"}, "Average": "$352.55B", "YoY Chg %": "23.35%", "EV Multiple": "9.0x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2032", "Analyst #": 2, "Estimate Low to High Range": {"low": "$328.37B", "high": "$428.78B"}, "Average": "$378.57B", "YoY Chg %": "7.38%", "EV Multiple": "8.4x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2033", "Analyst #": 2, "Estimate Low to High Range": {"low": "$364.80B", "high": "$511.40B"}, "Average": "$438.10B", "YoY Chg %": "15.72%", "EV Multiple": "7.3x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2034", "Analyst #": 2, "Estimate Low to High Range": {"low": "$402.95B", "high": "$600.89B"}, "Average": "$501.92B", "YoY Chg %": "14.57%", "EV Multiple": "6.3x", "Price Multiple": null},
+        {"Fiscal Period": "FY 2035", "Analyst #": 2, "Estimate Low to High Range": {"low": "$442.50B", "high": "$703.04B"}, "Average": "$572.77B", "YoY Chg %": "14.12%", "EV Multiple": "5.6x", "Price Multiple": null}
+      ]
+    },
+    {
+      "metric": "EPS",
+      "rows": [
+        {"Fiscal Period": "FY 2026", "Analyst #": 25, "Estimate Low to High Range": {"low": 16.70, "high": 17.63}, "Average": 16.85, "YoY Chg %": "23.50%", "EV Multiple": null, "Price Multiple": "25.0x"},
+        {"Fiscal Period": "FY 2027", "Analyst #": 37, "Estimate Low to High Range": {"low": 18.13, "high": 20.57}, "Average": 19.37, "YoY Chg %": "14.99%", "EV Multiple": null, "Price Multiple": "21.8x"},
+        {"Fiscal Period": "FY 2028", "Analyst #": 26, "Estimate Low to High Range": {"low": 19.00, "high": 23.70}, "Average": 22.53, "YoY Chg %": "16.30%", "EV Multiple": null, "Price Multiple": "18.7x"},
+        {"Fiscal Period": "FY 2029", "Analyst #": 5, "Estimate Low to High Range": {"low": 25.57, "high": 28.78}, "Average": 27.47, "YoY Chg %": "21.94%", "EV Multiple": null, "Price Multiple": "15.4x"},
+        {"Fiscal Period": "FY 2030", "Analyst #": 3, "Estimate Low to High Range": {"low": 29.13, "high": 34.28}, "Average": 31.94, "YoY Chg %": "16.26%", "EV Multiple": null, "Price Multiple": "13.2x"},
+        {"Fiscal Period": "FY 2031", "Analyst #": 2, "Estimate Low to High Range": {"low": 32.88, "high": 44.70}, "Average": 38.79, "YoY Chg %": "21.45%", "EV Multiple": null, "Price Multiple": "10.9x"},
+        {"Fiscal Period": "FY 2032", "Analyst #": 1, "Estimate Low to High Range": {"low": 36.88, "high": 36.88}, "Average": 36.88, "YoY Chg %": "-4.92%", "EV Multiple": null, "Price Multiple": "11.4x"},
+        {"Fiscal Period": "FY 2033", "Analyst #": 1, "Estimate Low to High Range": {"low": 41.13, "high": 41.13}, "Average": 41.13, "YoY Chg %": "11.52%", "EV Multiple": null, "Price Multiple": "10.3x"},
+        {"Fiscal Period": "FY 2034", "Analyst #": 1, "Estimate Low to High Range": {"low": 45.60, "high": 45.60}, "Average": 45.60, "YoY Chg %": "10.87%", "EV Multiple": null, "Price Multiple": "9.3x"},
+        {"Fiscal Period": "FY 2035", "Analyst #": 1, "Estimate Low to High Range": {"low": 50.24, "high": 50.24}, "Average": 50.24, "YoY Chg %": "10.18%", "EV Multiple": null, "Price Multiple": "8.4x"}
+      ]
+    },
+    {
+      "metric": "EPS GAAP",
+      "rows": [
+        {"Fiscal Period": "FY 2026", "Analyst #": 33, "Estimate Low to High Range": {"low": 16.81, "high": 17.88}, "Average": 17.32, "YoY Chg %": "27.00%", "EV Multiple": null, "Price Multiple": null},
+        {"Fiscal Period": "FY 2027", "Analyst #": 37, "Estimate Low to High Range": {"low": 18.21, "high": 23.27}, "Average": 19.50, "YoY Chg %": "12.56%", "EV Multiple": null, "Price Multiple": null},
+        {"Fiscal Period": "FY 2028", "Analyst #": 22, "Estimate Low to High Range": {"low": 21.10, "high": 26.96}, "Average": 22.99, "YoY Chg %": "17.88%", "EV Multiple": null, "Price Multiple": null},
+        {"Fiscal Period": "FY 2029", "Analyst #": 4, "Estimate Low to High Range": {"low": 25.57, "high": 28.78}, "Average": 27.18, "YoY Chg %": "18.24%", "EV Multiple": null, "Price Multiple": null},
+        {"Fiscal Period": "FY 2030", "Analyst #": 3, "Estimate Low to High Range": {"low": 29.13, "high": 34.28}, "Average": 31.94, "YoY Chg %": "17.52%", "EV Multiple": null, "Price Multiple": null},
+        {"Fiscal Period": "FY 2031", "Analyst #": 2, "Estimate Low to High Range": {"low": 32.88, "high": 44.70}, "Average": 38.79, "YoY Chg %": "21.45%", "EV Multiple": null, "Price Multiple": null},
+        {"Fiscal Period": "FY 2032", "Analyst #": 1, "Estimate Low to High Range": {"low": 36.88, "high": 36.88}, "Average": 36.88, "YoY Chg %": "-4.92%", "EV Multiple": null, "Price Multiple": null},
+        {"Fiscal Period": "FY 2033", "Analyst #": 1, "Estimate Low to High Range": {"low": 41.13, "high": 41.13}, "Average": 41.13, "YoY Chg %": "11.52%", "EV Multiple": null, "Price Multiple": null},
+        {"Fiscal Period": "FY 2034", "Analyst #": 1, "Estimate Low to High Range": {"low": 45.60, "high": 45.60}, "Average": 45.60, "YoY Chg %": "10.87%", "EV Multiple": null, "Price Multiple": null},
+        {"Fiscal Period": "FY 2035", "Analyst #": 1, "Estimate Low to High Range": {"low": 50.24, "high": 50.24}, "Average": 50.24, "YoY Chg %": "10.18%", "EV Multiple": null, "Price Multiple": null}
+      ]
+    }
+  ]
+}

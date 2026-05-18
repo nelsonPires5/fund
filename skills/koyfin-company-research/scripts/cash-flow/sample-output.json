@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "ticker": "MSFT",
+    "tab": "Cash Flow",
+    "view": "Annual",
+    "extractedAt": "2026-05-17T00:00:00.000Z",
+    "url": "https://app.koyfin.com/fa/00000000-1c82-4912-88c6-8689b285ac75/eq-kuqeq3",
+    "title": "MSFT - Cash Flow Statement",
+    "kid": "eq-kuqeq3",
+    "currency": "USD",
+    "fiscalYears": ["FY2016", "FY2017", "FY2018", "FY2019", "FY2020", "FY2021", "FY2022", "FY2023", "FY2024", "FY2025", "Current/LTM"]
+  },
+
+  "cashFromOperations": {
+    "Net Income": [20.5, 25.5, 16.6, 39.2, 44.3, 61.3, 72.7, 72.4, 88.1, 101.8, 125.2],
+    "Depreciation & Amortization, Total": [5.9, 7.8, 9.9, 11.6, 12.3, 10.9, 14.6, 13.5, 20.0, 28.0, 35.5],
+    "  Depreciation & Amortization": [4.9, 6.1, 7.7, 9.7, 10.7, 9.3, 12.6, 11.0, 15.2, 22.0, 30.3],
+    "  Amortization of Goodwill and Intangible Assets": [1.0, 1.7, 2.2, 1.9, 1.6, 1.6, 2.0, 2.5, 4.8, 6.0, 5.2],
+    "(Gain) Loss From Sale Of Asset": [null, null, null, null, null, null, null, null, null, null, null],
+    "(Gain) Loss on Sale of Investments": [-0.2, -2.1, -2.2, -0.8, -0.2, -1.2, -0.4, 0.2, 0.3, 0.6, -10.1],
+    "Amortization of Deferred Charges, Total": [0.1, null, null, null, null, null, null, null, null, null, null],
+    "Asset Writedown & Restructuring Costs": [0.6, null, null, null, null, null, null, null, null, null, null],
+    "Stock-Based Compensation": [2.7, 3.3, 3.9, 4.7, 5.3, 6.1, 7.5, 9.6, 10.7, 12.0, 12.4],
+    "Other Operating Activities, Total": [3.2, 0.1, -4.8, -6.4, 0.5, 0.6, -5.8, -5.7, -2.5, -0.9, 13.4],
+    "Change In Accounts Receivable": [0.6, -1.2, -3.9, -2.8, -2.6, -6.5, -6.8, -4.1, -7.2, -10.6, -7.8],
+    "Change In Inventories": [0.6, 0.1, -0.5, 0.6, 0.2, -0.7, -1.1, 1.2, 1.3, 0.3, -0.4],
+    "Change In Accounts Payable": [0.1, 0.1, 1.1, 0.2, 3.0, 2.8, 2.9, -2.7, 3.5, 0.6, 2.3],
+    "Change in Unearned Revenues": [2.6, 3.8, 5.9, 4.5, 2.2, 4.6, 5.1, 5.5, 5.3, 5.4, 5.3],
+    "Change In Income Taxes": [-0.3, 1.8, 18.2, 2.9, -3.6, -2.3, 0.7, -0.4, 1.7, 0.0, -0.5],
+    "Change in Other Net Operating Assets": [-2.9, 0.3, -0.5, -1.5, -0.7, 1.2, -0.3, -2.0, -2.8, -1.0, -5.0],
+    "► Cash from Operations": [33.3, 39.5, 43.9, 52.2, 60.7, 76.7, 89.0, 87.6, 118.5, 136.2, 170.1]
+  },
+
+  "cashFromInvesting": {
+    "Capital Expenditure": [-8.3, -8.1, -11.6, -13.9, -15.4, -20.6, -23.9, -28.1, -44.5, -64.6, -97.2],
+    "Sale of Property, Plant, and Equipment": [null, null, null, null, null, null, null, null, null, null, null],
+    "Cash Acquisitions": [-1.4, -25.9, -0.9, -2.4, -2.5, -8.9, -22.0, -1.7, -69.1, -6.0, -3.0],
+    "Divestitures": [null, null, null, null, null, null, null, null, null, null, null],
+    "Investment in Mkt and Equity Securities, Total": [-14.4, -12.5, 6.6, 0.5, 7.0, 2.9, 18.4, 10.2, 17.9, -4.4, -8.2],
+    "Net (Increase) Decrease in Loans Orig / Sold": [null, null, null, null, null, null, null, null, null, null, null],
+    "Other Investing Activities, Total": [0.2, -0.2, -0.1, null, -1.2, -0.9, -2.8, -3.1, -1.3, 2.3, -6.8],
+    "► Cash from Investing": [-23.9, -46.8, -6.1, -15.8, -12.2, -27.6, -30.3, -22.7, -97.0, -72.6, -115.2]
+  },
+
+  "cashFromFinancing": {
+    "Total Debt Issued": [21.1, 44.3, 7.2, null, null, null, null, null, 29.6, null, -0.9],
+    "  Short Term Debt Issued, Total": [7.2, null, null, null, null, null, null, null, 5.3, null, 5.3],
+    "  Long-Term Debt Issued, Total": [13.9, 44.3, 7.2, null, null, null, null, null, 24.4, null, 24.4],
+    "Total Debt Repaid": [-2.8, -12.9, -17.4, -4.0, -5.5, -3.8, -9.0, -2.8, -29.1, -9.0, -3.0],
+    "  Short Term Debt Repaid, Total": [null, -5.0, -7.3, null, null, null, null, null, null, -5.7, -5.7],
+    "  Long-Term Debt Repaid, Total": [-2.8, -7.9, -10.1, -4.0, -5.5, -3.8, -9.0, -2.8, -29.1, -3.2, -3.2],
+    "Issuance of Common Stock": [0.7, 0.8, 1.0, 1.1, 1.3, 1.7, 1.8, 1.9, 2.0, 2.1, 2.0],
+    "Repurchase of Common Stock": [-16.0, -11.8, -10.7, -19.5, -23.0, -27.4, -32.7, -22.2, -17.3, -18.4, -22.2],
+    "Common & Preferred Stock Dividends Paid": [-11.0, -11.8, -12.7, -13.8, -15.1, -16.5, -18.1, -19.8, -21.8, -24.1, -25.9],
+    "  Common Dividends Paid": [-11.0, -11.8, -12.7, -13.8, -15.1, -16.5, -18.1, -19.8, -21.8, -24.1, -25.9],
+    "  Preferred Dividends Paid": [null, null, null, null, null, null, null, null, null, null, null],
+    "  Special Dividends Paid": [null, null, null, null, null, null, null, null, null, null, null],
+    "Other Financing Activities": [-0.4, -0.2, -1.0, -0.7, -3.8, -2.5, -0.9, -1.0, -1.3, -2.3, -2.6],
+    "► Cash from Financing": [-8.4, 8.4, -33.6, -36.9, -46.0, -48.5, -58.9, -43.9, -37.8, -51.7, -51.6]
+  },
+
+  "netChangeInCash": {
+    "Foreign Exchange Rate Adjustments": [-0.1, 0.0, 0.1, -0.1, -0.2, 0.0, -0.1, 0.2, 0.2, 0.1, 0.0],
+    "Miscellaneous Cash Flow Adjustments": [null, null, null, null, null, null, null, null, null, null, null],
+    "► Net Change in Cash": [0.9, 1.2, 4.3, -0.6, 2.2, 0.6, -0.3, 20.8, -16.4, 11.9, 3.3]
+  },
+
+  "supplementalItems": {
+    "Free Cash Flow": [25.0, 31.4, 32.3, 38.3, 45.2, 56.1, 65.1, 59.5, 74.1, 71.6, 72.9],
+    "Free Cash Flow per Share": [3.20, 4.07, 4.20, 5.01, 5.97, 7.46, 8.73, 8.00, 9.96, 9.63, 9.82],
+    "Cash Interest Paid": [1.1, 1.6, null, 2.4, 2.4, 2.0, 1.9, 1.7, 1.7, 1.6, 1.6],
+    "Cash Income Tax Paid (Refund)": [3.9, 2.4, 5.5, 8.4, 12.5, 13.4, 16.0, 23.1, 23.4, 28.7, 28.7],
+    "Change In Net Working Capital": [-3.9, 5.2, -2.6, -3.4, -0.6, -2.7, -0.4, 1.8, -3.9, -6.8, 4.9],
+    "Net Debt Issued / Repaid": [18.3, 31.5, -10.2, -4.0, -5.5, -3.8, -9.0, -2.8, 0.6, -9.0, -3.0]
+  },
+
+  "notes": {
+    "unit": "Billions USD unless noted (Free Cash Flow per Share is USD/share)",
+    "null": "Value not reported / dash in display (indicates no data for that period)",
+    "parenthesesIndicateNegative": true,
+    "columns": ["FY2016", "FY2017", "FY2018", "FY2019", "FY2020", "FY2021", "FY2022", "FY2023", "FY2024", "FY2025", "Current/LTM"],
+    "columnCount": 11,
+    "source": "Koyfin Security Analysis > Financial Analysis > Cash Flow (Annual view)",
+    "extractionMethod": "DOM innerText parsing verified via API response capture"
+  },
+
+  "inventory": {
+    "totalDataRows": 44,
+    "totalSectionHeaders": 5,
+    "totalSupplementalRows": 6,
+    "metricsWithCompleteData": 36,
+    "metricsWithMissingData": 8,
+    "fiscalYearsCovered": "2016-2026",
+    "periodView": "Annual"
+  }
+}

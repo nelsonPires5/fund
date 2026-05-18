@@ -1,0 +1,62 @@
+{
+  "ticker": "MSFT",
+  "tab": "MSFT - Price Target",
+  "url": "https://app.koyfin.com/estimates/pt/eq-kuqeq3",
+  "extracted_at": "2026-05-17T00:00:00.000Z",
+
+  "price_target": {
+    "avg_target": 560.63,
+    "high_target": 870.00,
+    "low_target": 400.00,
+    "median_target": 557.50,
+    "std_dev": 74.07,
+    "num_estimates": 54,
+    "prev_target": 560.63,
+    "current_price": 421.92,
+    "return_potential_pct": 32.88,
+    "trailing_1y_return_pct": -6.89
+  },
+
+  "ratings": {
+    "summary": {
+      "strong_buy": 11,
+      "buy": 41,
+      "hold": 3,
+      "sell": 0,
+      "strong_sell": 0,
+      "covering_analysts": 55
+    },
+    "avg_rating_1to5": 4.69,
+    "historical": [
+      { "year": 2022, "rating": 4.69 },
+      { "year": 2023, "rating": 4.34 },
+      { "year": 2024, "rating": 4.42 },
+      { "year": 2025, "rating": 4.50 },
+      { "year": 2026, "rating": 4.58 }
+    ]
+  },
+
+  "historical_price_target_chart": {
+    "date_range": "Jul 2023 – Apr 2026",
+    "frequency": "Quarterly",
+    "available_time_presets": ["MTD", "1M", "QTD", "3M", "6M", "YTD", "1Y", "3Y", "5Y", "10Y"],
+    "current_view_period": "3Y (default view showing Jul 2023 – Apr 2026)",
+    "low_target": 400.00,
+    "avg_target": 560.63,
+    "high_target": 870.00,
+    "current_price": 421.92,
+    "target_premium_pct": 32.88
+  },
+
+  "metadata": {
+    "source_page": "Security Analysis > Analyst Estimates > Price Target",
+    "data_freshness": {
+      "price_target_data": "2026-05-16",
+      "stock_price": "2026-05-15T16:00:00-04:00"
+    },
+    "api_endpoint": "/api/v3p/data/keys",
+    "api_method": "POST",
+    "data_keys_prefix": "fest_estpt_* and fest_est_ar_*",
+    "no_coverage_handling": "Check fest_estpt_num === 0 or missing; check fest_est_ar_avg_no === null"
+  }
+}

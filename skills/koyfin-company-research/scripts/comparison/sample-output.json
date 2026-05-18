@@ -1,0 +1,79 @@
+{
+  "ticker": "MSFT",
+  "tab": "Security Analysis > Graphs > Comparison",
+  "url": "https://app.koyfin.com/charts/gc/eq-kuqeq3",
+  "extracted_at": "2026-05-17T21:24:00.000Z",
+  "metadata": {
+    "svgDimensions": { "width": "1480", "height": "1041" },
+    "xAxisLabels": [
+      "Jun 2", "Jul 1", "Aug 1", "Sep 1", "Oct 1", "Nov 3",
+      "Dec 1", "Jan 2", "Feb 2", "Mar 2", "Apr 1", "May 1"
+    ]
+  },
+  "tickers": [
+    { "ticker": "MSFT",    "name": "Microsoft Corporation" },
+    { "ticker": "INFINEON","name": "Infineon Technologies AG" },
+    { "ticker": "6963",    "name": "ROHM Co., Ltd." },
+    { "ticker": "WOLF",    "name": "Wolfspeed, Inc." },
+    { "ticker": "NVTS",    "name": "Navitas Semiconductor Corporation" },
+    { "ticker": "POWI",    "name": "Power Integrations, Inc." },
+    { "ticker": "MITSU19", "name": "Mitsubishi Heavy Industries, Ltd." },
+    { "ticker": "6504",    "name": "Fuji Electric Co., Ltd." },
+    { "ticker": "6588",    "name": "Toshiba Tec Corporation" }
+  ],
+  "panels": [
+    {
+      "metric": "Price Change %",
+      "series": [
+        { "ticker": "MSFT",    "company": "Microsoft Corporation",           "value": "-6.89%",  "color": "var(--primary-color, hsl(210, 100%, 50%))" },
+        { "ticker": "INFINEON","company": "Infineon Technologies AG",         "value": "73.22%",  "color": "rgb(125, 0, 255)" },
+        { "ticker": "6963",    "company": "ROHM Co., Ltd.",                   "value": "192.51%", "color": "rgb(252, 115, 53)" },
+        { "ticker": "WOLF",    "company": "Wolfspeed, Inc.",                  "value": "181.13%", "color": "rgb(255, 211, 51)" },
+        { "ticker": "NVTS",    "company": "Navitas Semiconductor Corporation","value": "929.95%", "color": "var(--market-color-open-up, hsl(145, 80%, 25%))" },
+        { "ticker": "POWI",    "company": "Power Integrations, Inc.",         "value": "34.98%",  "color": "var(--market-color-closed-down, hsl(4, 60%, 50%))" },
+        { "ticker": "MITSU19", "company": "Mitsubishi Heavy Industries, Ltd.","value": "34.40%",  "color": "rgb(55, 126, 184)" },
+        { "ticker": "6504",    "company": "Fuji Electric Co., Ltd.",          "value": "133.06%", "color": "rgb(193, 213, 42)" },
+        { "ticker": "6588",    "company": "Toshiba Tec Corporation",          "value": "-0.56%",  "color": "rgb(160, 160, 160)" }
+      ]
+    },
+    {
+      "metric": "Price / Earnings - P/E (NTM)",
+      "series": [
+        { "ticker": "MSFT",    "company": "Microsoft Corporation",           "value": "22.8x", "color": "var(--primary-color, hsl(210, 100%, 50%))" },
+        { "ticker": "INFINEON","company": "Infineon Technologies AG",         "value": "30.2x", "color": "rgb(125, 0, 255)" },
+        { "ticker": "6963",    "company": "ROHM Co., Ltd.",                   "value": "44.8x", "color": "rgb(252, 115, 53)" },
+        { "ticker": "POWI",    "company": "Power Integrations, Inc.",         "value": "50.4x", "color": "var(--market-color-closed-down, hsl(4, 60%, 50%))" },
+        { "ticker": "MITSU19", "company": "Mitsubishi Heavy Industries, Ltd.","value": "33.2x", "color": "rgb(55, 126, 184)" },
+        { "ticker": "6504",    "company": "Fuji Electric Co., Ltd.",          "value": "22.0x", "color": "rgb(193, 213, 42)" },
+        { "ticker": "6588",    "company": "Toshiba Tec Corporation",          "value": "14.0x", "color": "rgb(160, 160, 160)" }
+      ]
+    },
+    {
+      "metric": "EV / EBITDA (NTM)",
+      "series": [
+        { "ticker": "MSFT",    "company": "Microsoft Corporation",           "value": "13.8x",  "color": "var(--primary-color, hsl(210, 100%, 50%))" },
+        { "ticker": "INFINEON","company": "Infineon Technologies AG",         "value": "15.5x",  "color": "rgb(125, 0, 255)" },
+        { "ticker": "6963",    "company": "ROHM Co., Ltd.",                   "value": "15.6x",  "color": "rgb(252, 115, 53)" },
+        { "ticker": "WOLF",    "company": "Wolfspeed, Inc.",                  "value": "195.6x", "color": "rgb(255, 211, 51)" },
+        { "ticker": "POWI",    "company": "Power Integrations, Inc.",         "value": "145.1x", "color": "var(--market-color-closed-down, hsl(4, 60%, 50%))" },
+        { "ticker": "MITSU19", "company": "Mitsubishi Heavy Industries, Ltd.","value": "18.2x",  "color": "rgb(55, 126, 184)" },
+        { "ticker": "6504",    "company": "Fuji Electric Co., Ltd.",          "value": "11.3x",  "color": "rgb(193, 213, 42)" },
+        { "ticker": "6588",    "company": "Toshiba Tec Corporation",          "value": "4.2x",   "color": "rgb(160, 160, 160)" }
+      ]
+    },
+    {
+      "metric": "EV / Sales (NTM)",
+      "series": [
+        { "ticker": "MSFT",    "company": "Microsoft Corporation",           "value": "8.6x",   "color": "var(--primary-color, hsl(210, 100%, 50%))" },
+        { "ticker": "INFINEON","company": "Infineon Technologies AG",         "value": "5.2x",   "color": "rgb(125, 0, 255)" },
+        { "ticker": "6963",    "company": "ROHM Co., Ltd.",                   "value": "3.1x",   "color": "rgb(252, 115, 53)" },
+        { "ticker": "WOLF",    "company": "Wolfspeed, Inc.",                  "value": "5.4x",   "color": "rgb(255, 211, 51)" },
+        { "ticker": "NVTS",    "company": "Navitas Semiconductor Corporation","value": "100.0x",  "color": "var(--market-color-open-up, hsl(145, 80%, 25%))" },
+        { "ticker": "POWI",    "company": "Power Integrations, Inc.",         "value": "7.8x",   "color": "var(--market-color-closed-down, hsl(4, 60%, 50%))" },
+        { "ticker": "MITSU19", "company": "Mitsubishi Heavy Industries, Ltd.","value": "2.5x",   "color": "rgb(55, 126, 184)" },
+        { "ticker": "6504",    "company": "Fuji Electric Co., Ltd.",          "value": "1.8x",   "color": "rgb(193, 213, 42)" },
+        { "ticker": "6588",    "company": "Toshiba Tec Corporation",          "value": "0.3x",   "color": "rgb(160, 160, 160)" }
+      ]
+    }
+  ]
+}

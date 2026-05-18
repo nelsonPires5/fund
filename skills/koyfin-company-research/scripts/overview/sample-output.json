@@ -1,0 +1,58 @@
+{
+  "ticker": "MSFT",
+  "tab": "Overview",
+  "extracted_at": "2026-05-17T00:00:00Z",
+  "key_data": {
+    "Dividend Yield": "0.86%",
+    "Avg Volume (10D)": "33.37M",
+    "Beta (5Y Monthly)": "1.09",
+    "Volatility (1Y)": "23.71",
+    "Shares Outstanding": "7.43B",
+    "Short Interest %": "1.10%",
+    "Industry": "Software",
+    "Competitors": "ORCL, GOOGL, CRM, NVDA, AMZN"
+  },
+  "performance_returns": {
+    "periods": ["1M", "3M", "YTD", "1Y"],
+    "Price": ["2.60%", "5.13%", "-12.76%", "-6.89%"],
+    "Total": ["2.60%", "5.37%", "-12.56%", "-6.35%"]
+  },
+  "valuation": {
+    "columns": ["LTM", "NTM"],
+    "data": [
+      {"metric": "P/E", "values": ["25.1x", "22.8x"]},
+      {"metric": "EV/Sales", "values": ["10.0x", "8.6x"]},
+      {"metric": "EV/EBITDA", "values": ["16.1x", "13.8x"]},
+      {"metric": "Price/Book", "values": ["7.6x", ""]}
+    ]
+  },
+  "capital_structure": {
+    "Market Cap": "$3,134.21B",
+    "Total Debt": "$125.43B",
+    "Cash & Inv.": "$78.23B",
+    "Enterprise Value": "$3,181.41B"
+  },
+  "analyst_estimates": {
+    "columns": ["FY 2026", "FY 2027", "FY 2028"],
+    "data": [
+      {"metric": "Sales", "values": ["$329.50B", "$384.00B", "$452.94B"]},
+      {"metric": "YoY Chg (Sales)", "values": ["16.96%", "16.54%", "17.96%"]},
+      {"metric": "EPS", "values": ["$16.85", "$19.37", "$22.53"]},
+      {"metric": "YoY Chg (EPS)", "values": ["23.50%", "14.99%", "16.30%"]}
+    ]
+  },
+  "chart_periods": ["1d", "5d", "MTD", "1m", "QTD", "3m", "6m", "YTD", "1y", "3y", "5y", "10y", "20y", "All"],
+  "quote_box": {
+    "Price": "$421.92",
+    "Change": "+$12.49 (+3.05%)",
+    "After-Market": "$419.71 (-0.52%)",
+    "Next Earnings": "Thu Jul 30th 2026 (After-Market)",
+    "Sector": "Information Technology",
+    "Industry": "Software",
+    "Market Cap": "$3,134.21B",
+    "Forward P/E": "22.8x",
+    "Volume": "50,771,100",
+    "Total Return (3M)": "5.37%",
+    "Total Return (1Y)": "-6.35%"
+  }
+}

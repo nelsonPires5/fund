@@ -1,0 +1,31 @@
+ticker,tab,extractedAt,description,formType,formCode,isEdgar,date,docType
+MSFT,Filings,2026-05-17,"Form 8-K - Current report - Item 5.02 Item 9.01",8-K (Edgar),8-K,true,May 14 '26,8-K
+MSFT,Filings,2026-05-17,"Form 144 ~ Coleman Amy - Beneficial Ownership Changes",144 (Edgar),144,true,May 14 '26,144
+MSFT,Filings,2026-05-17,"Form SCHEDULE 13G - Statement of Beneficial Ownership by Certain Investors",SCHEDULE 13G (Edgar),SCHEDULE 13G,true,Apr 30 '26,SCHEDULE
+MSFT,Filings,2026-05-17,"10-Q ~ Interim Report  (ended Mar 31 2026)",10-Q (Edgar),10-Q,true,Apr 29 '26,10-Q
+MSFT,Filings,2026-05-17,"Form 8-K - Current report - Item 2.02 Item 9.01",8-K (Edgar),8-K,true,Apr 29 '26,8-K
+MSFT,Filings,2026-05-17,"Form 4 ~ Coleman Amy - Beneficial Ownership Changes",4 (Edgar),4,true,Apr 15 '26,4
+MSFT,Filings,2026-05-17,"Form SCHEDULE 13G/A - Statement of Beneficial Ownership by Certain Investors: [Amend]",SCHEDULE 13G/A (Edgar),SCHEDULE 13G/A,true,Mar 27 '26,SCHEDULE
+MSFT,Filings,2026-05-17,"11-K ~ Annual Report  (ended Dec 31 2025)",11-K (Edgar),11-K,true,Mar 23 '26,11-K
+MSFT,Filings,2026-05-17,"Form 4 ~ Coleman Amy - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 16 '26,4
+MSFT,Filings,2026-05-17,"Form 4 ~ Walmsley Emma N - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 13 '26,4
+MSFT,Filings,2026-05-17,"Form 4 ~ Rainey John D - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 13 '26,4
+MSFT,Filings,2026-05-17,"Form 4 ~ PRITZKER PENNY S - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 13 '26,4
+MSFT,Filings,2026-05-17,"Form 4 ~ PETERSON SANDRA E - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 13 '26,4
+MSFT,Filings,2026-05-17,"Form 4 ~ MacGregor Catherine - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 13 '26,4
+MSFT,Filings,2026-05-17,"Form 4 ~ List Teri - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 13 '26,4
+MSFT,Filings,2026-05-17,"Form 4 ~ Johnston Hugh F - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 13 '26,4
+MSFT,Filings,2026-05-17,"Form 4 ~ Hoffman Reid - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 13 '26,4
+MSFT,Filings,2026-05-17,"Form 4 ~ Hogan Kathleen T - Beneficial Ownership Changes",4 (Edgar),4,true,Mar 09 '26,4
+MSFT,Filings,2026-05-17,"Form 144 ~ Hogan Kathleen T - Beneficial Ownership Changes",144 (Edgar),144,true,Mar 06 '26,144
+MSFT,Filings,2026-05-17,"Form IRANNOTICE - Notice of disclosure filed pursuant to Section 219 of the Iran Threat Reduction and Syria Human Rights Act of 2012 (Exchange Act Section 13(r)).",IRANNOTICE (Edgar),IRANNOTICE,true,Jan 28 '26,IRANNOTICE
+MSFT,Filings,2026-05-17,"10-Q ~ Interim Report  (ended Dec 31 2025)",10-Q (Edgar),10-Q,true,Jan 28 '26,10-Q
+MSFT,Filings,2026-05-17,"Form S-8 ~ Registration Statement",S-8 (Edgar),S-8,true,Dec 30 '25,S-8
+MSFT,Filings,2026-05-17,"Form S-8 POS ~ Registration Statement",S-8 POS (Edgar),S-8 POS,true,Dec 30 '25,S-8
+MSFT,Filings,2026-05-17,"Form 8-K - Current report - Item 5.02",8-K (Edgar),8-K,true,Sep 30 '25,8-K
+MSFT,Filings,2026-05-17,"10-K ~ Annual Report  (ended Jun 30 2025)",10-K (Edgar),10-K,true,Jul 30 '25,
+MSFT,Filings,2026-05-17,"Form 8-K - Current report - Item 5.03 Item 9.01",8-K (Edgar),8-K,true,Jul 01 '25,8-K
+MSFT,Filings,2026-05-17,"Form SD - Specialized disclosure report",SD (Edgar),SD,true,May 30 '25,SD
+MSFT,Filings,2026-05-17,"10-Q ~ Interim Report  (ended Mar 31 2025)",10-Q (Edgar),10-Q,true,Apr 30 '25,10-Q
+MSFT,Filings,2026-05-17,"Form 424B3 ~ Prospectus",424B3 (Edgar),424B3,true,May 06 '24,424B3
+MSFT,Filings,2026-05-17,"Form S-4 ~ Registration Statement",S-4 (Edgar),S-4,true,Apr 26 '24,S-4

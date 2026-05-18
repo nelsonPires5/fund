@@ -1,0 +1,40 @@
+ticker,tab,extracted_at,section,metric,period,value
+MSFT,Overview,2026-05-17T00:00:00Z,key_data,Dividend Yield,,0.86%
+MSFT,Overview,2026-05-17T00:00:00Z,key_data,Avg Volume (10D),,33.37M
+MSFT,Overview,2026-05-17T00:00:00Z,key_data,Beta (5Y Monthly),,1.09
+MSFT,Overview,2026-05-17T00:00:00Z,key_data,Volatility (1Y),,23.71
+MSFT,Overview,2026-05-17T00:00:00Z,key_data,Shares Outstanding,,7.43B
+MSFT,Overview,2026-05-17T00:00:00Z,key_data,Short Interest %,,1.10%
+MSFT,Overview,2026-05-17T00:00:00Z,key_data,Industry,,Software
+MSFT,Overview,2026-05-17T00:00:00Z,key_data,Competitors,,"ORCL, GOOGL, CRM, NVDA, AMZN"
+MSFT,Overview,2026-05-17T00:00:00Z,performance_returns,Price,1M,2.60%
+MSFT,Overview,2026-05-17T00:00:00Z,performance_returns,Price,3M,5.13%
+MSFT,Overview,2026-05-17T00:00:00Z,performance_returns,Price,YTD,-12.76%
+MSFT,Overview,2026-05-17T00:00:00Z,performance_returns,Price,1Y,-6.89%
+MSFT,Overview,2026-05-17T00:00:00Z,performance_returns,Total,1M,2.60%
+MSFT,Overview,2026-05-17T00:00:00Z,performance_returns,Total,3M,5.37%
+MSFT,Overview,2026-05-17T00:00:00Z,performance_returns,Total,YTD,-12.56%
+MSFT,Overview,2026-05-17T00:00:00Z,performance_returns,Total,1Y,-6.35%
+MSFT,Overview,2026-05-17T00:00:00Z,valuation,P/E,LTM,25.1x
+MSFT,Overview,2026-05-17T00:00:00Z,valuation,P/E,NTM,22.8x
+MSFT,Overview,2026-05-17T00:00:00Z,valuation,EV/Sales,LTM,10.0x
+MSFT,Overview,2026-05-17T00:00:00Z,valuation,EV/Sales,NTM,8.6x
+MSFT,Overview,2026-05-17T00:00:00Z,valuation,EV/EBITDA,LTM,16.1x
+MSFT,Overview,2026-05-17T00:00:00Z,valuation,EV/EBITDA,NTM,13.8x
+MSFT,Overview,2026-05-17T00:00:00Z,valuation,Price/Book,LTM,7.6x
+MSFT,Overview,2026-05-17T00:00:00Z,capital_structure,Market Cap,,$3,134.21B
+MSFT,Overview,2026-05-17T00:00:00Z,capital_structure,Total Debt,,$125.43B
+MSFT,Overview,2026-05-17T00:00:00Z,capital_structure,Cash & Inv.,,$78.23B
+MSFT,Overview,2026-05-17T00:00:00Z,capital_structure,Enterprise Value,,$3,181.41B
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,Sales,"FY 2026",$329.50B
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,Sales,"FY 2027",$384.00B
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,Sales,"FY 2028",$452.94B
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,YoY Chg (Sales),"FY 2026",16.96%
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,YoY Chg (Sales),"FY 2027",16.54%
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,YoY Chg (Sales),"FY 2028",17.96%
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,EPS,"FY 2026",$16.85
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,EPS,"FY 2027",$19.37
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,EPS,"FY 2028",$22.53
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,YoY Chg (EPS),"FY 2026",23.50%
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,YoY Chg (EPS),"FY 2027",14.99%
+MSFT,Overview,2026-05-17T00:00:00Z,analyst_estimates,YoY Chg (EPS),"FY 2028",16.30%

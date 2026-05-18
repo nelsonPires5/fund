@@ -1,0 +1,121 @@
+{
+  "ticker": "MSFT",
+  "tab": "Estimates Overview",
+  "extracted_at": "2026-05-17T15:00:00.000Z",
+  "url": "https://app.koyfin.com/estimates/est/eq-kuqeq3",
+  "entity_id": "eq-kuqeq3",
+
+  "summary": {
+    "nextEarningsDate": "Thu Jul 30th 2026 (After-Market)",
+    "nextQuarter": "4Q Jun 2026",
+    "metrics": {
+      "Revenues": {
+        "last": { "value": 82.89, "unit": "B", "asOf": "2026-03-31", "type": "actual" },
+        "next": { "value": 87.66, "unit": "B", "asOf": "2026-05-16", "type": "estimate" },
+        "growth": { "value": 5.76, "unit": "%", "direction": "up" }
+      },
+      "EBITDA": {
+        "last": { "value": 48.56, "unit": "B", "asOf": "2026-03-31", "type": "actual" },
+        "next": { "value": 51.67, "unit": "B", "asOf": "2026-05-16", "type": "estimate" },
+        "growth": { "value": 6.40, "unit": "%", "direction": "up" }
+      },
+      "EBIT": {
+        "last": { "value": 38.40, "unit": "B", "asOf": "2026-03-31", "type": "actual" },
+        "next": { "value": 39.02, "unit": "B", "asOf": "2026-05-16", "type": "estimate" },
+        "growth": { "value": 1.62, "unit": "%", "direction": "up" }
+      },
+      "EPS GAAP": {
+        "last": { "value": 4.27, "unit": null, "asOf": "2026-03-31", "type": "actual" },
+        "next": { "value": 4.21, "unit": null, "asOf": "2026-05-16", "type": "estimate" },
+        "growth": { "value": -1.50, "unit": "%", "direction": "down" }
+      },
+      "EPS": {
+        "last": { "value": 4.27, "unit": null, "asOf": "2026-03-31", "type": "actual" },
+        "next": { "value": 4.24, "unit": null, "asOf": "2026-05-16", "type": "estimate" },
+        "growth": { "value": -0.60, "unit": "%", "direction": "down" }
+      }
+    }
+  },
+
+  "matrix": {
+    "fiscalYears": ["FY 2025", "FY 2026", "FY 2027", "FY 2028"],
+    "periods": ["1Q Sep", "2Q Dec", "3Q Mar", "4Q Jun"],
+    "metrics": {
+      "Sales": {
+        "unit": "B",
+        "currency": "USD",
+        "quarterly": {
+          "1Q Sep": ["$65.59B", "$77.67B", "$89.67B", "$105.18B"],
+          "2Q Dec": ["$69.63B", "$81.27B", "$94.26B", "$110.52B"],
+          "3Q Mar": ["$70.07B", "$82.89B", "$96.66B", "$111.95B"],
+          "4Q Jun": ["$76.44B", "$87.66B", "$102.52B", "$119.31B"]
+        },
+        "year": ["$281.72B", "$329.50B", "$384.00B", "$452.94B"],
+        "growth": ["14.93%", "16.96%", "16.54%", "17.96%"]
+      },
+      "EBITDA": {
+        "unit": "B",
+        "currency": "USD",
+        "quarterly": {
+          "1Q Sep": ["$37.94B", "$51.02B", "$57.36B", "$69.05B"],
+          "2Q Dec": ["$38.48B", "$47.47B", "$59.47B", "$71.86B"],
+          "3Q Mar": ["$40.74B", "$48.56B", "$61.27B", "$74.98B"],
+          "4Q Jun": ["$45.53B", "$51.67B", "$63.92B", "$78.71B"]
+        },
+        "year": ["$162.68B", "$198.22B", "$239.21B", "$291.17B"],
+        "growth": ["23.51%", "21.85%", "20.68%", "21.72%"]
+      },
+      "EBIT": {
+        "unit": "B",
+        "currency": "USD",
+        "quarterly": {
+          "1Q Sep": ["$30.55B", "$37.96B", "$42.48B", "$49.50B"],
+          "2Q Dec": ["$31.65B", "$38.27B", "$43.95B", "$51.30B"],
+          "3Q Mar": ["$32.00B", "$38.40B", "$44.75B", "$53.04B"],
+          "4Q Jun": ["$34.32B", "$39.02B", "$46.89B", "$56.08B"]
+        },
+        "year": ["$128.53B", "$153.66B", "$178.64B", "$209.72B"],
+        "growth": ["17.45%", "19.55%", "16.25%", "17.40%"]
+      },
+      "EPS": {
+        "unit": null,
+        "currency": null,
+        "quarterly": {
+          "1Q Sep": ["3.30", "4.13", "4.63", "5.43"],
+          "2Q Dec": ["3.23", "4.14", "4.78", "5.59"],
+          "3Q Mar": ["3.46", "4.27", "4.87", "5.78"],
+          "4Q Jun": ["3.65", "4.24", "5.09", "6.05"]
+        },
+        "year": ["13.64", "16.85", "19.37", "22.53"],
+        "growth": ["15.59%", "23.50%", "14.99%", "16.30%"]
+      },
+      "EPS GAAP": {
+        "unit": null,
+        "currency": null,
+        "quarterly": {
+          "1Q Sep": ["3.30", "3.72", "4.64", "5.49"],
+          "2Q Dec": ["3.23", "5.16", "4.82", "5.68"],
+          "3Q Mar": ["3.46", "4.27", "4.91", "5.91"],
+          "4Q Jun": ["3.65", "4.21", "5.14", "6.21"]
+        },
+        "year": ["13.64", "17.32", "19.50", "22.99"],
+        "growth": ["15.59%", "27.00%", "12.56%", "17.88%"]
+      }
+    },
+    "estimateStatus": {
+      "FY 2025": "all actual (reported)",
+      "FY 2026": "3Q Mar actual, 4Q Jun estimated",
+      "FY 2027": "all estimated",
+      "FY 2028": "all estimated"
+    }
+  },
+
+  "metadata": {
+    "pageTitle": "MSFT - Estimates",
+    "fiscalYearEnd": "June",
+    "quarterLabels": ["1Q Sep", "2Q Dec", "3Q Mar", "4Q Jun"],
+    "domain": "app.koyfin.com",
+    "dataSource": "DOM-rendered (server-side hydrated)",
+    "apiEndpoint": "https://app.koyfin.com/api/v3p/data/graph?schema=packed"
+  }
+}

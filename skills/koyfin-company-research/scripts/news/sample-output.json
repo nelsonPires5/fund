@@ -1,0 +1,279 @@
+{
+  "ticker": "MSFT",
+  "tab": "News (Security Analysis > News, Filings & Transcripts > News)",
+  "extracted_at": "2026-05-17",
+  "url": "https://app.koyfin.com/news/n/eq-kuqeq3",
+  "total_items": 54,
+  "items": [
+    {
+      "title": "Consumer Tech News (May 11-15): Trump\u2013Xi Talk Fails to Deliver Chip Deal, Elon Musk vs. OpenAI Trail & More",
+      "source": "Benzinga",
+      "date": "9:20 AM"
+    },
+    {
+      "title": "Nebius Group, Cisco Systems, Micron Technology And More: 5 Stocks Investors Couldn't Stop Buzzing About This Week",
+      "source": "Benzinga",
+      "date": "May 16 '26"
+    },
+    {
+      "title": "Trump Loaded Up On Palantir Shares Months Before Publicly Praising Defense AI Giant On Truth Social, Records Reveal",
+      "source": "Benzinga",
+      "date": "May 16 '26"
+    },
+    {
+      "title": "NextEra Energy, Dominion In Talks To Create $400 Billion Utility Giant As Electricity Demand Surges Amid AI Boom: Report",
+      "source": "Benzinga",
+      "date": "May 16 '26"
+    },
+    {
+      "title": "Elizabeth Warren Blasts Trump's Nvidia Trades Worth Millions As 'National Security Disaster' After China Chip Deals",
+      "source": "Benzinga",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Equities Fall, Yields Surge Intraday Amid Inflation Concerns; Oil Jumps",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "NVIDIA's China Comeback: Analyst Forecasts 'Godfather of AI' Will Spark New Global Tech Surge",
+      "source": "Benzinga",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Update: AI Revenue May Jump Fivefold to $200 Billion as Spending Race Intensifies",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Update: AI Revenue May Jump Fivefold to $200 Billion This Year as Spending Race Intensifies",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Investor Bill Ackman Says Pershing Hedge Fund Sold Alphabet, Bought Microsoft",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Top Midday Stories: Semiconductor Stocks Down After Trump-Xi Summit; Microsoft Gets Investment From Ackman",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Update: Market Chatter: Microsoft Explores AI Startup Deals as It Broadens Strategy Beyond OpenAI",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "AI Revenue May Jump Fivefold to $200 Billion as Spending Race Intensifies",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "AI Revenue May Jump Fivefold to $200 Billion This Year as Spending Race Intensifies",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Social Buzz: Wallstreetbets Stocks Mostly Declining Premarket Friday; Rocket Lab, Micron Technology to Open Lower",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Pershing Square Makes Significant Investment in Microsoft",
+      "source": "MT Newswires",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Microsoft, Salesforce In Focus As Gavin Newsom Proposes Tax On Digital Software Downloads In California\u2014 'I'm Paying Sales Tax On A Lot...'",
+      "source": "Benzinga",
+      "date": "May 15 '26"
+    },
+    {
+      "title": "Microsoft Adds Former EY Chief Carmine Di Sibio to Board",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "Cerebras Soars in Nasdaq Debut After Pricing IPO Above Range",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "Market Chatter: OpenAI Preparing for Possible Legal Action Against Apple",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "OpenAI Preparing for Possible Legal Action Against Apple, Bloomberg Reports",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "Marvell Technology to Slightly Beat Estimates for Fiscal Q1, Raise Guidance, RBC Says",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "Accenture Federal Services, OpenAI Collaborate to Speed Up US Government AI Adoption",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "Microsoft Business Software Ecosystem Faces UK Regulator Probe",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "Social Buzz: Wallstreetbets Stocks Mixed Pre-Bell Thursday; Cisco Systems, Nokia to Open Higher",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "UK Regulator Opens Initial SMS Investigation Into Microsoft Business Software Ecosystem",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "OpenAI Says 2 Devices Compromised in TanStack npm Supply Chain Attack",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "Market Chatter: Microsoft Explores AI Startup Deals as It Broadens Strategy Beyond OpenAI",
+      "source": "MT Newswires",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "Anthony Scaramucci Says Bitcoin Poised To Follow The S-Curve Of Adoption Like Amazon, Microsoft: 'Cannot Be Devalued'",
+      "source": "Benzinga",
+      "date": "May 14 '26"
+    },
+    {
+      "title": "Microsoft Feared Overdependence on OpenAI, Trial Testimony Shows",
+      "source": "MT Newswires",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Stocks close at a new record, powered by chip stocks and Big Tech",
+      "source": "Sherwood News",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Microsoft: We have spent over $100 billion on OpenAI deal",
+      "source": "Sherwood News",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Market Chatter: Microsoft Spent More Than $100 Billion on OpenAI Partnership, Executive Testifies",
+      "source": "MT Newswires",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Update: Market Chatter: LinkedIn Cutting Jobs Across Multiple Departments",
+      "source": "MT Newswires",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Market Chatter: LinkedIn Cutting Jobs Across Multiple Departments",
+      "source": "MT Newswires",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "LinkedIn Cutting Jobs Across Multiple Departments, Bloomberg Reports",
+      "source": "MT Newswires",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Update: Market Chatter: Microsoft Generates $30 Billion From OpenAI-Related Business, More Than Doubling Investment",
+      "source": "MT Newswires",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Microsoft\u2019s LinkedIn to lay off 5% of staff, Reuters reports",
+      "source": "Sherwood News",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Social Buzz: Wallstreetbets Stocks Mostly Advancing Premarket Wednesday; Micron Technology, Sandisk to Open Higher",
+      "source": "MT Newswires",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Phillip Securities Upgrades Microsoft to Buy From Accumulate, Price Target is $485",
+      "source": "MT Newswires",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Elizabeth Warren Targets Amazon, Google, Microsoft And Meta After Warning That AI Data Centers 'Use As Much Electricity As 100,000 Households'",
+      "source": "Benzinga",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Inside Sam Altman's Dramatic Court Testimony: 'Complicated' Elon Musk Feelings, 'Hair-Raising' Tesla Talks And The Microsoft Temptation",
+      "source": "Benzinga",
+      "date": "May 13 '26"
+    },
+    {
+      "title": "Nasdaq, S&P 500 Retreat From Record Highs Amid Losses in Tech Sector",
+      "source": "MT Newswires",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "Market Chatter: Microsoft Generates $30 Billion From OpenAI-Related Business, More Than Doubling Investment",
+      "source": "MT Newswires",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "Jim Cramer Said 'Smell' \u2014 AI Stocks Heard 'Sell'",
+      "source": "Benzinga",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "Equities Fall Intraday Amid Tech Sell-Off",
+      "source": "MT Newswires",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "Market Chatter: OpenAI Hit With Suit Alleging ChatGPT Culpability in Overdose",
+      "source": "MT Newswires",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "OpenAI Hit With Suit Alleging ChatGPT Culpability in Overdose, Bloomberg Reports",
+      "source": "MT Newswires",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "Oracle Set to Post Strong Results Amid Tech Infrastructure Spending, Oppenheimer Says",
+      "source": "MT Newswires",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "Microsoft's Revised OpenAI Deal Strengthens AI Strategy, Wedbush Securities Says",
+      "source": "MT Newswires",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "Social Buzz: Wallstreetbets Stocks Decline Premarket Tuesday; AST SpaceMobile, Sandisk to Open Lower",
+      "source": "MT Newswires",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "Market Chatter: OpenAI Poised for $97 Billion in Savings Through 2030 in Revised Microsoft Deal",
+      "source": "MT Newswires",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "OpenAI's IPO Dream Gets Massive Boost As Microsoft Reportedly Agrees To $38 Billion Revenue Cap\u2014 Nadella Says 'Very Proud' Of Early Bet",
+      "source": "Benzinga",
+      "date": "May 12 '26"
+    },
+    {
+      "title": "Ilya Sutskever Testifies He Spent A Year Building Case Against Open AI CEO Sam Altman's 'Pattern Of Lying' Before Ouster Move",
+      "source": "Benzinga",
+      "date": "May 11 '26"
+    }
+  ]
+}
