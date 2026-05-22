@@ -47,13 +47,13 @@ async function extractKoyfinNews() {
         setTimeout(() => {
           const loadedMore = scrollContainer.scrollTop > prevScroll;
           resolve(loadedMore);
-        }, 800);
+        }, 300);
       });
     };
 
     let hasMore = true;
     let attempts = 0;
-    while (hasMore && attempts < 20) {
+    while (hasMore && attempts < 5) {
       hasMore = await scrollStep();
       attempts++;
     }
@@ -64,29 +64,24 @@ async function extractKoyfinNews() {
   const newsItems = document.querySelectorAll('[class*="koy-news-item"]');
   
   newsItems.forEach(item => {
-    const labels = item.querySelectorAll('label');
-    let title = '';
-    let source = '';
-    let date = '';
-
-    labels.forEach(label => {
-      const text = label.textContent.trim();
-      const rect = label.getBoundingClientRect();
+    const labels = Array.from(item.querySelectorAll('label'));
+    if (labels.length >= 1) {
+      const title = labels[0].textContent.trim();
+      let source = '';
+      let date = '';
       
-      // Heuristic: title is the left-aligned label (x < 400 && x > 200)
-      if (rect.x < 400 && rect.x > 200) {
-        title = text;
-      } else {
-        // Right-side labels: source or date
-        if (text.includes('AM') || text.includes('PM') || /'\d{2}/.test(text)) {
-          date = text;
+      if (labels.length === 2) {
+        const val = labels[1].textContent.trim();
+        if (val.includes('AM') || val.includes('PM') || /'\d{2}/.test(val)) {
+          date = val;
         } else {
-          source = text;
+          source = val;
         }
+      } else if (labels.length >= 3) {
+        source = labels[1].textContent.trim();
+        date = labels[2].textContent.trim();
       }
-    });
-
-    if (title) {
+      
       items.push({ title, source, date });
     }
   });

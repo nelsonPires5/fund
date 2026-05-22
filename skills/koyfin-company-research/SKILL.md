@@ -26,8 +26,25 @@ Use this skill to research one company ticker in `https://app.koyfin.com` and ex
 
 ## Extraction pattern
 
-Use the reference for the active tab, run preflight, then run the matching script.
+You can extract data either systematically via the unified pipeline script or tab-by-tab manually.
 
+### 1. Unified Sequential Pipeline (Recommended)
+The automated script in `@scripts/run_pipeline.py` handles the entire process for all 27 tabs:
+- Queries the Koyfin Search API (`https://app.koyfin.com/api/v1/bfc/tickers/search`) to automatically retrieve the security ID (`KID`) for the ticker.
+- Sequentially navigates directly to the page for each tab.
+- Executes the corresponding extraction script and writes outputs, metadata, and screenshots to `/tmp/koyfin-company-research/{TICKER}/`.
+
+Run the pipeline from the command line:
+```bash
+TICKER=MSFT browser-harness < skills/koyfin-company-research/scripts/run_pipeline.py
+```
+
+*Optional Environment Variables:*
+- `SLUGS`: A comma-separated list of tab slugs to run (e.g. `SLUGS=historical,intraday` or `SLUGS=all`).
+- `OUTPUT_DIR`: Custom destination directory for output files.
+
+### 2. Manual Tab-by-Tab Fallback
+If you need to manually navigate and extract data for a single active tab:
 ```bash
 browser-harness <<'PY'
 # Navigate to the active Koyfin tab first.

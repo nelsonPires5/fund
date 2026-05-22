@@ -93,7 +93,38 @@ const TXN_COLS = [
   {key: 'value', x: 1655}
 ];
 
-module.exports = {
-  extractKoyfinTable,
-  INSIDER_COLS, INST_COLS, TXN_COLS
-};
+const result = (function extractKoyfinOwnership() {
+  const ticker = __koyfinTicker();
+  const securityId = __koyfinSecurityId();
+  const url = window.location.href;
+  
+  const res = {
+    ticker: ticker,
+    tab: 'Security Analysis > Ownership',
+    extracted_at: new Date().toISOString(),
+    url: url,
+    security_id: securityId,
+    data: {}
+  };
+
+  try {
+    if (url.includes('/insider-ownership/')) {
+      res.data.type = 'insider-ownership';
+      res.data.insiders = extractKoyfinTable(INSIDER_COLS, 299);
+    } else if (url.includes('/insider-transactions/')) {
+      res.data.type = 'insider-transactions';
+      res.data.transactions = extractKoyfinTable(TXN_COLS, 299);
+    } else if (url.includes('/institutional-ownership/')) {
+      res.data.type = 'institutional-ownership';
+      res.data.institutions = extractKoyfinTable(INST_COLS, 299);
+    } else {
+      res.data.insiders = extractKoyfinTable(INSIDER_COLS, 299);
+    }
+  } catch (err) {
+    res.error = err.message;
+  }
+  
+  return res;
+})();
+
+result;
