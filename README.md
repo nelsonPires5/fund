@@ -9,9 +9,7 @@ Use the initiating-coverage workflow for [TICKER]. Produce:
 3. a valuation framework;
 4. a list of assumptions required for the DCF model.
 
-Load all the skills needed first.
-The financial information need to come from koyfin. So use the koyfin knowledge and scripts to grab the info as quickly as possible. Do not need to explore using the koyfin, koyfin already has in the skill how to get the info, just say what you need and it will fetch it for you.
-Do not use multiple agents in parallel to grab info from koyfin. Is better to use a single agent per time and ask a batch of what you want per agent call.
+Use the initiating-coverage skill, but grab the info first from koyfin (using the koyfin skill). Grab all at once, using the script and next if have info missing search the web for additional information or use manual tab-by-tab extraction.
 ```
 
 ## Creating the Presentation

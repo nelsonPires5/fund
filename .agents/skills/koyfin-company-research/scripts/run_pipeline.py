@@ -124,8 +124,10 @@ def main():
         skill_dir = cwd
     elif (cwd / "skills" / "koyfin-company-research" / "scripts" / "common" / "preflight.js").exists():
         skill_dir = cwd / "skills" / "koyfin-company-research"
+    elif (cwd / ".agents" / "skills" / "koyfin-company-research" / "scripts" / "common" / "preflight.js").exists():
+        skill_dir = cwd / ".agents" / "skills" / "koyfin-company-research"
     else:
-        skill_dir = Path("/Users/nelson/Documents/repos/fund/skills/koyfin-company-research")
+        skill_dir = Path("/Users/nelson/Documents/repos/fund/.agents/skills/koyfin-company-research")
     
     preflight_path = skill_dir / "scripts" / "common" / "preflight.js"
     preflight_code = preflight_path.read_text(encoding="utf-8")
