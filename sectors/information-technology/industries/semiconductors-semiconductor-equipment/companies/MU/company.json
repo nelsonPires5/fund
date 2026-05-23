@@ -1,0 +1,16 @@
+{
+  "company_name": "Micron Technology, Inc.",
+  "ticker": "MU",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "memory and storage / DRAM / NAND / HBM",
+  "currency": "USD",
+  "fiscal_year_end": "08-31",
+  "koyfin_id": "MU US",
+  "sec_cik": "0000723125",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-11-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "semiconductors-semiconductor-equipment"
+}

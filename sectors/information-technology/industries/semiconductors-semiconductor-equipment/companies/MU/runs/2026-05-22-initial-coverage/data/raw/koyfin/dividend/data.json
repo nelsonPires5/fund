@@ -1,0 +1,276 @@
+{
+  "ticker": "MU",
+  "tickerId": "eq-7n04a1",
+  "tab": "Dividend",
+  "url": "https://app.koyfin.com/snapshot/dvd/eq-7n04a1",
+  "extractedAt": "2026-05-22T23:06:03.619Z",
+  "summary": {
+    "Dividend Yield & Frequency": {
+      "Indicated Yield": "0.08%",
+      "Trailing LTM Yield": "0.07%",
+      "Forward NTM Yield": "0.08%",
+      "Payout Ratio (LTM)": "2.19%",
+      "Payment Frequency": "Quarterly"
+    },
+    "Dividend Growth": {
+      "Consecutive Annual Increases": "1",
+      "annualizedGrowthPeriods": [
+        "1Y",
+        "3Y",
+        "5Y",
+        "10Y"
+      ],
+      "annualizedGrowthValues": [
+        "7.61%",
+        "2.47%"
+      ]
+    },
+    "Shareholder Yield": {
+      "Shareholder Yield*": "0.75%"
+    }
+  },
+  "dividends": [
+    {
+      "Announced Date": "03-18-2026",
+      "Ex-Date": "03-30-2026",
+      "Record Date": "03-30-2026",
+      "Payable Date": "04-15-2026",
+      "Currency": "USD",
+      "Amount": "0.150",
+      "Adj. Amount": "0.150",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "12-17-2025",
+      "Ex-Date": "12-29-2025",
+      "Record Date": "12-29-2025",
+      "Payable Date": "01-14-2026",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "09-23-2025",
+      "Ex-Date": "10-03-2025",
+      "Record Date": "10-03-2025",
+      "Payable Date": "10-21-2025",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "06-25-2025",
+      "Ex-Date": "07-07-2025",
+      "Record Date": "07-07-2025",
+      "Payable Date": "07-22-2025",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "03-20-2025",
+      "Ex-Date": "03-31-2025",
+      "Record Date": "03-31-2025",
+      "Payable Date": "04-15-2025",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "12-18-2024",
+      "Ex-Date": "12-30-2024",
+      "Record Date": "12-30-2024",
+      "Payable Date": "01-15-2025",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "09-25-2024",
+      "Ex-Date": "10-07-2024",
+      "Record Date": "10-07-2024",
+      "Payable Date": "10-23-2024",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "06-26-2024",
+      "Ex-Date": "07-08-2024",
+      "Record Date": "07-08-2024",
+      "Payable Date": "07-23-2024",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "03-20-2024",
+      "Ex-Date": "03-28-2024",
+      "Record Date": "04-01-2024",
+      "Payable Date": "04-16-2024",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "12-20-2023",
+      "Ex-Date": "12-29-2023",
+      "Record Date": "01-02-2024",
+      "Payable Date": "01-18-2024",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "09-27-2023",
+      "Ex-Date": "10-06-2023",
+      "Record Date": "10-10-2023",
+      "Payable Date": "10-25-2023",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "06-28-2023",
+      "Ex-Date": "07-07-2023",
+      "Record Date": "07-10-2023",
+      "Payable Date": "07-25-2023",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "03-28-2023",
+      "Ex-Date": "04-06-2023",
+      "Record Date": "04-10-2023",
+      "Payable Date": "04-25-2023",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "12-19-2022",
+      "Ex-Date": "12-30-2022",
+      "Record Date": "01-03-2023",
+      "Payable Date": "01-19-2023",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "09-29-2022",
+      "Ex-Date": "10-07-2022",
+      "Record Date": "10-11-2022",
+      "Payable Date": "10-26-2022",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "06-30-2022",
+      "Ex-Date": "07-08-2022",
+      "Record Date": "07-11-2022",
+      "Payable Date": "07-26-2022",
+      "Currency": "USD",
+      "Amount": "0.115",
+      "Adj. Amount": "0.115",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "03-29-2022",
+      "Ex-Date": "04-08-2022",
+      "Record Date": "04-11-2022",
+      "Payable Date": "04-26-2022",
+      "Currency": "USD",
+      "Amount": "0.100",
+      "Adj. Amount": "0.100",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "12-17-2021",
+      "Ex-Date": "12-31-2021",
+      "Record Date": "01-03-2022",
+      "Payable Date": "01-18-2022",
+      "Currency": "USD",
+      "Amount": "0.100",
+      "Adj. Amount": "0.100",
+      "Frequency": "Quarterly",
+      "Type": "Regular cash dividend",
+      "Description": "No special code applies"
+    },
+    {
+      "Announced Date": "08-02-2021",
+      "Ex-Date": "09-30-2021",
+      "Record Date": "10-01-2021",
+      "Payable Date": "10-18-2021",
+      "Currency": "USD",
+      "Amount": "0.100",
+      "Adj. Amount": "0.100",
+      "Frequency": "Quarterly",
+      "Type": "Initial dividend",
+      "Description": "No special code applies"
+    }
+  ],
+  "hasDividendData": true,
+  "headers": [
+    "Announced Date",
+    "Ex-Date",
+    "Record Date",
+    "Payable Date",
+    "Currency",
+    "Amount",
+    "Adj. Amount",
+    "Frequency",
+    "Type",
+    "Description"
+  ],
+  "totalDividendEntries": 19
+}

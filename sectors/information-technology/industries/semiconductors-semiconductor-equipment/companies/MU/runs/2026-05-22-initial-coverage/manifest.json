@@ -1,0 +1,28 @@
+{
+  "run_id": "2026-05-22-initial-coverage",
+  "run_type": "initial-coverage",
+  "company_ticker": "MU",
+  "created_at": "2026-05-22",
+  "source_files": [
+    "sectors/semiconductors/companies/MU/company.json",
+    "data/raw/koyfin/"
+  ],
+  "artifacts": {
+    "raw_data": "data/raw/",
+    "normalized_data": "data/normalized/",
+    "assets": "assets/",
+    "model": "model.xlsx",
+    "deck": "deck.pptx",
+    "outputs": "outputs.json",
+    "report": "report.md",
+    "thesis_tracker": "thesis_tracker.md",
+    "valuation_framework": "valuation_framework.md",
+    "dcf_assumptions": "dcf_assumptions.md",
+    "workbook_spec": "workbook.spec.json",
+    "workbook": "workbook.json",
+    "workbook_html": "workbook.html",
+    "deck_spec": "deck.spec.json",
+    "deck_html": "deck/index.html"
+  },
+  "notes": "Initiating coverage run for Micron Technology (MU). Sourced historical actuals, consensus estimates, and capital structure data from Koyfin."
+}

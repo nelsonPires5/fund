@@ -1,0 +1,257 @@
+{
+  "ticker": "MU",
+  "tab": "News, Filings & Transcripts > Transcripts",
+  "extracted_at": "2026-05-22T23:09:59.721Z",
+  "url": "https://app.koyfin.com/news/ts/eq-7n04a1",
+  "transcripts": [
+    {
+      "index": 0,
+      "title": "J.P. Morgan 54th Annual Global Technology",
+      "category": "Company Conference Presentations",
+      "date": "May 20 '26"
+    },
+    {
+      "index": 1,
+      "title": "Q2 2026 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Mar 18 '26"
+    },
+    {
+      "index": 2,
+      "title": "Q2 2026 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Mar 18 '26"
+    },
+    {
+      "index": 3,
+      "title": "Wolfe Research Auto",
+      "category": "Company Conference Presentations",
+      "date": "Feb 11 '26"
+    },
+    {
+      "index": 4,
+      "title": "Q1 2026 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Dec 17 '25"
+    },
+    {
+      "index": 5,
+      "title": "Q1 2026 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Dec 17 '25"
+    },
+    {
+      "index": 6,
+      "title": "Global Technology",
+      "category": "Company Conference Presentations",
+      "date": "Nov 19 '25"
+    },
+    {
+      "index": 7,
+      "title": "Q4 2025 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Sep 23 '25"
+    },
+    {
+      "index": 8,
+      "title": "Q4 2025 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Sep 23 '25"
+    },
+    {
+      "index": 9,
+      "title": "KeyBanc Capital Markets Technology Leadership Forum",
+      "category": "Company Conference Presentations",
+      "date": "Aug 11 '25"
+    },
+    {
+      "index": 10,
+      "title": "Q3 2025 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Jun 25 '25"
+    },
+    {
+      "index": 11,
+      "title": "Q3 2025 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Jun 25 '25"
+    },
+    {
+      "index": 12,
+      "title": "53rd Annual JPMorgan Global Technology",
+      "category": "Company Conference Presentations",
+      "date": "May 14 '25"
+    },
+    {
+      "index": 13,
+      "title": "Q2 2025 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Mar 20 '25"
+    },
+    {
+      "index": 14,
+      "title": "Q2 2025 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Mar 20 '25"
+    },
+    {
+      "index": 15,
+      "title": "Wolfe Research Auto",
+      "category": "Company Conference Presentations",
+      "date": "Feb 12 '25"
+    },
+    {
+      "index": 16,
+      "title": "Shareholder/Analyst Call - Micron Technology, Inc.",
+      "category": "Shareholder/Analyst Calls",
+      "date": "Dec 18 '24"
+    },
+    {
+      "index": 17,
+      "title": "Q1 2025 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Dec 18 '24"
+    },
+    {
+      "index": 18,
+      "title": "Shareholder/Analyst Call - Micron Technology, Inc.",
+      "category": "Shareholder/Analyst Calls",
+      "date": "Sep 25 '24"
+    },
+    {
+      "index": 19,
+      "title": "Q4 2024 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Sep 25 '24"
+    },
+    {
+      "index": 20,
+      "title": "Deutsche Bank Technology Conference 2024",
+      "category": "Company Conference Presentations",
+      "date": "Aug 28 '24"
+    },
+    {
+      "index": 21,
+      "title": "KeyBanc Capital Markets Technology Leadership Forum",
+      "category": "Company Conference Presentations",
+      "date": "Aug 05 '24"
+    },
+    {
+      "index": 22,
+      "title": "Shareholder/Analyst Call - Micron Technology, Inc.",
+      "category": "Shareholder/Analyst Calls",
+      "date": "Jun 26 '24"
+    },
+    {
+      "index": 23,
+      "title": "Q3 2024 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Jun 26 '24"
+    },
+    {
+      "index": 24,
+      "title": "COMPUTEX Taipei 2024",
+      "category": "Company Conference Presentations",
+      "date": "Jun 05 '24"
+    },
+    {
+      "index": 25,
+      "title": "Goldman Sachs Global Semiconductor Conference",
+      "category": "Company Conference Presentations",
+      "date": "May 30 '24"
+    },
+    {
+      "index": 26,
+      "title": "The 52nd J.P. Morgan Annual Global Technology",
+      "category": "Company Conference Presentations",
+      "date": "May 21 '24"
+    },
+    {
+      "index": 27,
+      "title": "Shareholder/Analyst Call - Micron Technology, Inc.",
+      "category": "Shareholder/Analyst Calls",
+      "date": "Mar 20 '24"
+    },
+    {
+      "index": 28,
+      "title": "Q2 2024 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Mar 20 '24"
+    },
+    {
+      "index": 29,
+      "title": "Shareholder/Analyst Call - Micron Technology, Inc.",
+      "category": "Shareholder/Analyst Calls",
+      "date": "Dec 20 '23"
+    },
+    {
+      "index": 30,
+      "title": "Q1 2024 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Dec 20 '23"
+    },
+    {
+      "index": 31,
+      "title": "2023 UBS Global Technology Conference",
+      "category": "Company Conference Presentations",
+      "date": "Nov 28 '23"
+    },
+    {
+      "index": 32,
+      "title": "Shareholder/Analyst Call - Micron Technology, Inc.",
+      "category": "Shareholder/Analyst Calls",
+      "date": "Sep 27 '23"
+    },
+    {
+      "index": 33,
+      "title": "Q4 2023 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Sep 27 '23"
+    },
+    {
+      "index": 34,
+      "title": "Deutsche Bank's 2023 Technology Conference",
+      "category": "Company Conference Presentations",
+      "date": "Aug 30 '23"
+    },
+    {
+      "index": 35,
+      "title": "KeyBanc's Technology Leadership Forum 2023",
+      "category": "Company Conference Presentations",
+      "date": "Aug 07 '23"
+    },
+    {
+      "index": 36,
+      "title": "Shareholder/Analyst Call - Micron Technology, Inc.",
+      "category": "Shareholder/Analyst Calls",
+      "date": "Jun 28 '23"
+    },
+    {
+      "index": 37,
+      "title": "Q3 2023 Earnings Call",
+      "category": "Earnings Calls",
+      "date": "Jun 28 '23"
+    },
+    {
+      "index": 38,
+      "title": "Goldman Sachs’ Global Semiconductor Conference",
+      "category": "Company Conference Presentations",
+      "date": "May 31 '23"
+    },
+    {
+      "index": 39,
+      "title": "51st Annual J.P. Morgan’s Global Technology",
+      "category": "Company Conference Presentations",
+      "date": "May 22 '23"
+    },
+    {
+      "index": 40,
+      "title": "Shareholder/Analyst Call - Micron Technology, Inc.",
+      "category": "Shareholder/Analyst Calls",
+      "date": "Mar 28 '23"
+    }
+  ],
+  "count": 41,
+  "state": "populated",
+  "errors": []
+}

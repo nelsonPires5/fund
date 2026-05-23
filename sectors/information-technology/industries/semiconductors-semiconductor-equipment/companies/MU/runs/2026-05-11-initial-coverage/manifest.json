@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-05-11-initial-coverage",
+  "run_type": "initial-coverage",
+  "company_ticker": "MU",
+  "created_at": "2026-05-11",
+  "source_files": [
+    "MU_Initiation_Model_2026-05-11.xlsx",
+    "Micron Technology (MU) \u2014 Initiating Coverage.md"
+  ],
+  "artifacts": {
+    "raw_data": "data/raw/",
+    "scripts": "data/scripts/",
+    "intermediate": "data/intermediate/",
+    "normalized_data": "data/normalized/",
+    "model_extracts": "data/normalized/model_extracts/",
+    "assets": "assets/",
+    "model": "model.xlsx",
+    "outputs": "outputs.json",
+    "report": "report.md"
+  },
+  "notes": "Imported from legacy financial reports folder."
+}

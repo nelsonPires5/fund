@@ -1,0 +1,11 @@
+{
+  "ticker": "MU",
+  "tab": "Security Analysis > Ownership",
+  "extracted_at": "2026-05-22T23:06:15.820Z",
+  "url": "https://app.koyfin.com/snapshot/own/insider-ownership/eq-7n04a1",
+  "security_id": "eq-7n04a1",
+  "data": {
+    "type": "insider-ownership",
+    "insiders": []
+  }
+}

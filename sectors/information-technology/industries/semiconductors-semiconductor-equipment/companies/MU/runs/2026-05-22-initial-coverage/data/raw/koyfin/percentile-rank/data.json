@@ -1,0 +1,802 @@
+{
+  "ticker": "MU",
+  "url": "https://app.koyfin.com/snapshot/rank/eq-7n04a1",
+  "tab": "Percentile Rank",
+  "extractedAt": "2026-05-22T23:05:51.494Z",
+  "tabs": [
+    {
+      "label": "Fundamentals",
+      "active": true
+    },
+    {
+      "label": "Performance",
+      "active": false
+    }
+  ],
+  "activeSubButtons": [],
+  "headerColumns": [
+    "",
+    "Current",
+    "Percentile Rank",
+    "vs. 5-Year History",
+    "vs. United States Information Technology",
+    "vs. United States"
+  ],
+  "dataRows": [
+    {
+      "section": "Valuation Multiples",
+      "metric": "Price / Earnings - P/E (NTM)",
+      "currentValue": "8.1x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 22,
+          "position_pct": 21.916411824668707,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 3,
+          "rank": 10,
+          "position_pct": 10.10928961748634,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 4,
+          "rank": 15,
+          "position_pct": 14.602587800369685,
+          "isUpperBand": true
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "Price / Earnings - P/E (LTM)",
+      "currentValue": "35.3x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 82,
+          "position_pct": 82.0403825717322,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 51,
+          "position_pct": 50.522648083623686,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 76,
+          "position_pct": 76.17718869898849,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "Price / Sales - P/S (NTM)",
+      "currentValue": "5.2x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 97,
+          "position_pct": 96.88995215311003,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 65,
+          "position_pct": 65.02145922746782,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 80,
+          "position_pct": 80.45480713874497,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "Price / Sales - P/S (LTM)",
+      "currentValue": "14.6x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 100,
+          "position_pct": 99.52153110047848,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 81,
+          "position_pct": 80.91872791519434,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 90,
+          "position_pct": 90.12567324955117,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "Price / Book - P/B (LTM)",
+      "currentValue": "11.7x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 100,
+          "position_pct": 99.52153110047848,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 82,
+          "position_pct": 82.45283018867924,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 91,
+          "position_pct": 90.6379072969252,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "Price / Tangible Book Value - P/TBV (LTM)",
+      "currentValue": "12.0x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 100,
+          "position_pct": 99.52153110047848,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 67,
+          "position_pct": 67.44730679156909,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 83,
+          "position_pct": 83.43373493975903,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "Price / Free Cash Flow (LTM)",
+      "currentValue": "82.4x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 61,
+          "position_pct": 60.5296343001261,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 90,
+          "position_pct": 89.76608187134502,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 94,
+          "position_pct": 94.0080379978078,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "Price / Gross Profit (LTM)",
+      "currentValue": "24.9x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 79,
+          "position_pct": 78.7929589270746,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 79,
+          "position_pct": 79.11275415896488,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 91,
+          "position_pct": 91.03595080416272,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "EV / Sales (NTM)",
+      "currentValue": "5.2x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 96,
+          "position_pct": 96.25199362041468,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 66,
+          "position_pct": 65.50976138828634,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 75,
+          "position_pct": 75.08080155138978,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "EV / Sales (LTM)",
+      "currentValue": "14.5x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 100,
+          "position_pct": 99.52153110047848,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 82,
+          "position_pct": 81.73431734317343,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 89,
+          "position_pct": 89.07700709994538,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "EV / EBITDA (NTM)",
+      "currentValue": "6.1x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 44,
+          "position_pct": 43.93939393939394,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 13,
+          "position_pct": 12.886597938144329,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 4,
+          "rank": 18,
+          "position_pct": 17.578439259855188,
+          "isUpperBand": true
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "EV / EBITDA (LTM)",
+      "currentValue": "22.8x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 89,
+          "position_pct": 89.15470494417863,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 56,
+          "position_pct": 55.61797752808989,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 82,
+          "position_pct": 81.90825688073394,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "EV / EBIT (NTM)",
+      "currentValue": "6.8x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 22,
+          "position_pct": 21.96589769307924,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 3,
+          "rank": 9,
+          "position_pct": 8.88888888888889,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 4,
+          "rank": 10,
+          "position_pct": 9.83467571004663,
+          "isUpperBand": true
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "EV / EBIT (LTM)",
+      "currentValue": "29.9x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 79,
+          "position_pct": 78.85010266940452,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 52,
+          "position_pct": 52.06349206349207,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 76,
+          "position_pct": 75.71371129875352,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Multiples",
+      "metric": "EV / Gross Profit (LTM)",
+      "currentValue": "24.8x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 77,
+          "position_pct": 77.36797988264878,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 80,
+          "position_pct": 80.23032629558541,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 90,
+          "position_pct": 89.64821222606689,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Yields",
+      "metric": "Free Cash Flow / EV Yield (LTM)",
+      "currentValue": "1.22%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 44,
+          "position_pct": 43.77934272300469,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 12,
+          "position_pct": 11.549295774647888,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 10,
+          "position_pct": 9.949622166246852,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Yields",
+      "metric": "Free Cash Flow / Market Cap Yield (LTM)",
+      "currentValue": "1.21%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 44,
+          "position_pct": 43.544600938967136,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 13,
+          "position_pct": 13.27683615819209,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 8,
+          "position_pct": 8.017179670722978,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Yields",
+      "metric": "Dividend Yield (Ind)",
+      "currentValue": "0.08%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 0,
+          "position_pct": 0.33167495854063017,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 10,
+          "position_pct": 10.344827586206897,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 6,
+          "position_pct": 5.676442762535478,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Yields",
+      "metric": "Buyback Yield (LTM)",
+      "currentValue": "0.11%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 20,
+          "position_pct": 19.849246231155778,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 50,
+          "position_pct": 49.7164461247637,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 48,
+          "position_pct": 47.645496256942764,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Yields",
+      "metric": "Debt Payback Yield (LTM)",
+      "currentValue": "0.58%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 73,
+          "position_pct": 73.28548644338117,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 67,
+          "position_pct": 66.58595641646488,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 65,
+          "position_pct": 65.46538760694841,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Yields",
+      "metric": "Shareholder Yield (LTM)",
+      "currentValue": "0.75%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 42,
+          "position_pct": 42.42424242424242,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 26,
+          "position_pct": 26.446280991735538,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 31,
+          "position_pct": 31.48051948051948,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Valuation Yields",
+      "metric": "Shareholder Yield excluding Debt (LTM)",
+      "currentValue": "0.17%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 0,
+          "position_pct": 0.4784688995215311,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": 48,
+          "position_pct": 47.76951672862453,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 40,
+          "position_pct": 39.605323542909595,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Margins & Profitability",
+      "metric": "Gross Profit Margin % (LTM)",
+      "currentValue": "58.44%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 100,
+          "position_pct": 100,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 3,
+          "rank": 60,
+          "position_pct": 59.589041095890416,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 67,
+          "position_pct": 66.7517223781577,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Margins & Profitability",
+      "metric": "EBITDA Margin % (LTM)",
+      "currentValue": "63.32%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 100,
+          "position_pct": 100,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 3,
+          "rank": 99,
+          "position_pct": 99.06191369606005,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 4,
+          "rank": 97,
+          "position_pct": 96.76019670234308,
+          "isUpperBand": true
+        }
+      ]
+    },
+    {
+      "section": "Margins & Profitability",
+      "metric": "EBIT Margin % (LTM)",
+      "currentValue": "48.41%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 100,
+          "position_pct": 100,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 3,
+          "rank": 99,
+          "position_pct": 98.70848708487084,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 4,
+          "rank": 96,
+          "position_pct": 95.86245457086943,
+          "isUpperBand": true
+        }
+      ]
+    },
+    {
+      "section": "Margins & Profitability",
+      "metric": "Net Income Margin % (LTM)",
+      "currentValue": "41.49%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 100,
+          "position_pct": 100,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 3,
+          "rank": 96,
+          "position_pct": 96.42857142857144,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 4,
+          "rank": 95,
+          "position_pct": 94.58046113620155,
+          "isUpperBand": true
+        }
+      ]
+    },
+    {
+      "section": "Margins & Profitability",
+      "metric": "Return on Assets (ROA) % (LTM)",
+      "currentValue": "20.15%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 100,
+          "position_pct": 100,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 3,
+          "rank": 98,
+          "position_pct": 97.9591836734694,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 4,
+          "rank": 98,
+          "position_pct": 98.42910293509716,
+          "isUpperBand": true
+        }
+      ]
+    },
+    {
+      "section": "Leverage",
+      "metric": "Long Term Debt / Equity (LTM)",
+      "currentValue": "14.1%",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 0,
+          "position_pct": 0,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 3,
+          "rank": 48,
+          "position_pct": 47.88732394366197,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": 31,
+          "position_pct": 31.45658263305322,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Leverage",
+      "metric": "Net Debt / (EBITDA - Capex) (LTM)",
+      "currentValue": "",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": null,
+          "position_pct": null,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": null,
+          "position_pct": null,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": null,
+          "position_pct": null,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Leverage",
+      "metric": "Net Debt / EBITDA (LTM)",
+      "currentValue": "",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": null,
+          "position_pct": null,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 3,
+          "rank": null,
+          "position_pct": null,
+          "isUpperBand": false
+        },
+        {
+          "columnIndex": 4,
+          "rank": null,
+          "position_pct": null,
+          "isUpperBand": false
+        }
+      ]
+    },
+    {
+      "section": "Leverage",
+      "metric": "Total Debt / EBITDA (LTM)",
+      "currentValue": "0.3x",
+      "percentileRanks": [
+        {
+          "columnIndex": 2,
+          "rank": 0,
+          "position_pct": 0,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 3,
+          "rank": 17,
+          "position_pct": 17.318435754189945,
+          "isUpperBand": true
+        },
+        {
+          "columnIndex": 4,
+          "rank": 10,
+          "position_pct": 10.325684678016284,
+          "isUpperBand": true
+        }
+      ]
+    }
+  ]
+}

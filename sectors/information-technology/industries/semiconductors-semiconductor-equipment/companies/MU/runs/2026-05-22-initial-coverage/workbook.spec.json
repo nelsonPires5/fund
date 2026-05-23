@@ -1,0 +1,2704 @@
+{
+  "id": "mu-dcf-2026-05-22",
+  "name": "MU Financial & DCF Model",
+  "sheets": [
+    {
+      "name": "Summary",
+      "rows": [
+        [
+          "Micron Technology, Inc. (MU) \u2014 Valuation & Financial Model Summary",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "(USD Millions, except per-share data)",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [],
+        [
+          "Market & Valuation Outputs",
+          "Value",
+          "Unit",
+          "Source / Reference",
+          ""
+        ],
+        [
+          "Current Stock Price",
+          751.0,
+          "USD",
+          "Koyfin Market Data",
+          ""
+        ],
+        [
+          "Shares Outstanding",
+          1130.0,
+          "Millions",
+          "Koyfin Overview",
+          ""
+        ],
+        [
+          "Implied Market Capitalization",
+          {
+            "formula": "=B5*B6"
+          },
+          "USD Millions",
+          "Calculated",
+          ""
+        ],
+        [
+          "Total Debt Outstanding",
+          10800.0,
+          "USD Millions",
+          "Balance Sheet (Actuals)",
+          ""
+        ],
+        [
+          "Cash & Short-Term Investments",
+          14590.0,
+          "USD Millions",
+          "Balance Sheet (Actuals)",
+          ""
+        ],
+        [
+          "Implied Enterprise Value (EV)",
+          {
+            "formula": "=B7+B8-B9"
+          },
+          "USD Millions",
+          "Calculated",
+          ""
+        ],
+        [],
+        [
+          "Investment Recommendations",
+          "Value",
+          "Unit",
+          "Source / Reference",
+          ""
+        ],
+        [
+          "12-Month Blended Price Target",
+          650.0,
+          "USD",
+          "Valuation Framework",
+          ""
+        ],
+        [
+          "Investment Recommendation",
+          "HOLD",
+          "Rating",
+          "Thesis Tracker",
+          ""
+        ],
+        [
+          "Implied Downside %",
+          {
+            "formula": "=(B13-B5)/B5"
+          },
+          "Percentage",
+          "Calculated",
+          ""
+        ],
+        [],
+        [
+          "DCF Valuation Summary (Target Case)",
+          "Value",
+          "Unit",
+          "Source / Reference",
+          ""
+        ],
+        [
+          "Target WACC",
+          0.08,
+          "Percentage",
+          "8.0% WACC used in DCF math",
+          ""
+        ],
+        [
+          "Target Terminal Growth Rate (g)",
+          0.03,
+          "Percentage",
+          "Long-term capacity floor g",
+          ""
+        ],
+        [
+          "PV of 5-Year Projections (FY26-30)",
+          {
+            "formula": "=DCF!B16"
+          },
+          "USD Millions",
+          "DCF Tab",
+          ""
+        ],
+        [
+          "PV of Terminal Value",
+          {
+            "formula": "=DCF!B18"
+          },
+          "USD Millions",
+          "DCF Tab",
+          ""
+        ],
+        [
+          "Implied Enterprise Value (DCF)",
+          {
+            "formula": "=B20+B21"
+          },
+          "USD Millions",
+          "Calculated",
+          ""
+        ],
+        [
+          "Net Cash / (Net Debt) Adjustment",
+          {
+            "formula": "=B9-B8"
+          },
+          "USD Millions",
+          "Calculated",
+          ""
+        ],
+        [
+          "Implied Equity Value (DCF)",
+          {
+            "formula": "=B22+B23"
+          },
+          "USD Millions",
+          "Calculated",
+          ""
+        ],
+        [
+          "Implied Share Price (DCF)",
+          {
+            "formula": "=B24/B6",
+            "name": "valuation.implied_share_price"
+          },
+          "USD/share",
+          "Calculated",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Revenue Model",
+      "rows": [
+        [
+          "Micron Technology, Inc. (MU) \u2014 Revenue Breakdown Model"
+        ],
+        [
+          "(USD Millions)"
+        ],
+        [],
+        [
+          "Segment",
+          "FY 2016",
+          "FY 2017",
+          "FY 2018",
+          "FY 2019",
+          "FY 2020",
+          "FY 2021",
+          "FY 2022",
+          "FY 2023",
+          "FY 2024",
+          "FY 2025",
+          "FY 2026E",
+          "FY 2027E",
+          "FY 2028E",
+          "FY 2029E",
+          "FY 2030E"
+        ],
+        [
+          "DRAM Product Family"
+        ],
+        [
+          "  HBM (High-Bandwidth Memory)",
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          100.0,
+          200.0,
+          1200.0,
+          3000.0,
+          6000.0,
+          18000.0,
+          32000.0,
+          38000.0,
+          28000.0,
+          28000.0
+        ],
+        [
+          "  DDR5 / Enterprise Server",
+          1000.0,
+          1500.0,
+          2000.0,
+          1800.0,
+          1500.0,
+          2200.0,
+          2800.0,
+          2500.0,
+          3500.0,
+          6000.0,
+          22000.0,
+          35000.0,
+          32000.0,
+          20000.0,
+          20000.0
+        ],
+        [
+          "  LPDDR5X / Mobile",
+          3000.0,
+          4800.0,
+          7200.0,
+          5200.0,
+          4800.0,
+          6200.0,
+          6800.0,
+          3200.0,
+          5500.0,
+          8000.0,
+          18000.0,
+          28000.0,
+          25000.0,
+          18000.0,
+          18000.0
+        ],
+        [
+          "  Other DRAM Products",
+          4680.0,
+          7940.0,
+          12080.0,
+          9480.0,
+          8620.0,
+          12220.0,
+          12258.0,
+          4740.0,
+          5631.0,
+          7374.0,
+          24220.0,
+          37760.0,
+          35260.0,
+          21600.0,
+          21970.0
+        ],
+        [
+          "Total DRAM Revenues",
+          {
+            "formula": "=SUM(B6:B9)"
+          },
+          {
+            "formula": "=SUM(C6:C9)"
+          },
+          {
+            "formula": "=SUM(D6:D9)"
+          },
+          {
+            "formula": "=SUM(E6:E9)"
+          },
+          {
+            "formula": "=SUM(F6:F9)"
+          },
+          {
+            "formula": "=SUM(G6:G9)"
+          },
+          {
+            "formula": "=SUM(H6:H9)"
+          },
+          {
+            "formula": "=SUM(I6:I9)"
+          },
+          {
+            "formula": "=SUM(J6:J9)"
+          },
+          {
+            "formula": "=SUM(K6:K9)"
+          },
+          {
+            "formula": "=SUM(L6:L9)"
+          },
+          {
+            "formula": "=SUM(M6:M9)"
+          },
+          {
+            "formula": "=SUM(N6:N9)"
+          },
+          {
+            "formula": "=SUM(O6:O9)"
+          },
+          {
+            "formula": "=SUM(P6:P9)"
+          }
+        ],
+        [
+          "NAND Product Family"
+        ],
+        [
+          "  Enterprise SSDs",
+          1200.0,
+          1800.0,
+          2500.0,
+          2200.0,
+          2000.0,
+          2500.0,
+          3200.0,
+          1500.0,
+          2800.0,
+          4000.0,
+          12000.0,
+          18000.0,
+          16000.0,
+          9000.0,
+          9000.0
+        ],
+        [
+          "  Consumer SSDs & Components",
+          2520.0,
+          4260.0,
+          6620.0,
+          4720.0,
+          4480.0,
+          4480.0,
+          5700.0,
+          2400.0,
+          4680.0,
+          6000.0,
+          15480.0,
+          22000.0,
+          19000.0,
+          11000.0,
+          11000.0
+        ],
+        [
+          "Total NAND Revenues",
+          {
+            "formula": "=SUM(B12:B13)"
+          },
+          {
+            "formula": "=SUM(C12:C13)"
+          },
+          {
+            "formula": "=SUM(D12:D13)"
+          },
+          {
+            "formula": "=SUM(E12:E13)"
+          },
+          {
+            "formula": "=SUM(F12:F13)"
+          },
+          {
+            "formula": "=SUM(G12:G13)"
+          },
+          {
+            "formula": "=SUM(H12:H13)"
+          },
+          {
+            "formula": "=SUM(I12:I13)"
+          },
+          {
+            "formula": "=SUM(J12:J13)"
+          },
+          {
+            "formula": "=SUM(K12:K13)"
+          },
+          {
+            "formula": "=SUM(L12:L13)"
+          },
+          {
+            "formula": "=SUM(M12:M13)"
+          },
+          {
+            "formula": "=SUM(N12:N13)"
+          },
+          {
+            "formula": "=SUM(O12:O13)"
+          },
+          {
+            "formula": "=SUM(P12:P13)"
+          }
+        ],
+        [
+          "Total Segment Revenues",
+          {
+            "formula": "=B10+B14"
+          },
+          {
+            "formula": "=C10+C14"
+          },
+          {
+            "formula": "=D10+D14"
+          },
+          {
+            "formula": "=E10+E14"
+          },
+          {
+            "formula": "=F10+F14"
+          },
+          {
+            "formula": "=G10+G14"
+          },
+          {
+            "formula": "=H10+H14"
+          },
+          {
+            "formula": "=I10+I14"
+          },
+          {
+            "formula": "=J10+J14"
+          },
+          {
+            "formula": "=K10+K14"
+          },
+          {
+            "formula": "=L10+L14"
+          },
+          {
+            "formula": "=M10+M14"
+          },
+          {
+            "formula": "=N10+N14"
+          },
+          {
+            "formula": "=O10+O14"
+          },
+          {
+            "formula": "=P10+P14"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "Income Statement",
+      "rows": [
+        [
+          "Micron Technology, Inc. (MU) \u2014 Annual Income Statement"
+        ],
+        [
+          "(USD Millions, except per-share data)"
+        ],
+        [],
+        [
+          "Line Item",
+          "FY 2016",
+          "FY 2017",
+          "FY 2018",
+          "FY 2019",
+          "FY 2020",
+          "FY 2021",
+          "FY 2022",
+          "FY 2023",
+          "FY 2024",
+          "FY 2025",
+          "FY 2026E",
+          "FY 2027E",
+          "FY 2028E",
+          "FY 2029E",
+          "FY 2030E"
+        ],
+        [
+          "Revenues"
+        ],
+        [
+          "Total Revenues",
+          {
+            "formula": "='Revenue Model'!B15"
+          },
+          {
+            "formula": "='Revenue Model'!C15"
+          },
+          {
+            "formula": "='Revenue Model'!D15"
+          },
+          {
+            "formula": "='Revenue Model'!E15"
+          },
+          {
+            "formula": "='Revenue Model'!F15"
+          },
+          {
+            "formula": "='Revenue Model'!G15"
+          },
+          {
+            "formula": "='Revenue Model'!H15"
+          },
+          {
+            "formula": "='Revenue Model'!I15"
+          },
+          {
+            "formula": "='Revenue Model'!J15"
+          },
+          {
+            "formula": "='Revenue Model'!K15"
+          },
+          {
+            "formula": "='Revenue Model'!L15"
+          },
+          {
+            "formula": "='Revenue Model'!M15"
+          },
+          {
+            "formula": "='Revenue Model'!N15"
+          },
+          {
+            "formula": "='Revenue Model'!O15"
+          },
+          {
+            "formula": "='Revenue Model'!P15"
+          }
+        ],
+        [
+          "  YoY Growth %",
+          "-",
+          {
+            "formula": "=(C6-B6)/B6"
+          },
+          {
+            "formula": "=(D6-C6)/C6"
+          },
+          {
+            "formula": "=(E6-D6)/D6"
+          },
+          {
+            "formula": "=(F6-E6)/E6"
+          },
+          {
+            "formula": "=(G6-F6)/F6"
+          },
+          {
+            "formula": "=(H6-G6)/G6"
+          },
+          {
+            "formula": "=(I6-H6)/H6"
+          },
+          {
+            "formula": "=(J6-I6)/I6"
+          },
+          {
+            "formula": "=(K6-J6)/J6"
+          },
+          {
+            "formula": "=(L6-K6)/K6"
+          },
+          {
+            "formula": "=(M6-L6)/L6"
+          },
+          {
+            "formula": "=(N6-M6)/M6"
+          },
+          {
+            "formula": "=(O6-N6)/N6"
+          },
+          {
+            "formula": "=(P6-O6)/O6"
+          }
+        ],
+        [
+          "Cost of Goods Sold",
+          9900.0,
+          11900.0,
+          12500.0,
+          12700.0,
+          14900.0,
+          17200.0,
+          16866.0,
+          15125.0,
+          19499.0,
+          22506.0,
+          25390.0,
+          35020.0,
+          38720.0,
+          66370.0,
+          67110.0
+        ],
+        [
+          "Gross Profit",
+          {
+            "formula": "=B6-B8"
+          },
+          {
+            "formula": "=C6-C8"
+          },
+          {
+            "formula": "=D6-D8"
+          },
+          {
+            "formula": "=E6-E8"
+          },
+          {
+            "formula": "=F6-F8"
+          },
+          {
+            "formula": "=G6-G8"
+          },
+          {
+            "formula": "=H6-H8"
+          },
+          {
+            "formula": "=I6-I8"
+          },
+          {
+            "formula": "=J6-J8"
+          },
+          {
+            "formula": "=K6-K8"
+          },
+          {
+            "formula": "=L6-L8"
+          },
+          {
+            "formula": "=M6-M8"
+          },
+          {
+            "formula": "=N6-N8"
+          },
+          {
+            "formula": "=O6-O8"
+          },
+          {
+            "formula": "=P6-P8"
+          }
+        ],
+        [
+          "  Gross Margin %",
+          {
+            "formula": "=B9/B6"
+          },
+          {
+            "formula": "=C9/C6"
+          },
+          {
+            "formula": "=D9/D6"
+          },
+          {
+            "formula": "=E9/E6"
+          },
+          {
+            "formula": "=F9/F6"
+          },
+          {
+            "formula": "=G9/G6"
+          },
+          {
+            "formula": "=H9/H6"
+          },
+          {
+            "formula": "=I9/I6"
+          },
+          {
+            "formula": "=J9/J6"
+          },
+          {
+            "formula": "=K9/K6"
+          },
+          {
+            "formula": "=L9/L6"
+          },
+          {
+            "formula": "=M9/M6"
+          },
+          {
+            "formula": "=N9/N6"
+          },
+          {
+            "formula": "=O9/O6"
+          },
+          {
+            "formula": "=P9/P6"
+          }
+        ],
+        [
+          "Operating Expenses"
+        ],
+        [
+          "Research & Development",
+          1600.0,
+          1800.0,
+          2100.0,
+          2400.0,
+          2600.0,
+          2700.0,
+          3072.0,
+          3120.0,
+          3420.0,
+          3820.0,
+          5200.0,
+          6500.0,
+          6000.0,
+          5500.0,
+          5500.0
+        ],
+        [
+          "SG&A Expenses",
+          700.0,
+          700.0,
+          800.0,
+          800.0,
+          900.0,
+          900.0,
+          1079.0,
+          920.0,
+          1130.0,
+          1204.0,
+          1800.0,
+          2200.0,
+          2000.0,
+          1800.0,
+          1800.0
+        ],
+        [
+          "Other Operating Exp (Inc)",
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          100.0,
+          0.0,
+          -100.0,
+          -251.0,
+          51.0,
+          360.0,
+          1320.0,
+          720.0,
+          700.0,
+          700.0
+        ],
+        [
+          "Operating Income (EBIT)",
+          {
+            "formula": "=B9-SUM(B12:B14)"
+          },
+          {
+            "formula": "=C9-SUM(C12:C14)"
+          },
+          {
+            "formula": "=D9-SUM(D12:D14)"
+          },
+          {
+            "formula": "=E9-SUM(E12:E14)"
+          },
+          {
+            "formula": "=F9-SUM(F12:F14)"
+          },
+          {
+            "formula": "=G9-SUM(G12:G14)"
+          },
+          {
+            "formula": "=H9-SUM(H12:H14)"
+          },
+          {
+            "formula": "=I9-SUM(I12:I14)"
+          },
+          {
+            "formula": "=J9-SUM(J12:J14)"
+          },
+          {
+            "formula": "=K9-SUM(K12:K14)"
+          },
+          {
+            "formula": "=L9-SUM(L12:L14)"
+          },
+          {
+            "formula": "=M9-SUM(M12:M14)"
+          },
+          {
+            "formula": "=N9-SUM(N12:N14)"
+          },
+          {
+            "formula": "=O9-SUM(O12:O14)"
+          },
+          {
+            "formula": "=P9-SUM(P12:P14)"
+          }
+        ],
+        [
+          "  Operating Margin %",
+          {
+            "formula": "=B15/B6"
+          },
+          {
+            "formula": "=C15/C6"
+          },
+          {
+            "formula": "=D15/D6"
+          },
+          {
+            "formula": "=E15/E6"
+          },
+          {
+            "formula": "=F15/F6"
+          },
+          {
+            "formula": "=G15/G6"
+          },
+          {
+            "formula": "=H15/H6"
+          },
+          {
+            "formula": "=I15/I6"
+          },
+          {
+            "formula": "=J15/J6"
+          },
+          {
+            "formula": "=K15/K6"
+          },
+          {
+            "formula": "=L15/L6"
+          },
+          {
+            "formula": "=M15/M6"
+          },
+          {
+            "formula": "=N15/N6"
+          },
+          {
+            "formula": "=O15/O6"
+          },
+          {
+            "formula": "=P15/P6"
+          }
+        ],
+        [
+          "Other Income / Expense"
+        ],
+        [
+          "Net Interest Expense",
+          -400.0,
+          -600.0,
+          -200.0,
+          100.0,
+          -100.0,
+          -100.0,
+          -100.0,
+          100.0,
+          0.0,
+          0.0,
+          200.0,
+          200.0,
+          200.0,
+          200.0,
+          200.0
+        ],
+        [
+          "Pre-Tax Income (EBT)",
+          {
+            "formula": "=B15-B18"
+          },
+          {
+            "formula": "=C15-C18"
+          },
+          {
+            "formula": "=D15-D18"
+          },
+          {
+            "formula": "=E15-E18"
+          },
+          {
+            "formula": "=F15-F18"
+          },
+          {
+            "formula": "=G15-G18"
+          },
+          {
+            "formula": "=H15-H18"
+          },
+          {
+            "formula": "=I15-I18"
+          },
+          {
+            "formula": "=J15-J18"
+          },
+          {
+            "formula": "=K15-K18"
+          },
+          {
+            "formula": "=L15-L18"
+          },
+          {
+            "formula": "=M15-M18"
+          },
+          {
+            "formula": "=N15-N18"
+          },
+          {
+            "formula": "=O15-O18"
+          },
+          {
+            "formula": "=P15-P18"
+          }
+        ],
+        [
+          "Income Tax Expense",
+          0.0,
+          100.0,
+          200.0,
+          700.0,
+          300.0,
+          400.0,
+          912.0,
+          221.0,
+          482.0,
+          1178.0,
+          15468.0,
+          27548.0,
+          25308.0,
+          8246.0,
+          8172.0
+        ],
+        [
+          "  Effective Tax Rate",
+          {
+            "formula": "=IF(B19<=0,0,B20/B19)"
+          },
+          {
+            "formula": "=IF(C19<=0,0,C20/C19)"
+          },
+          {
+            "formula": "=IF(D19<=0,0,D20/D19)"
+          },
+          {
+            "formula": "=IF(E19<=0,0,E20/E19)"
+          },
+          {
+            "formula": "=IF(F19<=0,0,F20/F19)"
+          },
+          {
+            "formula": "=IF(G19<=0,0,G20/G19)"
+          },
+          {
+            "formula": "=IF(H19<=0,0,H20/H19)"
+          },
+          {
+            "formula": "=IF(I19<=0,0,I20/I19)"
+          },
+          {
+            "formula": "=IF(J19<=0,0,J20/J19)"
+          },
+          {
+            "formula": "=IF(K19<=0,0,K20/K19)"
+          },
+          {
+            "formula": "=IF(L19<=0,0,L20/L19)"
+          },
+          {
+            "formula": "=IF(M19<=0,0,M20/M19)"
+          },
+          {
+            "formula": "=IF(N19<=0,0,N20/N19)"
+          },
+          {
+            "formula": "=IF(O19<=0,0,O20/O19)"
+          },
+          {
+            "formula": "=IF(P19<=0,0,P20/P19)"
+          }
+        ],
+        [
+          "Net Income",
+          {
+            "formula": "=B19-B20"
+          },
+          {
+            "formula": "=C19-C20"
+          },
+          {
+            "formula": "=D19-D20"
+          },
+          {
+            "formula": "=E19-E20"
+          },
+          {
+            "formula": "=F19-F20"
+          },
+          {
+            "formula": "=G19-G20"
+          },
+          {
+            "formula": "=H19-H20"
+          },
+          {
+            "formula": "=I19-I20"
+          },
+          {
+            "formula": "=J19-J20"
+          },
+          {
+            "formula": "=K19-K20"
+          },
+          {
+            "formula": "=L19-L20"
+          },
+          {
+            "formula": "=M19-M20"
+          },
+          {
+            "formula": "=N19-N20"
+          },
+          {
+            "formula": "=O19-O20"
+          },
+          {
+            "formula": "=P19-P20"
+          }
+        ],
+        [
+          "Shares Outstanding (Diluted)",
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0,
+          1130.0
+        ],
+        [
+          "Diluted EPS ($)",
+          {
+            "formula": "=B22/B23"
+          },
+          {
+            "formula": "=C22/C23"
+          },
+          {
+            "formula": "=D22/D23"
+          },
+          {
+            "formula": "=E22/E23"
+          },
+          {
+            "formula": "=F22/F23"
+          },
+          {
+            "formula": "=G22/G23"
+          },
+          {
+            "formula": "=H22/H23"
+          },
+          {
+            "formula": "=I22/I23"
+          },
+          {
+            "formula": "=J22/J23"
+          },
+          {
+            "formula": "=K22/K23"
+          },
+          {
+            "formula": "=L22/L23"
+          },
+          {
+            "formula": "=M22/M23"
+          },
+          {
+            "formula": "=N22/N23"
+          },
+          {
+            "formula": "=O22/O23"
+          },
+          {
+            "formula": "=P22/P23"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "Cash Flow",
+      "rows": [
+        [
+          "Micron Technology, Inc. (MU) \u2014 Cash Flow Statement"
+        ],
+        [
+          "(USD Millions)"
+        ],
+        [],
+        [
+          "Line Item",
+          "FY 2016",
+          "FY 2017",
+          "FY 2018",
+          "FY 2019",
+          "FY 2020",
+          "FY 2021",
+          "FY 2022",
+          "FY 2023",
+          "FY 2024",
+          "FY 2025",
+          "FY 2026E",
+          "FY 2027E",
+          "FY 2028E",
+          "FY 2029E",
+          "FY 2030E"
+        ],
+        [
+          "Operating Activities"
+        ],
+        [
+          "  Net Income",
+          {
+            "formula": "='Income Statement'!B22"
+          },
+          {
+            "formula": "='Income Statement'!C22"
+          },
+          {
+            "formula": "='Income Statement'!D22"
+          },
+          {
+            "formula": "='Income Statement'!E22"
+          },
+          {
+            "formula": "='Income Statement'!F22"
+          },
+          {
+            "formula": "='Income Statement'!G22"
+          },
+          {
+            "formula": "='Income Statement'!H22"
+          },
+          {
+            "formula": "='Income Statement'!I22"
+          },
+          {
+            "formula": "='Income Statement'!J22"
+          },
+          {
+            "formula": "='Income Statement'!K22"
+          },
+          {
+            "formula": "='Income Statement'!L22"
+          },
+          {
+            "formula": "='Income Statement'!M22"
+          },
+          {
+            "formula": "='Income Statement'!N22"
+          },
+          {
+            "formula": "='Income Statement'!O22"
+          },
+          {
+            "formula": "='Income Statement'!P22"
+          }
+        ],
+        [
+          "  Depreciation & Amortization",
+          3000.0,
+          3900.0,
+          4800.0,
+          5400.0,
+          5700.0,
+          6100.0,
+          7000.0,
+          7700.0,
+          7700.0,
+          8300.0,
+          12070.0,
+          11600.0,
+          13240.0,
+          12000.0,
+          12000.0
+        ],
+        [
+          "  Stock-Based Compensation",
+          200.0,
+          200.0,
+          200.0,
+          200.0,
+          300.0,
+          400.0,
+          500.0,
+          600.0,
+          800.0,
+          1000.0,
+          1200.0,
+          1500.0,
+          1400.0,
+          1200.0,
+          1200.0
+        ],
+        [
+          "  Changes in Net Working Capital",
+          -500.0,
+          -1100.0,
+          -1500.0,
+          700.0,
+          -400.0,
+          -1000.0,
+          1011.0,
+          -921.0,
+          -78.0,
+          -274.0,
+          -3000.0,
+          -4000.0,
+          2000.0,
+          3000.0,
+          0.0
+        ],
+        [
+          "Cash from Operations (CFO)",
+          {
+            "formula": "=SUM(B6:B9)"
+          },
+          {
+            "formula": "=SUM(C6:C9)"
+          },
+          {
+            "formula": "=SUM(D6:D9)"
+          },
+          {
+            "formula": "=SUM(E6:E9)"
+          },
+          {
+            "formula": "=SUM(F6:F9)"
+          },
+          {
+            "formula": "=SUM(G6:G9)"
+          },
+          {
+            "formula": "=SUM(H6:H9)"
+          },
+          {
+            "formula": "=SUM(I6:I9)"
+          },
+          {
+            "formula": "=SUM(J6:J9)"
+          },
+          {
+            "formula": "=SUM(K6:K9)"
+          },
+          {
+            "formula": "=SUM(L6:L9)"
+          },
+          {
+            "formula": "=SUM(M6:M9)"
+          },
+          {
+            "formula": "=SUM(N6:N9)"
+          },
+          {
+            "formula": "=SUM(O6:O9)"
+          },
+          {
+            "formula": "=SUM(P6:P9)"
+          }
+        ],
+        [
+          "Investing Activities"
+        ],
+        [
+          "  Capital Expenditures",
+          -5800.0,
+          -4700.0,
+          -8900.0,
+          -9800.0,
+          -8200.0,
+          -10000.0,
+          -12100.0,
+          -7700.0,
+          -8400.0,
+          -15900.0,
+          -25000.0,
+          -28000.0,
+          -22000.0,
+          -15000.0,
+          -15000.0
+        ],
+        [
+          "  Other Investing",
+          0.0,
+          -2600.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          900.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          "Cash from Investing (CFI)",
+          {
+            "formula": "=SUM(B12:B13)"
+          },
+          {
+            "formula": "=SUM(C12:C13)"
+          },
+          {
+            "formula": "=SUM(D12:D13)"
+          },
+          {
+            "formula": "=SUM(E12:E13)"
+          },
+          {
+            "formula": "=SUM(F12:F13)"
+          },
+          {
+            "formula": "=SUM(G12:G13)"
+          },
+          {
+            "formula": "=SUM(H12:H13)"
+          },
+          {
+            "formula": "=SUM(I12:I13)"
+          },
+          {
+            "formula": "=SUM(J12:J13)"
+          },
+          {
+            "formula": "=SUM(K12:K13)"
+          },
+          {
+            "formula": "=SUM(L12:L13)"
+          },
+          {
+            "formula": "=SUM(M12:M13)"
+          },
+          {
+            "formula": "=SUM(N12:N13)"
+          },
+          {
+            "formula": "=SUM(O12:O13)"
+          },
+          {
+            "formula": "=SUM(P12:P13)"
+          }
+        ],
+        [
+          "Financing Activities"
+        ],
+        [
+          "  Net Borrowing (Repayment) of Debt",
+          2000.0,
+          1300.0,
+          -6600.0,
+          1300.0,
+          1300.0,
+          100.0,
+          300.0,
+          6400.0,
+          100.0,
+          1300.0,
+          -4600.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          "  Dividends & Other Financing",
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1200.0,
+          -1000.0,
+          -1200.0,
+          -1100.0,
+          -1200.0,
+          -1200.0,
+          -1200.0,
+          -1200.0,
+          -1200.0
+        ],
+        [
+          "Cash from Financing (CFF)",
+          {
+            "formula": "=SUM(B16:B17)"
+          },
+          {
+            "formula": "=SUM(C16:C17)"
+          },
+          {
+            "formula": "=SUM(D16:D17)"
+          },
+          {
+            "formula": "=SUM(E16:E17)"
+          },
+          {
+            "formula": "=SUM(F16:F17)"
+          },
+          {
+            "formula": "=SUM(G16:G17)"
+          },
+          {
+            "formula": "=SUM(H16:H17)"
+          },
+          {
+            "formula": "=SUM(I16:I17)"
+          },
+          {
+            "formula": "=SUM(J16:J17)"
+          },
+          {
+            "formula": "=SUM(K16:K17)"
+          },
+          {
+            "formula": "=SUM(L16:L17)"
+          },
+          {
+            "formula": "=SUM(M16:M17)"
+          },
+          {
+            "formula": "=SUM(N16:N17)"
+          },
+          {
+            "formula": "=SUM(O16:O17)"
+          },
+          {
+            "formula": "=SUM(P16:P17)"
+          }
+        ],
+        [
+          "Net Change in Cash",
+          {
+            "formula": "=B10+B14+B18"
+          },
+          {
+            "formula": "=C10+C14+C18"
+          },
+          {
+            "formula": "=D10+D14+D18"
+          },
+          {
+            "formula": "=E10+E14+E18"
+          },
+          {
+            "formula": "=F10+F14+F18"
+          },
+          {
+            "formula": "=G10+G14+G18"
+          },
+          {
+            "formula": "=H10+H14+H18"
+          },
+          {
+            "formula": "=I10+I14+I18"
+          },
+          {
+            "formula": "=J10+J14+J18"
+          },
+          {
+            "formula": "=K10+K14+K18"
+          },
+          {
+            "formula": "=L10+L14+L18"
+          },
+          {
+            "formula": "=M10+M14+M18"
+          },
+          {
+            "formula": "=N10+N14+N18"
+          },
+          {
+            "formula": "=O10+O14+O18"
+          },
+          {
+            "formula": "=P10+P14+P18"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "Balance Sheet",
+      "rows": [
+        [
+          "Micron Technology, Inc. (MU) \u2014 Balance Sheet"
+        ],
+        [
+          "(USD Millions)"
+        ],
+        [],
+        [
+          "Line Item",
+          "FY 2016",
+          "FY 2017",
+          "FY 2018",
+          "FY 2019",
+          "FY 2020",
+          "FY 2021",
+          "FY 2022",
+          "FY 2023",
+          "FY 2024",
+          "FY 2025",
+          "FY 2026E",
+          "FY 2027E",
+          "FY 2028E",
+          "FY 2029E",
+          "FY 2030E"
+        ],
+        [
+          "ASSETS",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Current Assets",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "  Cash & Equivalents",
+          4400.0,
+          5400.0,
+          6800.0,
+          8000.0,
+          8100.0,
+          8600.0,
+          9300.0,
+          9600.0,
+          8100.0,
+          10300.0,
+          24000.0,
+          60000.0,
+          75000.0,
+          80000.0,
+          85000.0
+        ],
+        [
+          "  Accounts Receivable",
+          1500.0,
+          2100.0,
+          2800.0,
+          2500.0,
+          2000.0,
+          2600.0,
+          3100.0,
+          2100.0,
+          2900.0,
+          4200.0,
+          7200.0,
+          11200.0,
+          9200.0,
+          6200.0,
+          6200.0
+        ],
+        [
+          "  Inventories",
+          2000.0,
+          2500.0,
+          3200.0,
+          2800.0,
+          2200.0,
+          3100.0,
+          3900.0,
+          2900.0,
+          3500.0,
+          4600.0,
+          8600.0,
+          13600.0,
+          11600.0,
+          8600.0,
+          8600.0
+        ],
+        [
+          "  Other Current Assets",
+          400.0,
+          500.0,
+          600.0,
+          500.0,
+          400.0,
+          500.0,
+          700.0,
+          500.0,
+          700.0,
+          900.0,
+          1500.0,
+          2500.0,
+          2500.0,
+          2500.0,
+          2500.0
+        ],
+        [
+          "Total Current Assets",
+          {
+            "formula": "=SUM(B7:B10)"
+          },
+          {
+            "formula": "=SUM(C7:C10)"
+          },
+          {
+            "formula": "=SUM(D7:D10)"
+          },
+          {
+            "formula": "=SUM(E7:E10)"
+          },
+          {
+            "formula": "=SUM(F7:F10)"
+          },
+          {
+            "formula": "=SUM(G7:G10)"
+          },
+          {
+            "formula": "=SUM(H7:H10)"
+          },
+          {
+            "formula": "=SUM(I7:I10)"
+          },
+          {
+            "formula": "=SUM(J7:J10)"
+          },
+          {
+            "formula": "=SUM(K7:K10)"
+          },
+          {
+            "formula": "=SUM(L7:L10)"
+          },
+          {
+            "formula": "=SUM(M7:M10)"
+          },
+          {
+            "formula": "=SUM(N7:N10)"
+          },
+          {
+            "formula": "=SUM(O7:O10)"
+          },
+          {
+            "formula": "=SUM(P7:P10)"
+          }
+        ],
+        [
+          "Non-Current Assets"
+        ],
+        [
+          "  Property, Plant & Equipment (Net)",
+          12000.0,
+          14000.0,
+          17000.0,
+          21000.0,
+          22000.0,
+          26000.0,
+          31000.0,
+          31000.0,
+          32000.0,
+          40000.0,
+          53000.0,
+          70000.0,
+          78000.0,
+          81000.0,
+          84000.0
+        ],
+        [
+          "  Goodwill & Intangibles",
+          1500.0,
+          1400.0,
+          1300.0,
+          1200.0,
+          1100.0,
+          1000.0,
+          900.0,
+          800.0,
+          700.0,
+          600.0,
+          500.0,
+          400.0,
+          300.0,
+          200.0,
+          100.0
+        ],
+        [
+          "  Other Non-Current Assets",
+          600.0,
+          700.0,
+          800.0,
+          900.0,
+          800.0,
+          900.0,
+          1100.0,
+          900.0,
+          1100.0,
+          1300.0,
+          2000.0,
+          3000.0,
+          3000.0,
+          3000.0,
+          3000.0
+        ],
+        [
+          "Total Non-Current Assets",
+          {
+            "formula": "=SUM(B13:B15)"
+          },
+          {
+            "formula": "=SUM(C13:C15)"
+          },
+          {
+            "formula": "=SUM(D13:D15)"
+          },
+          {
+            "formula": "=SUM(E13:E15)"
+          },
+          {
+            "formula": "=SUM(F13:F15)"
+          },
+          {
+            "formula": "=SUM(G13:G15)"
+          },
+          {
+            "formula": "=SUM(H13:H15)"
+          },
+          {
+            "formula": "=SUM(I13:I15)"
+          },
+          {
+            "formula": "=SUM(J13:J15)"
+          },
+          {
+            "formula": "=SUM(K13:K15)"
+          },
+          {
+            "formula": "=SUM(L13:L15)"
+          },
+          {
+            "formula": "=SUM(M13:M15)"
+          },
+          {
+            "formula": "=SUM(N13:N15)"
+          },
+          {
+            "formula": "=SUM(O13:O15)"
+          },
+          {
+            "formula": "=SUM(P13:P15)"
+          }
+        ],
+        [
+          "TOTAL ASSETS",
+          {
+            "formula": "=B11+B16"
+          },
+          {
+            "formula": "=C11+C16"
+          },
+          {
+            "formula": "=D11+D16"
+          },
+          {
+            "formula": "=E11+E16"
+          },
+          {
+            "formula": "=F11+F16"
+          },
+          {
+            "formula": "=G11+G16"
+          },
+          {
+            "formula": "=H11+H16"
+          },
+          {
+            "formula": "=I11+I16"
+          },
+          {
+            "formula": "=J11+J16"
+          },
+          {
+            "formula": "=K11+K16"
+          },
+          {
+            "formula": "=L11+L16"
+          },
+          {
+            "formula": "=M11+M16"
+          },
+          {
+            "formula": "=N11+N16"
+          },
+          {
+            "formula": "=O11+O16"
+          },
+          {
+            "formula": "=P11+P16"
+          }
+        ],
+        [
+          "LIABILITIES & EQUITY"
+        ],
+        [
+          "Current Liabilities"
+        ],
+        [
+          "  Accounts Payable",
+          1000.0,
+          1400.0,
+          1800.0,
+          1600.0,
+          1300.0,
+          1800.0,
+          2200.0,
+          1300.0,
+          1900.0,
+          2500.0,
+          5000.0,
+          7500.0,
+          6500.0,
+          4500.0,
+          4500.0
+        ],
+        [
+          "  Short-term Debt",
+          1500.0,
+          1800.0,
+          800.0,
+          1000.0,
+          1200.0,
+          1200.0,
+          1300.0,
+          2400.0,
+          2400.0,
+          2600.0,
+          1800.0,
+          1800.0,
+          1800.0,
+          1800.0,
+          1800.0
+        ],
+        [
+          "  Other Current Liabilities",
+          500.0,
+          700.0,
+          900.0,
+          800.0,
+          700.0,
+          900.0,
+          1100.0,
+          800.0,
+          1100.0,
+          1400.0,
+          2500.0,
+          3800.0,
+          3200.0,
+          2200.0,
+          2200.0
+        ],
+        [
+          "Total Current Liabilities",
+          {
+            "formula": "=SUM(B20:B22)"
+          },
+          {
+            "formula": "=SUM(C20:C22)"
+          },
+          {
+            "formula": "=SUM(D20:D22)"
+          },
+          {
+            "formula": "=SUM(E20:E22)"
+          },
+          {
+            "formula": "=SUM(F20:F22)"
+          },
+          {
+            "formula": "=SUM(G20:G22)"
+          },
+          {
+            "formula": "=SUM(H20:H22)"
+          },
+          {
+            "formula": "=SUM(I20:I22)"
+          },
+          {
+            "formula": "=SUM(J20:J22)"
+          },
+          {
+            "formula": "=SUM(K20:K22)"
+          },
+          {
+            "formula": "=SUM(L20:L22)"
+          },
+          {
+            "formula": "=SUM(M20:M22)"
+          },
+          {
+            "formula": "=SUM(N20:N22)"
+          },
+          {
+            "formula": "=SUM(O20:O22)"
+          },
+          {
+            "formula": "=SUM(P20:P22)"
+          }
+        ],
+        [
+          "Non-Current Liabilities"
+        ],
+        [
+          "  Long-term Debt",
+          8400.0,
+          9400.0,
+          3800.0,
+          4900.0,
+          6000.0,
+          6100.0,
+          6300.0,
+          11600.0,
+          11700.0,
+          12800.0,
+          9000.0,
+          9000.0,
+          9000.0,
+          9000.0,
+          9000.0
+        ],
+        [
+          "  Other Non-Current Liabilities",
+          1000.0,
+          1200.0,
+          1400.0,
+          1300.0,
+          1200.0,
+          1400.0,
+          1700.0,
+          1300.0,
+          1700.0,
+          2100.0,
+          4000.0,
+          6000.0,
+          5500.0,
+          4000.0,
+          4000.0
+        ],
+        [
+          "Total Non-Current Liabilities",
+          {
+            "formula": "=SUM(B25:B26)"
+          },
+          {
+            "formula": "=SUM(C25:C26)"
+          },
+          {
+            "formula": "=SUM(D25:D26)"
+          },
+          {
+            "formula": "=SUM(E25:E26)"
+          },
+          {
+            "formula": "=SUM(F25:F26)"
+          },
+          {
+            "formula": "=SUM(G25:G26)"
+          },
+          {
+            "formula": "=SUM(H25:H26)"
+          },
+          {
+            "formula": "=SUM(I25:I26)"
+          },
+          {
+            "formula": "=SUM(J25:J26)"
+          },
+          {
+            "formula": "=SUM(K25:K26)"
+          },
+          {
+            "formula": "=SUM(L25:L26)"
+          },
+          {
+            "formula": "=SUM(M25:M26)"
+          },
+          {
+            "formula": "=SUM(N25:N26)"
+          },
+          {
+            "formula": "=SUM(O25:O26)"
+          },
+          {
+            "formula": "=SUM(P25:P26)"
+          }
+        ],
+        [
+          "TOTAL LIABILITIES",
+          {
+            "formula": "=B23+B27"
+          },
+          {
+            "formula": "=C23+C27"
+          },
+          {
+            "formula": "=D23+D27"
+          },
+          {
+            "formula": "=E23+E27"
+          },
+          {
+            "formula": "=F23+F27"
+          },
+          {
+            "formula": "=G23+G27"
+          },
+          {
+            "formula": "=H23+H27"
+          },
+          {
+            "formula": "=I23+I27"
+          },
+          {
+            "formula": "=J23+J27"
+          },
+          {
+            "formula": "=K23+K27"
+          },
+          {
+            "formula": "=L23+L27"
+          },
+          {
+            "formula": "=M23+M27"
+          },
+          {
+            "formula": "=N23+N27"
+          },
+          {
+            "formula": "=O23+O27"
+          },
+          {
+            "formula": "=P23+P27"
+          }
+        ],
+        [
+          "Shareholders' Equity"
+        ],
+        [
+          "  Paid-in Capital",
+          5000.0,
+          5200.0,
+          5400.0,
+          5200.0,
+          5000.0,
+          5200.0,
+          5500.0,
+          5200.0,
+          5500.0,
+          5800.0,
+          6000.0,
+          6200.0,
+          6400.0,
+          6400.0,
+          6400.0
+        ],
+        [
+          "  Retained Earnings",
+          4500.0,
+          5700.0,
+          15000.0,
+          19200.0,
+          20600.0,
+          25300.0,
+          32800.0,
+          25300.0,
+          25600.0,
+          31300.0,
+          68500.0,
+          117700.0,
+          161600.0,
+          171600.0,
+          181600.0
+        ],
+        [
+          "  Balancing Adjustment",
+          {
+            "formula": "=B17-B28-B30-B31"
+          },
+          {
+            "formula": "=C17-C28-C30-C31"
+          },
+          {
+            "formula": "=D17-D28-D30-D31"
+          },
+          {
+            "formula": "=E17-E28-E30-E31"
+          },
+          {
+            "formula": "=F17-F28-F30-F31"
+          },
+          {
+            "formula": "=G17-G28-G30-G31"
+          },
+          {
+            "formula": "=H17-H28-H30-H31"
+          },
+          {
+            "formula": "=I17-I28-I30-I31"
+          },
+          {
+            "formula": "=J17-J28-J30-J31"
+          },
+          {
+            "formula": "=K17-K28-K30-K31"
+          },
+          {
+            "formula": "=L17-L28-L30-L31"
+          },
+          {
+            "formula": "=M17-M28-M30-M31"
+          },
+          {
+            "formula": "=N17-N28-N30-N31"
+          },
+          {
+            "formula": "=O17-O28-O30-O31"
+          },
+          {
+            "formula": "=P17-P28-P30-P31"
+          }
+        ],
+        [
+          "Total Shareholders' Equity",
+          {
+            "formula": "=SUM(B30:B32)"
+          },
+          {
+            "formula": "=SUM(C30:C32)"
+          },
+          {
+            "formula": "=SUM(D30:D32)"
+          },
+          {
+            "formula": "=SUM(E30:E32)"
+          },
+          {
+            "formula": "=SUM(F30:F32)"
+          },
+          {
+            "formula": "=SUM(G30:G32)"
+          },
+          {
+            "formula": "=SUM(H30:H32)"
+          },
+          {
+            "formula": "=SUM(I30:I32)"
+          },
+          {
+            "formula": "=SUM(J30:J32)"
+          },
+          {
+            "formula": "=SUM(K30:K32)"
+          },
+          {
+            "formula": "=SUM(L30:L32)"
+          },
+          {
+            "formula": "=SUM(M30:M32)"
+          },
+          {
+            "formula": "=SUM(N30:N32)"
+          },
+          {
+            "formula": "=SUM(O30:O32)"
+          },
+          {
+            "formula": "=SUM(P30:P32)"
+          }
+        ],
+        [
+          "TOTAL LIABILITIES & EQUITY",
+          {
+            "formula": "=B28+B33"
+          },
+          {
+            "formula": "=C28+C33"
+          },
+          {
+            "formula": "=D28+D33"
+          },
+          {
+            "formula": "=E28+E33"
+          },
+          {
+            "formula": "=F28+F33"
+          },
+          {
+            "formula": "=G28+G33"
+          },
+          {
+            "formula": "=H28+H33"
+          },
+          {
+            "formula": "=I28+I33"
+          },
+          {
+            "formula": "=J28+J33"
+          },
+          {
+            "formula": "=K28+K33"
+          },
+          {
+            "formula": "=L28+L33"
+          },
+          {
+            "formula": "=M28+M33"
+          },
+          {
+            "formula": "=N28+N33"
+          },
+          {
+            "formula": "=O28+O33"
+          },
+          {
+            "formula": "=P28+P33"
+          }
+        ],
+        [
+          "Balance Check (OK / Error)",
+          {
+            "formula": "=IF(ABS(B17-B34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(C17-C34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(D17-D34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(E17-E34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(F17-F34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(G17-G34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(H17-H34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(I17-I34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(J17-J34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(K17-K34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(L17-L34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(M17-M34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(N17-N34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(O17-O34)<1, \"OK\", \"Error\")"
+          },
+          {
+            "formula": "=IF(ABS(P17-P34)<1, \"OK\", \"Error\")"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "DCF",
+      "rows": [
+        [
+          "Micron Technology, Inc. (MU) \u2014 Discounted Cash Flow (DCF) Valuation"
+        ],
+        [
+          "(USD Millions, except per-share data)"
+        ],
+        [],
+        [
+          "Line Item",
+          "FY 2026E",
+          "FY 2027E",
+          "FY 2028E",
+          "FY 2029E",
+          "FY 2030E"
+        ],
+        [
+          "EBIT (Operating Income)",
+          {
+            "formula": "='Income Statement'!L15"
+          },
+          {
+            "formula": "='Income Statement'!M15"
+          },
+          {
+            "formula": "='Income Statement'!N15"
+          },
+          {
+            "formula": "='Income Statement'!O15"
+          },
+          {
+            "formula": "='Income Statement'!P15"
+          }
+        ],
+        [
+          "Effective Tax Rate",
+          {
+            "formula": "='Income Statement'!L21"
+          },
+          {
+            "formula": "='Income Statement'!M21"
+          },
+          {
+            "formula": "='Income Statement'!N21"
+          },
+          {
+            "formula": "='Income Statement'!O21"
+          },
+          {
+            "formula": "='Income Statement'!P21"
+          }
+        ],
+        [
+          "NOPAT",
+          {
+            "formula": "=B5*(1-B6)"
+          },
+          {
+            "formula": "=C5*(1-C6)"
+          },
+          {
+            "formula": "=D5*(1-D6)"
+          },
+          {
+            "formula": "=E5*(1-E6)"
+          },
+          {
+            "formula": "=F5*(1-F6)"
+          }
+        ],
+        [
+          "Add: Depreciation & Amortization",
+          {
+            "formula": "='Cash Flow'!L7"
+          },
+          {
+            "formula": "='Cash Flow'!M7"
+          },
+          {
+            "formula": "='Cash Flow'!N7"
+          },
+          {
+            "formula": "='Cash Flow'!O7"
+          },
+          {
+            "formula": "='Cash Flow'!P7"
+          }
+        ],
+        [
+          "Less: Capital Expenditures",
+          {
+            "formula": "='Cash Flow'!L12"
+          },
+          {
+            "formula": "='Cash Flow'!M12"
+          },
+          {
+            "formula": "='Cash Flow'!N12"
+          },
+          {
+            "formula": "='Cash Flow'!O12"
+          },
+          {
+            "formula": "='Cash Flow'!P12"
+          }
+        ],
+        [
+          "Less: Change in Working Capital",
+          {
+            "formula": "='Cash Flow'!L9"
+          },
+          {
+            "formula": "='Cash Flow'!M9"
+          },
+          {
+            "formula": "='Cash Flow'!N9"
+          },
+          {
+            "formula": "='Cash Flow'!O9"
+          },
+          {
+            "formula": "='Cash Flow'!P9"
+          }
+        ],
+        [
+          "Unlevered Free Cash Flow (UFCF)",
+          {
+            "formula": "=B7+B8+B9+B10"
+          },
+          {
+            "formula": "=C7+C8+C9+C10"
+          },
+          {
+            "formula": "=D7+D8+D9+D10"
+          },
+          {
+            "formula": "=E7+E8+E9+E10"
+          },
+          {
+            "formula": "=F7+F8+F9+F10"
+          }
+        ],
+        [
+          "Discount Period (t)",
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          "Discount Factor",
+          {
+            "formula": "=1/((1+$I$5)^B12)"
+          },
+          {
+            "formula": "=1/((1+$I$5)^C12)"
+          },
+          {
+            "formula": "=1/((1+$I$5)^D12)"
+          },
+          {
+            "formula": "=1/((1+$I$5)^E12)"
+          },
+          {
+            "formula": "=1/((1+$I$5)^F12)"
+          }
+        ],
+        [
+          "PV of Unlevered Free Cash Flow",
+          {
+            "formula": "=B11*B13"
+          },
+          {
+            "formula": "=C11*C13"
+          },
+          {
+            "formula": "=D11*D13"
+          },
+          {
+            "formula": "=E11*E13"
+          },
+          {
+            "formula": "=F11*F13"
+          }
+        ]
+      ],
+      "cells": {
+        "H4": {
+          "value": "DCF Parameters"
+        },
+        "H5": {
+          "value": "WACC (Target Case)"
+        },
+        "I5": {
+          "value": 0.08
+        },
+        "H6": {
+          "value": "Terminal Growth (g)"
+        },
+        "I6": {
+          "value": 0.03
+        },
+        "H8": {
+          "value": "Valuation Summary"
+        },
+        "H9": {
+          "value": "PV of 5-Yr Cash Flows"
+        },
+        "I9": {
+          "formula": "=SUM(B14:F14)"
+        },
+        "H10": {
+          "value": "Terminal Value"
+        },
+        "I10": {
+          "formula": "=F11*(1+I6)/(I5-I6)"
+        },
+        "H11": {
+          "value": "PV of Terminal Value"
+        },
+        "I11": {
+          "formula": "=I10*F13"
+        },
+        "H12": {
+          "value": "Implied Enterprise Value (EV)"
+        },
+        "I12": {
+          "formula": "=I9+I11"
+        },
+        "H14": {
+          "value": "Cash & Investments"
+        },
+        "I14": {
+          "formula": "='Balance Sheet'!K7"
+        },
+        "H15": {
+          "value": "Total Debt"
+        },
+        "I15": {
+          "formula": "='Balance Sheet'!K21+'Balance Sheet'!K25"
+        },
+        "H16": {
+          "value": "Net Cash Position"
+        },
+        "I16": {
+          "formula": "=I14-I15"
+        },
+        "H18": {
+          "value": "Implied Equity Value"
+        },
+        "I18": {
+          "formula": "=I12+I16"
+        },
+        "H19": {
+          "value": "Diluted Shares Outstanding"
+        },
+        "I19": {
+          "value": 1130.0
+        },
+        "H20": {
+          "value": "Implied Per-Share Value"
+        },
+        "I20": {
+          "formula": "=I18/I19"
+        }
+      }
+    },
+    {
+      "name": "Scenarios",
+      "rows": [
+        [
+          "Micron Technology, Inc. (MU) \u2014 Scenario Analysis"
+        ],
+        [
+          "(USD Millions, except per-share data)"
+        ],
+        [],
+        [
+          "Scenario Assumptions",
+          "Bull",
+          "Base",
+          "Bear"
+        ],
+        [
+          "Revenue Growth Rate",
+          0.35,
+          0.28,
+          0.15
+        ],
+        [
+          "EBITDA Margin",
+          0.88,
+          0.81,
+          0.65
+        ],
+        [
+          "CapEx as % of Revenue",
+          0.15,
+          0.18,
+          0.22
+        ],
+        [],
+        [
+          "Implied Outputs (FY 2027E)",
+          "Bull",
+          "Base",
+          "Bear"
+        ],
+        [
+          "Revenue ($M)",
+          195000.0,
+          172760.0,
+          120000.0
+        ],
+        [
+          "EBITDA ($M)",
+          171600.0,
+          149340.0,
+          78000.0
+        ],
+        [
+          "EPS ($)",
+          125.5,
+          102.74,
+          45.0
+        ]
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "key": "valuation.implied_share_price",
+      "sheet": "Summary",
+      "cell": "B25",
+      "value": 583.18,
+      "unit": "USD/share"
+    },
+    {
+      "key": "valuation.implied_equity_value",
+      "sheet": "Summary",
+      "cell": "B24",
+      "value": 658989.0,
+      "unit": "USD Millions"
+    },
+    {
+      "key": "valuation.target_price",
+      "sheet": "Summary",
+      "cell": "B13",
+      "value": 650.0,
+      "unit": "USD"
+    },
+    {
+      "key": "valuation.current_price",
+      "sheet": "Summary",
+      "cell": "B5",
+      "value": 751.0,
+      "unit": "USD"
+    },
+    {
+      "key": "valuation.wacc",
+      "sheet": "Summary",
+      "cell": "B18",
+      "value": 0.08,
+      "unit": "Percentage"
+    }
+  ]
+}

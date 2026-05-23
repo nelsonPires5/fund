@@ -1,0 +1,91 @@
+{
+  "ticker": "MU",
+  "tab": "Overview",
+  "extracted_at": "2026-05-22T23:05:27.304Z",
+  "key_data": {
+    "Dividend Yield": "0.08%",
+    "Avg Volume (10D)": "53.45M",
+    "Beta (5Y Monthly)": "1.92",
+    "Volatility (1Y)": "63.16",
+    "Shares Outstanding": "1.13B",
+    "Short Interest %": "3.30%",
+    "Industry": "Semiconductors and Semiconductor Equipment",
+    "Competitors": "AMDINTCAVGOQCOMTXN"
+  },
+  "performance_returns": {
+    "periods": [
+      "1M",
+      "3M",
+      "YTD",
+      "1Y"
+    ],
+    "Price": [
+      "54.06%",
+      "75.40%",
+      "163.13%",
+      "691.94%"
+    ],
+    "Total": [
+      "54.06%",
+      "75.47%",
+      "163.24%",
+      "693.84%"
+    ]
+  },
+  "valuation": {
+    "columns": [
+      "LTM",
+      "NTM"
+    ],
+    "data": []
+  },
+  "capital_structure": {
+    "Market Cap": "$846.93B",
+    "Total Debt": "$10.80B",
+    "Cash & Inv.": "$14.59B",
+    "Enterprise Value": "$841.10B"
+  },
+  "analyst_estimates": {
+    "columns": [
+      "FY 2026",
+      "FY 2027",
+      "FY 2028"
+    ],
+    "data": [
+      {
+        "metric": "Sales",
+        "values": [
+          "$109.70B",
+          "$172.76B",
+          "$165.26B"
+        ]
+      },
+      {
+        "metric": "YoY Chg",
+        "values": [
+          "193.48%",
+          "57.48%",
+          "-4.34%"
+        ]
+      },
+      {
+        "metric": "EPS",
+        "values": [
+          "58.29",
+          "102.74",
+          "85.87"
+        ]
+      },
+      {
+        "metric": "YoY Chg",
+        "values": [
+          "603.15%",
+          "76.25%",
+          "-16.42%"
+        ]
+      }
+    ]
+  },
+  "chart_periods": [],
+  "quote_box": {}
+}

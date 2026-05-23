@@ -1,0 +1,1499 @@
+{
+  "ticker": "MU",
+  "tab": "Profitability",
+  "extracted_at": "2026-05-22T23:08:44.886Z",
+  "page_url": "https://app.koyfin.com/fa/00000000-5e32-4dbc-a064-6b856f86cc2e/eq-7n04a1",
+  "page_title": "MU - Profitability",
+  "periods": [
+    "FY 2016",
+    "FY 2017",
+    "FY 2018",
+    "FY 2019",
+    "FY 2020",
+    "FY 2021",
+    "FY 2022",
+    "FY 2023",
+    "FY 2024",
+    "FY 2025",
+    "Current/LTM"
+  ],
+  "sections": [
+    "Returns",
+    "Margins",
+    "Asset Turnovers",
+    "Short-term Liquidity"
+  ],
+  "metrics": {
+    "Returns": {
+      "Return on Assets": [
+        "0.57",
+        "11.68",
+        "23.70",
+        "10.01",
+        "3.73",
+        "7.55",
+        "9.70",
+        "(3.42)",
+        "1.22",
+        "8.06",
+        "20.15"
+      ],
+      "Return On Equity": [
+        "(2.10)",
+        "31.42",
+        "53.62",
+        "18.13",
+        "7.14",
+        "14.13",
+        "18.51",
+        "(12.41)",
+        "1.74",
+        "17.20",
+        "39.82"
+      ],
+      "Return on Total Capital": [
+        "0.67",
+        "13.74",
+        "27.23",
+        "11.46",
+        "4.30",
+        "8.71",
+        "11.16",
+        "(3.86)",
+        "1.39",
+        "9.53",
+        "23.94"
+      ],
+      "Return on Common Equity": [
+        "(2.26)",
+        "33.15",
+        "55.52",
+        "18.52",
+        "7.18",
+        "14.13",
+        "18.51",
+        "(12.41)",
+        "1.74",
+        "17.20",
+        "39.82"
+      ]
+    },
+    "Margins": {
+      "EBITDA Margin": [
+        "25.92",
+        "47.92",
+        "64.77",
+        "54.75",
+        "40.63",
+        "46.66",
+        "54.42",
+        "26.36",
+        "35.85",
+        "48.40",
+        "63.32"
+      ],
+      "EBITA Margin": [
+        "1.89",
+        "28.92",
+        "49.11",
+        "31.57",
+        "14.28",
+        "24.53",
+        "31.57",
+        "(23.00)",
+        "5.20",
+        "26.24",
+        "48.41"
+      ],
+      "EBIT Margin": [
+        "1.89",
+        "28.92",
+        "49.11",
+        "31.57",
+        "14.28",
+        "24.53",
+        "31.57",
+        "(23.00)",
+        "5.20",
+        "26.24",
+        "48.41"
+      ],
+      "EBT Margin": [],
+      "EBT Excl. Non-Recurring Items Margin": [],
+      "Gross Profit Margin": [
+        "20.20",
+        "41.51",
+        "58.87",
+        "45.72",
+        "30.57",
+        "37.80",
+        "45.18",
+        "2.67",
+        "22.35",
+        "39.79",
+        "58.44"
+      ],
+      "SG&A Margin": [
+        "5.29",
+        "3.59",
+        "2.68",
+        "3.57",
+        "4.11",
+        "3.23",
+        "3.47",
+        "5.92",
+        "4.50",
+        "3.22",
+        "2.26"
+      ],
+      "Net Income Margin": [
+        "(2.23)",
+        "25.04",
+        "46.51",
+        "26.97",
+        "12.54",
+        "21.16",
+        "28.24",
+        "(37.54)",
+        "3.10",
+        "22.84",
+        "41.49"
+      ],
+      "Net Avail. For Common Margin": [
+        "(2.23)",
+        "25.04",
+        "46.51",
+        "26.97",
+        "12.54",
+        "21.16",
+        "28.24",
+        "(37.54)",
+        "3.10",
+        "22.84",
+        "41.49"
+      ],
+      "Normalized Net Income Margin": [
+        "(0.95)",
+        "16.12",
+        "30.06",
+        "19.74",
+        "8.60",
+        "15.09",
+        "19.40",
+        "(13.99)",
+        "3.14",
+        "16.34",
+        "30.39"
+      ]
+    },
+    "Asset Turnovers": {
+      "Receivables Turnover (Average Receivables)": [
+        "6.3",
+        "7.7",
+        "7.1",
+        "6.0",
+        "6.8",
+        "6.6",
+        "6.4",
+        "4.6",
+        "6.7",
+        "5.9",
+        "5.7"
+      ],
+      "Fixed Assets Turnover (Average Fixed Assets)": [
+        "1.0",
+        "1.2",
+        "1.4",
+        "0.9",
+        "0.7",
+        "0.8",
+        "0.8",
+        "0.4",
+        "0.6",
+        "0.9",
+        "1.2"
+      ],
+      "Inventory Turnover (Average Inventory)": [
+        "3.8",
+        "4.0",
+        "3.7",
+        "2.9",
+        "2.8",
+        "3.5",
+        "3.0",
+        "2.0",
+        "2.3",
+        "2.6",
+        "2.8"
+      ],
+      "Asset Turnover": [
+        "0.5",
+        "0.6",
+        "0.8",
+        "0.5",
+        "0.4",
+        "0.5",
+        "0.5",
+        "0.2",
+        "0.4",
+        "0.5",
+        "0.7"
+      ],
+      "Days Outstanding Inventory (Avg)": [
+        "96.2",
+        "92.1",
+        "97.8",
+        "124.8",
+        "130.8",
+        "104.1",
+        "120.4",
+        "181.1",
+        "161.1",
+        "139.3",
+        "130.1"
+      ]
+    },
+    "Short-term Liquidity": {
+      "Current Ratio": [
+        "2.0",
+        "2.3",
+        "2.8",
+        "2.6",
+        "2.7",
+        "3.1",
+        "2.9",
+        "4.5",
+        "2.6",
+        "2.5",
+        "2.9"
+      ],
+      "Quick Ratio": [
+        "1.3",
+        "1.7",
+        "2.1",
+        "1.7",
+        "1.8",
+        "2.2",
+        "1.9",
+        "2.5",
+        "1.6",
+        "1.7",
+        "2.2"
+      ],
+      "Days Sales Outstanding (Average Receivables)": [
+        "58.0",
+        "47.1",
+        "51.2",
+        "60.9",
+        "54.3",
+        "55.3",
+        "57.3",
+        "79.8",
+        "54.1",
+        "61.3",
+        "64.1"
+      ],
+      "Days Payable Outstanding (Avg)": [
+        "48.8",
+        "41.8",
+        "42.4",
+        "43.1",
+        "47.4",
+        "43.8",
+        "37.2",
+        "41.8",
+        "40.5",
+        "48.5",
+        "44.8"
+      ],
+      "Cash Conversion Cycle (Average Days)": [
+        "105.4",
+        "97.3",
+        "106.6",
+        "142.6",
+        "137.6",
+        "115.6",
+        "140.5",
+        "219.1",
+        "174.7",
+        "152.1",
+        "149.4"
+      ],
+      "Operating Cash Flow to Current Liabilities": [
+        "0.7",
+        "1.5",
+        "3.0",
+        "2.1",
+        "1.3",
+        "1.9",
+        "2.0",
+        "0.3",
+        "0.9",
+        "1.5",
+        "2.1"
+      ]
+    }
+  },
+  "raw_values": [
+    {
+      "section": "Returns",
+      "metric": "Return on Assets",
+      "values": [
+        {
+          "value": "0.57",
+          "unit": "%"
+        },
+        {
+          "value": "11.68",
+          "unit": "%"
+        },
+        {
+          "value": "23.70",
+          "unit": "%"
+        },
+        {
+          "value": "10.01",
+          "unit": "%"
+        },
+        {
+          "value": "3.73",
+          "unit": "%"
+        },
+        {
+          "value": "7.55",
+          "unit": "%"
+        },
+        {
+          "value": "9.70",
+          "unit": "%"
+        },
+        {
+          "value": "(3.42)",
+          "unit": "%"
+        },
+        {
+          "value": "1.22",
+          "unit": "%"
+        },
+        {
+          "value": "8.06",
+          "unit": "%"
+        },
+        {
+          "value": "20.15",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Returns",
+      "metric": "Return On Equity",
+      "values": [
+        {
+          "value": "(2.10)",
+          "unit": "%"
+        },
+        {
+          "value": "31.42",
+          "unit": "%"
+        },
+        {
+          "value": "53.62",
+          "unit": "%"
+        },
+        {
+          "value": "18.13",
+          "unit": "%"
+        },
+        {
+          "value": "7.14",
+          "unit": "%"
+        },
+        {
+          "value": "14.13",
+          "unit": "%"
+        },
+        {
+          "value": "18.51",
+          "unit": "%"
+        },
+        {
+          "value": "(12.41)",
+          "unit": "%"
+        },
+        {
+          "value": "1.74",
+          "unit": "%"
+        },
+        {
+          "value": "17.20",
+          "unit": "%"
+        },
+        {
+          "value": "39.82",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Returns",
+      "metric": "Return on Total Capital",
+      "values": [
+        {
+          "value": "0.67",
+          "unit": "%"
+        },
+        {
+          "value": "13.74",
+          "unit": "%"
+        },
+        {
+          "value": "27.23",
+          "unit": "%"
+        },
+        {
+          "value": "11.46",
+          "unit": "%"
+        },
+        {
+          "value": "4.30",
+          "unit": "%"
+        },
+        {
+          "value": "8.71",
+          "unit": "%"
+        },
+        {
+          "value": "11.16",
+          "unit": "%"
+        },
+        {
+          "value": "(3.86)",
+          "unit": "%"
+        },
+        {
+          "value": "1.39",
+          "unit": "%"
+        },
+        {
+          "value": "9.53",
+          "unit": "%"
+        },
+        {
+          "value": "23.94",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Returns",
+      "metric": "Return on Common Equity",
+      "values": [
+        {
+          "value": "(2.26)",
+          "unit": "%"
+        },
+        {
+          "value": "33.15",
+          "unit": "%"
+        },
+        {
+          "value": "55.52",
+          "unit": "%"
+        },
+        {
+          "value": "18.52",
+          "unit": "%"
+        },
+        {
+          "value": "7.18",
+          "unit": "%"
+        },
+        {
+          "value": "14.13",
+          "unit": "%"
+        },
+        {
+          "value": "18.51",
+          "unit": "%"
+        },
+        {
+          "value": "(12.41)",
+          "unit": "%"
+        },
+        {
+          "value": "1.74",
+          "unit": "%"
+        },
+        {
+          "value": "17.20",
+          "unit": "%"
+        },
+        {
+          "value": "39.82",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Margins",
+      "metric": "EBITDA Margin",
+      "values": [
+        {
+          "value": "25.92",
+          "unit": "%"
+        },
+        {
+          "value": "47.92",
+          "unit": "%"
+        },
+        {
+          "value": "64.77",
+          "unit": "%"
+        },
+        {
+          "value": "54.75",
+          "unit": "%"
+        },
+        {
+          "value": "40.63",
+          "unit": "%"
+        },
+        {
+          "value": "46.66",
+          "unit": "%"
+        },
+        {
+          "value": "54.42",
+          "unit": "%"
+        },
+        {
+          "value": "26.36",
+          "unit": "%"
+        },
+        {
+          "value": "35.85",
+          "unit": "%"
+        },
+        {
+          "value": "48.40",
+          "unit": "%"
+        },
+        {
+          "value": "63.32",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Margins",
+      "metric": "EBITA Margin",
+      "values": [
+        {
+          "value": "1.89",
+          "unit": "%"
+        },
+        {
+          "value": "28.92",
+          "unit": "%"
+        },
+        {
+          "value": "49.11",
+          "unit": "%"
+        },
+        {
+          "value": "31.57",
+          "unit": "%"
+        },
+        {
+          "value": "14.28",
+          "unit": "%"
+        },
+        {
+          "value": "24.53",
+          "unit": "%"
+        },
+        {
+          "value": "31.57",
+          "unit": "%"
+        },
+        {
+          "value": "(23.00)",
+          "unit": "%"
+        },
+        {
+          "value": "5.20",
+          "unit": "%"
+        },
+        {
+          "value": "26.24",
+          "unit": "%"
+        },
+        {
+          "value": "48.41",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Margins",
+      "metric": "EBIT Margin",
+      "values": [
+        {
+          "value": "1.89",
+          "unit": "%"
+        },
+        {
+          "value": "28.92",
+          "unit": "%"
+        },
+        {
+          "value": "49.11",
+          "unit": "%"
+        },
+        {
+          "value": "31.57",
+          "unit": "%"
+        },
+        {
+          "value": "14.28",
+          "unit": "%"
+        },
+        {
+          "value": "24.53",
+          "unit": "%"
+        },
+        {
+          "value": "31.57",
+          "unit": "%"
+        },
+        {
+          "value": "(23.00)",
+          "unit": "%"
+        },
+        {
+          "value": "5.20",
+          "unit": "%"
+        },
+        {
+          "value": "26.24",
+          "unit": "%"
+        },
+        {
+          "value": "48.41",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Margins",
+      "metric": "EBT Margin",
+      "values": []
+    },
+    {
+      "section": "Margins",
+      "metric": "EBT Excl. Non-Recurring Items Margin",
+      "values": []
+    },
+    {
+      "section": "Margins",
+      "metric": "Gross Profit Margin",
+      "values": [
+        {
+          "value": "20.20",
+          "unit": "%"
+        },
+        {
+          "value": "41.51",
+          "unit": "%"
+        },
+        {
+          "value": "58.87",
+          "unit": "%"
+        },
+        {
+          "value": "45.72",
+          "unit": "%"
+        },
+        {
+          "value": "30.57",
+          "unit": "%"
+        },
+        {
+          "value": "37.80",
+          "unit": "%"
+        },
+        {
+          "value": "45.18",
+          "unit": "%"
+        },
+        {
+          "value": "2.67",
+          "unit": "%"
+        },
+        {
+          "value": "22.35",
+          "unit": "%"
+        },
+        {
+          "value": "39.79",
+          "unit": "%"
+        },
+        {
+          "value": "58.44",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Margins",
+      "metric": "SG&A Margin",
+      "values": [
+        {
+          "value": "5.29",
+          "unit": "%"
+        },
+        {
+          "value": "3.59",
+          "unit": "%"
+        },
+        {
+          "value": "2.68",
+          "unit": "%"
+        },
+        {
+          "value": "3.57",
+          "unit": "%"
+        },
+        {
+          "value": "4.11",
+          "unit": "%"
+        },
+        {
+          "value": "3.23",
+          "unit": "%"
+        },
+        {
+          "value": "3.47",
+          "unit": "%"
+        },
+        {
+          "value": "5.92",
+          "unit": "%"
+        },
+        {
+          "value": "4.50",
+          "unit": "%"
+        },
+        {
+          "value": "3.22",
+          "unit": "%"
+        },
+        {
+          "value": "2.26",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Margins",
+      "metric": "Net Income Margin",
+      "values": [
+        {
+          "value": "(2.23)",
+          "unit": "%"
+        },
+        {
+          "value": "25.04",
+          "unit": "%"
+        },
+        {
+          "value": "46.51",
+          "unit": "%"
+        },
+        {
+          "value": "26.97",
+          "unit": "%"
+        },
+        {
+          "value": "12.54",
+          "unit": "%"
+        },
+        {
+          "value": "21.16",
+          "unit": "%"
+        },
+        {
+          "value": "28.24",
+          "unit": "%"
+        },
+        {
+          "value": "(37.54)",
+          "unit": "%"
+        },
+        {
+          "value": "3.10",
+          "unit": "%"
+        },
+        {
+          "value": "22.84",
+          "unit": "%"
+        },
+        {
+          "value": "41.49",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Margins",
+      "metric": "Net Avail. For Common Margin",
+      "values": [
+        {
+          "value": "(2.23)",
+          "unit": "%"
+        },
+        {
+          "value": "25.04",
+          "unit": "%"
+        },
+        {
+          "value": "46.51",
+          "unit": "%"
+        },
+        {
+          "value": "26.97",
+          "unit": "%"
+        },
+        {
+          "value": "12.54",
+          "unit": "%"
+        },
+        {
+          "value": "21.16",
+          "unit": "%"
+        },
+        {
+          "value": "28.24",
+          "unit": "%"
+        },
+        {
+          "value": "(37.54)",
+          "unit": "%"
+        },
+        {
+          "value": "3.10",
+          "unit": "%"
+        },
+        {
+          "value": "22.84",
+          "unit": "%"
+        },
+        {
+          "value": "41.49",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Margins",
+      "metric": "Normalized Net Income Margin",
+      "values": [
+        {
+          "value": "(0.95)",
+          "unit": "%"
+        },
+        {
+          "value": "16.12",
+          "unit": "%"
+        },
+        {
+          "value": "30.06",
+          "unit": "%"
+        },
+        {
+          "value": "19.74",
+          "unit": "%"
+        },
+        {
+          "value": "8.60",
+          "unit": "%"
+        },
+        {
+          "value": "15.09",
+          "unit": "%"
+        },
+        {
+          "value": "19.40",
+          "unit": "%"
+        },
+        {
+          "value": "(13.99)",
+          "unit": "%"
+        },
+        {
+          "value": "3.14",
+          "unit": "%"
+        },
+        {
+          "value": "16.34",
+          "unit": "%"
+        },
+        {
+          "value": "30.39",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "section": "Asset Turnovers",
+      "metric": "Receivables Turnover (Average Receivables)",
+      "values": [
+        {
+          "value": "6.3",
+          "unit": "x"
+        },
+        {
+          "value": "7.7",
+          "unit": "x"
+        },
+        {
+          "value": "7.1",
+          "unit": "x"
+        },
+        {
+          "value": "6.0",
+          "unit": "x"
+        },
+        {
+          "value": "6.8",
+          "unit": "x"
+        },
+        {
+          "value": "6.6",
+          "unit": "x"
+        },
+        {
+          "value": "6.4",
+          "unit": "x"
+        },
+        {
+          "value": "4.6",
+          "unit": "x"
+        },
+        {
+          "value": "6.7",
+          "unit": "x"
+        },
+        {
+          "value": "5.9",
+          "unit": "x"
+        },
+        {
+          "value": "5.7",
+          "unit": "x"
+        }
+      ]
+    },
+    {
+      "section": "Asset Turnovers",
+      "metric": "Fixed Assets Turnover (Average Fixed Assets)",
+      "values": [
+        {
+          "value": "1.0",
+          "unit": "x"
+        },
+        {
+          "value": "1.2",
+          "unit": "x"
+        },
+        {
+          "value": "1.4",
+          "unit": "x"
+        },
+        {
+          "value": "0.9",
+          "unit": "x"
+        },
+        {
+          "value": "0.7",
+          "unit": "x"
+        },
+        {
+          "value": "0.8",
+          "unit": "x"
+        },
+        {
+          "value": "0.8",
+          "unit": "x"
+        },
+        {
+          "value": "0.4",
+          "unit": "x"
+        },
+        {
+          "value": "0.6",
+          "unit": "x"
+        },
+        {
+          "value": "0.9",
+          "unit": "x"
+        },
+        {
+          "value": "1.2",
+          "unit": "x"
+        }
+      ]
+    },
+    {
+      "section": "Asset Turnovers",
+      "metric": "Inventory Turnover (Average Inventory)",
+      "values": [
+        {
+          "value": "3.8",
+          "unit": "x"
+        },
+        {
+          "value": "4.0",
+          "unit": "x"
+        },
+        {
+          "value": "3.7",
+          "unit": "x"
+        },
+        {
+          "value": "2.9",
+          "unit": "x"
+        },
+        {
+          "value": "2.8",
+          "unit": "x"
+        },
+        {
+          "value": "3.5",
+          "unit": "x"
+        },
+        {
+          "value": "3.0",
+          "unit": "x"
+        },
+        {
+          "value": "2.0",
+          "unit": "x"
+        },
+        {
+          "value": "2.3",
+          "unit": "x"
+        },
+        {
+          "value": "2.6",
+          "unit": "x"
+        },
+        {
+          "value": "2.8",
+          "unit": "x"
+        }
+      ]
+    },
+    {
+      "section": "Asset Turnovers",
+      "metric": "Asset Turnover",
+      "values": [
+        {
+          "value": "0.5",
+          "unit": "x"
+        },
+        {
+          "value": "0.6",
+          "unit": "x"
+        },
+        {
+          "value": "0.8",
+          "unit": "x"
+        },
+        {
+          "value": "0.5",
+          "unit": "x"
+        },
+        {
+          "value": "0.4",
+          "unit": "x"
+        },
+        {
+          "value": "0.5",
+          "unit": "x"
+        },
+        {
+          "value": "0.5",
+          "unit": "x"
+        },
+        {
+          "value": "0.2",
+          "unit": "x"
+        },
+        {
+          "value": "0.4",
+          "unit": "x"
+        },
+        {
+          "value": "0.5",
+          "unit": "x"
+        },
+        {
+          "value": "0.7",
+          "unit": "x"
+        }
+      ]
+    },
+    {
+      "section": "Asset Turnovers",
+      "metric": "Days Outstanding Inventory (Avg)",
+      "values": [
+        {
+          "value": "96.2",
+          "unit": null
+        },
+        {
+          "value": "92.1",
+          "unit": null
+        },
+        {
+          "value": "97.8",
+          "unit": null
+        },
+        {
+          "value": "124.8",
+          "unit": null
+        },
+        {
+          "value": "130.8",
+          "unit": null
+        },
+        {
+          "value": "104.1",
+          "unit": null
+        },
+        {
+          "value": "120.4",
+          "unit": null
+        },
+        {
+          "value": "181.1",
+          "unit": null
+        },
+        {
+          "value": "161.1",
+          "unit": null
+        },
+        {
+          "value": "139.3",
+          "unit": null
+        },
+        {
+          "value": "130.1",
+          "unit": null
+        }
+      ]
+    },
+    {
+      "section": "Short-term Liquidity",
+      "metric": "Current Ratio",
+      "values": [
+        {
+          "value": "2.0",
+          "unit": "x"
+        },
+        {
+          "value": "2.3",
+          "unit": "x"
+        },
+        {
+          "value": "2.8",
+          "unit": "x"
+        },
+        {
+          "value": "2.6",
+          "unit": "x"
+        },
+        {
+          "value": "2.7",
+          "unit": "x"
+        },
+        {
+          "value": "3.1",
+          "unit": "x"
+        },
+        {
+          "value": "2.9",
+          "unit": "x"
+        },
+        {
+          "value": "4.5",
+          "unit": "x"
+        },
+        {
+          "value": "2.6",
+          "unit": "x"
+        },
+        {
+          "value": "2.5",
+          "unit": "x"
+        },
+        {
+          "value": "2.9",
+          "unit": "x"
+        }
+      ]
+    },
+    {
+      "section": "Short-term Liquidity",
+      "metric": "Quick Ratio",
+      "values": [
+        {
+          "value": "1.3",
+          "unit": "x"
+        },
+        {
+          "value": "1.7",
+          "unit": "x"
+        },
+        {
+          "value": "2.1",
+          "unit": "x"
+        },
+        {
+          "value": "1.7",
+          "unit": "x"
+        },
+        {
+          "value": "1.8",
+          "unit": "x"
+        },
+        {
+          "value": "2.2",
+          "unit": "x"
+        },
+        {
+          "value": "1.9",
+          "unit": "x"
+        },
+        {
+          "value": "2.5",
+          "unit": "x"
+        },
+        {
+          "value": "1.6",
+          "unit": "x"
+        },
+        {
+          "value": "1.7",
+          "unit": "x"
+        },
+        {
+          "value": "2.2",
+          "unit": "x"
+        }
+      ]
+    },
+    {
+      "section": "Short-term Liquidity",
+      "metric": "Days Sales Outstanding (Average Receivables)",
+      "values": [
+        {
+          "value": "58.0",
+          "unit": null
+        },
+        {
+          "value": "47.1",
+          "unit": null
+        },
+        {
+          "value": "51.2",
+          "unit": null
+        },
+        {
+          "value": "60.9",
+          "unit": null
+        },
+        {
+          "value": "54.3",
+          "unit": null
+        },
+        {
+          "value": "55.3",
+          "unit": null
+        },
+        {
+          "value": "57.3",
+          "unit": null
+        },
+        {
+          "value": "79.8",
+          "unit": null
+        },
+        {
+          "value": "54.1",
+          "unit": null
+        },
+        {
+          "value": "61.3",
+          "unit": null
+        },
+        {
+          "value": "64.1",
+          "unit": null
+        }
+      ]
+    },
+    {
+      "section": "Short-term Liquidity",
+      "metric": "Days Payable Outstanding (Avg)",
+      "values": [
+        {
+          "value": "48.8",
+          "unit": null
+        },
+        {
+          "value": "41.8",
+          "unit": null
+        },
+        {
+          "value": "42.4",
+          "unit": null
+        },
+        {
+          "value": "43.1",
+          "unit": null
+        },
+        {
+          "value": "47.4",
+          "unit": null
+        },
+        {
+          "value": "43.8",
+          "unit": null
+        },
+        {
+          "value": "37.2",
+          "unit": null
+        },
+        {
+          "value": "41.8",
+          "unit": null
+        },
+        {
+          "value": "40.5",
+          "unit": null
+        },
+        {
+          "value": "48.5",
+          "unit": null
+        },
+        {
+          "value": "44.8",
+          "unit": null
+        }
+      ]
+    },
+    {
+      "section": "Short-term Liquidity",
+      "metric": "Cash Conversion Cycle (Average Days)",
+      "values": [
+        {
+          "value": "105.4",
+          "unit": null
+        },
+        {
+          "value": "97.3",
+          "unit": null
+        },
+        {
+          "value": "106.6",
+          "unit": null
+        },
+        {
+          "value": "142.6",
+          "unit": null
+        },
+        {
+          "value": "137.6",
+          "unit": null
+        },
+        {
+          "value": "115.6",
+          "unit": null
+        },
+        {
+          "value": "140.5",
+          "unit": null
+        },
+        {
+          "value": "219.1",
+          "unit": null
+        },
+        {
+          "value": "174.7",
+          "unit": null
+        },
+        {
+          "value": "152.1",
+          "unit": null
+        },
+        {
+          "value": "149.4",
+          "unit": null
+        }
+      ]
+    },
+    {
+      "section": "Short-term Liquidity",
+      "metric": "Operating Cash Flow to Current Liabilities",
+      "values": [
+        {
+          "value": "0.7",
+          "unit": "x"
+        },
+        {
+          "value": "1.5",
+          "unit": "x"
+        },
+        {
+          "value": "3.0",
+          "unit": "x"
+        },
+        {
+          "value": "2.1",
+          "unit": "x"
+        },
+        {
+          "value": "1.3",
+          "unit": "x"
+        },
+        {
+          "value": "1.9",
+          "unit": "x"
+        },
+        {
+          "value": "2.0",
+          "unit": "x"
+        },
+        {
+          "value": "0.3",
+          "unit": "x"
+        },
+        {
+          "value": "0.9",
+          "unit": "x"
+        },
+        {
+          "value": "1.5",
+          "unit": "x"
+        },
+        {
+          "value": "2.1",
+          "unit": "x"
+        }
+      ]
+    }
+  ]
+}

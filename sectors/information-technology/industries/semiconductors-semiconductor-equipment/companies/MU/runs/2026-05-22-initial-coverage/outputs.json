@@ -1,0 +1,71 @@
+{
+  "ticker": "MU",
+  "company_name": "Micron Technology, Inc.",
+  "currency": "USD",
+  "current_price": 751.0,
+  "shares_outstanding_m": 1130.0,
+  "market_cap_m": 846930.0,
+  "total_debt_m": 10800.0,
+  "cash_and_inv_m": 14590.0,
+  "enterprise_value_m": 841100.0,
+  "recommendation": "HOLD",
+  "price_target": 650.0,
+  "implied_downside_pct": -13.4,
+  "fy2025_revenue_m": 37380.0,
+  "fy2026_consensus_revenue_m": 109700.0,
+  "fy2027_consensus_revenue_m": 172760.0,
+  "fy2028_consensus_revenue_m": 165260.0,
+  "fy2026_consensus_eps": 58.29,
+  "fy2027_consensus_eps": 102.74,
+  "fy2028_consensus_eps": 85.87,
+  "pe_fy2026": 12.9,
+  "pe_fy2027": 7.3,
+  "pe_fy2028": 8.7,
+  "ev_sales_fy2026": 7.7,
+  "ev_sales_fy2027": 4.9,
+  "ev_sales_fy2028": 5.1,
+  "consensus_target_price": 613.23,
+  "wacc_base_pct": 12.0,
+  "terminal_growth_base_pct": 2.5,
+  "beta_5y_monthly": 1.92,
+  "workbook_id": "mu-dcf-2026-05-22",
+  "workbook_name": "MU Financial & DCF Model",
+  "generated_at": "2026-05-23T05:14:59.949Z",
+  "outputs": [
+    {
+      "key": "valuation.implied_share_price",
+      "sheet": "Summary",
+      "cell": "B25",
+      "value": 583.18,
+      "unit": "USD/share"
+    },
+    {
+      "key": "valuation.implied_equity_value",
+      "sheet": "Summary",
+      "cell": "B24",
+      "value": 658989,
+      "unit": "USD Millions"
+    },
+    {
+      "key": "valuation.target_price",
+      "sheet": "Summary",
+      "cell": "B13",
+      "value": 650,
+      "unit": "USD"
+    },
+    {
+      "key": "valuation.current_price",
+      "sheet": "Summary",
+      "cell": "B5",
+      "value": 751,
+      "unit": "USD"
+    },
+    {
+      "key": "valuation.wacc",
+      "sheet": "Summary",
+      "cell": "B18",
+      "value": 0.08,
+      "unit": "Percentage"
+    }
+  ]
+}

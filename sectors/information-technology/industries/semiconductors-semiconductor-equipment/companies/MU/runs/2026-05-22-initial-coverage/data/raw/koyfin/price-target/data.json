@@ -1,0 +1,73 @@
+{
+  "ticker": "MU",
+  "tab": "MU - Price Target",
+  "url": "https://app.koyfin.com/estimates/pt/eq-7n04a1",
+  "extracted_at": "2026-05-22T23:06:53.422Z",
+  "source_dom": {
+    "price_target": {
+      "low_target": 249,
+      "high_target": 1,
+      "avg_target": 613.23,
+      "current_price": 751,
+      "return_potential_pct": -18.35,
+      "trailing_1y_return_pct": 691.94
+    },
+    "ratings": {
+      "Strong Buy": 9,
+      "Buy": 30,
+      "Hold": 4,
+      "Sell": 1,
+      "Strong Sell": 0,
+      "covering_analysts": 44,
+      "historical": null
+    },
+    "historical_chart": {
+      "dates_visible": [
+        "Jul 2023",
+        "Oct 2023",
+        "Jan 2024",
+        "Apr 2024",
+        "Jul 2024",
+        "Oct 2024",
+        "Jan 2025",
+        "Apr 2025",
+        "Jul 2025",
+        "Oct 2025",
+        "Jan 2026",
+        "Apr 2026"
+      ],
+      "price_values_visible": [
+        2022,
+        2023,
+        2024,
+        2025,
+        2026,
+        3.96,
+        4.09,
+        4.22,
+        4.35,
+        4.48,
+        4.61,
+        4.74,
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1,
+        1,
+        1,
+        50,
+        100,
+        150
+      ]
+    }
+  },
+  "source_api": {
+    "error": "No KID in response. Raw: {\"statusCode\":400,\"message\":\"Invalid type of identifier\",\"error\":\"Bad Request\"}"
+  }
+}
