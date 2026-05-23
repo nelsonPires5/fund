@@ -1,16 +1,16 @@
 ---
-name: company-workspace-manager
-description: Create and maintain sector/company/run folders for the investment research workspace. Use when setting up a company, creating a new model/research run, updating company.json, writing manifest.json, or organizing artifacts.
+name: workspace-manager
+description: Create and maintain sector, industry, company, and run folders for the investment research workspace. Use when setting up a company, organizing reports, creating a new model/research run, updating company.json, writing manifest.json, or organizing artifacts.
 ---
 
-# Company Workspace Manager
+# Workspace Manager
 
 Use this skill for file organization only. It does not perform valuation or write thesis content.
 
 ## Company layout
 
 ```text
-sectors/<sector>/companies/<ticker>/
+sectors/<sector>/industries/<industry>/companies/<ticker>/
   company.json
   runs/
     <yyyy-mm-dd>-<run-type>/
@@ -33,6 +33,20 @@ sectors/<sector>/companies/<ticker>/
 
 `deck.pptx` is optional. Raw data is run-local so every run is self-contained and auditable.
 
+## Sector & Industry Reports layout
+
+Sector and industry level overviews, primers, and reports are structured as follows:
+
+```text
+sectors/<sector>/reports/<report-id>/
+  report.md
+  assets/                     # report-specific assets and diagrams
+
+sectors/<sector>/industries/<industry>/reports/<report-id>/
+  report.md
+  assets/                     # industry-specific assets and diagrams
+```
+
 ## `company.json`
 
 Create/update a small metadata file for agents:
@@ -42,7 +56,8 @@ Create/update a small metadata file for agents:
   "company_name": "Microsoft Corporation",
   "ticker": "MSFT",
   "exchange": "NASDAQ",
-  "sector": "software",
+  "sector": "technology",
+  "industry": "software",
   "subsector": "infrastructure software",
   "currency": "USD",
   "fiscal_year_end": "06-30",
@@ -98,3 +113,13 @@ Each run gets a manifest:
 - Use `model.xlsx` for workbook/model artifacts by default in this comparison phase.
 - Use `deck.pptx` for presentation artifacts by default when requested.
 - Use `report.md` for detailed research discussion.
+
+## New Company Classification Pipeline
+
+When onboarding or creating a new company folder in the workspace, you MUST follow this classification check:
+1. Load the comprehensive GICS taxonomy reference at `references/sectors_industries.json`.
+2. Based on the company's description and business profile, identify the most appropriate GICS Sector (2-digit) and GICS Industry (6-digit).
+3. Present your GICS classification suggestions to the user (e.g. suggesting Sector: "Information Technology", Industry: "Software" for a software-as-a-service company).
+4. Ask the user to confirm the categorization or choose from a list of options.
+5. Create the company workspace at `sectors/<gics-sector-slug>/industries/<gics-industry-slug>/companies/<ticker>/` ONLY after user confirmation.
+
