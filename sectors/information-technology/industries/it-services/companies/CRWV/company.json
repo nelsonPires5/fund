@@ -1,0 +1,16 @@
+{
+  "company_name": "CoreWeave, Inc.",
+  "ticker": "CRWV",
+  "exchange": "OTC",
+  "sector": "information-technology",
+  "subsector": "GPU cloud / AI compute",
+  "currency": "USD",
+  "fiscal_year_end": "12-31",
+  "koyfin_id": "CRWV US",
+  "sec_cik": "0001880479",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-22-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "it-services"
+}

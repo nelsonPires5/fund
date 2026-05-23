@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="slides-format" content="viewport">
+    <title>CoreWeave (CRWV) — Investment Committee Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --color-bg: #0a0f1e;
+            --color-bg-deep: #050810;
+            --color-surface: #111827;
+            --color-text: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-text-muted: #64748b;
+            --color-accent-1: #C9A84C;
+            --color-accent-2: #E8D5B5;
+            --color-accent-3: #8B6914;
+            --color-glass-bg: rgba(255,255,255,0.05);
+            --color-glass-border: rgba(255,255,255,0.09);
+            --color-vignette: rgba(0,0,0,0.45);
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+        }
+    </style>
+    <style>
+        :root {
+            --color-bg: #0a0f1e;
+            --color-text: #f1f5f9;
+            --glow-color-rgb: 201,168,76;
+            /* shorthand vars for data-viz templates */
+            --accent-1: #C9A84C;
+            --accent-2: #E8D5B5;
+            --accent-3: #8B6914;
+            --grad-accent: linear-gradient(135deg, #C9A84C, #E8D5B5);
+            --glass-bg: rgba(255,255,255,0.05);
+            --glass-border: rgba(255,255,255,0.09);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --bg-deep: #050810;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { background: var(--color-bg); margin: 0; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--color-text); overflow: hidden; height: 100vh; width: 100vw; }
+        .deck { width: 100vw; height: 100vh; position: relative; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: scale(0.95); transition: opacity 0.7s ease, transform 0.7s ease; pointer-events: none; overflow: hidden; }
+        .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+        .slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1100px; padding: clamp(1.5rem, 4vw, 3.5rem); }
+        .nav-controls { position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; z-index: 100; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 9px 22px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.09); }
+        .nav-btn { width: 36px; height: 36px; border: none; background: rgba(255,255,255,0.05); color: #C9A84C; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        .nav-btn:hover { background: rgba(201,168,76,0.15); }
+        .slide-dots { display: flex; gap: 7px; }
+        .slide-dots .dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.15); cursor: pointer; transition: background 0.3s, transform 0.3s; }
+        .slide-dots .dot.active { background: #C9A84C; transform: scale(1.3); }
+        .slide-counter { font-size: 0.75rem; color: #64748b; min-width: 36px; text-align: center; }
+        .reveal { opacity: 0; transform: translateY(20px); }
+        /* glow */
+        .text-glow { text-shadow: 0 0 20px rgba(201,168,76,0.5), 0 0 40px rgba(201,168,76,0.2); }
+        .stat-glow { text-shadow: 0 0 30px rgba(201,168,76,0.6), 0 0 60px rgba(201,168,76,0.25); }
+        @keyframes glow-pulse {
+            0%,100% { text-shadow: 0 0 20px rgba(201,168,76,0.5), 0 0 40px rgba(201,168,76,0.2); }
+            50% { text-shadow: 0 0 30px rgba(201,168,76,0.8), 0 0 60px rgba(201,168,76,0.35); }
+        }
+        .glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+        /* blobs */
+        @keyframes float-slow { 0%{transform:translate(0,0)scale(1)}25%{transform:translate(60px,-50px)scale(1.12)}50%{transform:translate(-40px,40px)scale(0.9)}75%{transform:translate(50px,20px)scale(1.08)}100%{transform:translate(0,0)scale(1)} }
+        @keyframes float-drift { 0%{transform:translate(0,0)scale(1)rotate(0deg)}33%{transform:translate(-50px,-60px)scale(1.15)rotate(3deg)}66%{transform:translate(40px,30px)scale(0.88)rotate(-2deg)}100%{transform:translate(0,0)scale(1)rotate(0deg)} }
+        @keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)} }
+        .gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float-slow 10s ease-in-out infinite; }
+        .blob:nth-child(2) { animation: float-drift 14s ease-in-out infinite; }
+        .blob:nth-child(3) { animation: float-slow 18s ease-in-out infinite reverse; }
+        /* noise + vignette */
+        .slide::before { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); background-repeat:repeat; background-size:256px; opacity:0.03; mix-blend-mode:overlay; }
+        .slide::after { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background:radial-gradient(ellipse at center, transparent 50%, var(--color-vignette) 100%); }
+        /* data viz helpers */
+        .bar-row { display:flex; align-items:center; gap:12px; width:100%; }
+        .bar-label { min-width:130px; font-size:0.8rem; color:var(--text-secondary); text-align:right; }
+        .bar-track { flex:1; height:20px; background:rgba(255,255,255,0.06); border-radius:10px; overflow:hidden; }
+        .bar-fill { height:100%; border-radius:10px; width:0%; transition: width 1s cubic-bezier(0.16,1,0.3,1); }
+        .bar-value { min-width:60px; font-size:0.8rem; font-weight:600; color:var(--accent-1); }
+        .heatmap-grid { display:grid; gap:4px; }
+        .heatmap-cell { padding:0.45rem; text-align:center; font-weight:700; font-size:0.8rem; display:flex; align-items:center; justify-content:center; border-radius:6px; }
+        .reactive-heatmap .hm-grid { display:grid; gap:3px; }
+        .hm-cell { padding:0.5rem 0.3rem; text-align:center; font-size:0.78rem; font-weight:700; border-radius:5px; cursor:default; position:relative; }
+        .donut-ring { stroke-dasharray:314.16; stroke-dashoffset:314.16; stroke-linecap:round; }
+        .radar-shape { }
+        /* deco parallax */
+        .deco-shape { position:absolute; border-radius:50%; pointer-events:none; transition:transform 0.1s linear; }
+        /* spotlight */
+        .mouse-spotlight { position:fixed; inset:0; z-index:99; pointer-events:none; }
+        /* rating badge */
+        .rating-badge { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,rgba(201,168,76,0.25),rgba(201,168,76,0.1)); border:1px solid rgba(201,168,76,0.4); border-radius:8px; padding:6px 16px; }
+        /* pill */
+        .pill { display:inline-flex; align-items:center; padding:3px 12px; border-radius:999px; font-size:0.72rem; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; }
+        .pill-green { background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.3); color:#4ade80; }
+        .pill-red { background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#f87171; }
+        .pill-amber { background:rgba(251,191,36,0.15); border:1px solid rgba(251,191,36,0.3); color:#fbbf24; }
+        .pill-gold { background:rgba(201,168,76,0.18); border:1px solid rgba(201,168,76,0.4); color:#C9A84C; }
+    </style>
+</head>
+<body>
+<div class="mouse-spotlight"></div>
+<div class="deck">
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide active" data-slide="1">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:550px;height:550px;top:-120px;right:-100px;background:#C9A84C;opacity:0.13;"></div>
+        <div class="blob" style="width:320px;height:320px;bottom:-80px;left:-60px;background:#8B6914;opacity:0.10;"></div>
+        <div class="blob" style="width:220px;height:220px;top:45%;left:12%;background:#E8D5B5;opacity:0.07;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+        <div style="margin-bottom:1.5rem;">
+            <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/d78b5937ee6e62fdbb8e6258593e43dd79ef1bd8.jpg" alt="CoreWeave Logo"
+                 class="reveal" style="height:72px;object-fit:contain;filter:brightness(0) invert(1);display:inline-block;animation:float 3.5s ease-in-out infinite;drop-shadow(0 0 20px rgba(201,168,76,0.4))">
+        </div>
+        <h1 class="reveal font-display font-black tracking-tight mb-3"
+            style="font-size:clamp(2.8rem,6vw,5rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5,#C9A84C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+            CoreWeave, Inc.
+        </h1>
+        <p class="reveal font-body font-light tracking-[5px] uppercase mb-6" style="font-size:clamp(0.8rem,1.3vw,1.1rem);color:#64748b;">
+            CRWV · NASDAQ · Investment Committee Presentation
+        </p>
+        <div class="reveal" style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:2rem;">
+            <div class="rating-badge">
+                <span style="color:#C9A84C;font-weight:800;font-size:1.1rem;font-family:'Playfair Display',serif;">BUY</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 16px;font-size:0.82rem;color:#cbd5e1;">
+                Price Target: <strong style="color:#C9A84C;">$215</strong>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 16px;font-size:0.82rem;color:#cbd5e1;">
+                Current Price: <strong style="color:#f1f5f9;">$107.58</strong>
+            </div>
+            <div style="background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:6px 16px;font-size:0.82rem;">
+                Upside: <strong style="color:#4ade80;">+100%</strong>
+            </div>
+        </div>
+        <p class="reveal" style="font-size:0.78rem;color:#64748b;letter-spacing:0.05em;">May 2026 · Equity Research — Initiating Coverage</p>
+    </div>
+</div>
+
+<!-- SLIDE 2: AGENDA -->
+<div class="slide" data-slide="2">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:350px;height:350px;top:-60px;right:-60px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-50px;left:-40px;background:#8B6914;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(2rem,3.5vw,2.8rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Agenda</h2>
+        <p class="reveal mb-6" style="color:#64748b;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;">Investment Committee · CRWV Initiating Coverage</p>
+        <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #C9A84C;border-radius:8px;padding:14px 18px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                    <span style="background:linear-gradient(135deg,#C9A84C,#8B6914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1rem;font-family:'Playfair Display',serif;">01</span>
+                    <span style="font-weight:600;font-size:0.9rem;">Investment Thesis</span>
+                </div>
+                <p style="font-size:0.77rem;color:#64748b;">3-pillar bull case, key catalysts</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #C9A84C;border-radius:8px;padding:14px 18px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                    <span style="background:linear-gradient(135deg,#C9A84C,#8B6914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1rem;font-family:'Playfair Display',serif;">02</span>
+                    <span style="font-weight:600;font-size:0.9rem;">Company Overview</span>
+                </div>
+                <p style="font-size:0.77rem;color:#64748b;">Business model, revenue, moat</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #C9A84C;border-radius:8px;padding:14px 18px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                    <span style="background:linear-gradient(135deg,#C9A84C,#8B6914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1rem;font-family:'Playfair Display',serif;">03</span>
+                    <span style="font-weight:600;font-size:0.9rem;">Financial Analysis</span>
+                </div>
+                <p style="font-size:0.77rem;color:#64748b;">Revenue growth, margins, FCF</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #C9A84C;border-radius:8px;padding:14px 18px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                    <span style="background:linear-gradient(135deg,#C9A84C,#8B6914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1rem;font-family:'Playfair Display',serif;">04</span>
+                    <span style="font-weight:600;font-size:0.9rem;">Market Opportunity</span>
+                </div>
+                <p style="font-size:0.77rem;color:#64748b;">TAM, competitive landscape</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #C9A84C;border-radius:8px;padding:14px 18px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                    <span style="background:linear-gradient(135deg,#C9A84C,#8B6914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1rem;font-family:'Playfair Display',serif;">05</span>
+                    <span style="font-weight:600;font-size:0.9rem;">Valuation</span>
+                </div>
+                <p style="font-size:0.77rem;color:#64748b;">DCF, comps, football field</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #C9A84C;border-radius:8px;padding:14px 18px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                    <span style="background:linear-gradient(135deg,#C9A84C,#8B6914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1rem;font-family:'Playfair Display',serif;">06</span>
+                    <span style="font-weight:600;font-size:0.9rem;">Risks &amp; Thesis Tracker</span>
+                </div>
+                <p style="font-size:0.77rem;color:#64748b;">Bull/Bear/Base, KPIs</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 3: INVESTMENT THESIS -->
+<div class="slide" data-slide="3">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:400px;height:400px;top:-80px;right:-80px;background:#C9A84C;opacity:0.09;"></div>
+        <div class="blob" style="width:260px;height:260px;bottom:-60px;left:-40px;background:#8B6914;opacity:0.07;"></div>
+    </div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(1.8rem,3.2vw,2.5rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Investment Thesis</h2>
+        <p class="reveal mb-5" style="color:#64748b;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;">Three pillars supporting BUY rating · $215 PT</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;">
+            <div class="reveal" style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-top:3px solid #C9A84C;border-radius:10px;padding:18px 16px;">
+                <div style="font-size:1.8rem;margin-bottom:8px;">⚡</div>
+                <h3 style="font-size:0.88rem;font-weight:700;color:#E8D5B5;margin-bottom:6px;">Revenue Visibility</h3>
+                <p style="font-size:0.75rem;color:#94a3b8;line-height:1.5;">$99.4B contracted backlog representing ~2.8× FY2025 revenue. Microsoft = 62% of revenue in FY2025, providing a floor on near-term growth.</p>
+            </div>
+            <div class="reveal" style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-top:3px solid #C9A84C;border-radius:10px;padding:18px 16px;">
+                <div style="font-size:1.8rem;margin-bottom:8px;">🏗️</div>
+                <h3 style="font-size:0.88rem;font-weight:700;color:#E8D5B5;margin-bottom:6px;">Infrastructure Moat</h3>
+                <p style="font-size:0.75rem;color:#94a3b8;line-height:1.5;">32 data centers, 250k+ GPUs (primarily H100/H200), +$15B capex cycle. NVIDIA $2B equity stake and preferred GPU allocation create insurmountable barriers.</p>
+            </div>
+            <div class="reveal" style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-top:3px solid #C9A84C;border-radius:10px;padding:18px 16px;">
+                <div style="font-size:1.8rem;margin-bottom:8px;">📈</div>
+                <h3 style="font-size:0.88rem;font-weight:700;color:#E8D5B5;margin-bottom:6px;">Margin Inflection</h3>
+                <p style="font-size:0.75rem;color:#94a3b8;line-height:1.5;">Gross margins expanded from 10% (FY2023) to 23% (FY2025) to ~28% (Q1'26). EBITDA margin pathway to 60%+ as infrastructure scales and D&A peaks.</p>
+            </div>
+        </div>
+        <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px 20px;">
+            <p style="font-size:0.82rem;color:#cbd5e1;line-height:1.6;"><span style="color:#C9A84C;font-weight:700;">One-line thesis:</span> CoreWeave is the only pure-play hyperscale GPU cloud at scale — a critical picks-and-shovels beneficiary of the AI infrastructure buildout with $99.4B in contracted backlog, a defensible NVIDIA moat, and a clear path to 60%+ EBITDA margins as the $1.7T AI infrastructure TAM unfolds through 2030.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 4: KEY METRICS SNAPSHOT -->
+<div class="slide" data-slide="4">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-70px;right:-70px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-50px;left:-30px;background:#E8D5B5;opacity:0.05;"></div>
+    </div>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(1.8rem,3.2vw,2.5rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Key Metrics Snapshot</h2>
+        <p class="reveal mb-5" style="color:#64748b;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;">As of May 22, 2026 · Q1 2026 Actuals</p>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;">
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;">
+                <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Market Cap</p>
+                <p class="stat-glow glow-pulse" style="font-size:1.6rem;font-weight:800;color:#C9A84C;font-family:'Playfair Display',serif;" data-count="59" data-suffix="B">$0B</p>
+                <p style="font-size:0.7rem;color:#64748b;margin-top:2px;">@ $107.58/sh</p>
+            </div>
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;">
+                <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">FY2025 Revenue</p>
+                <p class="stat-glow" style="font-size:1.6rem;font-weight:800;color:#C9A84C;font-family:'Playfair Display',serif;" data-count="35" data-suffix="B">$0B</p>
+                <p style="font-size:0.7rem;color:#64748b;margin-top:2px;">+737% YoY growth</p>
+            </div>
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;">
+                <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Contracted Backlog</p>
+                <p class="stat-glow" style="font-size:1.6rem;font-weight:800;color:#C9A84C;font-family:'Playfair Display',serif;" data-count="99" data-suffix="B">$0B</p>
+                <p style="font-size:0.7rem;color:#64748b;margin-top:2px;">~2.8× FY2025 rev</p>
+            </div>
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;">
+                <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Gross Margin</p>
+                <p class="stat-glow" style="font-size:1.6rem;font-weight:800;color:#C9A84C;font-family:'Playfair Display',serif;" data-count="28" data-suffix="%">0%</p>
+                <p style="font-size:0.7rem;color:#64748b;margin-top:2px;">Q1'26 · up from 10%</p>
+            </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;">
+                <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">EV</p>
+                <p style="font-size:1.6rem;font-weight:800;color:#E8D5B5;font-family:'Playfair Display',serif;" data-count="81" data-suffix="B">$0B</p>
+                <p style="font-size:0.7rem;color:#64748b;margin-top:2px;">Net debt $22.4B</p>
+            </div>
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;">
+                <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Price Target</p>
+                <p style="font-size:1.6rem;font-weight:800;color:#4ade80;font-family:'Playfair Display',serif;">$215</p>
+                <p style="font-size:0.7rem;color:#4ade80;margin-top:2px;">+100% upside</p>
+            </div>
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;">
+                <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">EV/Rev FY2025</p>
+                <p style="font-size:1.6rem;font-weight:800;color:#E8D5B5;font-family:'Playfair Display',serif;" data-count="23" data-suffix="x">0x</p>
+                <p style="font-size:0.7rem;color:#64748b;margin-top:2px;">Vs. peers 4–18×</p>
+            </div>
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;">
+                <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">52-Wk Range</p>
+                <p style="font-size:1.3rem;font-weight:800;color:#E8D5B5;font-family:'Playfair Display',serif;">$23–$74</p>
+                <p style="font-size:0.7rem;color:#64748b;margin-top:2px;">IPO March 2025</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 5: REVENUE GROWTH (Line Chart) -->
+<div class="slide" data-slide="5">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:370px;height:370px;top:-60px;right:-60px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-50px;left:-30px;background:#8B6914;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <div style="display:grid;grid-template-columns:1fr 1.7fr;gap:28px;align-items:center;">
+            <div>
+                <h2 class="reveal font-display font-bold mb-2" style="font-size:clamp(1.5rem,2.5vw,2.1rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Revenue &amp; Margin Trajectory</h2>
+                <p class="reveal mb-5" style="color:#64748b;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;">FY2022–Q1 2026 Actuals</p>
+                <div class="reveal" style="display:flex;flex-direction:column;gap:10px;">
+                    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;">
+                        <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">FY2022 Revenue</p>
+                        <p style="font-size:1.05rem;font-weight:700;color:#E8D5B5;">$29M</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;">
+                        <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">FY2025 Revenue</p>
+                        <p style="font-size:1.05rem;font-weight:700;color:#C9A84C;">$3.48B</p>
+                        <p style="font-size:0.7rem;color:#4ade80;">+12,000% vs. FY2022</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;">
+                        <p style="font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">Q1 2026 Revenue</p>
+                        <p style="font-size:1.05rem;font-weight:700;color:#C9A84C;">$981M</p>
+                        <p style="font-size:0.7rem;color:#4ade80;">+420% YoY</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal">
+                <svg viewBox="0 0 580 240" style="width:100%;height:auto;">
+                    <defs>
+                        <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" style="stop-color:#C9A84C;stop-opacity:0.35"/>
+                            <stop offset="100%" style="stop-color:#C9A84C;stop-opacity:0.02"/>
+                        </linearGradient>
+                        <linearGradient id="strokeRev" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#8B6914"/>
+                            <stop offset="100%" style="stop-color:#E8D5B5"/>
+                        </linearGradient>
+                    </defs>
+                    <line x1="55" y1="20" x2="55" y2="210" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+                    <line x1="55" y1="210" x2="550" y2="210" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+                    <line x1="55" y1="160" x2="550" y2="160" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+                    <line x1="55" y1="110" x2="550" y2="110" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+                    <line x1="55" y1="60" x2="550" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+                    <text x="48" y="213" text-anchor="end" style="fill:#64748b;font-size:0.55rem;font-family:'DM Sans',sans-serif;">$0</text>
+                    <text x="48" y="163" text-anchor="end" style="fill:#64748b;font-size:0.55rem;font-family:'DM Sans',sans-serif;">$1B</text>
+                    <text x="48" y="113" text-anchor="end" style="fill:#64748b;font-size:0.55rem;font-family:'DM Sans',sans-serif;">$2B</text>
+                    <text x="48" y="63" text-anchor="end" style="fill:#64748b;font-size:0.55rem;font-family:'DM Sans',sans-serif;">$3B</text>
+                    <!-- FY2022=29M→y≈208, FY2023=474M→y≈186, FY2024=1900M→y≈115, FY2025=3480M→y≈36, Q1'26=981M run rate -->
+                    <!-- x positions: 130,230,330,430,530 -->
+                    <polygon class="line-area"
+                        points="130,207 230,186 330,115 430,36 530,85 530,210 130,210"
+                        fill="url(#revGrad)" style="opacity:0;transition:opacity 1s ease 0.5s;"/>
+                    <polyline class="line-path"
+                        points="130,207 230,186 330,115 430,36 530,85"
+                        fill="none" stroke="url(#strokeRev)" stroke-width="2.5" stroke-linecap="round"
+                        stroke-dasharray="900" stroke-dashoffset="900"
+                        style="transition:stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1);"/>
+                    <g class="line-dots" style="opacity:0;transition:opacity 0.5s ease 1.5s;">
+                        <circle cx="130" cy="207" r="3.5" fill="#8B6914"/>
+                        <circle cx="230" cy="186" r="3.5" fill="#C9A84C"/>
+                        <circle cx="330" cy="115" r="3.5" fill="#C9A84C"/>
+                        <circle cx="430" cy="36" r="4" fill="#E8D5B5"/>
+                        <circle cx="530" cy="85" r="4" fill="#E8D5B5"/>
+                    </g>
+                    <text x="130" y="225" text-anchor="middle" style="fill:#64748b;font-size:0.58rem;font-family:'DM Sans',sans-serif;">FY22</text>
+                    <text x="230" y="225" text-anchor="middle" style="fill:#64748b;font-size:0.58rem;font-family:'DM Sans',sans-serif;">FY23</text>
+                    <text x="330" y="225" text-anchor="middle" style="fill:#64748b;font-size:0.58rem;font-family:'DM Sans',sans-serif;">FY24</text>
+                    <text x="430" y="225" text-anchor="middle" style="fill:#64748b;font-size:0.58rem;font-family:'DM Sans',sans-serif;">FY25</text>
+                    <text x="530" y="225" text-anchor="middle" style="fill:#C9A84C;font-size:0.58rem;font-family:'DM Sans',sans-serif;font-weight:600;">Q1'26A</text>
+                    <text x="135" y="200" style="fill:#94a3b8;font-size:0.52rem;font-family:'DM Sans',sans-serif;">$29M</text>
+                    <text x="235" y="179" style="fill:#94a3b8;font-size:0.52rem;font-family:'DM Sans',sans-serif;">$474M</text>
+                    <text x="335" y="108" style="fill:#cbd5e1;font-size:0.52rem;font-family:'DM Sans',sans-serif;">$1.9B</text>
+                    <text x="435" y="29" style="fill:#E8D5B5;font-size:0.52rem;font-family:'DM Sans',sans-serif;font-weight:700;">$3.5B</text>
+                    <text x="535" y="78" style="fill:#C9A84C;font-size:0.52rem;font-family:'DM Sans',sans-serif;font-weight:700;">$981M</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 6: BUSINESS MODEL -->
+<div class="slide" data-slide="6">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-70px;right:-70px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:230px;height:230px;bottom:-45px;left:-30px;background:#8B6914;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(1.8rem,3vw,2.4rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Business Model &amp; Competitive Moat</h2>
+        <p class="reveal mb-4" style="color:#64748b;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;">Hyperscale GPU Cloud · Pure-Play AI Infrastructure</p>
+        <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:18px;">
+            <div>
+                <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;margin-bottom:12px;">
+                    <h3 style="font-size:0.85rem;font-weight:700;color:#E8D5B5;margin-bottom:10px;">Revenue Model</h3>
+                    <div style="display:flex;flex-direction:column;gap:7px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:rgba(201,168,76,0.08);border-radius:6px;">
+                            <span style="font-size:0.78rem;color:#cbd5e1;">Cloud Services (GPU rental)</span>
+                            <span class="pill pill-gold">~85%</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:rgba(255,255,255,0.04);border-radius:6px;">
+                            <span style="font-size:0.78rem;color:#cbd5e1;">Managed Services / Professional Svcs</span>
+                            <span class="pill pill-gold">~15%</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.73rem;color:#64748b;margin-top:8px;line-height:1.5;">Long-term contracts (1–5 years) ensure revenue predictability. Avg. contract duration expanding as hyperscaler customers lock capacity.</p>
+                </div>
+                <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;">
+                    <h3 style="font-size:0.85rem;font-weight:700;color:#E8D5B5;margin-bottom:8px;">Customer Concentration</h3>
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <div class="bar-row">
+                            <p class="bar-label" style="font-size:0.73rem;">Microsoft</p>
+                            <div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#C9A84C,#E8D5B5);" data-width="62"></div></div>
+                            <p class="bar-value" style="font-size:0.73rem;">62%</p>
+                        </div>
+                        <div class="bar-row">
+                            <p class="bar-label" style="font-size:0.73rem;">OpenAI</p>
+                            <div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#8B6914,#C9A84C);" data-width="15"></div></div>
+                            <p class="bar-value" style="font-size:0.73rem;">~15%</p>
+                        </div>
+                        <div class="bar-row">
+                            <p class="bar-label" style="font-size:0.73rem;">Other AI Labs</p>
+                            <div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#4a3a10,#8B6914);" data-width="23"></div></div>
+                            <p class="bar-value" style="font-size:0.73rem;">~23%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;margin-bottom:12px;">
+                    <h3 style="font-size:0.85rem;font-weight:700;color:#E8D5B5;margin-bottom:8px;">Competitive Moat</h3>
+                    <div style="display:flex;flex-direction:column;gap:7px;">
+                        <div style="display:flex;gap:8px;align-items:flex-start;">
+                            <span style="color:#C9A84C;font-weight:700;font-size:0.9rem;margin-top:1px;">✓</span>
+                            <p style="font-size:0.76rem;color:#cbd5e1;line-height:1.4;"><strong style="color:#E8D5B5;">NVIDIA equity partner</strong> — $2B stake, preferred H100/H200 allocation, early Blackwell access</p>
+                        </div>
+                        <div style="display:flex;gap:8px;align-items:flex-start;">
+                            <span style="color:#C9A84C;font-weight:700;font-size:0.9rem;margin-top:1px;">✓</span>
+                            <p style="font-size:0.76rem;color:#cbd5e1;line-height:1.4;"><strong style="color:#E8D5B5;">InfiniBand networking</strong> — only cloud native on full Dragonfly+ topology enabling LLM cluster ≥100k GPUs</p>
+                        </div>
+                        <div style="display:flex;gap:8px;align-items:flex-start;">
+                            <span style="color:#C9A84C;font-weight:700;font-size:0.9rem;margin-top:1px;">✓</span>
+                            <p style="font-size:0.76rem;color:#cbd5e1;line-height:1.4;"><strong style="color:#E8D5B5;">Switching costs</strong> — customers retrain models on CoreWeave infra; migration cost = months of lost compute</p>
+                        </div>
+                        <div style="display:flex;gap:8px;align-items:flex-start;">
+                            <span style="color:#C9A84C;font-weight:700;font-size:0.9rem;margin-top:1px;">✓</span>
+                            <p style="font-size:0.76rem;color:#cbd5e1;line-height:1.4;"><strong style="color:#E8D5B5;">32 data centers</strong> — purpose-built for AI density, 250k+ GPU footprint unmatched by pure peers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 7: MARKET OPPORTUNITY (Treemap + TAM) -->
+<div class="slide" data-slide="7">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:400px;height:400px;top:-80px;right:-80px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-55px;left:-30px;background:#8B6914;opacity:0.07;"></div>
+    </div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(1.8rem,3vw,2.4rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Market Opportunity</h2>
+        <p class="reveal mb-4" style="color:#64748b;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;">AI Infrastructure TAM · 39% CAGR to $1.7T by 2030</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="reveal" style="display:grid;grid-template-columns:3fr 2fr;grid-template-rows:2fr 1fr 1fr;gap:6px;height:260px;">
+                <div style="grid-row:1/3;background:linear-gradient(135deg,rgba(201,168,76,0.35),rgba(201,168,76,0.15));border:1px solid rgba(201,168,76,0.3);border-radius:10px;padding:16px;display:flex;flex-direction:column;justify-content:center;">
+                    <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.05em;color:#C9A84C;margin-bottom:4px;">AI Cloud Infrastructure</p>
+                    <p style="font-size:2.2rem;font-weight:800;color:#f1f5f9;font-family:'Playfair Display',serif;">$530B</p>
+                    <p style="font-size:0.68rem;color:#94a3b8;margin-top:4px;">2030E · GPU rental + colocation</p>
+                </div>
+                <div style="background:linear-gradient(135deg,rgba(201,168,76,0.2),rgba(201,168,76,0.07));border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:12px;display:flex;flex-direction:column;justify-content:center;">
+                    <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.04em;color:#E8D5B5;margin-bottom:2px;">AI SaaS/PaaS</p>
+                    <p style="font-size:1.5rem;font-weight:800;color:#f1f5f9;font-family:'Playfair Display',serif;">$640B</p>
+                </div>
+                <div style="background:linear-gradient(135deg,rgba(139,105,20,0.25),rgba(139,105,20,0.1));border:1px solid rgba(139,105,20,0.2);border-radius:10px;padding:10px;display:flex;flex-direction:column;justify-content:center;">
+                    <p style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.04em;color:#C9A84C;margin-bottom:2px;">AI Networking</p>
+                    <p style="font-size:1.2rem;font-weight:800;color:#f1f5f9;font-family:'Playfair Display',serif;">$280B</p>
+                </div>
+                <div style="grid-column:1/3;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px;display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-size:0.75rem;font-weight:700;color:#E8D5B5;">Total AI Infrastructure TAM 2030</span>
+                    <span style="font-size:1.1rem;font-weight:800;color:#C9A84C;font-family:'Playfair Display',serif;">$1.7T</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;margin-bottom:10px;">
+                    <h3 style="font-size:0.82rem;font-weight:700;color:#E8D5B5;margin-bottom:10px;">CRWV Market Share Runway</h3>
+                    <div style="display:flex;flex-direction:column;gap:7px;">
+                        <div class="bar-row">
+                            <p class="bar-label" style="font-size:0.7rem;">AWS (est.)</p>
+                            <div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#475569,#94a3b8);" data-width="45"></div></div>
+                            <p class="bar-value" style="font-size:0.7rem;color:#94a3b8;">~45%</p>
+                        </div>
+                        <div class="bar-row">
+                            <p class="bar-label" style="font-size:0.7rem;">Azure (est.)</p>
+                            <div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#475569,#94a3b8);" data-width="30"></div></div>
+                            <p class="bar-value" style="font-size:0.7rem;color:#94a3b8;">~30%</p>
+                        </div>
+                        <div class="bar-row">
+                            <p class="bar-label" style="font-size:0.7rem;">GCP (est.)</p>
+                            <div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#475569,#94a3b8);" data-width="15"></div></div>
+                            <p class="bar-value" style="font-size:0.7rem;color:#94a3b8;">~15%</p>
+                        </div>
+                        <div class="bar-row">
+                            <p class="bar-label" style="font-size:0.7rem;">CoreWeave</p>
+                            <div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#C9A84C,#E8D5B5);" data-width="5"></div></div>
+                            <p class="bar-value" style="font-size:0.7rem;color:#C9A84C;">~5%</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:12px 14px;">
+                    <p style="font-size:0.75rem;color:#E8D5B5;font-weight:600;margin-bottom:4px;">📍 CRWV 1% share of $1.7T TAM = $17B revenue</p>
+                    <p style="font-size:0.72rem;color:#94a3b8;line-height:1.5;">Base case assumes ~3–4% share by 2030, implying $51–68B revenue vs. $3.5B today — a clear path to self-funding capex at scale.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 8: COMPETITIVE POSITIONING (Radar) -->
+<div class="slide" data-slide="8">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-60px;right:-60px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-45px;left:-30px;background:#8B6914;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(1.8rem,3vw,2.4rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Competitive Positioning</h2>
+        <p class="reveal mb-4" style="color:#64748b;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;">CRWV vs. Hyperscalers · GPU Cloud Specialists</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
+            <div class="reveal" style="display:flex;justify-content:center;">
+                <svg viewBox="0 0 300 300" style="width:260px;height:260px;">
+                    <defs>
+                        <linearGradient id="radarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#C9A84C;stop-opacity:0.35"/>
+                            <stop offset="100%" style="stop-color:#E8D5B5;stop-opacity:0.1"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Grid rings -->
+                    <polygon points="150,50 238,110 210,210 90,210 62,110" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+                    <polygon points="150,74 218,122 196,196 104,196 82,122" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+                    <polygon points="150,98 198,134 182,182 118,182 102,134" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+                    <polygon points="150,122 178,146 168,168 132,168 122,146" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+                    <!-- Axis lines -->
+                    <line x1="150" y1="150" x2="150" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                    <line x1="150" y1="150" x2="238" y2="110" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                    <line x1="150" y1="150" x2="210" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                    <line x1="150" y1="150" x2="90" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                    <line x1="150" y1="150" x2="62" y2="110" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                    <!-- CRWV shape (GPU perf=95%, Networking=90%, Scale=80%, AI-native=100%, Cost=70%) -->
+                    <!-- Axis 1(top/GPU perf): 95% -> y=150-0.95*100=55.5 x=150 -->
+                    <!-- Axis 2(NE/Networking): 90% -> x=150+0.9*88=229 y=150-0.9*40=114 -->
+                    <!-- Axis 3(SE/Scale): 80% -> x=150+0.8*60=198 y=150+0.8*60=198 -->
+                    <!-- Axis 4(SW/AI-native): 100% -> x=150-1.0*60=90 y=150+1.0*60=210 -->
+                    <!-- Axis 5(NW/Cost): 70% -> x=150-0.7*88=88.4 y=150-0.7*40=122 -->
+                    <polygon class="radar-shape"
+                        points="150,55 229,114 198,198 90,210 89,122"
+                        fill="url(#radarGrad)" stroke="#C9A84C" stroke-width="2"
+                        stroke-dasharray="800" stroke-dashoffset="800"
+                        style="transition:stroke-dashoffset 1.5s cubic-bezier(0.16,1,0.3,1);"/>
+                    <g class="radar-dots" style="opacity:0;transition:opacity 0.5s ease 1s;">
+                        <circle cx="150" cy="55" r="4" fill="#E8D5B5"/>
+                        <circle cx="229" cy="114" r="4" fill="#E8D5B5"/>
+                        <circle cx="198" cy="198" r="4" fill="#C9A84C"/>
+                        <circle cx="90" cy="210" r="4" fill="#C9A84C"/>
+                        <circle cx="89" cy="122" r="4" fill="#C9A84C"/>
+                    </g>
+                    <!-- Labels -->
+                    <text x="150" y="40" text-anchor="middle" style="fill:#E8D5B5;font-size:0.62rem;font-family:'DM Sans',sans-serif;font-weight:600;">GPU Performance</text>
+                    <text x="248" y="112" text-anchor="start" style="fill:#cbd5e1;font-size:0.62rem;font-family:'DM Sans',sans-serif;">Networking</text>
+                    <text x="215" y="220" text-anchor="start" style="fill:#cbd5e1;font-size:0.62rem;font-family:'DM Sans',sans-serif;">Scale</text>
+                    <text x="78" y="225" text-anchor="end" style="fill:#cbd5e1;font-size:0.62rem;font-family:'DM Sans',sans-serif;">AI-Native</text>
+                    <text x="50" y="116" text-anchor="end" style="fill:#cbd5e1;font-size:0.62rem;font-family:'DM Sans',sans-serif;">Cost Efficiency</text>
+                    <!-- CRWV label center -->
+                    <text x="150" y="153" text-anchor="middle" style="fill:#C9A84C;font-size:0.6rem;font-family:'DM Sans',sans-serif;font-weight:700;">CRWV</text>
+                </svg>
+            </div>
+            <div class="reveal">
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;">
+                    <div style="background:rgba(255,255,255,0.06);padding:10px 14px;display:grid;grid-template-columns:1fr repeat(4,0.7fr);gap:4px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:#64748b;">
+                        <span>Company</span><span style="text-align:center;">GPU</span><span style="text-align:center;">Net</span><span style="text-align:center;">Scale</span><span style="text-align:center;">AI-Native</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr repeat(4,0.7fr);gap:4px;padding:8px 14px;align-items:center;">
+                        <span style="font-size:0.75rem;font-weight:700;color:#C9A84C;">CoreWeave</span>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(34,197,94,0.6),rgba(34,197,94,0.2));font-size:0.62rem;padding:4px;">★★★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(34,197,94,0.6),rgba(34,197,94,0.2));font-size:0.62rem;padding:4px;">★★★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(132,204,22,0.5),rgba(132,204,22,0.2));font-size:0.62rem;padding:4px;">★★½</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(34,197,94,0.6),rgba(34,197,94,0.2));font-size:0.62rem;padding:4px;">★★★</div></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr repeat(4,0.7fr);gap:4px;padding:8px 14px;align-items:center;background:rgba(255,255,255,0.02);">
+                        <span style="font-size:0.73rem;color:#cbd5e1;">AWS</span>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(132,204,22,0.4),rgba(132,204,22,0.1));font-size:0.62rem;padding:4px;">★★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(250,204,21,0.4),rgba(250,204,21,0.1));font-size:0.62rem;padding:4px;">★★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(34,197,94,0.6),rgba(34,197,94,0.2));font-size:0.62rem;padding:4px;">★★★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(250,204,21,0.4),rgba(250,204,21,0.1));font-size:0.62rem;padding:4px;">★★</div></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr repeat(4,0.7fr);gap:4px;padding:8px 14px;align-items:center;">
+                        <span style="font-size:0.73rem;color:#cbd5e1;">Azure</span>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(132,204,22,0.4),rgba(132,204,22,0.1));font-size:0.62rem;padding:4px;">★★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(132,204,22,0.4),rgba(132,204,22,0.1));font-size:0.62rem;padding:4px;">★★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(34,197,94,0.6),rgba(34,197,94,0.2));font-size:0.62rem;padding:4px;">★★★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(132,204,22,0.4),rgba(132,204,22,0.1));font-size:0.62rem;padding:4px;">★★</div></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr repeat(4,0.7fr);gap:4px;padding:8px 14px;align-items:center;background:rgba(255,255,255,0.02);">
+                        <span style="font-size:0.73rem;color:#cbd5e1;">Lambda Labs</span>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(250,204,21,0.35),rgba(250,204,21,0.1));font-size:0.62rem;padding:4px;">★½</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(249,115,22,0.35),rgba(249,115,22,0.1));font-size:0.62rem;padding:4px;">★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(249,115,22,0.35),rgba(249,115,22,0.1));font-size:0.62rem;padding:4px;">★</div></div>
+                        <div style="text-align:center;"><div class="heatmap-cell" style="background:radial-gradient(circle at 35% 35%,rgba(132,204,22,0.4),rgba(132,204,22,0.1));font-size:0.62rem;padding:4px;">★★</div></div>
+                    </div>
+                </div>
+                <p style="font-size:0.65rem;color:#475569;margin-top:8px;">★★★ = Best-in-class · ★★ = Competitive · ★ = Lagging</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 9: DCF VALUATION -->
+<div class="slide" data-slide="9">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-70px;right:-70px;background:#C9A84C;opacity:0.09;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-50px;left:-35px;background:#8B6914;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(1.8rem,3vw,2.4rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Valuation Framework</h2>
+        <p class="reveal mb-4" style="color:#64748b;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;">DCF + Comps · Blended Price Target $215</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;">
+                <h3 style="font-size:0.82rem;font-weight:700;color:#E8D5B5;margin-bottom:10px;">DCF Model — Key Inputs</h3>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                    <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:5px;">
+                        <span style="font-size:0.75rem;color:#94a3b8;">Risk-Free Rate (10Y UST)</span>
+                        <span style="font-size:0.75rem;font-weight:600;color:#E8D5B5;">4.50%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:5px;">
+                        <span style="font-size:0.75rem;color:#94a3b8;">Equity Risk Premium</span>
+                        <span style="font-size:0.75rem;font-weight:600;color:#E8D5B5;">5.50%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:5px;">
+                        <span style="font-size:0.75rem;color:#94a3b8;">Beta (Adjusted)</span>
+                        <span style="font-size:0.75rem;font-weight:600;color:#E8D5B5;">1.40×</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);border-radius:5px;">
+                        <span style="font-size:0.75rem;color:#E8D5B5;font-weight:600;">WACC</span>
+                        <span style="font-size:0.75rem;font-weight:700;color:#C9A84C;">12.1%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(255,255,255,0.03);border-radius:5px;">
+                        <span style="font-size:0.75rem;color:#94a3b8;">Terminal Growth Rate</span>
+                        <span style="font-size:0.75rem;font-weight:600;color:#E8D5B5;">3.5%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);border-radius:5px;">
+                        <span style="font-size:0.75rem;color:#E8D5B5;font-weight:600;">DCF Implied Value</span>
+                        <span style="font-size:0.75rem;font-weight:700;color:#C9A84C;">$332/sh</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;">
+                <h3 style="font-size:0.82rem;font-weight:700;color:#E8D5B5;margin-bottom:10px;">Football Field — Implied Value Range</h3>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                            <span style="font-size:0.72rem;color:#94a3b8;">DCF (Base)</span>
+                            <span style="font-size:0.72rem;color:#E8D5B5;font-weight:600;">$280–$332</span>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.06);border-radius:6px;height:14px;overflow:hidden;">
+                            <div style="height:100%;width:78%;background:linear-gradient(90deg,#8B6914,#C9A84C);border-radius:6px;margin-left:8%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                            <span style="font-size:0.72rem;color:#94a3b8;">EV/Rev Comps (NTM)</span>
+                            <span style="font-size:0.72rem;color:#E8D5B5;font-weight:600;">$180–$240</span>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.06);border-radius:6px;height:14px;overflow:hidden;">
+                            <div style="height:100%;width:55%;background:linear-gradient(90deg,#4a3a10,#8B6914);border-radius:6px;margin-left:18%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                            <span style="font-size:0.72rem;color:#94a3b8;">EV/EBITDA Comps (NTM)</span>
+                            <span style="font-size:0.72rem;color:#E8D5B5;font-weight:600;">$150–$210</span>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.06);border-radius:6px;height:14px;overflow:hidden;">
+                            <div style="height:100%;width:50%;background:linear-gradient(90deg,#2d2508,#4a3a10);border-radius:6px;margin-left:15%;"></div>
+                        </div>
+                    </div>
+                    <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                            <span style="font-size:0.76rem;color:#C9A84C;font-weight:700;">Blended PT (50% DCF / 50% Comps)</span>
+                            <span style="font-size:0.76rem;color:#C9A84C;font-weight:700;">$215</span>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.06);border-radius:6px;height:16px;overflow:hidden;">
+                            <div style="height:100%;width:45%;background:linear-gradient(90deg,#C9A84C,#E8D5B5);border-radius:6px;margin-left:0%;"></div>
+                        </div>
+                        <p style="font-size:0.68rem;color:#64748b;margin-top:4px;">Current price $107.58 → 100% upside</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="reveal" style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.18);border-radius:8px;padding:12px 18px;">
+            <p style="font-size:0.77rem;color:#cbd5e1;line-height:1.6;"><span style="color:#C9A84C;font-weight:700;">Note on leverage discount:</span> DCF ($332) materially exceeds comps ($215) due to $22.4B net debt. We apply a 50/50 blend and a structural premium discount for leverage — PT $215 reflects conservative stance. Debt pay-down catalyst could drive re-rating toward DCF value.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 10: SCENARIO ANALYSIS -->
+<div class="slide" data-slide="10">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-60px;right:-60px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-45px;left:-30px;background:#8B6914;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(1.8rem,3vw,2.4rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Scenario Analysis</h2>
+        <p class="reveal mb-4" style="color:#64748b;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;">Bull / Base / Bear · FY2026E–FY2029E</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;">
+            <div class="reveal" style="background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.25);border-top:3px solid #4ade80;border-radius:10px;padding:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="font-size:0.9rem;font-weight:700;color:#4ade80;">🐂 Bull Case</h3>
+                    <span class="pill pill-green">30% prob.</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-size:0.73rem;color:#94a3b8;">FY2026E Rev</span>
+                        <span style="font-size:0.73rem;font-weight:600;color:#f1f5f9;">$5.3B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-size:0.73rem;color:#94a3b8;">FY2028E Rev</span>
+                        <span style="font-size:0.73rem;font-weight:600;color:#f1f5f9;">$16.4B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-size:0.73rem;color:#94a3b8;">EBITDA Margin '28</span>
+                        <span style="font-size:0.73rem;font-weight:600;color:#f1f5f9;">65%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(34,197,94,0.2);padding-top:6px;margin-top:4px;">
+                        <span style="font-size:0.8rem;font-weight:700;color:#4ade80;">Implied PT</span>
+                        <span style="font-size:0.8rem;font-weight:800;color:#4ade80;">$320</span>
+                    </div>
+                </div>
+                <p style="font-size:0.68rem;color:#94a3b8;margin-top:8px;line-height:1.4;">Backlog converts faster; MSFT expands scope; Blackwell adoption drives ASP expansion</p>
+            </div>
+            <div class="reveal" style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.3);border-top:3px solid #C9A84C;border-radius:10px;padding:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="font-size:0.9rem;font-weight:700;color:#C9A84C;">⚖️ Base Case</h3>
+                    <span class="pill pill-gold">50% prob.</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-size:0.73rem;color:#94a3b8;">FY2026E Rev</span>
+                        <span style="font-size:0.73rem;font-weight:600;color:#f1f5f9;">$4.6B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-size:0.73rem;color:#94a3b8;">FY2028E Rev</span>
+                        <span style="font-size:0.73rem;font-weight:600;color:#f1f5f9;">$12.8B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-size:0.73rem;color:#94a3b8;">EBITDA Margin '28</span>
+                        <span style="font-size:0.73rem;font-weight:600;color:#f1f5f9;">60%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(201,168,76,0.2);padding-top:6px;margin-top:4px;">
+                        <span style="font-size:0.8rem;font-weight:700;color:#C9A84C;">Implied PT</span>
+                        <span style="font-size:0.8rem;font-weight:800;color:#C9A84C;">$215</span>
+                    </div>
+                </div>
+                <p style="font-size:0.68rem;color:#94a3b8;margin-top:8px;line-height:1.4;">Consensus estimates; steady backlog conversion; gradual customer diversification beyond MSFT</p>
+            </div>
+            <div class="reveal" style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-top:3px solid #f87171;border-radius:10px;padding:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="font-size:0.9rem;font-weight:700;color:#f87171;">🐻 Bear Case</h3>
+                    <span class="pill pill-red">20% prob.</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-size:0.73rem;color:#94a3b8;">FY2026E Rev</span>
+                        <span style="font-size:0.73rem;font-weight:600;color:#f1f5f9;">$3.8B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-size:0.73rem;color:#94a3b8;">FY2028E Rev</span>
+                        <span style="font-size:0.73rem;font-weight:600;color:#f1f5f9;">$8.2B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-size:0.73rem;color:#94a3b8;">EBITDA Margin '28</span>
+                        <span style="font-size:0.73rem;font-weight:600;color:#f1f5f9;">45%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(239,68,68,0.2);padding-top:6px;margin-top:4px;">
+                        <span style="font-size:0.8rem;font-weight:700;color:#f87171;">Implied PT</span>
+                        <span style="font-size:0.8rem;font-weight:800;color:#f87171;">$90</span>
+                    </div>
+                </div>
+                <p style="font-size:0.68rem;color:#94a3b8;margin-top:8px;line-height:1.4;">MSFT reduces contract scope; GPU spot pricing deflates; leverage constrains capex</p>
+            </div>
+        </div>
+        <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:11px 18px;display:flex;gap:20px;align-items:center;">
+            <span style="font-size:0.78rem;color:#94a3b8;"><strong style="color:#E8D5B5;">Probability-weighted PT:</strong> 0.30×$320 + 0.50×$215 + 0.20×$90 = <strong style="color:#C9A84C;">$211</strong> (rounded to $215)</span>
+            <span style="font-size:0.78rem;color:#94a3b8;">|</span>
+            <span style="font-size:0.78rem;color:#94a3b8;"><strong style="color:#E8D5B5;">Key Swing Factor:</strong> Microsoft contract renewal/expansion (FY2027)</span>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 11: RISKS -->
+<div class="slide" data-slide="11">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-65px;right:-65px;background:#C9A84C;opacity:0.07;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-45px;left:-30px;background:#8B6914;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(1.8rem,3vw,2.4rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Risk Register</h2>
+        <p class="reveal mb-4" style="color:#64748b;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;">Ranked by Severity × Probability</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="reveal" style="display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:11px 16px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-left:4px solid #f87171;border-radius:8px;">
+                <span class="pill pill-red" style="font-size:0.62rem;">Critical</span>
+                <div><p style="font-size:0.8rem;font-weight:600;color:#f1f5f9;margin-bottom:1px;">Customer concentration (MSFT = 62% rev)</p><p style="font-size:0.7rem;color:#64748b;">Non-renewal / scope reduction → revenue cliff. Mitigant: Backlog extends ~3 yrs beyond FY2025; diversification active.</p></div>
+                <div style="text-align:center;"><p style="font-size:0.65rem;color:#64748b;">Severity</p><p style="font-size:0.85rem;font-weight:700;color:#f87171;">9/10</p></div>
+            </div>
+            <div class="reveal" style="display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:11px 16px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-left:4px solid #f87171;border-radius:8px;">
+                <span class="pill pill-red" style="font-size:0.62rem;">High</span>
+                <div><p style="font-size:0.8rem;font-weight:600;color:#f1f5f9;margin-bottom:1px;">Leverage &amp; refinancing risk ($22.4B net debt)</p><p style="font-size:0.7rem;color:#64748b;">Rate sensitivity on $26B debt; interest = ~$1.8B/yr. Mitigant: Long-duration fixed-rate; $2.3B liquidity buffer.</p></div>
+                <div style="text-align:center;"><p style="font-size:0.65rem;color:#64748b;">Severity</p><p style="font-size:0.85rem;font-weight:700;color:#f87171;">8/10</p></div>
+            </div>
+            <div class="reveal" style="display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:11px 16px;background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.15);border-left:4px solid #fbbf24;border-radius:8px;">
+                <span class="pill pill-amber" style="font-size:0.62rem;">Medium</span>
+                <div><p style="font-size:0.8rem;font-weight:600;color:#f1f5f9;margin-bottom:1px;">GPU pricing deflation / commoditization</p><p style="font-size:0.7rem;color:#64748b;">Spot GPU prices declining post-2025 peak. Mitigant: Long-term contract pricing locked; Blackwell ASP re-rating.</p></div>
+                <div style="text-align:center;"><p style="font-size:0.65rem;color:#64748b;">Severity</p><p style="font-size:0.85rem;font-weight:700;color:#fbbf24;">7/10</p></div>
+            </div>
+            <div class="reveal" style="display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:11px 16px;background:rgba(251,191,36,0.05);border:1px solid rgba(251,191,36,0.12);border-left:4px solid #fbbf24;border-radius:8px;">
+                <span class="pill pill-amber" style="font-size:0.62rem;">Medium</span>
+                <div><p style="font-size:0.8rem;font-weight:600;color:#f1f5f9;margin-bottom:1px;">Hyperscaler in-housing AI compute (Azure NNs, AWS Trainium)</p><p style="font-size:0.7rem;color:#64748b;">Long-term risk as hyperscalers build own infra. Mitigant: 2–3 year lag; hyperscalers themselves are clients today.</p></div>
+                <div style="text-align:center;"><p style="font-size:0.65rem;color:#64748b;">Severity</p><p style="font-size:0.85rem;font-weight:700;color:#fbbf24;">6/10</p></div>
+            </div>
+            <div class="reveal" style="display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:11px 16px;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.12);border-left:4px solid #C9A84C;border-radius:8px;">
+                <span class="pill pill-gold" style="font-size:0.62rem;">Low</span>
+                <div><p style="font-size:0.8rem;font-weight:600;color:#f1f5f9;margin-bottom:1px;">Regulatory / data sovereignty restrictions</p><p style="font-size:0.7rem;color:#64748b;">EU AI Act, US export controls. Mitigant: Domestic-first strategy; US government cloud pipeline building.</p></div>
+                <div style="text-align:center;"><p style="font-size:0.65rem;color:#64748b;">Severity</p><p style="font-size:0.85rem;font-weight:700;color:#C9A84C;">4/10</p></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 12: THESIS TRACKER -->
+<div class="slide" data-slide="12">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-70px;right:-70px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-50px;left:-30px;background:#8B6914;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 class="reveal font-display font-bold mb-1" style="font-size:clamp(1.8rem,3vw,2.4rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Thesis Tracker &amp; KPIs</h2>
+        <p class="reveal mb-4" style="color:#64748b;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;">Monitor Points · Quarterly Checkboxes</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div>
+                <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;margin-bottom:10px;">
+                    <div style="background:rgba(255,255,255,0.06);padding:8px 14px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;">Thesis Pillar → Monitoring Signal</div>
+                    <div style="display:flex;flex-direction:column;gap:0;">
+                        <div style="display:grid;grid-template-columns:1fr 0.6fr 0.5fr;gap:8px;padding:8px 14px;align-items:center;border-bottom:1px solid rgba(255,255,255,0.04);">
+                            <span style="font-size:0.75rem;color:#cbd5e1;">Backlog intake ≥ $8B/qtr</span>
+                            <span style="font-size:0.7rem;color:#4ade80;font-weight:600;">✓ Intact</span>
+                            <span style="font-size:0.65rem;color:#64748b;">HIGH</span>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 0.6fr 0.5fr;gap:8px;padding:8px 14px;align-items:center;border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);">
+                            <span style="font-size:0.75rem;color:#cbd5e1;">Gross margin ≥ 30% by Q4'26</span>
+                            <span style="font-size:0.7rem;color:#fbbf24;font-weight:600;">◉ Watch</span>
+                            <span style="font-size:0.65rem;color:#64748b;">HIGH</span>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 0.6fr 0.5fr;gap:8px;padding:8px 14px;align-items:center;border-bottom:1px solid rgba(255,255,255,0.04);">
+                            <span style="font-size:0.75rem;color:#cbd5e1;">MSFT rev % declining (diversifying)</span>
+                            <span style="font-size:0.7rem;color:#4ade80;font-weight:600;">✓ Intact</span>
+                            <span style="font-size:0.65rem;color:#64748b;">HIGH</span>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 0.6fr 0.5fr;gap:8px;padding:8px 14px;align-items:center;border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);">
+                            <span style="font-size:0.75rem;color:#cbd5e1;">Net debt / EBITDA declining YoY</span>
+                            <span style="font-size:0.7rem;color:#4ade80;font-weight:600;">✓ Intact</span>
+                            <span style="font-size:0.65rem;color:#64748b;">MED</span>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 0.6fr 0.5fr;gap:8px;padding:8px 14px;align-items:center;border-bottom:1px solid rgba(255,255,255,0.04);">
+                            <span style="font-size:0.75rem;color:#cbd5e1;">Capex / Revenue ≤ 80% by FY2027</span>
+                            <span style="font-size:0.7rem;color:#fbbf24;font-weight:600;">◉ Watch</span>
+                            <span style="font-size:0.65rem;color:#64748b;">MED</span>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 0.6fr 0.5fr;gap:8px;padding:8px 14px;align-items:center;">
+                            <span style="font-size:0.75rem;color:#cbd5e1;">New govt/enterprise pipeline &gt; $5B</span>
+                            <span style="font-size:0.7rem;color:#C9A84C;font-weight:600;">◑ Emerging</span>
+                            <span style="font-size:0.65rem;color:#64748b;">MED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;margin-bottom:10px;">
+                    <h3 style="font-size:0.82rem;font-weight:700;color:#E8D5B5;margin-bottom:9px;">Key Catalysts (0–18 months)</h3>
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <div style="display:flex;gap:8px;align-items:flex-start;padding:6px 8px;background:rgba(34,197,94,0.06);border-radius:6px;">
+                            <span style="color:#4ade80;font-size:0.85rem;margin-top:0px;">→</span>
+                            <div><p style="font-size:0.76rem;font-weight:600;color:#f1f5f9;">Q2'26 Earnings Beat (Aug 2026)</p><p style="font-size:0.68rem;color:#64748b;">Revenue ≥ $1.15B vs. consensus $1.05B</p></div>
+                        </div>
+                        <div style="display:flex;gap:8px;align-items:flex-start;padding:6px 8px;background:rgba(34,197,94,0.06);border-radius:6px;">
+                            <span style="color:#4ade80;font-size:0.85rem;">→</span>
+                            <div><p style="font-size:0.76rem;font-weight:600;color:#f1f5f9;">MSFT Contract Expansion Announcement</p><p style="font-size:0.68rem;color:#64748b;">Multi-billion incremental commitment = re-rating event</p></div>
+                        </div>
+                        <div style="display:flex;gap:8px;align-items:flex-start;padding:6px 8px;background:rgba(201,168,76,0.06);border-radius:6px;">
+                            <span style="color:#C9A84C;font-size:0.85rem;">→</span>
+                            <div><p style="font-size:0.76rem;font-weight:600;color:#f1f5f9;">Blackwell GB200 Cluster Deployments</p><p style="font-size:0.68rem;color:#64748b;">ASP uplift + next-gen inference moat</p></div>
+                        </div>
+                        <div style="display:flex;gap:8px;align-items:flex-start;padding:6px 8px;background:rgba(201,168,76,0.06);border-radius:6px;">
+                            <span style="color:#C9A84C;font-size:0.85rem;">→</span>
+                            <div><p style="font-size:0.76rem;font-weight:600;color:#f1f5f9;">US Government AI Infrastructure Win</p><p style="font-size:0.68rem;color:#64748b;">Stargate / DOD contract = diversification proof</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal" style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.18);border-radius:8px;padding:11px 14px;">
+                    <p style="font-size:0.74rem;font-weight:700;color:#C9A84C;margin-bottom:4px;">What Would Change Our View</p>
+                    <p style="font-size:0.72rem;color:#94a3b8;line-height:1.5;">Downgrade trigger: MSFT contract non-renewal / >20% scope cut; or gross margin declining for two consecutive quarters below 24%.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 13: RECOMMENDATION -->
+<div class="slide" data-slide="13">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:500px;height:500px;top:-100px;right:-100px;background:#C9A84C;opacity:0.14;"></div>
+        <div class="blob" style="width:300px;height:300px;bottom:-80px;left:-60px;background:#8B6914;opacity:0.10;"></div>
+        <div class="blob" style="width:200px;height:200px;top:40%;left:10%;background:#E8D5B5;opacity:0.06;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+        <div class="reveal" style="display:inline-block;padding:8px 28px;background:linear-gradient(135deg,rgba(201,168,76,0.2),rgba(201,168,76,0.05));border:1px solid rgba(201,168,76,0.35);border-radius:40px;margin-bottom:20px;">
+            <span style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#C9A84C;font-weight:600;">Investment Committee Decision</span>
+        </div>
+        <h1 class="reveal font-display font-black tracking-tight mb-4"
+            style="font-size:clamp(3rem,7vw,5.5rem);background:linear-gradient(135deg,#C9A84C,#E8D5B5,#C9A84C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+            BUY
+        </h1>
+        <div class="reveal" style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:24px;">
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 24px;text-align:center;">
+                <p style="font-size:0.68rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Current Price</p>
+                <p style="font-size:1.5rem;font-weight:700;color:#f1f5f9;font-family:'Playfair Display',serif;">$107.58</p>
+            </div>
+            <div style="font-size:1.8rem;color:#64748b;">→</div>
+            <div style="background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.4);border-radius:10px;padding:12px 24px;text-align:center;">
+                <p style="font-size:0.68rem;color:#C9A84C;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Price Target</p>
+                <p class="stat-glow glow-pulse" style="font-size:1.5rem;font-weight:700;color:#C9A84C;font-family:'Playfair Display',serif;">$215</p>
+            </div>
+            <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:10px;padding:12px 24px;text-align:center;">
+                <p style="font-size:0.68rem;color:#4ade80;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Upside</p>
+                <p style="font-size:1.5rem;font-weight:700;color:#4ade80;font-family:'Playfair Display',serif;">+100%</p>
+            </div>
+        </div>
+        <div class="reveal" style="max-width:720px;margin:0 auto 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px 24px;">
+            <p style="font-size:0.82rem;color:#cbd5e1;line-height:1.7;">CoreWeave is the only scaled pure-play GPU cloud — a critical infrastructure layer in the AI buildout cycle with $99.4B in contracted backlog, an unmatched NVIDIA partnership, and a clear path to 60%+ EBITDA margins. The stock's 50%+ decline from IPO pricing embeds excessive pessimism about leverage and customer concentration risks that our analysis shows are manageable and declining.</p>
+        </div>
+        <p class="reveal" style="font-size:0.72rem;color:#64748b;letter-spacing:0.06em;">CRWV · NASDAQ · May 2026 · Equity Research — Initiating Coverage · Analyst: [Name]</p>
+    </div>
+</div>
+
+</div><!-- end deck -->
+
+<div class="nav-controls">
+    <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+    <div class="slide-dots" id="dots"></div>
+    <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+    <span class="slide-counter" id="counter">1 / 13</span>
+</div>
+
+<script>
+let current = 1;
+const total = document.querySelectorAll('.slide').length;
+const dotsContainer = document.getElementById('dots');
+const counter = document.getElementById('counter');
+for(let i=1;i<=total;i++){const dot=document.createElement('div');dot.className='dot'+(i===1?' active':'');dot.onclick=()=>goToSlide(i);dotsContainer.appendChild(dot);}
+function goToSlide(n){const prev=document.querySelector('.slide.active');const next=document.querySelector(`.slide[data-slide="${n}"]`);if(prev)prev.classList.remove('active');if(next){next.classList.add('active');animateSlide(next);}current=n;updateNav();}
+function changeSlide(dir){let n=current+dir;if(n<1)n=total;if(n>total)n=1;goToSlide(n);}
+function updateNav(){document.querySelectorAll('.dot').forEach((d,i)=>{d.classList.toggle('active',i+1===current)});counter.textContent=current+' / '+total;}
+document.addEventListener('keydown',(e)=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();changeSlide(1);}if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1);}});
+let touchStartX=0;
+document.addEventListener('touchstart',(e)=>{touchStartX=e.touches[0].clientX;});
+document.addEventListener('touchend',(e)=>{const diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50)changeSlide(diff>0?1:-1);});
+function animateSlide(slide){
+    slide.querySelectorAll('.reveal').forEach((el,i)=>{
+        el.style.transition='none';el.style.opacity='0';el.style.transform='translateY(20px)';
+        el.offsetHeight;
+        const delay=i*0.08;
+        el.style.transition=`opacity 0.35s ease ${delay}s, transform 0.35s ease ${delay}s`;
+        el.style.opacity='1';el.style.transform='translateY(0px)';
+    });
+    animateSlideEffects(slide);
+}
+function animateSlideEffects(slide){
+    slide.querySelectorAll('[data-count]:not(.counted)').forEach(el=>{
+        el.classList.add('counted');
+        const target=parseInt(el.dataset.count);
+        const suffix=el.dataset.suffix||'',prefix=el.dataset.prefix||'$';
+        let cur=0;const step=target/40;
+        const timer=setInterval(()=>{cur+=step;if(cur>=target){cur=target;clearInterval(timer);}el.textContent=prefix+Math.round(cur).toLocaleString()+suffix;},30);
+    });
+    slide.querySelectorAll('.bar-fill:not(.fill-init)').forEach((bar,i)=>{
+        bar.classList.add('fill-init');
+        const w=bar.dataset.width+'%';
+        bar.style.width='0%';
+        bar.offsetHeight;
+        setTimeout(()=>{bar.style.width=w;},200+i*100);
+    });
+    slide.querySelectorAll('.line-path:not(.line-init)').forEach(line=>{
+        line.classList.add('line-init');
+        line.style.strokeDashoffset='0';
+        const svg=line.closest('svg');
+        if(svg){const area=svg.querySelector('.line-area');if(area){setTimeout(()=>{area.style.opacity='1';},500);}const dots=svg.querySelector('.line-dots');if(dots){setTimeout(()=>{dots.style.opacity='1';},1500);}}
+    });
+    slide.querySelectorAll('.radar-shape:not(.radar-init)').forEach(shape=>{
+        shape.classList.add('radar-init');
+        shape.style.strokeDashoffset='0';
+        const dots=shape.closest('svg')?.querySelector('.radar-dots');
+        if(dots){setTimeout(()=>{dots.style.opacity='1';},1000);}
+    });
+    slide.querySelectorAll('.donut-ring:not(.ring-init)').forEach(ring=>{
+        ring.classList.add('ring-init');
+        const pct=parseInt(ring.dataset.percent||0);
+        ring.style.transition='stroke-dashoffset 0.8s ease';
+        setTimeout(()=>{ring.style.strokeDashoffset=314.16-(pct/100)*314.16;},200);
+    });
+}
+document.addEventListener('mousemove',(e)=>{
+    const spotlight=document.querySelector('.mouse-spotlight');
+    if(spotlight)spotlight.style.background=`radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px,rgba(201,168,76,0.06),transparent 40%)`;
+});
+(function(){
+    let mx=window.innerWidth/2,my=window.innerHeight/2;
+    const cx=window.innerWidth/2,cy=window.innerHeight/2;
+    document.addEventListener('mousemove',(e)=>{mx=e.clientX;my=e.clientY;});
+    (function tick(){const ox=(mx-cx)/cx,oy=(my-cy)/cy;document.querySelectorAll('.deco-shape').forEach(s=>{const sp=parseFloat(s.dataset.speed)||0.03;s.style.transform=`translate(${ox*sp*100}px,${oy*sp*100}px)`;});requestAnimationFrame(tick);})();
+})();
+window.initParticles=function(canvas,options){
+    if(!canvas)return;
+    const ctx=canvas.getContext('2d');
+    canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;
+    const interactive=options.interactive!==false;
+    const count=options.count||(interactive?55:18);
+    let mx2=-1000,my2=-1000;
+    const r=201,g=168,b=76;
+    const particles=Array.from({length:count},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,size:Math.random()*2.5+0.8,alpha:Math.random()*0.3+0.08}));
+    if(interactive){canvas.addEventListener('mousemove',(e)=>{const rect=canvas.getBoundingClientRect();mx2=e.clientX-rect.left;my2=e.clientY-rect.top;});canvas.addEventListener('mouseleave',()=>{mx2=-1000;my2=-1000;});}
+    (function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{if(interactive){const dx=p.x-mx2,dy=p.y-my2,dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){const force=(120-dist)/120*2;p.vx+=(dx/dist)*force*0.1;p.vy+=(dy/dist)*force*0.1;}}p.vx*=0.98;p.vy*=0.98;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle=`rgba(${r},${g},${b},${p.alpha})`;ctx.fill();});requestAnimationFrame(animate);})();
+};
+document.querySelectorAll('.particle-canvas').forEach(c=>window.initParticles(c,{interactive:true,count:55}));
+document.querySelectorAll('.particle-canvas-ambient').forEach(c=>window.initParticles(c,{interactive:false,count:18}));
+try{animateSlide(document.querySelector('.slide.active'));}catch(e){console.warn(e);}
+</script>
+</body>
+</html>
