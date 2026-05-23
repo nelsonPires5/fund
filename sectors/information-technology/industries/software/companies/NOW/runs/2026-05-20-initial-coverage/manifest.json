@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-05-20-initial-coverage",
+  "run_type": "initial-coverage",
+  "company_ticker": "NOW",
+  "created_at": "2026-05-20",
+  "source_files": [
+    "sectors/software/companies/NOW/company.json",
+    "sectors/software/companies/NOW/data/raw/koyfin/",
+    "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000007/now-20251231.htm",
+    "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000054/erq1fy26.htm"
+  ],
+  "artifacts": {
+    "outputs": "outputs.json",
+    "report": "report.md",
+    "thesis_tracker": "thesis_tracker.md",
+    "valuation_framework": "valuation_framework.md",
+    "dcf_assumptions": "dcf_assumptions.md"
+  },
+  "notes": "User requested initial coverage for NOW. Koyfin batch extraction initiated via a single delegate agent; raw Koyfin outputs should be copied into data/raw/koyfin when complete. Current draft uses SEC/company sources plus Koyfin pending placeholder."
+}

@@ -1,0 +1,16 @@
+{
+  "company_name": "ServiceNow, Inc.",
+  "ticker": "NOW",
+  "exchange": "NYSE",
+  "sector": "information-technology",
+  "subsector": "enterprise workflow / IT service management / AI platform software",
+  "currency": "USD",
+  "fiscal_year_end": "12-31",
+  "koyfin_id": "NOW US",
+  "sec_cik": "0001373715",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-20-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise. Financial market and consensus data sourced from Koyfin where available. Per-share data adjusted for the 5-for-1 split effective 2025-12-17.",
+  "industry": "software"
+}

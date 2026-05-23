@@ -1,0 +1,1 @@
+Let me set up the output directory and start the extraction. First, a connectivity test:

@@ -1,0 +1,105 @@
+{
+  "overview": {
+    "status": "extracted",
+    "file": "/tmp/NOW/koyfin-batch/overview/overview.json",
+    "size": 1002
+  },
+  "description": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "percentile-rank": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "dividend": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "ownership": {
+    "status": "error",
+    "error": "JavaScript evaluation failed at line 95, column 0: ReferenceError: module is not defined\n    at <anonymous>:96:1\n    at <anonymous>:100:3; expression: (function(){// Koyfin cross-ticker helpers (copie"
+  },
+  "earnings-history": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "actuals-and-consensus": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "price-target": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "estimates-overview": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "estimates-trends": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "highlights": {
+    "status": "extracted",
+    "file": "/tmp/NOW/koyfin-batch/highlights/highlights.json",
+    "size": 293
+  },
+  "income-statement": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "balance-sheet": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "cash-flow": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "multiples": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "enterprise-value": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "profitability": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "roic": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "solvency": {
+    "status": "extracted",
+    "file": "/tmp/NOW/koyfin-batch/solvency/solvency.json",
+    "size": 281
+  },
+  "news": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "press-releases": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "filings": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "transcripts": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "historical": {
+    "status": "null_result",
+    "gate": "ok"
+  },
+  "performance": {
+    "status": "null_result",
+    "gate": "ok"
+  }
+}
