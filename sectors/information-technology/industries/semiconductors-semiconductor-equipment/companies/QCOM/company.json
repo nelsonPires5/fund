@@ -1,0 +1,16 @@
+{
+  "company_name": "Qualcomm Incorporated",
+  "ticker": "QCOM",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "mobile processors / wireless technology",
+  "currency": "USD",
+  "fiscal_year_end": "09-29",
+  "koyfin_id": "QCOM US",
+  "sec_cik": "0000804328",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-13-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "semiconductors-semiconductor-equipment"
+}

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="slides-format" content="viewport">
+    <title>QCOM Investment Committee Deck</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --color-bg: #0b1120;
+            --color-bg-deep: #020617;
+            --color-surface: #111827;
+            --color-text: #e5e7eb;
+            --color-text-secondary: #cbd5f5;
+            --color-text-muted: #64748b;
+            --color-accent-1: #8BC34A; /* QCOM green-ish */
+            --color-accent-2: #F5F0D0;
+            --color-accent-3: #D4A017;
+            --color-glass-bg: rgba(15,23,42,0.85);
+            --color-glass-border: rgba(148,163,184,0.35);
+            --color-vignette: rgba(0,0,0,0.45);
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+    </style>
+
+    <style>
+        :root { --color-bg: #0b1120; --color-text: #e5e7eb; --glow-color-rgb: 139,195,74; }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { background: var(--color-bg); margin: 0; }
+        body { font-family: var(--font-body); color: var(--color-text); overflow: hidden; height: 100vh; width: 100vw; }
+        .deck { width: 100vw; height: 100vh; position: relative; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: scale(0.95); transition: opacity 0.7s ease, transform 0.7s ease; pointer-events: none; overflow: hidden; }
+        .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+        .slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1100px; padding: clamp(1.5rem, 4vw, 4rem); }
+        .nav-controls { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; z-index: 100; background: var(--color-glass-bg); backdrop-filter: blur(16px); padding: 10px 24px; border-radius: 40px; border: 1px solid var(--color-glass-border); box-shadow: 0 18px 45px rgba(0,0,0,0.6); }
+        .nav-btn { width: 40px; height: 40px; border: none; background: rgba(15,23,42,0.9); color: #bbf7d0; border-radius: 999px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.25s ease, transform 0.2s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
+        .nav-btn:hover { background: rgba(30,64,175,1); transform: translateY(-1px); }
+        .slide-dots { display: flex; gap: 8px; }
+        .slide-dots .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(148,163,184,0.5); cursor: pointer; transition: background 0.25s ease, transform 0.2s ease; }
+        .slide-dots .dot.active { background: #8BC34A; transform: scale(1.35); box-shadow: 0 0 15px rgba(139,195,74,0.9); }
+        .slide-counter { font-size: 0.8rem; color: var(--color-text-muted); min-width: 42px; text-align: center; }
+        .reveal { opacity: 0; transform: translateY(20px); }
+
+        @keyframes float-slow { 0% { transform: translate(0, 0) scale(1); } 25% { transform: translate(60px, -50px) scale(1.12); } 50% { transform: translate(-40px, 40px) scale(0.9); } 75% { transform: translate(50px, 20px) scale(1.08); } 100% { transform: translate(0, 0) scale(1); } }
+        @keyframes float-drift { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 33% { transform: translate(-50px, -60px) scale(1.15) rotate(3deg); } 66% { transform: translate(40px, 30px) scale(0.88) rotate(-2deg); } 100% { transform: translate(0, 0) scale(1) rotate(0deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float-slow 12s ease-in-out infinite; }
+        .blob:nth-child(2) { animation: float-drift 18s ease-in-out infinite; }
+        .blob:nth-child(3) { animation: float-slow 22s ease-in-out infinite reverse; }
+
+        .slide::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; opacity: 0.035; mix-blend-mode: overlay; }
+        .slide::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse at center, transparent 45%, var(--color-vignette) 100%); }
+
+        .text-glow { text-shadow: 0 0 20px rgba(var(--glow-color-rgb), 0.5), 0 0 40px rgba(var(--glow-color-rgb), 0.2); }
+        @keyframes glow-pulse { 0%, 100% { text-shadow: 0 0 20px rgba(var(--glow-color-rgb), 0.5), 0 0 40px rgba(var(--glow-color-rgb), 0.2); } 50% { text-shadow: 0 0 30px rgba(var(--glow-color-rgb), 0.9), 0 0 70px rgba(var(--glow-color-rgb), 0.3); } }
+        .glow-pulse { animation: glow-pulse 3.2s ease-in-out infinite; }
+
+        .bar-chart { display: flex; align-items: flex-end; gap: clamp(0.4rem, 1vw, 0.75rem); height: clamp(120px, 22vh, 220px); }
+        .bar-col { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; flex: 1; }
+        .bar { border-radius: 0.75rem 0.75rem 0 0; width: 100%; background: linear-gradient(to top, rgba(15,118,110,0.15), rgba(139,195,74,0.8)); box-shadow: 0 10px 25px rgba(15,118,110,0.4); }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.15s !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="mouse-spotlight" style="position:fixed;inset:0;z-index:99;pointer-events:none;"></div>
+
+<div class="deck">
+    <!-- Slide 1: Title -->
+    <div class="slide slide-1 active" data-slide="1">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:520px;height:520px;top:-120px;right:-140px;background:var(--color-accent-1);opacity:0.2;"></div>
+            <div class="blob" style="width:380px;height:380px;bottom:-120px;left:-80px;background:var(--color-accent-2);opacity:0.16;"></div>
+            <div class="blob" style="width:260px;height:260px;top:50%;left:10%;background:var(--color-accent-3);opacity:0.14;"></div>
+        </div>
+        <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+        <div class="content text-center">
+            <div class="text-[110px] mb-3 animate-[float_3s_ease-in-out_infinite] drop-shadow-2xl mx-auto">📶</div>
+            <h1 class="font-display text-[clamp(2.6rem,6vw,4.8rem)] font-black bg-linear-to-br from-accent-1 via-accent-2 to-accent-1 bg-clip-text text-transparent tracking-tight mb-3 reveal">QCOM Investment Committee</h1>
+            <p class="text-[clamp(0.95rem,1.6vw,1.4rem)] font-light text-text-muted tracking-[0.32em] uppercase mb-4 reveal">Initiating Coverage & Valuation Review</p>
+            <p class="text-sm text-text-muted reveal">QUALCOMM Incorporated (NASDAQ: QCOM) &bull; May 2026 &bull; Confidential draft for IC discussion</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Agenda -->
+    <div class="slide slide-2" data-slide="2">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:380px;height:380px;top:-90px;right:-90px;background:var(--color-accent-1);opacity:0.10;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-80px;left:-60px;background:var(--color-accent-2);opacity:0.08;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-6 reveal">Agenda</h2>
+            <div class="grid grid-cols-2 gap-6 mt-4">
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-5 reveal">
+                    <div class="text-xs uppercase tracking-[0.25em] text-text-muted mb-2">Section I</div>
+                    <h3 class="font-semibold text-lg mb-1">Executive Summary</h3>
+                    <p class="text-sm text-text-muted">Thesis, rating, price target and core upside/downside framing.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-5 reveal">
+                    <div class="text-xs uppercase tracking-[0.25em] text-text-muted mb-2">Section II</div>
+                    <h3 class="font-semibold text-lg mb-1">Business & Industry</h3>
+                    <p class="text-sm text-text-muted">Qualcomm overview, segment mix, and competitive positioning.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-5 reveal">
+                    <div class="text-xs uppercase tracking-[0.25em] text-text-muted mb-2">Section III</div>
+                    <h3 class="font-semibold text-lg mb-1">Financials & Diversification</h3>
+                    <p class="text-sm text-text-muted">Historical performance and handset vs. non-handset growth.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-5 reveal">
+                    <div class="text-xs uppercase tracking-[0.25em] text-text-muted mb-2">Section IV</div>
+                    <h3 class="font-semibold text-lg mb-1">Valuation Framework</h3>
+                    <p class="text-sm text-text-muted">DCF, comps, SOTP and scenario-based valuation.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-5 reveal">
+                    <div class="text-xs uppercase tracking-[0.25em] text-text-muted mb-2">Section V</div>
+                    <h3 class="font-semibold text-lg mb-1">Thesis Tracker</h3>
+                    <p class="text-sm text-text-muted">Pillars, KPIs, catalysts and risk register.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-5 reveal">
+                    <div class="text-xs uppercase tracking-[0.25em] text-text-muted mb-2">Section VI</div>
+                    <h3 class="font-semibold text-lg mb-1">Recommendation</h3>
+                    <p class="text-sm text-text-muted">IC decision, sizing considerations and monitoring plan.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Investment Snapshot -->
+    <div class="slide slide-3" data-slide="3">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:420px;height:420px;top:-120px;right:-100px;background:var(--color-accent-1);opacity:0.11;"></div>
+            <div class="blob" style="width:280px;height:280px;bottom:-80px;left:-60px;background:var(--color-accent-3);opacity:0.09;"></div>
+        </div>
+        <div class="content">
+            <div class="flex items-center justify-between gap-6 mb-6">
+                <div class="reveal">
+                    <div class="text-xs uppercase tracking-[0.25em] text-text-muted mb-2">Section I</div>
+                    <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-2">Investment Snapshot</h2>
+                    <p class="text-sm text-text-muted max-w-xl">We are initiating coverage on Qualcomm with a <span class="font-semibold text-accent-1">BUY</span> rating and <span class="font-semibold">$235</span> price target, implying ~10% upside plus ~2% dividend yield.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl px-6 py-4 text-right reveal">
+                    <div class="text-[0.7rem] uppercase tracking-[0.2em] text-text-muted mb-1">Rating &amp; Target</div>
+                    <div class="text-[2.2rem] font-extrabold text-glow glow-pulse leading-none">BUY</div>
+                    <div class="text-sm mt-1"><span class="font-semibold">PT:</span> $235 &bull; <span class="font-semibold">Upside:</span> ~10%</div>
+                </div>
+            </div>
+            <div class="grid grid-cols-4 gap-5 mt-4">
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">Market</div>
+                    <div class="text-xl font-semibold">$220B+</div>
+                    <div class="text-[0.8rem] text-text-muted">Large-cap fabless leader with dominant mobile and growing auto/IoT exposure.</div>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">FCF Machine</div>
+                    <div class="text-xl font-semibold">~$13B</div>
+                    <div class="text-[0.8rem] text-text-muted">Record free cash flow in FY25; FCF margin approaching 30%.</div>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">Valuation</div>
+                    <div class="text-xl font-semibold">~23x P/E</div>
+                    <div class="text-[0.8rem] text-text-muted">Lowest multiple in high-quality fabless peer set despite diversification.</div>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">Balance Sheet</div>
+                    <div class="text-xl font-semibold">&lt;0.5x ND/EBITDA</div>
+                    <div class="text-[0.8rem] text-text-muted">Net leverage well below 1x with ample buyback and M&amp;A capacity.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Business Overview -->
+    <div class="slide slide-4" data-slide="4">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:360px;height:360px;top:-80px;right:-80px;background:var(--color-accent-1);opacity:0.09;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-80px;left:-70px;background:var(--color-accent-2);opacity:0.07;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-4 reveal">Business Overview</h2>
+            <p class="text-sm text-text-muted max-w-3xl mb-6 reveal">Qualcomm is a leading fabless semiconductor designer and IP licensor. QCT (chips) drives ~85–90% of revenue, while QTL (licensing) contributes a structurally high-margin royalty stream anchored in 3G/4G/5G standards-essential patents.</p>
+            <div class="grid grid-cols-3 gap-5">
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">QCT &mdash; Semiconductors</div>
+                    <h3 class="font-semibold text-base mb-1">Handsets, Auto, IoT, PC</h3>
+                    <p class="text-[0.8rem] text-text-muted">Snapdragon SoCs across premium Android, Snapdragon Digital Chassis in autos, industrial/IoT modules, and AI PCs via Snapdragon X Elite.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">QTL &mdash; Licensing</div>
+                    <h3 class="font-semibold text-base mb-1">5G/CDMA IP</h3>
+                    <p class="text-[0.8rem] text-text-muted">Royalties on virtually all 3G/4G/5G phones globally; EBIT margins ~70%+ with minimal capital intensity.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">QSI &mdash; Strategic</div>
+                    <h3 class="font-semibold text-base mb-1">Ventures &amp; Adjacent Bets</h3>
+                    <p class="text-[0.8rem] text-text-muted">Smaller strategic investments and platforms; not thesis-critical but offer upside optionality.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Industry & Competitive Position -->
+    <div class="slide slide-5" data-slide="5">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:420px;height:420px;top:-90px;right:-60px;background:var(--color-accent-1);opacity:0.10;"></div>
+            <div class="blob" style="width:280px;height:280px;bottom:-100px;left:-80px;background:var(--color-accent-3);opacity:0.09;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-4 reveal">Industry &amp; Competitive Position</h2>
+            <div class="grid grid-cols-2 gap-8 mt-4">
+                <div class="reveal">
+                    <h3 class="font-semibold mb-2 text-accent-1 text-sm tracking-[0.18em] uppercase">Fabless in a Structural Upcycle</h3>
+                    <ul class="list-disc list-inside text-sm text-text-muted space-y-2">
+                        <li>Global semis surpassed ~$800B revenue in 2025; fabless sub-sector growing ~14% CAGR into 2030.</li>
+                        <li>Qualcomm participates in smartphones, automotive, IoT and AI PCs; diversified across end-markets.</li>
+                        <li>Fabless model supports high margins and low capex (~3% of revenue) versus 25–40% for IDMs.</li>
+                    </ul>
+                </div>
+                <div class="reveal">
+                    <h3 class="font-semibold mb-2 text-accent-1 text-sm tracking-[0.18em] uppercase">Competitive Edge</h3>
+                    <ul class="list-disc list-inside text-sm text-text-muted space-y-2">
+                        <li>Dominant share in premium Android modems/SoCs and high entry barriers from 3G/4G/5G IP.</li>
+                        <li>3–5 year automotive design cycles with Snapdragon Digital Chassis embed Qualcomm deeply in OEM roadmaps.</li>
+                        <li>Unique edge-AI span: from milliwatt IoT to kilowatt automotive compute on a common platform.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Historical Financials -->
+    <div class="slide slide-6" data-slide="6">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:360px;height:360px;top:-80px;right:-70px;background:var(--color-accent-1);opacity:0.10;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-80px;left:-70px;background:var(--color-accent-2);opacity:0.07;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-2 reveal">Historical Financial Profile</h2>
+            <p class="text-sm text-text-muted mb-5 reveal">Top line has recovered from the post-COVID handset correction while margins and free cash flow remain structurally strong.</p>
+            <div class="grid grid-cols-3 gap-5 mb-6">
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">Revenue</div>
+                    <div class="text-2xl font-bold mb-1">~$44B</div>
+                    <div class="text-[0.8rem] text-text-muted">FY25 revenue back above prior-cycle peak; ~7% 5Y CAGR and double-digit rebound since FY23 trough.</div>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">Margins</div>
+                    <div class="text-2xl font-bold mb-1">~55% GM</div>
+                    <div class="text-[0.8rem] text-text-muted">Mid-50s gross margin with EBITDA margins in the mid-30s, supported by QTL royalty economics.</div>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">Returns</div>
+                    <div class="text-2xl font-bold mb-1">20%+ ROIC*</div>
+                    <div class="text-[0.8rem] text-text-muted">Adjusted ROIC well above WACC despite FY25 tax noise; strong value creation across the cycle.</div>
+                </div>
+            </div>
+            <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-5 reveal">
+                <div class="text-xs uppercase tracking-[0.18em] text-text-muted mb-2">Qualitative Takeaways</div>
+                <ul class="list-disc list-inside text-[0.85rem] text-text-muted space-y-1">
+                    <li>Post-pandemic handset correction has largely normalized; Qualcomm exited FY25 on an improving revenue trajectory.</li>
+                    <li>License-heavy QTL mix stabilizes profitability even through unit cycles.</li>
+                    <li>FCF conversion remains excellent, providing significant capacity for buybacks and dividends.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Diversification & Segments -->
+    <div class="slide slide-7" data-slide="7">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:420px;height:420px;top:-110px;right:-90px;background:var(--color-accent-1);opacity:0.11;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-100px;left:-80px;background:var(--color-accent-3);opacity:0.09;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-2 reveal">Segment Mix &amp; Diversification</h2>
+            <p class="text-sm text-text-muted mb-5 reveal">Core handset exposure is being progressively diluted as automotive, IoT and PC initiatives scale.</p>
+            <div class="grid grid-cols-4 gap-5">
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">Handsets</h3>
+                    <div class="text-xl font-semibold mb-1">~2/3 of QCT</div>
+                    <p class="text-[0.8rem] text-text-muted">Premium Android and legacy Apple modem exposure; mature but cash-generative.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">Automotive</h3>
+                    <div class="text-xl font-semibold mb-1">Fastest Growth</div>
+                    <p class="text-[0.8rem] text-text-muted">Snapdragon Digital Chassis design wins underpin a path to ~$8B by FY29.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">IoT / Industrial</h3>
+                    <div class="text-xl font-semibold mb-1">Scaling Edge AI</div>
+                    <p class="text-[0.8rem] text-text-muted">Connected devices and on-device inference expand TAM beyond smartphones.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.18em] text-text-muted mb-1">Licensing (QTL)</h3>
+                    <div class="text-xl font-semibold mb-1">High-Margin Annuity</div>
+                    <p class="text-[0.8rem] text-text-muted">Royalty stream on global handset units with minimal incremental cost.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Thesis Pillars -->
+    <div class="slide slide-8" data-slide="8">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:360px;height:360px;top:-80px;right:-80px;background:var(--color-accent-1);opacity:0.11;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-90px;left:-70px;background:var(--color-accent-2);opacity:0.08;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-4 reveal">Investment Thesis &mdash; 4 Pillars</h2>
+            <div class="grid grid-cols-2 gap-5 mt-2">
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">Pillar 1</h3>
+                    <p class="font-semibold text-sm mb-1">Automotive Revenue Inflection</p>
+                    <p class="text-[0.8rem] text-text-muted">Design-win pipeline and first 2026 vehicle launches support a credible path to multi-billion auto revenue with 30%+ EBITDA margins.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">Pillar 2</h3>
+                    <p class="font-semibold text-sm mb-1">Edge AI Leadership</p>
+                    <p class="text-[0.8rem] text-text-muted">Snapdragon X Elite and Hexagon NPU position Qualcomm as a key beneficiary of AI inference moving from cloud to devices.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">Pillar 3</h3>
+                    <p class="font-semibold text-sm mb-1">Durable QTL Moat</p>
+                    <p class="text-[0.8rem] text-text-muted">Standards-essential IP and Apple precedent underpin a high-margin royalty business that cushions cyclical volatility.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">Pillar 4</h3>
+                    <p class="font-semibold text-sm mb-1">FCF &amp; Capital Returns</p>
+                    <p class="text-[0.8rem] text-text-muted">~$13B FCF with sub-1x leverage funds a sustainable dividend and meaningful buybacks while retaining strategic flexibility.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Key Risks & Mitigants -->
+    <div class="slide slide-9" data-slide="9">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:420px;height:420px;top:-110px;right:-80px;background:var(--color-accent-1);opacity:0.10;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-100px;left:-80px;background:var(--color-accent-3);opacity:0.09;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-4 reveal">Key Risks &amp; Mitigants</h2>
+            <div class="grid grid-cols-2 gap-5 mt-2">
+                <div class="border-l-4 border-red-500/70 bg-glass-bg backdrop-blur-xl rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">Apple Modem Exit</h3>
+                    <p class="text-[0.8rem] text-text-muted mb-1">Full Apple in-sourcing of modem by FY27 could remove a high-margin revenue stream.</p>
+                    <p class="text-[0.8rem] text-amber-200">Mitigant: Largely incorporated in estimates and valuation; diversification into auto/IoT/PC offsets a major portion over time.</p>
+                </div>
+                <div class="border-l-4 border-yellow-400/70 bg-glass-bg backdrop-blur-xl rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">China Exposure</h3>
+                    <p class="text-[0.8rem] text-text-muted mb-1">High concentration in Chinese OEMs exposes QCOM to tariffs and demand shocks.</p>
+                    <p class="text-[0.8rem] text-amber-200">Mitigant: 3-year design cycles, export-oriented Chinese OEMs, and rising non-China revenue in auto/PC.</p>
+                </div>
+                <div class="border-l-4 border-orange-400/70 bg-glass-bg backdrop-blur-xl rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">QTL Contract Risk</h3>
+                    <p class="text-[0.8rem] text-text-muted mb-1">Apple QTL renewal around 2027 could reset royalty economics.</p>
+                    <p class="text-[0.8rem] text-amber-200">Mitigant: FRAND framework and 2019 settlement precedent; SEP portfolio provides strong negotiation leverage.</p>
+                </div>
+                <div class="border-l-4 border-orange-400/70 bg-glass-bg backdrop-blur-xl rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">Auto Ramp Execution</h3>
+                    <p class="text-[0.8rem] text-text-muted mb-1">Delays in OEM production or slower ADAS adoption would push out auto revenue.</p>
+                    <p class="text-[0.8rem] text-amber-200">Mitigant: Multi-OEM design wins already in place; auto is an option-valued growth driver, not base thesis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Valuation Overview -->
+    <div class="slide slide-10" data-slide="10">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:360px;height:360px;top:-80px;right:-80px;background:var(--color-accent-1);opacity:0.11;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-80px;left:-70px;background:var(--color-accent-2);opacity:0.08;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-2 reveal">Valuation Overview</h2>
+            <p class="text-sm text-text-muted mb-5 reveal">We triangulate value using a base-case DCF, peer multiples and a SOTP lens. All three methods support a fair value in the low-to-mid $230s.</p>
+            <div class="grid grid-cols-3 gap-5">
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">DCF</h3>
+                    <p class="text-[0.85rem] text-text-muted mb-2">WACC ~10.7%, terminal growth 3.0% and mid-30s EBITDA margin trajectory yield an implied value range of roughly $180–220 per share.</p>
+                    <p class="text-[0.8rem] text-text-muted"><span class="font-semibold">Role:</span> Anchors downside and long-term economics.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">Comps</h3>
+                    <p class="text-[0.85rem] text-text-muted mb-2">QCOM trades at a steep discount to high-quality fabless peers on P/E, EV/EBITDA and P/FCF despite comparable growth and returns.</p>
+                    <p class="text-[0.8rem] text-text-muted"><span class="font-semibold">Role:</span> Highlights relative mispricing driven by Apple overhang.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-1">SOTP</h3>
+                    <p class="text-[0.85rem] text-text-muted mb-2">Valuing QCT, QTL and auto separately yields an intrinsic value in the low $230s, with QTL alone worth a substantial fraction of today&apos;s market cap.</p>
+                    <p class="text-[0.8rem] text-text-muted"><span class="font-semibold">Role:</span> Confirms upside and highlights embedded optionality in auto/IoT.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: DCF Summary -->
+    <div class="slide slide-11" data-slide="11">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:380px;height:380px;top:-90px;right:-90px;background:var(--color-accent-1);opacity:0.11;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-90px;left:-80px;background:var(--color-accent-3);opacity:0.09;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-3 reveal">DCF &amp; Key Assumptions</h2>
+            <div class="grid grid-cols-2 gap-6 mt-2">
+                <div class="reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Economics</h3>
+                    <ul class="list-disc list-inside text-[0.85rem] text-text-muted space-y-1">
+                        <li>Base case projects low single-digit revenue CAGR through 2030 as auto and IoT offset Apple.</li>
+                        <li>EBIT margins rise modestly into the low/mid-30s on operating leverage and mix shift.</li>
+                        <li>Capex held near 3% of sales; working capital absorption modest (~1% of revenue growth).</li>
+                    </ul>
+                </div>
+                <div class="reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Discount Rate &amp; Terminal Value</h3>
+                    <ul class="list-disc list-inside text-[0.85rem] text-text-muted space-y-1">
+                        <li>WACC of ~10.7% based on Rf ~4.4%, ERP ~5.1% and beta ~1.3 with low leverage.</li>
+                        <li>Terminal growth rate of 3.0% consistent with long-run nominal GDP.</li>
+                        <li>Terminal value comprises ~74% of EV; sensitivity analysis bounds fair value.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Scenario & Sensitivity -->
+    <div class="slide slide-12" data-slide="12">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:360px;height:360px;top:-80px;right:-80px;background:var(--color-accent-1);opacity:0.12;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-80px;left:-70px;background:var(--color-accent-2);opacity:0.08;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-3 reveal">Scenarios &amp; Sensitivities</h2>
+            <p class="text-sm text-text-muted mb-5 reveal">Our base case embeds a full Apple exit while assuming execution on auto/IoT. Upside and downside are driven by Apple, China, and the auto ramp.</p>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-emerald-200 mb-1">Bull</h3>
+                    <p class="text-[0.8rem] text-text-muted mb-1">Apple retains some modem/QTL exposure, auto exceeds plan and AI PC adoption is strong.</p>
+                    <p class="text-[0.8rem] text-emerald-200">Implication: fair value in the high $200s; multiple re-rates toward peers.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-sky-200 mb-1">Base</h3>
+                    <p class="text-[0.8rem] text-text-muted mb-1">Full Apple exit by FY27, but auto/IoT/PC growth offsets most of the earnings drag.</p>
+                    <p class="text-[0.8rem] text-sky-200">Implication: fair value around low/mid $230s; current pricing is slightly discounted.</p>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-rose-200 mb-1">Bear</h3>
+                    <p class="text-[0.8rem] text-text-muted mb-1">Apple exit, weaker China and slower auto ramp combine to pressure revenue and margins.</p>
+                    <p class="text-[0.8rem] text-rose-200">Implication: fair value in the $150–$170 range; still supported by QTL and FCF floor.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Thesis Tracker & KPIs -->
+    <div class="slide slide-13" data-slide="13">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:420px;height:420px;top:-110px;right:-80px;background:var(--color-accent-1);opacity:0.11;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-90px;left:-70px;background:var(--color-accent-3);opacity:0.09;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold mb-3 reveal">Thesis Tracker &amp; KPIs</h2>
+            <p class="text-sm text-text-muted mb-4 reveal">We propose tracking a focused set of KPIs that directly tie back to each thesis pillar.</p>
+            <div class="grid grid-cols-2 gap-5">
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Automotive &amp; Diversification</h3>
+                    <ul class="list-disc list-inside text-[0.8rem] text-text-muted space-y-1">
+                        <li>Quarterly automotive revenue and booked lifetime design-win value.</li>
+                        <li>Non-handset QCT revenue (auto + IoT + PC) vs. target trajectory.</li>
+                        <li>EBITDA margin progression as mix shifts toward auto and QTL.</li>
+                    </ul>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Apple &amp; QTL</h3>
+                    <ul class="list-disc list-inside text-[0.8rem] text-text-muted space-y-1">
+                        <li>QTL revenue stability and EBIT margin trends.</li>
+                        <li>Disclosures around Apple modem and QTL contract renewal.</li>
+                        <li>Global 5G handset units and Qualcomm licensing coverage.</li>
+                    </ul>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Edge AI &amp; PC</h3>
+                    <ul class="list-disc list-inside text-[0.8rem] text-text-muted space-y-1">
+                        <li>PC revenue run-rate and Snapdragon X Elite design wins at key OEMs.</li>
+                        <li>On-device AI benchmarks versus Intel and Apple M-series.</li>
+                        <li>Developer and ecosystem adoption of Snapdragon AI features.</li>
+                    </ul>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-4 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Capital Allocation &amp; FCF</h3>
+                    <ul class="list-disc list-inside text-[0.8rem] text-text-muted space-y-1">
+                        <li>FCF margin vs. mid-20s target and absolute FCF generation.</li>
+                        <li>Annual buyback and dividend progression versus FCF.</li>
+                        <li>Net leverage staying below 1x through the cycle.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Recommendation & Sizing -->
+    <div class="slide slide-14" data-slide="14">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:420px;height:420px;top:-120px;right:-90px;background:var(--color-accent-1);opacity:0.12;"></div>
+            <div class="blob" style="width:260px;height:260px;bottom:-100px;left:-80px;background:var(--color-accent-2);opacity:0.09;"></div>
+        </div>
+        <div class="content">
+            <h2 class="font-display text-[clamp(2.2rem,4.5vw,3.2rem)] font-semibold mb-3 reveal">IC Recommendation &amp; Positioning</h2>
+            <div class="grid grid-cols-2 gap-6 mt-2">
+                <div class="reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Proposed Action</h3>
+                    <ul class="list-disc list-inside text-[0.9rem] text-text-muted space-y-2">
+                        <li>Initiate / maintain a <span class="font-semibold text-accent-1">BUY</span> recommendation on QCOM.</li>
+                        <li>Use a <span class="font-semibold">$235</span> 12–18 month price target as the primary risk anchor.</li>
+                        <li>Consider a core position sizing reflecting balanced growth/value with clear catalysts.</li>
+                    </ul>
+                </div>
+                <div class="bg-glass-bg backdrop-blur-xl border border-glass-border rounded-2xl p-5 reveal">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Key IC Considerations</h3>
+                    <ul class="list-disc list-inside text-[0.85rem] text-text-muted space-y-1">
+                        <li>Apple risk is real but already heavily discounted; upside stems from auto and edge AI execution.</li>
+                        <li>QTL and FCF create a strong floor; balance sheet limits structural downside.</li>
+                        <li>Monitoring KPIs provide timely triggers to add, trim or revisit the thesis.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: Closing -->
+    <div class="slide slide-15" data-slide="15">
+        <div class="gradient-mesh">
+            <div class="blob" style="width:520px;height:520px;top:-140px;right:-150px;background:var(--color-accent-1);opacity:0.2;"></div>
+            <div class="blob" style="width:380px;height:380px;bottom:-140px;left:-100px;background:var(--color-accent-2);opacity:0.17;"></div>
+            <div class="blob" style="width:260px;height:260px;top:45%;left:12%;background:var(--color-accent-3);opacity:0.13;"></div>
+        </div>
+        <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+        <div class="content text-center">
+            <div class="text-[100px] mb-4 animate-[float_3s_ease-in-out_infinite] drop-shadow-2xl mx-auto">✅</div>
+            <h2 class="font-display text-[clamp(2.4rem,5vw,4.2rem)] font-semibold mb-3 bg-linear-to-br from-accent-1 via-accent-2 to-accent-1 bg-clip-text text-transparent tracking-tight reveal">Thank You / IC Discussion</h2>
+            <p class="text-sm text-text-muted max-w-2xl mx-auto mb-3 reveal">We recommend QCOM as a high-quality, FCF-rich compounder with a credible diversification path and mispriced Apple risk.</p>
+            <p class="text-xs text-text-muted tracking-[0.3em] uppercase reveal">Next step: IC views on risk tolerance, position sizing and monitoring cadence.</p>
+        </div>
+    </div>
+</div>
+
+<div class="nav-controls">
+    <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+    <div class="slide-dots" id="dots"></div>
+    <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+    <span class="slide-counter" id="counter">1 / 15</span>
+</div>
+
+<script>
+    let current = 1;
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    for (let i = 1; i <= total; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 1 ? ' active' : '');
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+    }
+    function goToSlide(n) {
+        const prev = document.querySelector('.slide.active');
+        const next = document.querySelector(`.slide[data-slide="${n}"]`);
+        if (prev) prev.classList.remove('active');
+        if (next) {
+            next.classList.add('active');
+            animateSlide(next);
+        }
+        current = n;
+        updateNav();
+    }
+    function changeSlide(dir) {
+        let next = current + dir;
+        if (next < 1) next = total;
+        if (next > total) next = 1;
+        goToSlide(next);
+    }
+    function updateNav() {
+        document.querySelectorAll('.dot').forEach((d, i) => {
+            d.classList.toggle('active', i + 1 === current);
+        });
+        counter.textContent = current + ' / ' + total;
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            e.preventDefault();
+            changeSlide(1);
+        }
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            changeSlide(-1);
+        }
+    });
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+    });
+
+    function animateSlide(slide) {
+        slide.querySelectorAll('.reveal').forEach((el, i) => {
+            el.style.transition = 'none';
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.offsetHeight;
+            const delay = i * 0.08;
+            el.style.transition = `opacity 0.35s ease ${delay}s, transform 0.35s ease ${delay}s`;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0px)';
+        });
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        const spotlight = document.querySelector('.mouse-spotlight');
+        if (spotlight) {
+            const rgb = getComputedStyle(document.documentElement).getPropertyValue('--glow-color-rgb').trim() || '139,195,74';
+            spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(${rgb}, 0.08), transparent 40%)`;
+        }
+    });
+
+    (function() {
+        window.initParticles = function(canvas, options) {
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            const interactive = options.interactive !== false;
+            const count = options.count || (interactive ? 55 : 18);
+            let mx = -1000, my = -1000;
+            const rgb = getComputedStyle(document.documentElement).getPropertyValue('--glow-color-rgb').trim() || '139,195,74';
+            const [r, g, b] = rgb.split(',').map(Number);
+            const particles = Array.from({ length: count }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                size: Math.random() * 2.5 + 0.8,
+                alpha: Math.random() * 0.35 + 0.1
+            }));
+            if (interactive) {
+                canvas.addEventListener('mousemove', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    mx = e.clientX - rect.left;
+                    my = e.clientY - rect.top;
+                });
+                canvas.addEventListener('mouseleave', () => { mx = -1000; my = -1000; });
+            }
+            (function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    if (interactive) {
+                        const dx = p.x - mx;
+                        const dy = p.y - my;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            const force = (120 - dist) / 120 * 2;
+                            p.vx += (dx / dist) * force * 0.1;
+                            p.vy += (dy / dist) * force * 0.1;
+                        }
+                    }
+                    p.vx *= 0.98;
+                    p.vy *= 0.98;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${r},${g},${b},${p.alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(animate);
+            })();
+        };
+        document.querySelectorAll('.particle-canvas').forEach(c => window.initParticles(c, { interactive: true, count: 55 }));
+    })();
+
+    try { animateSlide(document.querySelector('.slide.active')); } catch(e) { console.warn('Initial animation error:', e); }
+</script>
+
+</body>
+</html>
