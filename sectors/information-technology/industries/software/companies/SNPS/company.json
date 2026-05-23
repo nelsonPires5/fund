@@ -1,0 +1,16 @@
+{
+  "company_name": "Synopsys, Inc.",
+  "ticker": "SNPS",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "electronic design automation (EDA) / silicon IP",
+  "currency": "USD",
+  "fiscal_year_end": "10-31",
+  "koyfin_id": "SNPS US",
+  "sec_cik": "0000883241",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-22-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "software"
+}
