@@ -109,6 +109,8 @@ Earnings Materials (Q3 2024):
 - Update forward estimates based on results
 - Show old vs. new estimates clearly
 - Explain what changed and why
+- If the earnings update changes the model, rerun workbook validations before publishing: `recalc.py`, `validate_model.py`, `validate_outputs.py`, and `validate_artifacts.py` for the final report/deck when applicable.
+- Do not publish a rating/price-target combination that contradicts model outputs (for example, Buy with material base-case downside or Sell with material base-case upside) unless the report explicitly documents the override rationale.
 
 ## High-Level Workflow
 
@@ -170,7 +172,14 @@ Create 8-12 page DOCX report with specific structure.
 - Pages 11-12: Appendix (optional)
 
 ### Phase 5: Quality Check & Delivery (30 minutes)
-Verify content, formatting, accuracy, and timeliness before delivery.
+Verify content, formatting, accuracy, timeliness, and model/output consistency before delivery.
+
+If a model is updated as part of the earnings analysis:
+- Recalculate the workbook and scan for formula errors.
+- Run `validate_model.py` to catch active output errors, Summary-vs-DCF/Scenarios mismatches, scenario ordering issues, rating-vs-return inconsistencies, return-math errors, and terminal/WACC sanity issues.
+- Regenerate `outputs.json` from recalculated workbook cells only.
+- Run `validate_outputs.py` to verify `outputs.json` equals workbook cells.
+- Run `validate_artifacts.py` to verify the earnings report's material target prices, returns, scenario values, and valuation numbers match `outputs.json`.
 
 **See [references/best-practices.md](references/best-practices.md)** for quality checklist and common mistakes to avoid.
 
