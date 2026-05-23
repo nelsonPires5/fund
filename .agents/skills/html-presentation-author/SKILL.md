@@ -5,12 +5,12 @@ description: Create standalone HTML investment presentations and decks from comp
 
 # HTML Presentation Author
 
-Use this skill when a presentation/deck is requested. Default output is `deck/index.html` inside a company run folder.
+Use this skill when a presentation/deck is requested. Default output is `deck.html` in the company run folder root.
 
 ## Output contract
 
 ```text
-<run>/deck/index.html
+<run>/deck.html
 ```
 
 Optional source file:
@@ -29,23 +29,25 @@ Before building the deck, confirm these artifacts exist and are current:
 - Charts under `<run>/assets/charts/`
 - `report.md` (for narrative, thesis, risks)
 - `manifest.json` (run metadata)
+- Passing model/output validations: `<run>/data/scripts/validation/recalc.py`, `validate_model.py`, and `validate_outputs.py` must have run successfully after the latest model change.
 
-Do not start deck creation until the model and charts are ready.
+Do not start deck creation until the model, outputs, validations, and charts are ready.
 
 ## Workflow
 
 1. Confirm the run folder and prerequisite source artifacts above.
 2. Draft slide outline first if the deck is substantial.
 3. Use only final assets from `<run>/assets/charts/` or `<run>/assets/screenshots/`; do not reference raw captures from `<run>/data/raw/`.
-4. Every material number must trace to a named key in `outputs.json` or a `data/normalized/model_extracts/` entry; footnote the source run id.
-5. In `deck.spec.json`, slides may use `image`, `chartImage`, or `images` fields with paths relative to `deck/index.html` (for example `../assets/charts/revenue_mix.png`).
+4. Every material number must trace to a named key in `outputs.json` or a `data/normalized/model_extracts/` entry; footnote the source run id. Do not manually type target prices, returns, multiples, or scenario values unless they are copied from `outputs.json` and the output key is recorded.
+5. In `deck.spec.json`, slides may use `image`, `chartImage`, or `images` fields with paths relative to `deck.html` (for example `./assets/charts/revenue_mix.png`).
 6. Build standalone HTML directly or create `deck.spec.json` and run via scripts under `data/scripts/presentation/` (or the skill's bundled scripts):
 
 ```bash
-node skills/html-presentation-author/scripts/build-deck.js <run>/deck.spec.json <run>/deck/index.html
+node skills/html-presentation-author/scripts/build-deck.js <run>/deck.spec.json <run>/deck.html
 ```
 
 7. Optional: embed Mermaid diagrams (e.g., thesis flow, catalyst timeline, competitive map) directly in the HTML via `<pre class="mermaid">` blocks and the Mermaid CDN.
+8. Before delivery, run `<run>/data/scripts/validation/validate_artifacts.py` (or create it if missing) to assert material numbers in `deck.spec.json` / `deck.html` match `outputs.json` within tolerance. Fix mismatches before delivery.
 
 ## Conventions
 
