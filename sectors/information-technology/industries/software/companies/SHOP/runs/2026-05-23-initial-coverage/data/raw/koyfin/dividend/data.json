@@ -1,0 +1,33 @@
+{
+  "ticker": "SHOP",
+  "tickerId": "eq-q6lsgw",
+  "tab": "Dividend",
+  "url": "https://app.koyfin.com/snapshot/dvd/eq-q6lsgw",
+  "extractedAt": "2026-05-23T07:47:00.602Z",
+  "summary": {
+    "Dividend Yield & Frequency": {
+      "Indicated Yield": "-",
+      "Trailing LTM Yield": "-",
+      "Forward NTM Yield": "0.00%",
+      "Payout Ratio (LTM)": "-",
+      "Payment Frequency": "-"
+    },
+    "Dividend Growth": {
+      "Consecutive Annual Increases": "-",
+      "annualizedGrowthPeriods": [
+        "1Y",
+        "3Y",
+        "5Y",
+        "10Y"
+      ],
+      "annualizedGrowthValues": []
+    },
+    "Shareholder Yield": {
+      "Shareholder Yield*": "-"
+    }
+  },
+  "dividends": [],
+  "hasDividendData": false,
+  "headers": [],
+  "totalDividendEntries": 0
+}

@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="slides-format" content="viewport">
+    <title>SHOP — Initiating Coverage | Investment Committee Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --color-bg: #0a0f1e;
+            --color-bg-deep: #050810;
+            --color-surface: #121827;
+            --color-text: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-text-muted: #94a3b8;
+            --color-accent-1: #96BF48;
+            --color-accent-2: #5E8E3E;
+            --color-accent-3: #D4E8A2;
+            --color-sell: #EF4444;
+            --color-gold: #F59E0B;
+            --color-glass-bg: rgba(255,255,255,0.05);
+            --color-glass-border: rgba(255,255,255,0.09);
+            --color-vignette: rgba(0,0,0,0.45);
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+    </style>
+    <style>
+        :root {
+            --color-bg: #0a0f1e;
+            --color-text: #f1f5f9;
+            --glow-color-rgb: 150,191,72;
+            --sell-rgb: 239,68,68;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { background: var(--color-bg); margin: 0; }
+        body { font-family: 'DM Sans', sans-serif; color: var(--color-text); overflow: hidden; height: 100vh; width: 100vw; }
+        .deck { width: 100vw; height: 100vh; position: relative; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: scale(0.96); transition: opacity 0.65s ease, transform 0.65s ease; pointer-events: none; overflow: hidden; }
+        .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+        .slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1140px; padding: clamp(1.2rem, 3.5vw, 3.5rem); }
+        .nav-controls { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; z-index: 100; background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); padding: 9px 22px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.09); }
+        .nav-btn { width: 38px; height: 38px; border: none; background: rgba(255,255,255,0.06); color: #96BF48; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.25s; }
+        .nav-btn:hover { background: rgba(150,191,72,0.18); }
+        .slide-dots { display: flex; gap: 7px; }
+        .slide-dots .dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.18); cursor: pointer; transition: background 0.3s, transform 0.3s; }
+        .slide-dots .dot.active { background: #96BF48; transform: scale(1.4); }
+        .slide-counter { font-size: 0.78rem; color: #94a3b8; min-width: 38px; text-align: center; font-family: 'DM Sans', sans-serif; }
+        .reveal { opacity: 0; transform: translateY(18px); }
+
+        /* Glow */
+        .text-glow { text-shadow: 0 0 24px rgba(150,191,72,0.55), 0 0 48px rgba(150,191,72,0.22); }
+        .sell-glow { text-shadow: 0 0 24px rgba(239,68,68,0.6), 0 0 48px rgba(239,68,68,0.25); }
+        @keyframes glow-pulse { 0%,100% { text-shadow: 0 0 20px rgba(150,191,72,0.5), 0 0 40px rgba(150,191,72,0.2); } 50% { text-shadow: 0 0 32px rgba(150,191,72,0.85), 0 0 64px rgba(150,191,72,0.35); } }
+        .glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+        @keyframes sell-pulse { 0%,100% { text-shadow: 0 0 20px rgba(239,68,68,0.5); } 50% { text-shadow: 0 0 36px rgba(239,68,68,0.9); } }
+        .sell-pulse { animation: sell-pulse 2.5s ease-in-out infinite; }
+
+        /* Gradient mesh */
+        @keyframes float-slow { 0% { transform: translate(0,0) scale(1); } 25% { transform: translate(55px,-45px) scale(1.1); } 50% { transform: translate(-35px,35px) scale(0.92); } 75% { transform: translate(45px,18px) scale(1.07); } 100% { transform: translate(0,0) scale(1); } }
+        @keyframes float-drift { 0% { transform: translate(0,0) scale(1) rotate(0deg); } 33% { transform: translate(-45px,-55px) scale(1.13) rotate(3deg); } 66% { transform: translate(38px,28px) scale(0.9) rotate(-2deg); } 100% { transform: translate(0,0) scale(1) rotate(0deg); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+        .gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float-slow 10s ease-in-out infinite; }
+        .blob:nth-child(2) { animation: float-drift 14s ease-in-out infinite; }
+        .blob:nth-child(3) { animation: float-slow 18s ease-in-out infinite reverse; }
+        .blob:nth-child(4) { animation: float-drift 22s ease-in-out infinite reverse; }
+
+        /* Noise + vignette */
+        .slide::before { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); background-repeat:repeat; background-size:256px 256px; opacity:0.03; mix-blend-mode:overlay; }
+        .slide::after { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background:radial-gradient(ellipse at center, transparent 50%, var(--color-vignette) 100%); }
+
+        /* Bars */
+        .bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #96BF48, #D4E8A2); transition: width 0.8s ease; }
+        .bar-fill-sell { background: linear-gradient(90deg, #EF4444, #FCA5A5); }
+        .bar-track { background: rgba(255,255,255,0.07); border-radius: 4px; height: 10px; overflow: hidden; }
+
+        /* Donut */
+        .donut-ring { stroke-dasharray: 251.3; stroke-dashoffset: 251.3; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+
+        /* Football field bar */
+        .ff-bar { height: 32px; border-radius: 6px; position: relative; display: flex; align-items: center; }
+
+        /* Heatmap */
+        .hm-cell { padding: 6px 10px; border-radius: 4px; text-align: center; font-size: 0.75rem; font-weight: 700; min-width: 52px; }
+
+        /* Deco shapes */
+        @keyframes drift-a { 0%,100%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(25px,-18px) rotate(6deg);} }
+        @keyframes drift-b { 0%,100%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(-18px,22px) rotate(-5deg);} }
+        .deco-shape { position: absolute; pointer-events: none; z-index: 0; opacity: 0.04; }
+        .deco-shape:nth-child(odd) { animation: drift-a 12s ease-in-out infinite; }
+        .deco-shape:nth-child(even) { animation: drift-b 16s ease-in-out infinite; }
+
+        /* Horizontal progress rows */
+        .h-bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+        .h-bar-label { font-size: 0.82rem; color: #94a3b8; min-width: 110px; }
+        .h-bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; }
+        .h-bar-val { font-size: 0.82rem; font-weight: 600; min-width: 48px; text-align: right; }
+
+        /* Tag badges */
+        .tag { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+        .tag-sell { background: rgba(239,68,68,0.18); color: #EF4444; border: 1px solid rgba(239,68,68,0.3); }
+        .tag-bull { background: rgba(150,191,72,0.15); color: #96BF48; border: 1px solid rgba(150,191,72,0.3); }
+        .tag-bear { background: rgba(239,68,68,0.12); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.22); }
+        .tag-catalyst { background: rgba(245,158,11,0.15); color: #F59E0B; border: 1px solid rgba(245,158,11,0.3); }
+        .tag-risk { background: rgba(239,68,68,0.12); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.22); }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } }
+    </style>
+</head>
+<body>
+
+<div class="mouse-spotlight" style="position:fixed;inset:0;z-index:99;pointer-events:none;"></div>
+
+<div class="deck">
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 1 — TITLE
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-1 active" data-slide="1">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:520px;height:520px;top:-120px;right:-100px;background:#96BF48;opacity:0.13;"></div>
+        <div class="blob" style="width:320px;height:320px;bottom:-90px;left:-70px;background:#5E8E3E;opacity:0.11;"></div>
+        <div class="blob" style="width:220px;height:220px;top:42%;left:12%;background:#D4E8A2;opacity:0.08;"></div>
+        <div class="blob" style="width:180px;height:180px;bottom:20%;right:15%;background:#EF4444;opacity:0.07;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+        <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 22px;margin-bottom:28px;" class="reveal">
+            <span style="font-size:2rem;">🛍️</span>
+            <span style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#96BF48;letter-spacing:-0.02em;">Shopify</span>
+            <span style="font-size:0.8rem;color:#94a3b8;font-family:'DM Sans',sans-serif;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border-left:1px solid rgba(255,255,255,0.12);padding-left:10px;">NYSE: SHOP</span>
+        </div>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5.5vw,4.8rem);font-weight:900;background:linear-gradient(135deg,#96BF48,#D4E8A2,#96BF48);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin:0 0 16px;" class="reveal">Initiating Coverage</h1>
+        <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:18px;" class="reveal">
+            <span class="tag tag-sell" style="font-size:0.9rem;padding:4px 18px;">SELL</span>
+            <span style="color:#94a3b8;font-size:0.9rem;">Price Target: </span>
+            <span style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#EF4444;" class="sell-pulse">$64</span>
+            <span style="color:#94a3b8;font-size:0.9rem;">vs. Current</span>
+            <span style="font-size:1.1rem;font-weight:600;">$103.00</span>
+            <span style="color:#EF4444;font-weight:700;font-size:0.95rem;">— 37.9% Downside</span>
+        </div>
+        <p style="font-size:clamp(0.85rem,1.4vw,1.1rem);color:#94a3b8;letter-spacing:5px;text-transform:uppercase;margin:0;" class="reveal">Investment Committee Presentation · May 2026</p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 2 — EXECUTIVE SUMMARY
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-2" data-slide="2">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-80px;right:-80px;background:#EF4444;opacity:0.07;"></div>
+        <div class="blob" style="width:260px;height:260px;bottom:-60px;left:-40px;background:#96BF48;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px;" class="reveal">
+            <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.5vw,2.6rem);font-weight:700;margin:0;">Executive Summary</h2>
+            <span class="tag tag-sell">SELL · PT $64</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+            <div style="background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.15);border-left:3px solid #96BF48;border-radius:10px;padding:18px 20px;" class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#96BF48;margin-bottom:8px;">Investment Thesis</div>
+                <p style="font-size:0.88rem;line-height:1.6;color:#cbd5e1;margin:0;">Shopify is a genuine commerce infrastructure powerhouse with 4.8M merchants, 29% US e-commerce share, and a powerful FinTech flywheel. However, at 9.8× NTM revenue and 62× NTM EBITDA, the market is pricing <em>perfection</em>. Our DCF base-case yields $46 — a 55% premium to intrinsic value is unjustified given decelerating GMV growth, persistent SBC drag (~20% of revenue), and rising competitive threats.</p>
+            </div>
+            <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-left:3px solid #EF4444;border-radius:10px;padding:18px 20px;" class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#EF4444;margin-bottom:8px;">Key Bear Case Drivers</div>
+                <ul style="font-size:0.86rem;line-height:1.7;color:#cbd5e1;margin:0;padding-left:16px;">
+                    <li>Valuation embeds ~30%+ revenue CAGR for 5+ years — aggressive</li>
+                    <li>SBC of ~20% of revenue massively inflates reported FCF metrics</li>
+                    <li>Amazon, TikTok Shop & WooCommerce intensifying merchant competition</li>
+                    <li>Macro headwinds: consumer spending deceleration, FX pressure (36% intl revenue)</li>
+                    <li>Capital-light model tested by enterprise/B2B pivot with higher cost-to-serve</li>
+                </ul>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px 20px;" class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:10px;">Valuation Summary</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;">
+                    <div><div style="font-size:1.3rem;font-weight:700;color:#EF4444;">$46</div><div style="font-size:0.7rem;color:#94a3b8;">DCF Base</div></div>
+                    <div><div style="font-size:1.3rem;font-weight:700;color:#F59E0B;">$64</div><div style="font-size:0.7rem;color:#94a3b8;">Price Target</div></div>
+                    <div><div style="font-size:1.3rem;font-weight:700;color:#96BF48;">$57</div><div style="font-size:0.7rem;color:#94a3b8;">DCF Bull</div></div>
+                </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px 20px;" class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:10px;">Snapshot Metrics (FY2025A / FY2026E)</div>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;font-size:0.82rem;">
+                    <div style="color:#94a3b8;">Revenue</div><div style="color:#f1f5f9;text-align:right;">$11.6B / $15.1B</div>
+                    <div style="color:#94a3b8;">GMV</div><div style="color:#f1f5f9;text-align:right;">$293B / $384B</div>
+                    <div style="color:#94a3b8;">Adj. EBITDA Margin</div><div style="color:#f1f5f9;text-align:right;">19.5% / 21%E</div>
+                    <div style="color:#94a3b8;">Reported FCF Margin</div><div style="color:#f1f5f9;text-align:right;">17.4% / 18%E</div>
+                    <div style="color:#94a3b8;">SBC / Revenue</div><div style="color:#EF4444;text-align:right;">~20% ⚠️</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 3 — BUSINESS OVERVIEW
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-3" data-slide="3">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:350px;height:350px;top:-70px;right:-70px;background:#96BF48;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-50px;left:-50px;background:#5E8E3E;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.5vw,2.6rem);font-weight:700;margin:0 0 6px;" class="reveal">Business Overview</h2>
+        <p style="font-size:0.84rem;color:#94a3b8;margin:0 0 22px;" class="reveal">Commerce infrastructure platform · Founded 2006 · HQ Ottawa, Canada</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px;" class="reveal">
+                <div style="font-size:1.8rem;margin-bottom:8px;">🏪</div>
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#96BF48;margin-bottom:6px;">Subscription Solutions</div>
+                <div style="font-size:1.2rem;font-weight:700;color:#f1f5f9;">~29% Revenue</div>
+                <p style="font-size:0.8rem;color:#94a3b8;margin:8px 0 0;line-height:1.5;">Platform access, themes, apps, domain hosting. Basic ($39) → Advanced ($399) → Plus (custom). 4.8M active merchants.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px;" class="reveal">
+                <div style="font-size:1.8rem;margin-bottom:8px;">💳</div>
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#96BF48;margin-bottom:6px;">Merchant Solutions</div>
+                <div style="font-size:1.2rem;font-weight:700;color:#f1f5f9;">~71% Revenue</div>
+                <p style="font-size:0.8rem;color:#94a3b8;margin:8px 0 0;line-height:1.5;">Shopify Payments (64% GMV penetration), Capital, Shipping, Markets (cross-border), POS. Grows with merchant GMV.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px;" class="reveal">
+                <div style="font-size:1.8rem;margin-bottom:8px;">🌍</div>
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#96BF48;margin-bottom:6px;">Geographic Mix</div>
+                <div style="font-size:1.2rem;font-weight:700;color:#f1f5f9;">64% North America</div>
+                <p style="font-size:0.8rem;color:#94a3b8;margin:8px 0 0;line-height:1.5;">36% international (growing +36% YoY). UK, EMEA, APAC expansion via Shopify Markets & localized payment rails.</p>
+            </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px;">
+            <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:12px;text-align:center;" class="reveal">
+                <div style="font-size:1.4rem;font-weight:800;color:#96BF48;" data-count="293" data-suffix="B">$0B</div>
+                <div style="font-size:0.7rem;color:#94a3b8;margin-top:3px;">FY2025 GMV</div>
+            </div>
+            <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:12px;text-align:center;" class="reveal">
+                <div style="font-size:1.4rem;font-weight:800;color:#96BF48;">11.6B</div>
+                <div style="font-size:0.7rem;color:#94a3b8;margin-top:3px;">FY2025 Revenue</div>
+            </div>
+            <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:12px;text-align:center;" class="reveal">
+                <div style="font-size:1.4rem;font-weight:800;color:#96BF48;">3.08%</div>
+                <div style="font-size:0.7rem;color:#94a3b8;margin-top:3px;">Blended Take Rate</div>
+            </div>
+            <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:12px;text-align:center;" class="reveal">
+                <div style="font-size:1.4rem;font-weight:800;color:#96BF48;">29%</div>
+                <div style="font-size:0.7rem;color:#94a3b8;margin-top:3px;">US e-Commerce Share</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 4 — FINANCIAL PERFORMANCE
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-4" data-slide="4">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-70px;right:-70px;background:#5E8E3E;opacity:0.08;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-50px;left:-40px;background:#96BF48;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.5vw,2.6rem);font-weight:700;margin:0 0 22px;" class="reveal">Historical Financial Performance</h2>
+        <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:20px;">
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:12px;">Revenue ($B) & GMV ($B) — FY2021–FY2025</div>
+                <div style="display:flex;align-items:flex-end;gap:10px;height:140px;padding:0 0 8px;">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                        <span style="font-size:0.65rem;color:#94a3b8;">$4.6B</span>
+                        <div class="bar" style="width:100%;background:linear-gradient(180deg,#96BF48,#5E8E3E);border-radius:4px 4px 0 0;" data-height="40" style="height:0%"></div>
+                        <span style="font-size:0.65rem;color:#94a3b8;">FY21</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                        <span style="font-size:0.65rem;color:#94a3b8;">$5.6B</span>
+                        <div class="bar" style="width:100%;background:linear-gradient(180deg,#96BF48,#5E8E3E);border-radius:4px 4px 0 0;" data-height="48" style="height:0%"></div>
+                        <span style="font-size:0.65rem;color:#94a3b8;">FY22</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                        <span style="font-size:0.65rem;color:#94a3b8;">$7.1B</span>
+                        <div class="bar" style="width:100%;background:linear-gradient(180deg,#96BF48,#5E8E3E);border-radius:4px 4px 0 0;" data-height="61" style="height:0%"></div>
+                        <span style="font-size:0.65rem;color:#94a3b8;">FY23</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                        <span style="font-size:0.65rem;color:#94a3b8;">$8.9B</span>
+                        <div class="bar" style="width:100%;background:linear-gradient(180deg,#96BF48,#5E8E3E);border-radius:4px 4px 0 0;" data-height="77" style="height:0%"></div>
+                        <span style="font-size:0.65rem;color:#94a3b8;">FY24</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                        <span style="font-size:0.65rem;color:#D4E8A2;font-weight:600;">$11.6B</span>
+                        <div class="bar" style="width:100%;background:linear-gradient(180deg,#D4E8A2,#96BF48);border-radius:4px 4px 0 0;" data-height="100" style="height:0%"></div>
+                        <span style="font-size:0.65rem;color:#D4E8A2;font-weight:600;">FY25</span>
+                    </div>
+                </div>
+                <div style="margin-top:16px;">
+                    <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:10px;">Key Margin Trends</div>
+                    <div class="h-bar-row">
+                        <span class="h-bar-label">Gross Margin</span>
+                        <div class="h-bar-track"><div class="bar-fill" data-width="48" style="width:0%;"></div></div>
+                        <span class="h-bar-val" style="color:#96BF48;">48.3%</span>
+                    </div>
+                    <div class="h-bar-row">
+                        <span class="h-bar-label">EBITDA Margin</span>
+                        <div class="h-bar-track"><div class="bar-fill" data-width="19.5" style="width:0%;"></div></div>
+                        <span class="h-bar-val" style="color:#96BF48;">19.5%</span>
+                    </div>
+                    <div class="h-bar-row">
+                        <span class="h-bar-label">FCF Margin</span>
+                        <div class="h-bar-track"><div class="bar-fill" data-width="17.4" style="width:0%;"></div></div>
+                        <span class="h-bar-val" style="color:#96BF48;">17.4%</span>
+                    </div>
+                    <div class="h-bar-row">
+                        <span class="h-bar-label">SBC / Revenue ⚠️</span>
+                        <div class="h-bar-track"><div class="bar-fill bar-fill-sell" data-width="20" style="width:0%;"></div></div>
+                        <span class="h-bar-val" style="color:#EF4444;">~20%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:12px;">Revenue CAGR & Growth Deceleration</div>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:0.82rem;color:#94a3b8;">3-Year Revenue CAGR</span>
+                        <span style="font-size:1.2rem;font-weight:700;color:#96BF48;">26%</span>
+                    </div>
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:0.82rem;color:#94a3b8;">Q1 2026A Revenue Growth</span>
+                        <span style="font-size:1.2rem;font-weight:700;color:#96BF48;">34.3%</span>
+                    </div>
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:0.82rem;color:#94a3b8;">GMV 5-Yr CAGR (est.)</span>
+                        <span style="font-size:1.2rem;font-weight:700;color:#96BF48;">24%</span>
+                    </div>
+                    <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.18);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:0.82rem;color:#94a3b8;">B2B GMV Growth (FY2025)</span>
+                        <span style="font-size:1.2rem;font-weight:700;color:#F59E0B;">+84%</span>
+                    </div>
+                    <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.18);border-radius:8px;padding:12px 16px;">
+                        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#EF4444;margin-bottom:4px;">Key Concern</div>
+                        <p style="font-size:0.8rem;color:#cbd5e1;margin:0;line-height:1.5;">True FCF (adj. for SBC) ≈ -2% to -3% margin — free cash flow story is largely a SBC accounting artifact.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 5 — THESIS TRACKER
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-5" data-slide="5">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:340px;height:340px;top:-60px;right:-60px;background:#96BF48;opacity:0.07;"></div>
+        <div class="blob" style="width:220px;height:220px;bottom:-50px;left:-40px;background:#EF4444;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;" class="reveal">
+            <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:700;margin:0;">Thesis Tracker — 5 Pillars</h2>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+            <div style="display:grid;grid-template-columns:28px 1fr 1fr 80px;gap:12px;align-items:center;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.18);border-left:3px solid #96BF48;border-radius:8px;padding:12px 16px;" class="reveal">
+                <div style="font-family:'Playfair Display',serif;font-weight:700;color:#96BF48;font-size:1rem;">P1</div>
+                <div>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">Commerce OS Network Effect</div>
+                    <div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">4.8M merchants, 29% US share, 1.7M App Store installs, deep switching costs via Payments + data lock-in</div>
+                </div>
+                <div style="font-size:0.78rem;color:#94a3b8;line-height:1.4;">KPI: Merchant count growth >12% YoY; App Store GMV penetration >40%</div>
+                <div style="text-align:center;"><span style="font-size:1rem;">✅</span><div style="font-size:0.65rem;color:#96BF48;margin-top:2px;">INTACT</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:28px 1fr 1fr 80px;gap:12px;align-items:center;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.18);border-left:3px solid #96BF48;border-radius:8px;padding:12px 16px;" class="reveal">
+                <div style="font-family:'Playfair Display',serif;font-weight:700;color:#96BF48;font-size:1rem;">P2</div>
+                <div>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">Payments & FinTech Flywheel</div>
+                    <div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">64% GMV via Shopify Payments; Capital loan book expanding; POS hardware growing offline share</div>
+                </div>
+                <div style="font-size:0.78rem;color:#94a3b8;line-height:1.4;">KPI: Payments penetration >70%; Take rate holds ≥3.0%</div>
+                <div style="text-align:center;"><span style="font-size:1rem;">✅</span><div style="font-size:0.65rem;color:#96BF48;margin-top:2px;">INTACT</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:28px 1fr 1fr 80px;gap:12px;align-items:center;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.18);border-left:3px solid #F59E0B;border-radius:8px;padding:12px 16px;" class="reveal">
+                <div style="font-family:'Playfair Display',serif;font-weight:700;color:#F59E0B;font-size:1rem;">P3</div>
+                <div>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">FCF Margin Expansion</div>
+                    <div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">17.4% reported FCF margin → 20%+ target; operating leverage from R&D productivity</div>
+                </div>
+                <div style="font-size:0.78rem;color:#94a3b8;line-height:1.4;">KPI: True FCF margin (adj. SBC) turns positive; SBC/rev declining trend</div>
+                <div style="text-align:center;"><span style="font-size:1rem;">🟡</span><div style="font-size:0.65rem;color:#F59E0B;margin-top:2px;">DEVELOPING</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:28px 1fr 1fr 80px;gap:12px;align-items:center;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.18);border-left:3px solid #F59E0B;border-radius:8px;padding:12px 16px;" class="reveal">
+                <div style="font-family:'Playfair Display',serif;font-weight:700;color:#F59E0B;font-size:1rem;">P4</div>
+                <div>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">Enterprise / B2B Penetration</div>
+                    <div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">B2B GMV +84% YoY; Shopify Plus & Markets unlocking mid-market / enterprise segment</div>
+                </div>
+                <div style="font-size:0.78rem;color:#94a3b8;line-height:1.4;">KPI: Plus revenue share >30% of subscriptions; B2B GMV CAGR >50%</div>
+                <div style="text-align:center;"><span style="font-size:1rem;">🟡</span><div style="font-size:0.65rem;color:#F59E0B;margin-top:2px;">DEVELOPING</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:28px 1fr 1fr 80px;gap:12px;align-items:center;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.18);border-left:3px solid #96BF48;border-radius:8px;padding:12px 16px;" class="reveal">
+                <div style="font-family:'Playfair Display',serif;font-weight:700;color:#96BF48;font-size:1rem;">P5</div>
+                <div>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">International Expansion</div>
+                    <div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">International revenue +36% FY2025; Markets product lowers cross-border friction; growing EMEA & APAC presence</div>
+                </div>
+                <div style="font-size:0.78rem;color:#94a3b8;line-height:1.4;">KPI: Intl revenue >40% of total by FY2027; intl GMV growth >30% annually</div>
+                <div style="text-align:center;"><span style="font-size:1rem;">✅</span><div style="font-size:0.65rem;color:#96BF48;margin-top:2px;">INTACT</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 6 — COMPETITIVE LANDSCAPE
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-6" data-slide="6">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-70px;right:-70px;background:#96BF48;opacity:0.07;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-60px;left:-50px;background:#5E8E3E;opacity:0.06;"></div>
+    </div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:700;margin:0 0 18px;" class="reveal">Competitive Landscape & Moat Assessment</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:12px;">Competitive Advantages (Moats)</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="display:flex;align-items:flex-start;gap:10px;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:10px 14px;">
+                        <span style="font-size:1.1rem;min-width:22px;">🕸️</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#D4E8A2;">Network Effects</div><div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">App ecosystem (8,000+ apps), partner agencies, developer community create compounding value</div></div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:10px 14px;">
+                        <span style="font-size:1.1rem;min-width:22px;">🔒</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#D4E8A2;">Switching Costs</div><div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">Payments data, merchant analytics, customized themes and app integrations — migration is costly</div></div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:10px 14px;">
+                        <span style="font-size:1.1rem;min-width:22px;">📊</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#D4E8A2;">Data Advantage</div><div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">$293B GMV processed yields unique merchant & consumer purchasing intelligence for credit underwriting</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:12px;">Competitive Threats (Bear Case Amplifiers)</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="display:flex;align-items:flex-start;gap:10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;">
+                        <span style="font-size:1.1rem;min-width:22px;">📦</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#FCA5A5;">Amazon / Buy with Prime</div><div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">Tempts Shopify merchants with Amazon's fulfillment infrastructure and 200M+ Prime customers</div></div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;">
+                        <span style="font-size:1.1rem;min-width:22px;">🎵</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#FCA5A5;">TikTok Shop</div><div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">Social commerce disintermediating the merchant-storefront model; $20B+ US GMV (est. 2025)</div></div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;">
+                        <span style="font-size:1.1rem;min-width:22px;">🐘</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#FCA5A5;">BigCommerce / WooCommerce</div><div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">Open-source & lower-cost alternatives gaining traction in enterprise (WC has 3.9M+ active installs)</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 7 — REVENUE PROJECTIONS (3 SCENARIOS)
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-7" data-slide="7">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:340px;height:340px;top:-60px;right:-60px;background:#96BF48;opacity:0.08;"></div>
+        <div class="blob" style="width:220px;height:220px;bottom:-50px;left:-40px;background:#5E8E3E;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:700;margin:0 0 20px;" class="reveal">Revenue Projections — Three Scenarios</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px;">
+            <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.2);border-radius:10px;padding:16px;" class="reveal">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#96BF48;font-weight:600;">🐂 Bull Case</div>
+                    <span class="tag tag-bull">$57 PT</span>
+                </div>
+                <div style="font-size:0.78rem;color:#94a3b8;margin-bottom:10px;line-height:1.5;">GMV +34%, guidance high end, market share gains, B2B acceleration. GM expands to 50%+.</div>
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">FY2026E Rev</span><span style="font-weight:600;color:#96BF48;">$16.0B</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">FY2028E Rev</span><span style="font-weight:600;color:#96BF48;">$25.0B</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">FCF Margin</span><span style="font-weight:600;color:#96BF48;">24%</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">Rev Growth</span><span style="font-weight:600;color:#96BF48;">34%→22%</span></div>
+                </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;border-top:2px solid #F59E0B;" class="reveal">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#F59E0B;font-weight:600;">⚖️ Base Case</div>
+                    <span style="font-size:0.7rem;background:rgba(245,158,11,0.15);color:#F59E0B;border:1px solid rgba(245,158,11,0.3);padding:2px 10px;border-radius:20px;font-weight:600;">$46 DCF</span>
+                </div>
+                <div style="font-size:0.78rem;color:#94a3b8;margin-bottom:10px;line-height:1.5;">Consensus estimates, slight deceleration from Q1 2026 beat, stable take rate, modest operating leverage.</div>
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">FY2026E Rev</span><span style="font-weight:600;color:#F59E0B;">$15.1B</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">FY2028E Rev</span><span style="font-weight:600;color:#F59E0B;">$21.8B</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">FCF Margin</span><span style="font-weight:600;color:#F59E0B;">20%</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">Rev Growth</span><span style="font-weight:600;color:#F59E0B;">31%→18%</span></div>
+                </div>
+            </div>
+            <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.18);border-radius:10px;padding:16px;" class="reveal">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#EF4444;font-weight:600;">🐻 Bear Case</div>
+                    <span class="tag tag-bear">$32 DCF</span>
+                </div>
+                <div style="font-size:0.78rem;color:#94a3b4;margin-bottom:10px;line-height:1.5;">Macro headwinds, merchant growth decelerates, competition intensifies, take rate compression, SBC persists.</div>
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">FY2026E Rev</span><span style="font-weight:600;color:#EF4444;">$13.8B</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">FY2028E Rev</span><span style="font-weight:600;color:#EF4444;">$18.0B</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">FCF Margin</span><span style="font-weight:600;color:#EF4444;">15%</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.8rem;"><span style="color:#94a3b8;">Rev Growth</span><span style="font-weight:600;color:#EF4444;">25%→12%</span></div>
+                </div>
+            </div>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:14px 18px;" class="reveal">
+            <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:8px;">Key Scenario Swing Factors</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;font-size:0.78rem;">
+                <div><span style="color:#F59E0B;">Take Rate:</span><span style="color:#94a3b8;"> 3.0–3.2% vs. 2.8% compression</span></div>
+                <div><span style="color:#F59E0B;">Payments Penetration:</span><span style="color:#94a3b8;"> 64% → 70%+ or plateauing</span></div>
+                <div><span style="color:#F59E0B;">SBC Trajectory:</span><span style="color:#94a3b8;"> Declining to 15% or sustained at 20%</span></div>
+                <div><span style="color:#F59E0B;">Macro / FX:</span><span style="color:#94a3b8;"> Consumer spending vs. recessionary headwinds</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 8 — DCF VALUATION
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-8" data-slide="8">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-70px;right:-70px;background:#EF4444;opacity:0.07;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-50px;left:-40px;background:#96BF48;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:700;margin:0 0 20px;" class="reveal">DCF Valuation & Key Assumptions</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:10px;">WACC Build-Up</div>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;">
+                    <div style="display:grid;grid-template-columns:1fr auto;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span style="font-size:0.82rem;color:#94a3b8;">Risk-Free Rate (10Y UST)</span><span style="font-size:0.82rem;font-weight:600;color:#f1f5f9;">4.42%</span></div>
+                    <div style="display:grid;grid-template-columns:1fr auto;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span style="font-size:0.82rem;color:#94a3b8;">Equity Risk Premium</span><span style="font-size:0.82rem;font-weight:600;color:#f1f5f9;">5.50%</span></div>
+                    <div style="display:grid;grid-template-columns:1fr auto;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span style="font-size:0.82rem;color:#94a3b8;">Blume-Adjusted Beta</span><span style="font-size:0.82rem;font-weight:600;color:#f1f5f9;">1.65</span></div>
+                    <div style="display:grid;grid-template-columns:1fr auto;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span style="font-size:0.82rem;color:#94a3b8;">Cost of Equity</span><span style="font-size:0.82rem;font-weight:600;color:#96BF48;">13.49%</span></div>
+                    <div style="display:grid;grid-template-columns:1fr auto;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span style="font-size:0.82rem;color:#94a3b8;">Net Cash Position</span><span style="font-size:0.82rem;font-weight:600;color:#96BF48;">$5.59B</span></div>
+                    <div style="display:grid;grid-template-columns:1fr auto;padding:10px 14px;background:rgba(150,191,72,0.08);">
+                        <span style="font-size:0.85rem;color:#D4E8A2;font-weight:600;">WACC (equity-heavy cap structure)</span><span style="font-size:1rem;font-weight:800;color:#96BF48;">13.49%</span></div>
+                </div>
+                <div style="margin-top:12px;">
+                    <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:8px;">Terminal Value Assumptions</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px;text-align:center;">
+                            <div style="font-size:1.1rem;font-weight:700;color:#96BF48;">3.0%</div>
+                            <div style="font-size:0.7rem;color:#94a3b8;margin-top:2px;">Terminal Growth Rate</div>
+                        </div>
+                        <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.15);border-radius:8px;padding:10px;text-align:center;">
+                            <div style="font-size:1.1rem;font-weight:700;color:#EF4444;">73%</div>
+                            <div style="font-size:0.7rem;color:#94a3b8;margin-top:2px;">TV % of EV (borderline)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:10px;">WACC × TGR Sensitivity (Implied Price/Share)</div>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px;">
+                    <div style="display:grid;grid-template-columns:auto repeat(5,1fr);gap:3px;font-size:0.7rem;">
+                        <div style="color:#94a3b8;padding:4px;"></div>
+                        <div style="color:#94a3b8;text-align:center;padding:4px;font-weight:600;">TGR 1.5%</div>
+                        <div style="color:#94a3b8;text-align:center;padding:4px;font-weight:600;">2.0%</div>
+                        <div style="color:#F59E0B;text-align:center;padding:4px;font-weight:700;border:1px solid rgba(245,158,11,0.3);border-radius:3px;">2.5%</div>
+                        <div style="color:#94a3b8;text-align:center;padding:4px;font-weight:600;">3.0%</div>
+                        <div style="color:#94a3b8;text-align:center;padding:4px;font-weight:600;">3.5%</div>
+                        <div style="color:#94a3b8;padding:4px;">12.0%</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.12);color:#FCA5A5;">$50</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.15);color:#FCA5A5;">$54</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.18);color:#FCA5A5;">$59</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.22);color:#EF4444;">$65</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.28);color:#EF4444;">$73</div>
+                        <div style="color:#94a3b8;padding:4px;">12.5%</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.10);color:#FCA5A5;">$44</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.12);color:#FCA5A5;">$47</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.15);color:#FCA5A5;">$51</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.18);color:#FCA5A5;">$56</div>
+                        <div class="hm-cell" style="background:rgba(239,68,68,0.22);color:#EF4444;">$62</div>
+                        <div style="color:#F59E0B;padding:4px;font-weight:700;font-size:0.72rem;">13.5%⬅</div>
+                        <div class="hm-cell" style="background:rgba(245,158,11,0.1);color:#FBD38D;">$38</div>
+                        <div class="hm-cell" style="background:rgba(245,158,11,0.12);color:#FBD38D;">$40</div>
+                        <div class="hm-cell" style="background:rgba(245,158,11,0.15);color:#F59E0B;border:1px solid rgba(245,158,11,0.4);">$43</div>
+                        <div class="hm-cell" style="background:rgba(245,158,11,0.18);color:#F59E0B;font-weight:700;">$46</div>
+                        <div class="hm-cell" style="background:rgba(245,158,11,0.22);color:#F59E0B;">$50</div>
+                        <div style="color:#94a3b8;padding:4px;">14.0%</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.06);color:#A8D35A;">$33</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.08);color:#A8D35A;">$35</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.1);color:#96BF48;">$37</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.12);color:#96BF48;">$40</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.15);color:#96BF48;">$43</div>
+                        <div style="color:#94a3b8;padding:4px;">15.0%</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.04);color:#A8D35A;">$27</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.06);color:#A8D35A;">$28</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.07);color:#96BF48;">$30</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.09);color:#96BF48;">$32</div>
+                        <div class="hm-cell" style="background:rgba(150,191,72,0.11);color:#96BF48;">$34</div>
+                    </div>
+                </div>
+                <div style="margin-top:10px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.18);border-radius:8px;padding:10px 14px;">
+                    <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#EF4444;margin-bottom:4px;">Valuation Verdict</div>
+                    <p style="font-size:0.8rem;color:#cbd5e1;margin:0;line-height:1.5;">At WACC 13.5%, only TGR above 4% (implying SHOP grows faster than nominal GDP forever) can justify $103. Entire sensitivity table is below current price — the market embeds heroic assumptions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 9 — COMPS & FOOTBALL FIELD
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-9" data-slide="9">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-70px;right:-60px;background:#5E8E3E;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-50px;left:-50px;background:#EF4444;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:700;margin:0 0 18px;" class="reveal">Comparable Companies & Valuation Football Field</h2>
+        <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:20px;">
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:10px;">Peer Multiples (NTM)</div>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;">
+                    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.8fr;font-size:0.72rem;color:#94a3b8;padding:8px 12px;background:rgba(255,255,255,0.04);font-weight:600;gap:6px;">
+                        <div>Company</div><div style="text-align:right;">EV/Rev</div><div style="text-align:right;">P/E</div><div style="text-align:right;">Rev Gr</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.8fr;font-size:0.78rem;padding:7px 12px;border-top:1px solid rgba(255,255,255,0.04);background:rgba(239,68,68,0.04);gap:6px;">
+                        <div style="color:#FCA5A5;font-weight:600;">SHOP (current)</div><div style="text-align:right;color:#EF4444;font-weight:700;">9.8×</div><div style="text-align:right;color:#EF4444;font-weight:700;">62×</div><div style="text-align:right;color:#96BF48;">31%</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.8fr;font-size:0.78rem;padding:7px 12px;border-top:1px solid rgba(255,255,255,0.04);gap:6px;">
+                        <div style="color:#cbd5e1;">WIX</div><div style="text-align:right;color:#f1f5f9;">4.2×</div><div style="text-align:right;color:#f1f5f9;">28×</div><div style="text-align:right;color:#94a3b8;">12%</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.8fr;font-size:0.78rem;padding:7px 12px;border-top:1px solid rgba(255,255,255,0.04);gap:6px;">
+                        <div style="color:#cbd5e1;">SQ (Block)</div><div style="text-align:right;color:#f1f5f9;">2.1×</div><div style="text-align:right;color:#f1f5f9;">18×</div><div style="text-align:right;color:#94a3b8;">9%</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.8fr;font-size:0.78rem;padding:7px 12px;border-top:1px solid rgba(255,255,255,0.04);gap:6px;">
+                        <div style="color:#cbd5e1;">BIGC</div><div style="text-align:right;color:#f1f5f9;">2.8×</div><div style="text-align:right;color:#f1f5f9;">n/m</div><div style="text-align:right;color:#94a3b8;">8%</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.8fr;font-size:0.78rem;padding:7px 12px;border-top:1px solid rgba(255,255,255,0.04);gap:6px;">
+                        <div style="color:#cbd5e1;">AMZN</div><div style="text-align:right;color:#f1f5f9;">3.2×</div><div style="text-align:right;color:#f1f5f9;">35×</div><div style="text-align:right;color:#94a3b8;">11%</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.8fr;font-size:0.78rem;padding:7px 12px;border-top:1px solid rgba(255,255,255,0.04);gap:6px;">
+                        <div style="color:#cbd5e1;">PYPL</div><div style="text-align:right;color:#f1f5f9;">2.5×</div><div style="text-align:right;color:#f1f5f9;">14×</div><div style="text-align:right;color:#94a3b8;">7%</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.8fr;font-size:0.78rem;padding:7px 12px;border-top:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.03);font-weight:600;gap:6px;">
+                        <div style="color:#F59E0B;">Peer Median</div><div style="text-align:right;color:#F59E0B;">3.5×</div><div style="text-align:right;color:#F59E0B;">24×</div><div style="text-align:right;color:#94a3b8;">10%</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.8fr;font-size:0.78rem;padding:7px 12px;border-top:1px solid rgba(255,255,255,0.04);background:rgba(150,191,72,0.04);font-weight:600;gap:6px;">
+                        <div style="color:#96BF48;">Growth Premium (5.5×)</div><div style="text-align:right;color:#96BF48;">5.5×</div><div style="text-align:right;color:#96BF48;">40×</div><div style="text-align:right;color:#96BF48;">31%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:12px;">Valuation Football Field (Implied Price)</div>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div>
+                        <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#94a3b8;margin-bottom:4px;"><span>DCF Bear ($32) → DCF Bull ($57)</span><span>Bear–Bull Range</span></div>
+                        <div style="position:relative;height:26px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden;">
+                            <div style="position:absolute;left:0%;width:55.3%;height:100%;background:linear-gradient(90deg,#EF4444,#96BF48);border-radius:6px;opacity:0.8;"></div>
+                            <div style="position:absolute;top:50%;left:0%;transform:translateY(-50%);font-size:0.68rem;color:#fff;padding:0 6px;font-weight:600;">$32</div>
+                            <div style="position:absolute;top:50%;left:55.3%;transform:translate(-100%,-50%);font-size:0.68rem;color:#fff;padding:0 6px;font-weight:600;">$57</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#94a3b8;margin-bottom:4px;"><span>Comps P/S Median (3.5×) → Premium (5.5×)</span></div>
+                        <div style="position:relative;height:26px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden;">
+                            <div style="position:absolute;left:30%;width:36%;height:100%;background:linear-gradient(90deg,#F59E0B,#96BF48);border-radius:6px;opacity:0.8;"></div>
+                            <div style="position:absolute;top:50%;left:30%;transform:translateY(-50%);font-size:0.68rem;color:#fff;padding:0 6px;font-weight:600;">$45</div>
+                            <div style="position:absolute;top:50%;left:66%;transform:translate(-100%,-50%);font-size:0.68rem;color:#fff;padding:0 6px;font-weight:600;">$68</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#94a3b8;margin-bottom:4px;"><span>Price Target (blended 50/30/20)</span></div>
+                        <div style="position:relative;height:30px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden;">
+                            <div style="position:absolute;left:56%;width:6%;height:100%;background:#F59E0B;border-radius:4px;"></div>
+                            <div style="position:absolute;top:50%;left:60%;transform:translateY(-50%);font-size:0.8rem;font-weight:700;color:#F59E0B;padding:0 8px;">$64</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#EF4444;margin-bottom:4px;"><span>Current Market Price</span></div>
+                        <div style="position:relative;height:30px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden;">
+                            <div style="position:absolute;left:95%;width:4%;height:100%;background:#EF4444;border-radius:4px;"></div>
+                            <div style="position:absolute;top:50%;right:2px;transform:translateY(-50%);font-size:0.8rem;font-weight:700;color:#EF4444;padding:0 8px;">$103</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:14px;text-align:center;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.22);border-radius:8px;padding:12px;">
+                    <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#EF4444;margin-bottom:4px;">Valuation Gap</div>
+                    <div style="font-size:2rem;font-weight:900;color:#EF4444;" class="sell-pulse">−37.9%</div>
+                    <div style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">$103 → $64 Price Target</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 10 — RISKS
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-10" data-slide="10">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-70px;right:-60px;background:#EF4444;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-50px;left:-40px;background:#96BF48;opacity:0.05;"></div>
+    </div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:700;margin:0 0 18px;" class="reveal">Risk Register — Ranked by Severity</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);border-left:3px solid #EF4444;border-radius:8px;padding:14px 16px;" class="reveal">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    <span style="background:rgba(239,68,68,0.2);color:#EF4444;font-size:0.7rem;font-weight:700;padding:1px 7px;border-radius:4px;">HIGH</span>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">Valuation Risk</div>
+                </div>
+                <p style="font-size:0.78rem;color:#94a3b8;margin:0;line-height:1.5;"><strong style="color:#FCA5A5;">Impact:</strong> 9.8× EV/Rev prices in >30% CAGR perpetually. Any guidance cut or multiple compression triggers outsized decline. <strong style="color:#96BF48;">Mitigant:</strong> Strong Q1 2026 beat provides near-term buffer.</p>
+            </div>
+            <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);border-left:3px solid #EF4444;border-radius:8px;padding:14px 16px;" class="reveal">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    <span style="background:rgba(239,68,68,0.2);color:#EF4444;font-size:0.7rem;font-weight:700;padding:1px 7px;border-radius:4px;">HIGH</span>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">SBC Opacity Risk</div>
+                </div>
+                <p style="font-size:0.78rem;color:#94a3b8;margin:0;line-height:1.5;"><strong style="color:#FCA5A5;">Impact:</strong> ~20% SBC/revenue means true FCF is near zero or negative. Investors relying on reported FCF metrics materially overvalue the business. <strong style="color:#96BF48;">Mitigant:</strong> SBC trending down from peak; buyback offsetting dilution.</p>
+            </div>
+            <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-left:3px solid #F59E0B;border-radius:8px;padding:14px 16px;" class="reveal">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    <span style="background:rgba(245,158,11,0.2);color:#F59E0B;font-size:0.7rem;font-weight:700;padding:1px 7px;border-radius:4px;">MED</span>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">Competitive Displacement</div>
+                </div>
+                <p style="font-size:0.78rem;color:#94a3b8;margin:0;line-height:1.5;"><strong style="color:#FBD38D;">Impact:</strong> TikTok Shop + Amazon Buy-with-Prime could disintermediate merchant storefront model. Social commerce GMV estimated at $100B+ in 2026. <strong style="color:#96BF48;">Mitigant:</strong> Shopify partnership with TikTok for checkout; ecosystem depth.</p>
+            </div>
+            <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-left:3px solid #F59E0B;border-radius:8px;padding:14px 16px;" class="reveal">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    <span style="background:rgba(245,158,11,0.2);color:#F59E0B;font-size:0.7rem;font-weight:700;padding:1px 7px;border-radius:4px;">MED</span>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">Macro / Consumer Spending</div>
+                </div>
+                <p style="font-size:0.78rem;color:#94a3b8;margin:0;line-height:1.5;"><strong style="color:#FBD38D;">Impact:</strong> 70%+ of revenue tied to GMV volume. Recessionary consumer retreat or tariff-driven import inflation would compress merchant GMV. Particularly acute for DTC brands. <strong style="color:#96BF48;">Mitigant:</strong> Diversified merchant base (4.8M).</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-left:3px solid #94a3b8;border-radius:8px;padding:14px 16px;" class="reveal">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    <span style="background:rgba(148,163,184,0.2);color:#94a3b8;font-size:0.7rem;font-weight:700;padding:1px 7px;border-radius:4px;">LOW</span>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">Regulatory / Payments</div>
+                </div>
+                <p style="font-size:0.78rem;color:#94a3b8;margin:0;line-height:1.5;"><strong style="color:#cbd5e1;">Impact:</strong> Interchange fee regulation in US/EU could compress Shopify Payments margins. Open Banking expansion could enable new payment rails bypassing card networks. <strong style="color:#96BF48;">Mitigant:</strong> Multi-rail payments architecture, strong merchant pricing power.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-left:3px solid #94a3b8;border-radius:8px;padding:14px 16px;" class="reveal">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    <span style="background:rgba(148,163,184,0.2);color:#94a3b8;font-size:0.7rem;font-weight:700;padding:1px 7px;border-radius:4px;">LOW</span>
+                    <div style="font-size:0.85rem;font-weight:600;color:#f1f5f9;">FX & International Execution</div>
+                </div>
+                <p style="font-size:0.78rem;color:#94a3b8;margin:0;line-height:1.5;"><strong style="color:#cbd5e1;">Impact:</strong> 36% international revenue exposed to USD strengthening. EMEA/APAC expansion requires localized compliance, payment rails, and customer support investment. <strong style="color:#96BF48;">Mitigant:</strong> Natural USD cash generation as partial hedge.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 11 — CATALYSTS & KPI DASHBOARD
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-11" data-slide="11">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-70px;right:-60px;background:#96BF48;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-50px;left:-40px;background:#5E8E3E;opacity:0.06;"></div>
+    </div>
+    <div class="content">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:700;margin:0 0 18px;" class="reveal">Catalysts & KPI Dashboard</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:10px;">📅 Catalyst Timeline</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;">
+                        <span class="tag tag-sell" style="white-space:nowrap;font-size:0.65rem;padding:2px 6px;">NEAR</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#FCA5A5;">Q2 2026 Earnings (Jul/Aug)</div><div style="font-size:0.74rem;color:#94a3b8;margin-top:2px;">Growth deceleration from 34.3% Q1 beat likely → multiple compression trigger</div></div>
+                    </div>
+                    <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:8px;padding:10px 14px;">
+                        <span class="tag tag-sell" style="white-space:nowrap;font-size:0.65rem;padding:2px 6px;">NEAR</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#FCA5A5;">Shopify Unite 2026 (developer conf.)</div><div style="font-size:0.74rem;color:#94a3b8;margin-top:2px;">AI commerce/Sidekick announcements could re-rate or disappoint; watch monetization details</div></div>
+                    </div>
+                    <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:8px;padding:10px 14px;">
+                        <span class="tag tag-catalyst" style="white-space:nowrap;font-size:0.65rem;padding:2px 6px;">MED</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#FBD38D;">B2B / Plus Enterprise Deals</div><div style="font-size:0.74rem;color:#94a3b8;margin-top:2px;">Sustained >80% B2B GMV growth or major enterprise contract wins → pillar P4 confirmation</div></div>
+                    </div>
+                    <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:8px;padding:10px 14px;">
+                        <span class="tag tag-catalyst" style="white-space:nowrap;font-size:0.65rem;padding:2px 6px;">MED</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#FBD38D;">SBC Decline to <15% of Revenue</div><div style="font-size:0.74rem;color:#94a3b8;margin-top:2px;">Inflection in true FCF would be material positive; would support valuation re-rating</div></div>
+                    </div>
+                    <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(150,191,72,0.06);border:1px solid rgba(150,191,72,0.15);border-radius:8px;padding:10px 14px;">
+                        <span class="tag tag-bull" style="white-space:nowrap;font-size:0.65rem;padding:2px 6px;">BULL</span>
+                        <div><div style="font-size:0.82rem;font-weight:600;color:#96BF48;">Capital Markets Day / Guidance Raise</div><div style="font-size:0.74div;color:#94a3b8;margin-top:2px;">Long-term financial targets above current consensus could justify current multiple</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal">
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:10px;">📊 12-KPI Monitoring Dashboard</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:7px;padding:8px 12px;">
+                        <div style="font-size:0.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">GMV Growth</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+                            <span style="font-size:0.9rem;font-weight:700;color:#96BF48;">+31%</span>
+                            <span style="font-size:0.65rem;color:#94a3b8;">Target: >25%</span>
+                        </div>
+                    </div>
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:7px;padding:8px 12px;">
+                        <div style="font-size:0.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">Take Rate</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+                            <span style="font-size:0.9rem;font-weight:700;color:#96BF48;">3.08%</span>
+                            <span style="font-size:0.65rem;color:#94a3b8;">Floor: 3.0%</span>
+                        </div>
+                    </div>
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:7px;padding:8px 12px;">
+                        <div style="font-size:0.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">Payments Penetration</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+                            <span style="font-size:0.9rem;font-weight:700;color:#96BF48;">64%</span>
+                            <span style="font-size:0.65rem;color:#94a3b8;">Target: >70%</span>
+                        </div>
+                    </div>
+                    <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.18);border-radius:7px;padding:8px 12px;">
+                        <div style="font-size:0.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">SBC / Revenue ⚠️</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+                            <span style="font-size:0.9rem;font-weight:700;color:#EF4444;">~20%</span>
+                            <span style="font-size:0.65rem;color:#EF4444;">Target: &lt;15%</span>
+                        </div>
+                    </div>
+                    <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.18);border-radius:7px;padding:8px 12px;">
+                        <div style="font-size:0.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">FCF Margin (reported)</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+                            <span style="font-size:0.9rem;font-weight:700;color:#F59E0B;">17.4%</span>
+                            <span style="font-size:0.65rem;color:#94a3b8;">Target: >20%</span>
+                        </div>
+                    </div>
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:7px;padding:8px 12px;">
+                        <div style="font-size:0.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">B2B GMV Growth</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+                            <span style="font-size:0.9rem;font-weight:700;color:#96BF48;">+84%</span>
+                            <span style="font-size:0.65rem;color:#94a3b8;">Target: >50%</span>
+                        </div>
+                    </div>
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:7px;padding:8px 12px;">
+                        <div style="font-size:0.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">Intl Revenue Growth</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+                            <span style="font-size:0.9rem;font-weight:700;color:#96BF48;">+36%</span>
+                            <span style="font-size:0.65rem;color:#94a3b8;">Target: >30%</span>
+                        </div>
+                    </div>
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.15);border-radius:7px;padding:8px 12px;">
+                        <div style="font-size:0.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">Gross Margin</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+                            <span style="font-size:0.9rem;font-weight:700;color:#96BF48;">48.3%</span>
+                            <span style="font-size:0.65rem;color:#94a3b8;">Target: >49%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 12 — PRICE TARGET & RECOMMENDATION
+     ═══════════════════════════════════════════════════ -->
+<div class="slide slide-12" data-slide="12">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:500px;height:500px;top:-100px;right:-100px;background:#EF4444;opacity:0.12;"></div>
+        <div class="blob" style="width:300px;height:300px;bottom:-80px;left:-60px;background:#96BF48;opacity:0.08;"></div>
+        <div class="blob" style="width:200px;height:200px;top:40%;left:10%;background:#F59E0B;opacity:0.06;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;">
+            <div>
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:16px;" class="reveal">IC Recommendation</div>
+                <div style="background:rgba(239,68,68,0.1);border:2px solid rgba(239,68,68,0.3);border-radius:16px;padding:28px 32px;text-align:center;margin-bottom:16px;" class="reveal">
+                    <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.12em;color:#EF4444;margin-bottom:10px;">Rating</div>
+                    <div style="font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:#EF4444;line-height:1;" class="sell-pulse">SELL</div>
+                    <div style="margin-top:14px;display:flex;justify-content:center;gap:24px;">
+                        <div><div style="font-size:1.8rem;font-weight:800;color:#F59E0B;">$64</div><div style="font-size:0.7rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">Price Target</div></div>
+                        <div style="width:1px;background:rgba(255,255,255,0.1);"></div>
+                        <div><div style="font-size:1.8rem;font-weight:800;color:#EF4444;">-37.9%</div><div style="font-size:0.7rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;">Downside</div></div>
+                    </div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px 18px;" class="reveal">
+                    <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:10px;">Target Methodology Weights</div>
+                    <div class="h-bar-row">
+                        <span class="h-bar-label">DCF Base (50%)</span>
+                        <div class="h-bar-track"><div class="bar-fill" data-width="50" style="width:0%;"></div></div>
+                        <span class="h-bar-val" style="color:#96BF48;">$46</span>
+                    </div>
+                    <div class="h-bar-row">
+                        <span class="h-bar-label">Comps Premium (30%)</span>
+                        <div class="h-bar-track"><div class="bar-fill" data-width="30" style="width:0%;"></div></div>
+                        <span class="h-bar-val" style="color:#96BF48;">$68</span>
+                    </div>
+                    <div class="h-bar-row">
+                        <span class="h-bar-label">DCF Bull (20%)</span>
+                        <div class="h-bar-track"><div class="bar-fill" data-width="20" style="width:0%;"></div></div>
+                        <span class="h-bar-val" style="color:#96BF48;">$57</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a3b8;margin-bottom:12px;" class="reveal">What Changes Our View</div>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div style="background:rgba(150,191,72,0.07);border:1px solid rgba(150,191,72,0.2);border-radius:8px;padding:12px 16px;" class="reveal">
+                        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#96BF48;margin-bottom:6px;">⬆ Upgrade to HOLD if:</div>
+                        <ul style="font-size:0.78rem;color:#94a3b8;margin:0;padding-left:16px;line-height:1.7;">
+                            <li>SBC declines to &lt;15% of revenue (true FCF inflects positive)</li>
+                            <li>SHOP trades to $75 or below (20% upside to PT)</li>
+                            <li>B2B GMV sustains >75% growth for 3 consecutive quarters</li>
+                        </ul>
+                    </div>
+                    <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.18);border-radius:8px;padding:12px 16px;" class="reveal">
+                        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#EF4444;margin-bottom:6px;">⬇ Downgrade to STRONG SELL if:</div>
+                        <ul style="font-size:0.78rem;color:#94a3b8;margin:0;padding-left:16px;line-height:1.7;">
+                            <li>GMV growth decelerates below 20% for 2+ quarters</li>
+                            <li>Take rate compresses below 3.0% (Payments margin squeeze)</li>
+                            <li>Amazon/TikTok Shop shows material merchant churn evidence</li>
+                        </ul>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px 16px;" class="reveal">
+                        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#F59E0B;margin-bottom:6px;">📅 Next Scheduled Review:</div>
+                        <p style="font-size:0.8rem;color:#94a3b8;margin:0;line-height:1.5;">Q2 2026 Earnings Release (est. July/August 2026). Monitor GMV growth rate trajectory, take rate evolution, and SBC as % of revenue for thesis pillar confirmation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div> <!-- end .deck -->
+
+<div class="nav-controls">
+    <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+    <div class="slide-dots" id="dots"></div>
+    <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+    <span class="slide-counter" id="counter">1 / 12</span>
+</div>
+
+<script>
+    let current = 1;
+    const total = document.querySelectorAll('.slide').length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    for (let i = 1; i <= total; i++) { const dot = document.createElement('div'); dot.className = 'dot' + (i === 1 ? ' active' : ''); dot.onclick = () => goToSlide(i); dotsContainer.appendChild(dot); }
+
+    function goToSlide(n) {
+        const prev = document.querySelector('.slide.active');
+        const next = document.querySelector(`.slide[data-slide="${n}"]`);
+        if (prev) prev.classList.remove('active');
+        if (next) { next.classList.add('active'); animateSlide(next); }
+        current = n; updateNav();
+    }
+    function changeSlide(dir) { let next = current + dir; if (next < 1) next = total; if (next > total) next = 1; goToSlide(next); }
+    function updateNav() { document.querySelectorAll('.dot').forEach((d, i) => { d.classList.toggle('active', i + 1 === current); }); counter.textContent = current + ' / ' + total; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); } });
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', (e) => { const diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1); });
+
+    function animateSlide(slide) {
+        slide.querySelectorAll('.reveal').forEach((el, i) => {
+            el.style.transition = 'none';
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(18px)';
+            el.offsetHeight;
+            const delay = i * 0.07;
+            el.style.transition = `opacity 0.32s ease ${delay}s, transform 0.32s ease ${delay}s`;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        });
+        animateSlideEffects(slide);
+    }
+
+    function animateSlideEffects(slide) {
+        // Counters
+        slide.querySelectorAll('[data-count]:not(.counted)').forEach(el => {
+            el.classList.add('counted');
+            const target = parseInt(el.dataset.count);
+            const suffix = el.dataset.suffix || '', prefix = el.dataset.prefix || '';
+            let cur = 0; const step = target / 40;
+            const timer = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(timer); } el.textContent = prefix + Math.round(cur).toLocaleString() + suffix; }, 30);
+        });
+        // Vertical bars
+        slide.querySelectorAll('.bar-chart:not(.bar-init)').forEach(chart => {
+            chart.classList.add('bar-init');
+            chart.querySelectorAll('.bar').forEach((bar, i) => { bar.style.height = '0%'; bar.style.transition = `height 0.5s ease ${i * 0.06}s`; bar.offsetHeight; bar.style.height = bar.dataset.height + '%'; });
+        });
+        // All bars with data-height (not in .bar-chart wrapper)
+        slide.querySelectorAll('.bar[data-height]:not(.bar-init-solo)').forEach((bar, i) => {
+            bar.classList.add('bar-init-solo');
+            bar.style.height = '0%';
+            bar.style.transition = `height 0.5s ease ${i * 0.08}s`;
+            bar.offsetHeight;
+            bar.style.height = bar.dataset.height + '%';
+        });
+        // Horizontal bar fills
+        slide.querySelectorAll('.bar-fill:not(.fill-init)').forEach((bar, i) => {
+            bar.classList.add('fill-init');
+            bar.style.width = '0%'; bar.style.transition = `width 0.6s ease ${i * 0.08}s`; bar.offsetHeight; bar.style.width = bar.dataset.width + '%';
+        });
+    }
+
+    // Mouse spotlight
+    document.addEventListener('mousemove', (e) => {
+        const spotlight = document.querySelector('.mouse-spotlight');
+        if (spotlight) {
+            spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(150,191,72,0.055), transparent 40%)`;
+        }
+    });
+
+    // Particles
+    window.initParticles = function(canvas, options) {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+        const interactive = options.interactive !== false;
+        const count = options.count || (interactive ? 50 : 16);
+        let mx = -1000, my = -1000;
+        const particles = Array.from({ length: count }, () => ({
+            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28,
+            size: Math.random() * 2.2 + 0.7, alpha: Math.random() * 0.32 + 0.08
+        }));
+        if (interactive) {
+            canvas.addEventListener('mousemove', (e) => { const rect = canvas.getBoundingClientRect(); mx = e.clientX - rect.left; my = e.clientY - rect.top; });
+            canvas.addEventListener('mouseleave', () => { mx = -1000; my = -1000; });
+        }
+        (function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                if (interactive) { const dx = p.x - mx, dy = p.y - my, dist = Math.sqrt(dx * dx + dy * dy); if (dist < 110) { const force = (110 - dist) / 110 * 2; p.vx += (dx / dist) * force * 0.09; p.vy += (dy / dist) * force * 0.09; } }
+                p.vx *= 0.98; p.vy *= 0.98; p.x += p.vx; p.y += p.vy;
+                if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(150,191,72,${p.alpha})`; ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        })();
+    };
+    document.querySelectorAll('.particle-canvas').forEach(c => window.initParticles(c, { interactive: true, count: 50 }));
+    document.querySelectorAll('.particle-canvas-ambient').forEach(c => window.initParticles(c, { interactive: false, count: 16 }));
+
+    try { animateSlide(document.querySelector('.slide.active')); } catch(e) { console.warn('Initial animation:', e); }
+</script>
+</body>
+</html>

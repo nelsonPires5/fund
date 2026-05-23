@@ -1,0 +1,952 @@
+#!/usr/bin/env python3
+import json
+from pathlib import Path
+
+RUN_DIR = Path('sectors/software/companies/SHOP/runs/2026-05-23-initial-coverage')
+SPEC_PATH = RUN_DIR / 'deck_new.spec.json'
+
+def main():
+    print("Building HTML presentation spec...")
+    
+    # Global CSS block for styling slides
+    css = """<style>
+  .slide-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .slide-header {
+    border-bottom: 2px solid #1F4E79;
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .slide-header h2 {
+    font-size: 1.8rem;
+    color: #1F4E79;
+    margin: 0;
+    font-weight: 800;
+  }
+  .slide-header .subtitle {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+  .slide-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    flex: 1;
+  }
+  .slide-grid-2-custom {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: 1.5rem;
+    align-items: start;
+    flex: 1;
+  }
+  .slide-grid-2-custom-rev {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 1.5rem;
+    align-items: start;
+    flex: 1;
+  }
+  .bullets-box {
+    font-size: 1.15rem;
+    line-height: 1.45;
+    color: #334155;
+  }
+  .bullets-box ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+  .bullets-box li {
+    margin-bottom: 0.6rem;
+  }
+  .chart-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    box-shadow: 0 4px 10px rgba(15,23,42,0.04);
+  }
+  .chart-img {
+    max-width: 100%;
+    max-height: 52vh;
+    object-fit: contain;
+  }
+  .card-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .m-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.4rem;
+    padding: 0.6rem 0.8rem;
+    flex: 1;
+    min-width: 160px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  }
+  .m-card.recommendation {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+  }
+  .m-card-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+  .m-card-val {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1F4E79;
+  }
+  .m-card-note {
+    font-size: 0.75rem;
+    color: #475569;
+    margin-top: 0.2rem;
+  }
+  .p-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+  }
+  .p-table th {
+    background: #1F4E79;
+    color: white;
+    font-weight: 700;
+    padding: 0.5rem 0.6rem;
+    text-align: left;
+  }
+  .p-table td {
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+  .p-table tr:nth-child(even) {
+    background: #f8fafc;
+  }
+  
+  /* Slide 1 Title band */
+  .title-band {
+    background: #1F4E79;
+    color: white;
+    padding: 3rem 4rem;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .title-band h1 {
+    font-size: 3.5rem;
+    color: white;
+    margin: 0 0 0.5rem 0;
+    font-weight: 800;
+  }
+  .title-band h3 {
+    font-size: 1.8rem;
+    color: #e2e8f0;
+    margin: 0 0 1.5rem 0;
+    font-weight: 400;
+  }
+  .title-band p {
+    font-size: 1.25rem;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+    max-width: 85%;
+  }
+  .title-band .card-row .m-card {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+  }
+  .title-band .m-card-title {
+    color: #94a3b8;
+  }
+  .title-band .m-card-val {
+    color: white;
+  }
+  .title-band .m-card-note {
+    color: #cbd5e1;
+  }
+  .title-band footer {
+    color: #94a3b8;
+    position: static;
+    padding: 0;
+    margin-top: 2rem;
+  }
+
+  /* Flywheel diagram styles */
+  .fw-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+  }
+  .fw-node {
+    background: #eff6ff;
+    border: 2px solid #2F75B5;
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    text-align: center;
+    width: 17%;
+    font-weight: 700;
+    color: #1F4E79;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+  .fw-node.center-node {
+    background: #fffbeb;
+    border-color: #fbbf24;
+    color: #b45309;
+    width: 20%;
+  }
+  .fw-arrow {
+    font-size: 1.5rem;
+    color: #2F75B5;
+    font-weight: bold;
+  }
+</style>"""
+
+    slides = []
+    
+    # ------------------
+    # Slide 1: Title
+    # ------------------
+    slide1_html = f"""
+{css}
+<div class="title-band">
+  <div>
+    <h1>Shopify Inc. (SHOP)</h1>
+    <h3>Investment Committee Presentation</h3>
+    <p>Neutral / Accumulate on pullbacks — exceptional company, valuation still requires proof that 20%+ growth and margin expansion persist</p>
+  </div>
+  
+  <div class="card-row">
+    <div class="m-card">
+      <div class="m-card-title">Reference price</div>
+      <div class="m-card-val">$103</div>
+      <div class="m-card-note">Koyfin / model</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Model DCF value</div>
+      <div class="m-card-val">$96</div>
+      <div class="m-card-note">model.xlsx DCF!B107</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Implied downside</div>
+      <div class="m-card-val">-6.5%</div>
+      <div class="m-card-note">model.xlsx DCF!B109</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Market cap / EV</div>
+      <div class="m-card-val">$134B / $128B</div>
+      <div class="m-card-note">Koyfin / model</div>
+    </div>
+  </div>
+  
+  <footer>Prepared from SHOP initial coverage report, thesis tracker and DCF model | 2026-05-23 | Run: 2026-05-23-initial-coverage</footer>
+</div>
+"""
+    slides.append({"html": slide1_html})
+
+    # ------------------
+    # Slide 2: IC Recommendation
+    # ------------------
+    slide2_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>IC recommendation: own the work, wait for either a better entry or proof of reacceleration</h2>
+    <div class="subtitle">SHOP Valuation & Stance</div>
+  </div>
+  
+  <div class="card-row">
+    <div class="m-card recommendation">
+      <div class="m-card-title">Recommendation</div>
+      <div class="m-card-val">Neutral</div>
+      <div class="m-card-note">Accumulate on pullbacks below ~$90</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Base DCF</div>
+      <div class="m-card-val">~$96/share</div>
+      <div class="m-card-note">9.5% WACC; 3.5% terminal g</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Upside setup</div>
+      <div class="m-card-val">$110–150+</div>
+      <div class="m-card-note">Requires growth reacceleration</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Main concern</div>
+      <div class="m-card-val">Valuation</div>
+      <div class="m-card-note">8.3x NTM EV/sales; 44x EV/EBITDA</div>
+    </div>
+  </div>
+  
+  <div class="slide-grid-2-custom">
+    <div class="bullets-box">
+      <ul>
+        <li><strong>Business quality is not the debate</strong>: Shopify is scaled, founder-led, asset-light and deeply embedded in merchant workflows.</li>
+        <li><strong>Fundamentals remain strong</strong>: Q1 revenue +34%, GMV +35%, FY2025 FCF $2.0B and net cash balance sheet.</li>
+        <li><strong>Valuation premium is demanding</strong>: The current multiple still prices in sustained 20%+ revenue growth and FCF margin expansion.</li>
+        <li><strong>IC action</strong>: Keep active coverage; add only on price weakness or evidence that growth/margins are tracking above base case.</li>
+      </ul>
+    </div>
+    <div class="chart-box">
+      <img class="chart-img" src="assets/charts/shop_valuation_range.png" alt="Valuation Range Chart" />
+    </div>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: report.md; valuation_framework.md; model.xlsx; outputs.json</footer>
+</div>
+"""
+    slides.append({"html": slide2_html})
+
+    # ------------------
+    # Slide 3: Company Snapshot
+    # ------------------
+    slide3_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>Company snapshot: Shopify is a scaled commerce infrastructure platform, not just SMB store software</h2>
+    <div class="subtitle">Platform Highlights</div>
+  </div>
+  
+  <div class="card-row">
+    <div class="m-card">
+      <div class="m-card-title">FY2025 GMV</div>
+      <div class="m-card-val">$378B</div>
+      <div class="m-card-note">Q1 2026 crossed $100B</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">FY2025 Revenue</div>
+      <div class="m-card-val">$11.6B</div>
+      <div class="m-card-note">+30% YoY growth</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">FY2025 FCF</div>
+      <div class="m-card-val">$2.0B</div>
+      <div class="m-card-note">17% FCF margin</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Net Cash</div>
+      <div class="m-card-val">~$5.6B</div>
+      <div class="m-card-note">Minimal debt / highly liquid</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Insider Ownership</div>
+      <div class="m-card-val">~6%</div>
+      <div class="m-card-note">Strong founder alignment</div>
+    </div>
+  </div>
+  
+  <div class="slide-grid-2-custom-rev">
+    <div class="chart-box">
+      <img class="chart-img" src="assets/charts/shop_kpi_dashboard.png" alt="KPI Dashboard Chart" />
+    </div>
+    <div class="bullets-box">
+      <ul>
+        <li><strong>Two revenue engines</strong>: High-margin Subscription Solutions plus GMV-linked Merchant Solutions.</li>
+        <li><strong>Flywheel attachment</strong>: Merchant Solutions is now ~76% of revenue, monetizing merchant success through Payments, Shop Pay, Capital, Shipping, and Markets.</li>
+        <li><strong>Core strategic pivot</strong>: From online storefront software to the operating system for independent commerce across online, offline (POS), B2B, and international.</li>
+      </ul>
+    </div>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: Koyfin extraction summary; report.md; thesis_tracker.md</footer>
+</div>
+"""
+    slides.append({"html": slide3_html})
+
+    # ------------------
+    # Slide 4: Business Model Flywheel
+    # ------------------
+    slide4_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>Business model: subscription locks in the merchant; Merchant Solutions monetizes merchant success</h2>
+    <div class="subtitle">Monetization Flywheel</div>
+  </div>
+  
+  <div class="fw-container">
+    <div class="fw-node">More Merchants<br>(Acquisition / Subscriptions)</div>
+    <div class="fw-arrow">&rarr;</div>
+    <div class="fw-node">More Surfaces<br>(Online / POS / B2B / AI)</div>
+    <div class="fw-arrow">&rarr;</div>
+    <div class="fw-node">More Conversion<br>(Shop Pay / Catalog)</div>
+    <div class="fw-arrow">&rarr;</div>
+    <div class="fw-node">More GMV<br>(Scale Flywheel)</div>
+    <div class="fw-arrow">&rarr;</div>
+    <div class="fw-node center-node">More Merchant Solutions Attach<br>(Flywheel Monetization)</div>
+  </div>
+  
+  <table class="p-table">
+    <thead>
+      <tr>
+        <th>Revenue stream</th>
+        <th>Q1 2026 revenue</th>
+        <th>Gross margin profile</th>
+        <th>Strategic role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Subscription Solutions</strong></td>
+        <td>$750M / ~24% of revenue</td>
+        <td>~80%</td>
+        <td>Merchant acquisition, platform control, Plus/enterprise upgrades</td>
+      </tr>
+      <tr>
+        <td><strong>Merchant Solutions</strong></td>
+        <td>$2.42B / ~76% of revenue</td>
+        <td>~39%</td>
+        <td>GMV-linked monetization (payments, lending, shipping) and retention flywheel</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="bullets-box" style="margin-top: 1rem;">
+    <ul>
+      <li>Merchant Solutions gross margin of ~39% reflects the high mix of credit card processing fees, but drives massive operating cash flow dollars due to GMV scale.</li>
+    </ul>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: report.md business model section; web_business_strategy.md; Koyfin summary</footer>
+</div>
+"""
+    slides.append({"html": slide4_html})
+
+    # ------------------
+    # Slide 5: Thesis Pillars
+    # ------------------
+    slide5_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>Thesis pillars: five things must stay true for SHOP to compound through the multiple</h2>
+    <div class="subtitle">Thesis Tracking Framework</div>
+  </div>
+  
+  <table class="p-table">
+    <thead>
+      <tr>
+        <th>Pillar</th>
+        <th>Evidence today</th>
+        <th>KPI / breakpoint</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Commerce OS</strong></td>
+        <td>FY2025 GMV $378B; Q1 GMV $100.7B; broad app ecosystem</td>
+        <td>GMV growth; breakpoint &lt;15% for 2+ quarters</td>
+      </tr>
+      <tr>
+        <td><strong>Merchant Solutions flywheel</strong></td>
+        <td>Merchant Solutions 76% of revenue; GPV penetration 67%</td>
+        <td>GPV penetration; breakpoint stalls &lt;67%</td>
+      </tr>
+      <tr>
+        <td><strong>Upmarket / B2B / international</strong></td>
+        <td>Plus ~34% MRR; B2B +80–96%; international +mid-30s</td>
+        <td>Plus mix, B2B GMV, enterprise wins</td>
+      </tr>
+      <tr>
+        <td><strong>FCF durability</strong></td>
+        <td>FY2025 FCF $2.0B; Q1 FCF margin 15%</td>
+        <td>FCF margin; breakpoint &lt;12%</td>
+      </tr>
+      <tr>
+        <td><strong>AI option</strong></td>
+        <td>UCP, Sidekick, Catalog, agentic storefronts</td>
+        <td>AI-referred GMV / monetization</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="bullets-box" style="margin-top: 1rem;">
+    <ul>
+      <li><strong>IC framing</strong>: Thesis is intact today, but the premium valuation requires these key metrics to track at or above target levels to support the multiple.</li>
+    </ul>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: thesis_tracker.md</footer>
+</div>
+"""
+    slides.append({"html": slide5_html})
+
+    # ------------------
+    # Slide 6: Financial Model
+    # ------------------
+    slide6_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>Financial model: consensus supports 20%+ growth through FY2028; DCF assumes gradual fade and FCF margin expansion</h2>
+    <div class="subtitle">Financial Projections & FCF Build</div>
+  </div>
+  
+  <div class="slide-grid-2-custom">
+    <div class="chart-box">
+      <img class="chart-img" src="assets/charts/shop_revenue_fcf_projection.png" alt="Revenue and FCF Projection Chart" />
+    </div>
+    
+    <div>
+      <table class="p-table" style="margin-bottom: 1rem;">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>FY2025</th>
+            <th>FY2028E</th>
+            <th>FY2035E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Revenue ($B)</strong></td>
+            <td>$11.6</td>
+            <td>$22.9</td>
+            <td>$49.9</td>
+          </tr>
+          <tr>
+            <td><strong>Growth</strong></td>
+            <td>30.0%</td>
+            <td>25.0%</td>
+            <td>5.0%</td>
+          </tr>
+          <tr>
+            <td><strong>FCF margin</strong></td>
+            <td>17.4%</td>
+            <td>18.5%</td>
+            <td>22.0%</td>
+          </tr>
+          <tr>
+            <td><strong>FCF ($B)</strong></td>
+            <td>$2.0</td>
+            <td>$4.2</td>
+            <td>$11.0</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="bullets-box">
+        <ul>
+          <li>Base case uses Koyfin consensus for FY2026–FY2028, representing 28% growth in FY26 fading to 20% in FY29.</li>
+          <li>Long-run value is highly dependent on FCF margins expanding to 22.0% as platform benefits from SG&A scale.</li>
+          <li>SBC dilution is modeled as a cash-equivalent cost; share buybacks help offset dilution but do not eliminate it.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: model.xlsx DCF tab; valuation_framework.md; report.md financial analysis</footer>
+</div>
+"""
+    slides.append({"html": slide6_html})
+
+    # ------------------
+    # Slide 7: Valuation
+    # ------------------
+    slide7_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>Valuation: model base is below current price; upside requires either duration, margin or discount-rate upside</h2>
+    <div class="subtitle">DCF Valuation & Sensitivity Analysis</div>
+  </div>
+  
+  <div class="slide-grid-2-custom">
+    <div>
+      <table class="p-table" style="margin-bottom: 1rem;">
+        <thead>
+          <tr>
+            <th>DCF Bridge</th>
+            <th>Value ($M) / Share ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PV of Explicit FCF (10-Yr)</td>
+            <td>$39,700</td>
+          </tr>
+          <tr>
+            <td>PV of Terminal Value</td>
+            <td>$80,000</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise Value</strong></td>
+            <td><strong>$119,600</strong></td>
+          </tr>
+          <tr>
+            <td>+ Net Cash</td>
+            <td>$5,561</td>
+          </tr>
+          <tr>
+            <td><strong>Equity Value</strong></td>
+            <td><strong>$125,186</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Implied Value / Share</strong></td>
+            <td><strong>$96.30</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="bullets-box">
+        <ul>
+          <li><strong>Model base</strong>: $96.30/share vs current $103.00 (implies -6.5% downside).</li>
+          <li><strong>Base Case CAPM</strong>: 9.5% WACC (adjusted beta 1.10, ERP 5.0%, risk-free 4.2%), 3.5% terminal growth rate.</li>
+          <li><strong>Practical range</strong>: &lt;$85 is highly attractive; &gt;$135 requires assuming bull-case growth duration.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div>
+      <div class="chart-box" style="margin-bottom: 0.5rem;">
+        <img class="chart-img" src="assets/charts/shop_wacc_g_sensitivity.png" alt="WACC and Growth Sensitivity Chart" style="max-height: 40vh;" />
+      </div>
+      <div class="bullets-box">
+        <ul>
+          <li>WACC and terminal growth drive massive value swing: a 100bps WACC reduction raises value by &gt;$20/share.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: model.xlsx DCF!B100:B109; outputs.json; valuation_framework.md</footer>
+</div>
+"""
+    slides.append({"html": slide7_html})
+
+    # ------------------
+    # Slide 8: Multiple Sanity Check
+    # ------------------
+    slide8_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>Multiple sanity check: SHOP deserves a premium, but the premium is still the key risk</h2>
+    <div class="subtitle">Comparable Multiples</div>
+  </div>
+  
+  <div class="slide-grid-2-custom">
+    <div class="chart-box">
+      <img class="chart-img" src="assets/charts/shop_ev_sales_comps.png" alt="EV/Sales Comps Chart" />
+    </div>
+    
+    <div>
+      <table class="p-table" style="margin-bottom: 1.2rem;">
+        <thead>
+          <tr>
+            <th>Multiple</th>
+            <th>SHOP Current</th>
+            <th>SaaS Median</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>EV / Sales LTM</strong></td>
+            <td>10.3x</td>
+            <td>3.0x</td>
+          </tr>
+          <tr>
+            <td><strong>EV / Sales NTM</strong></td>
+            <td>8.3x</td>
+            <td>2.5x</td>
+          </tr>
+          <tr>
+            <td><strong>EV / EBITDA NTM</strong></td>
+            <td>44.4x</td>
+            <td>16.0x</td>
+          </tr>
+          <tr>
+            <td><strong>P / E NTM</strong></td>
+            <td>54.5x</td>
+            <td>24.0x</td>
+          </tr>
+          <tr>
+            <td><strong>Street Avg Target</strong></td>
+            <td>$151.11</td>
+            <td>N/A</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="bullets-box">
+        <ul>
+          <li>SHOP justifies a premium based on scale, ecosystem lock-in, and payments monetization, but the current premium is very high.</li>
+          <li>Multiple compression remains the main downside risk if forward guidance suggests growth is slipping below 20%.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: Koyfin multiples; valuation_framework.md comps section; model.xlsx Comps tab</footer>
+</div>
+"""
+    slides.append({"html": slide8_html})
+
+    # ------------------
+    # Slide 9: Competitive Position
+    # ------------------
+    slide9_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>Competitive position: Shopify wins on merchant alignment, ecosystem breadth and unified commerce</h2>
+    <div class="subtitle">Competitive Landscape</div>
+  </div>
+  
+  <table class="p-table">
+    <thead>
+      <tr>
+        <th>Competitor set</th>
+        <th>Where they compete</th>
+        <th>SHOP counter-positioning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Amazon / Marketplaces</strong></td>
+        <td>Demand capture and fulfillment</td>
+        <td>Shopify preserves merchant brand control, customer relationship data, and channel independence.</td>
+      </tr>
+      <tr>
+        <td><strong>Woo / Wix / Squarespace</strong></td>
+        <td>SMB storefront creation</td>
+        <td>Shopify offers a vastly superior commerce stack, integrated payments (Shop Pay), and a scaling enterprise path.</td>
+      </tr>
+      <tr>
+        <td><strong>BigCommerce</strong></td>
+        <td>Mid-market / B2B segment</td>
+        <td>Shopify has a larger third-party app ecosystem, higher checkout conversion, and broader Merchant Solutions.</td>
+      </tr>
+      <tr>
+        <td><strong>Adobe / Salesforce</strong></td>
+        <td>Complex enterprise commerce</td>
+        <td>Shopify offers faster implementation and lower total cost of ownership (TCO), though must prove enterprise complexity.</td>
+      </tr>
+      <tr>
+        <td><strong>Stripe / PayPal / Block</strong></td>
+        <td>Payments & POS economics</td>
+        <td>Shopify embeds payments in its merchant OS; transactional take-rate dependencies and concentration remain.</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="bullets-box" style="margin-top: 0.8rem;">
+    <ul>
+      <li><strong>Moat Source</strong>: High switching costs, unified commerce integrations, and incentives aligned with merchant GMV success rather than competing with them.</li>
+    </ul>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: report.md competitive landscape; web_competition_market.md; thesis_tracker.md</footer>
+</div>
+"""
+    slides.append({"html": slide9_html})
+
+    # ------------------
+    # Slide 10: Catalysts
+    # ------------------
+    slide10_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>Catalysts: next 6–12 months should clarify whether deceleration fears are overdone</h2>
+    <div class="subtitle">Catalyst Calendar</div>
+  </div>
+  
+  <table class="p-table">
+    <thead>
+      <tr>
+        <th>Catalyst</th>
+        <th>Window</th>
+        <th>Bull signal</th>
+        <th>Bear signal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Q2 2026 earnings</strong></td>
+        <td>Early Aug 2026</td>
+        <td>Revenue &gt; guide; GMV resilient; FCF margin in mid/high teens</td>
+        <td>In-line growth with margin pressure; weak Q3 forward guidance</td>
+      </tr>
+      <tr>
+        <td><strong>AI / agentic disclosures</strong></td>
+        <td>2026–2027</td>
+        <td>AI-referred GMV disclosed; Shopify captures checkout/payments</td>
+        <td>Traffic gains without monetization; third-party AI agents bypass store checkout</td>
+      </tr>
+      <tr>
+        <td><strong>Payments penetration</strong></td>
+        <td>Quarterly</td>
+        <td>GPV penetration tracks toward 70–75%</td>
+        <td>GPV penetration stalls at or below 67%; take-rate compression</td>
+      </tr>
+      <tr>
+        <td><strong>B2B / enterprise</strong></td>
+        <td>Quarterly</td>
+        <td>Significant enterprise client wins; B2B GMV maintains +50% growth</td>
+        <td>B2B segment growth slows; Adobe/Salesforce defend enterprise turf</td>
+      </tr>
+      <tr>
+        <td><strong>Buyback execution</strong></td>
+        <td>2026</td>
+        <td>Outstanding share count stable/down; disciplined buybacks</td>
+        <td>Buybacks fail to offset high SBC dilution; share count rises</td>
+      </tr>
+      <tr>
+        <td><strong>BNPL Regulation</strong></td>
+        <td>H2 2026+</td>
+        <td>Antitrust and BNPL credit inquiries contained</td>
+        <td>Forced payments interoperability; margins on Shop Pay Installments compress</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: thesis_tracker.md catalysts table</footer>
+</div>
+"""
+    slides.append({"html": slide10_html})
+
+    # ------------------
+    # Slide 11: Risks and Kill Criteria
+    # ------------------
+    slide11_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>Risks and kill criteria: the thesis breaks if growth slows before margins scale</h2>
+    <div class="subtitle">Risk & Monitor Register</div>
+  </div>
+  
+  <table class="p-table">
+    <thead>
+      <tr>
+        <th>Risk</th>
+        <th>Why it matters</th>
+        <th>Watch item / kill criterion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Growth deceleration</strong></td>
+        <td>Premium multiple requires long growth duration</td>
+        <td>Revenue &lt;20% or GMV &lt;18% for multiple consecutive quarters</td>
+      </tr>
+      <tr>
+        <td><strong>Merchant Solutions margin drag</strong></td>
+        <td>Lower-margin transaction revenue can cap FCF margins</td>
+        <td>Gross margin slips below 45% or payment transaction losses rise</td>
+      </tr>
+      <tr>
+        <td><strong>AI disintermediation</strong></td>
+        <td>Walled garden AI assistants could bypass storefronts</td>
+        <td>AI traffic grows but Shopify monetization remains absent</td>
+      </tr>
+      <tr>
+        <td><strong>Competition</strong></td>
+        <td>Pressure across SMB, enterprise, POS, and payments</td>
+        <td>Enterprise adoption slows; GPV penetration stalls</td>
+      </tr>
+      <tr>
+        <td><strong>Regulation / BNPL</strong></td>
+        <td>Regulatory actions can impair credit/payments margins</td>
+        <td>Sezzle case expanded or forced payments interoperability</td>
+      </tr>
+      <tr>
+        <td><strong>SBC dilution</strong></td>
+        <td>Per-share metrics matter more than absolute cash flow</td>
+        <td>SBC stays &gt;5% of revenue and buyback is insufficient to offset</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="bullets-box" style="margin-top: 0.8rem;">
+    <ul>
+      <li><strong>Position sizing</strong> should reflect asymmetric multiple risk: downside is primarily multiple compression, not balance sheet distress.</li>
+    </ul>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: thesis_tracker.md risks table; report.md risks section</footer>
+</div>
+"""
+    slides.append({"html": slide11_html})
+
+    # ------------------
+    # Slide 12: IC Decision
+    # ------------------
+    slide12_html = """
+<div class="slide-container">
+  <div class="slide-header">
+    <h2>IC decision: keep on active watch; require either price discipline or KPI confirmation</h2>
+    <div class="subtitle">Investment Committee Verdict</div>
+  </div>
+  
+  <div class="card-row">
+    <div class="m-card recommendation">
+      <div class="m-card-title">Decision</div>
+      <div class="m-card-val">Do not initiate full position</div>
+      <div class="m-card-note">Valuation lacks margin of safety at ~$103</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Entry Rule</div>
+      <div class="m-card-val">Add below ~$90</div>
+      <div class="m-card-note">Assuming core KPIs remain intact</div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">Upgrade Rule</div>
+      <div class="m-card-val">Buy on proof</div>
+      <div class="m-card-note">Q2/Q3 show high-20s growth + FCF expansion</div>
+    </div>
+  </div>
+  
+  <div class="slide-grid-2-custom">
+    <div class="bullets-box">
+      <ul>
+        <li><strong>What we like</strong>: Founder-led, dominant independent commerce OS, GMV-linked monetization, net cash balance sheet, positive FCF with multiple growth vectors.</li>
+        <li><strong>What holds us back</strong>: Base DCF is below current price, premium multiples (8.3x NTM sales, 44x EBITDA), gross margin pressure from Merchant Solutions mix, and AI disintermediation risk.</li>
+        <li><strong>Next steps</strong>: Maintain active coverage, update models after Q2 earnings, and track KPI dashboard and valuation bands.</li>
+      </ul>
+    </div>
+    
+    <div class="chart-box">
+      <img class="chart-img" src="assets/charts/shop_valuation_range.png" alt="Valuation Range Chart" />
+    </div>
+  </div>
+  
+  <footer style="position: absolute; bottom: 1.5rem; color: #64748b; font-size: 0.8rem;">Source: Investment conclusion from report.md; model.xlsx; thesis_tracker.md</footer>
+</div>
+"""
+    slides.append({"html": slide12_html})
+
+    spec_data = {
+        "title": "Shopify Inc. (SHOP) Investment Committee Presentation",
+        "run_id": "2026-05-23-initial-coverage",
+        "autoFinalSlide": True,
+        "slides": slides
+    }
+    
+    print(f"Writing spec to {SPEC_PATH}...")
+    with open(SPEC_PATH, 'w') as f:
+        json.dump(spec_data, f, indent=2)
+        f.write('\n')
+        
+    print("Done!")
+
+if __name__ == '__main__':
+    main()

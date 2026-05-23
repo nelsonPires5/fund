@@ -1,0 +1,124 @@
+{
+  "ticker": "SHOP",
+  "tab": "Security Analysis > Ownership",
+  "extracted_at": "2026-05-23T07:47:13.171Z",
+  "url": "https://app.koyfin.com/snapshot/own/insider-ownership/eq-q6lsgw",
+  "security_id": "eq-q6lsgw",
+  "data": {
+    "type": "insider-ownership",
+    "insiders": [
+      {
+        "name": "Tobias Lutke",
+        "title": "Founder, Chairman, CEO and Head of R&D",
+        "marketValue": "$8.15B",
+        "pctMarketcap": "6.10%",
+        "sharesHeld": "79,136,132",
+        "positionDate": "May 07, 2026"
+      },
+      {
+        "name": "Toby Shannan",
+        "title": "Independent Director",
+        "marketValue": "$25.86M",
+        "pctMarketcap": "0.02%",
+        "sharesHeld": "251,020",
+        "positionDate": "Mar 11, 2026"
+      },
+      {
+        "name": "Gail Goodman",
+        "title": "Independent Director",
+        "marketValue": "$7.70M",
+        "pctMarketcap": "0.01%",
+        "sharesHeld": "74,746",
+        "positionDate": "May 05, 2026"
+      },
+      {
+        "name": "Jeff Hoffmeister",
+        "title": "Chief Financial Officer",
+        "marketValue": "$7.69M",
+        "pctMarketcap": "0.01%",
+        "sharesHeld": "74,636",
+        "positionDate": "Apr 28, 2026"
+      },
+      {
+        "name": "Jessica Hertz",
+        "title": "Chief Operating Officer",
+        "marketValue": "$2.39M",
+        "pctMarketcap": "0.00%",
+        "sharesHeld": "23,194",
+        "positionDate": "Apr 28, 2026"
+      },
+      {
+        "name": "Fidji Simo",
+        "title": "Independent Director",
+        "marketValue": "$1.59M",
+        "pctMarketcap": "0.00%",
+        "sharesHeld": "15,476",
+        "positionDate": "Sep 12, 2025"
+      },
+      {
+        "name": "Harley Finkelstein",
+        "title": "President",
+        "marketValue": "$1.52M",
+        "pctMarketcap": "0.00%",
+        "sharesHeld": "14,797",
+        "positionDate": "May 04, 2026"
+      },
+      {
+        "name": "Prashanth Mahendra-Rajah",
+        "title": "Independent Director",
+        "marketValue": "$809.17K",
+        "pctMarketcap": "0.00%",
+        "sharesHeld": "7,856",
+        "positionDate": "Mar 11, 2026"
+      },
+      {
+        "name": "Lulu Meservey",
+        "title": "Independent Director",
+        "marketValue": "$787.85K",
+        "pctMarketcap": "0.00%",
+        "sharesHeld": "7,649",
+        "positionDate": "Mar 11, 2026"
+      },
+      {
+        "name": "Jean Niehaus",
+        "title": "General Counsel",
+        "marketValue": "$435.07K",
+        "pctMarketcap": "0.00%",
+        "sharesHeld": "4,224",
+        "positionDate": "Apr 28, 2026"
+      },
+      {
+        "name": "Joseph Natale",
+        "title": "Lead Independent Director",
+        "marketValue": "$307.45K",
+        "pctMarketcap": "0.00%",
+        "sharesHeld": "2,985",
+        "positionDate": "Dec 11, 2025"
+      },
+      {
+        "name": "James Scott",
+        "title": "Independent Director",
+        "marketValue": "$298.39K",
+        "pctMarketcap": "0.00%",
+        "sharesHeld": "2,897",
+        "positionDate": "Mar 13, 2026"
+      },
+      {
+        "name": "David Hansson",
+        "title": "Independent Director",
+        "marketValue": "$111.75K",
+        "pctMarketcap": "0.00%",
+        "sharesHeld": "1,085",
+        "positionDate": "Dec 11, 2025"
+      },
+      {
+        "name": "Sum",
+        "title": "",
+        "marketValue": "$8.20B",
+        "pctMarketcap": "6.14%",
+        "sharesHeld": "79,616,697",
+        "positionDate": ""
+      }
+    ]
+  }
+}

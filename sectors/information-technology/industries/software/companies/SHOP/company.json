@@ -1,0 +1,16 @@
+{
+  "company_name": "Shopify Inc.",
+  "ticker": "SHOP",
+  "exchange": "NYSE/TSX",
+  "sector": "information-technology",
+  "subsector": "commerce enablement / e-commerce infrastructure",
+  "currency": "USD",
+  "fiscal_year_end": "12-31",
+  "koyfin_id": "SHOP US",
+  "sec_cik": "0001594805",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-23-initial-coverage-imported",
+  "notes": "Use USD millions unless stated otherwise. Shopify reports in USD.",
+  "industry": "software"
+}

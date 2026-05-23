@@ -1,0 +1,1784 @@
+{
+  "ticker": "SHOP",
+  "tab": "Filings",
+  "extractedAt": "2026-05-23T07:50:49.272Z",
+  "url": "https://app.koyfin.com/news/cf/eq-q6lsgw",
+  "filings": [
+    {
+      "description": "Form 8-K - Current report - Item 8.01 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "May 08 '26",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "May 05 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form S-8 POS ~ Registration Statement",
+      "formType": "S-8 POS (Edgar)",
+      "formCode": "S-8 POS",
+      "isEdgar": true,
+      "date": "May 05 '26",
+      "docType": "S-8"
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Mar 31 2026)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "May 05 '26",
+      "docType": "10-Q"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "May 05 '26",
+      "docType": "8-K"
+    },
+    {
+      "description": "10-K/A ~ Annual Report  (ended Dec 31 2025)",
+      "formType": "10-K/A (Edgar)",
+      "formCode": "10-K/A",
+      "isEdgar": true,
+      "date": "Apr 29 '26",
+      "docType": "10-K/A"
+    },
+    {
+      "description": "Form 4 ~ SHOPIFY INC. - Beneficial Ownership Changes",
+      "formType": "4 (Edgar)",
+      "formCode": "4",
+      "isEdgar": true,
+      "date": "Apr 29 '26",
+      "docType": "4"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Apr 06 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Shannan Tobyn - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Natale Joseph Michael - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hoffmeister Jeff - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Finkelstein Harley - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Niehaus Jean - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 10 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Lutke Tobias - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 06 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 05 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Niehaus Jean - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Feb 27 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hertz Jessica - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Feb 27 '26",
+      "docType": "144"
+    },
+    {
+      "description": "10-K ~ Annual Report  (ended Dec 31 2025)",
+      "formType": "10-K (Edgar)",
+      "formCode": "10-K",
+      "isEdgar": true,
+      "date": "Feb 11 '26",
+      "docType": "10-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 7.01 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Feb 11 '26",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Feb 05 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 4 ~ SHOPIFY INC. - Beneficial Ownership Changes",
+      "formType": "4 (Edgar)",
+      "formCode": "4",
+      "isEdgar": true,
+      "date": "Jan 30 '26",
+      "docType": "4"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Jan 05 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Shannan Tobyn - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hertz Jessica - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Finkelstein Harley - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Niehaus Jean - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hoffmeister Jeff - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 11 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hertz Jessica - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 11 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Shannan Tobyn - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 10 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 05 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 8.01 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Dec 02 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form SCHEDULE 13D/A - General Statement of Acquisition of Beneficial Ownership: [Amend]",
+      "formType": "SCHEDULE 13D/A (Edgar)",
+      "formCode": "SCHEDULE 13D/A",
+      "isEdgar": true,
+      "date": "Nov 14 '25",
+      "docType": "SCHEDULE"
+    },
+    {
+      "description": "Form 4 ~ SHOPIFY INC. - Beneficial Ownership Changes",
+      "formType": "4 (Edgar)",
+      "formCode": "4",
+      "isEdgar": true,
+      "date": "Nov 14 '25",
+      "docType": "4"
+    },
+    {
+      "description": "Form 144 ~ Nejatian Kasra - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Nov 10 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Nov 05 '25",
+      "docType": "144"
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Sep 30 2025)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "Nov 04 '25",
+      "docType": "10-Q"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Nov 04 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 144 ~ Niehaus Jean - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Oct 30 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Oct 27 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 5.02",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Oct 09 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Oct 06 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Shannan Tobyn - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Lutke Tobias - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hertz Jessica - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hoffmeister Jeff - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Finkelstein Harley - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 5.02",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Sep 10 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Mar 31 2026)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "May 05 '26",
+      "docType": "10-Q"
+    },
+    {
+      "description": "10-K/A ~ Annual Report  (ended Dec 31 2025)",
+      "formType": "10-K/A (Edgar)",
+      "formCode": "10-K/A",
+      "isEdgar": true,
+      "date": "Apr 29 '26",
+      "docType": "10-K/A"
+    },
+    {
+      "description": "10-K ~ Annual Report  (ended Dec 31 2025)",
+      "formType": "10-K (Edgar)",
+      "formCode": "10-K",
+      "isEdgar": true,
+      "date": "Feb 11 '26",
+      "docType": "10-K"
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Sep 30 2025)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "Nov 04 '25",
+      "docType": "10-Q"
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Jun 30 2025)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "Aug 06 '25",
+      "docType": "10-Q"
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Mar 31 2025)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "May 08 '25",
+      "docType": "10-Q"
+    },
+    {
+      "description": "10-K/A ~ Annual Report  (ended Dec 31 2024)",
+      "formType": "10-K/A (Edgar)",
+      "formCode": "10-K/A",
+      "isEdgar": true,
+      "date": "Apr 29 '25",
+      "docType": "10-K/A"
+    },
+    {
+      "description": "10-K ~ Annual Report  (ended Dec 31 2024)",
+      "formType": "10-K (Edgar)",
+      "formCode": "10-K",
+      "isEdgar": true,
+      "date": "Feb 11 '25",
+      "docType": "10-K"
+    },
+    {
+      "description": "40-F ~ Annual Report  (ended Dec 31 2023)",
+      "formType": "40-F (Edgar)",
+      "formCode": "40-F",
+      "isEdgar": true,
+      "date": "Feb 13 '24",
+      "docType": ""
+    },
+    {
+      "description": "40-F ~ Annual Report  (ended Dec 31 2022)",
+      "formType": "40-F (Edgar)",
+      "formCode": "40-F",
+      "isEdgar": true,
+      "date": "Feb 16 '23",
+      "docType": ""
+    },
+    {
+      "description": "40-F ~ Annual Report  (ended Dec 31 2021)",
+      "formType": "40-F (Edgar)",
+      "formCode": "40-F",
+      "isEdgar": true,
+      "date": "Feb 16 '22",
+      "docType": ""
+    },
+    {
+      "description": "40-F ~ Annual Report  (ended Dec 31 2020)",
+      "formType": "40-F (Edgar)",
+      "formCode": "40-F",
+      "isEdgar": true,
+      "date": "Feb 17 '21",
+      "docType": ""
+    },
+    {
+      "description": "40-F ~ Annual Report  (ended Dec 31 2019)",
+      "formType": "40-F (Edgar)",
+      "formCode": "40-F",
+      "isEdgar": true,
+      "date": "Feb 12 '20",
+      "docType": ""
+    },
+    {
+      "description": "40-F ~ Annual Report  (ended Dec 31 2018)",
+      "formType": "40-F (Edgar)",
+      "formCode": "40-F",
+      "isEdgar": true,
+      "date": "Feb 12 '19",
+      "docType": ""
+    },
+    {
+      "description": "40-F ~ Annual Report  (ended Dec 31 2017)",
+      "formType": "40-F (Edgar)",
+      "formCode": "40-F",
+      "isEdgar": true,
+      "date": "Feb 15 '18",
+      "docType": ""
+    },
+    {
+      "description": "40-F ~ Annual Report  (ended Dec 31 2016)",
+      "formType": "40-F (Edgar)",
+      "formCode": "40-F",
+      "isEdgar": true,
+      "date": "Feb 15 '17",
+      "docType": ""
+    },
+    {
+      "description": "20-F ~ Annual Report  (ended Dec 31 2015)",
+      "formType": "20-F (Edgar)",
+      "formCode": "20-F",
+      "isEdgar": true,
+      "date": "Feb 17 '16",
+      "docType": ""
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Jun 30 2005)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "Aug 09 '05",
+      "docType": "10-Q"
+    },
+    {
+      "description": "ARS ~ Annual Report  (ended Dec 31 2004)",
+      "formType": "ARS (Edgar)",
+      "formCode": "ARS",
+      "isEdgar": true,
+      "date": "May 17 '05",
+      "docType": "ARS"
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Mar 31 2005)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "May 13 '05",
+      "docType": "10-Q"
+    },
+    {
+      "description": "10-K ~ Annual Report  (ended Dec 31 2004)",
+      "formType": "10-K (Edgar)",
+      "formCode": "10-K",
+      "isEdgar": true,
+      "date": "Mar 23 '05",
+      "docType": "10-K"
+    },
+    {
+      "description": "10-Q ~ Interim Report  (ended Sep 30 2004)",
+      "formType": "10-Q (Edgar)",
+      "formCode": "10-Q",
+      "isEdgar": true,
+      "date": "Nov 12 '04",
+      "docType": "10-Q"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 8.01 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "May 08 '26",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "May 05 '26",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 7.01 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Feb 11 '26",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 8.01 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Dec 02 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Nov 04 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 5.02",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Oct 09 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 5.02",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Sep 10 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Aug 06 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 5.07 Item 8.01 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Jun 18 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form SD - Specialized disclosure report",
+      "formType": "SD (Edgar)",
+      "formCode": "SD",
+      "isEdgar": true,
+      "date": "May 23 '25",
+      "docType": "SD"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "May 08 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 8.01 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Apr 29 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 3.01 Item 7.01 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Mar 18 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 8-K - Current report - Item 2.02 Item 9.01",
+      "formType": "8-K (Edgar)",
+      "formCode": "8-K",
+      "isEdgar": true,
+      "date": "Feb 11 '25",
+      "docType": "8-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Dec 03 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 12 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 12 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 12 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Sep 06 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Aug 07 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Aug 07 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Jun 05 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Jun 05 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form SD - Specialized disclosure report",
+      "formType": "SD (Edgar)",
+      "formCode": "SD",
+      "isEdgar": true,
+      "date": "May 24 '24",
+      "docType": "SD"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "May 08 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "May 08 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "May 01 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "May 01 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Mar 22 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Feb 13 '24",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 28 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 27 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 02 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 02 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 02 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Aug 03 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Aug 02 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Jun 27 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Jun 06 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form SD - Specialized disclosure report",
+      "formType": "SD (Edgar)",
+      "formCode": "SD",
+      "isEdgar": true,
+      "date": "May 26 '23",
+      "docType": "SD"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "May 26 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "May 26 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "May 04 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "May 04 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Apr 21 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Mar 17 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Feb 15 '23",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K/A - Report of foreign issuer [Rules 13a-16 and 15d-16]: [Amend]",
+      "formType": "6-K/A (Edgar)",
+      "formCode": "6-K/A",
+      "isEdgar": true,
+      "date": "Nov 29 '22",
+      "docType": "6-K/A"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 29 '22",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 6-K - Report of foreign issuer [Rules 13a-16 and 15d-16]",
+      "formType": "6-K (Edgar)",
+      "formCode": "6-K",
+      "isEdgar": true,
+      "date": "Nov 28 '22",
+      "docType": "6-K"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "May 05 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 4 ~ SHOPIFY INC. - Beneficial Ownership Changes",
+      "formType": "4 (Edgar)",
+      "formCode": "4",
+      "isEdgar": true,
+      "date": "Apr 29 '26",
+      "docType": "4"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Apr 06 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Shannan Tobyn - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Natale Joseph Michael - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hoffmeister Jeff - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Finkelstein Harley - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 20 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Niehaus Jean - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 10 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Lutke Tobias - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 06 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Mar 05 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Niehaus Jean - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Feb 27 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hertz Jessica - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Feb 27 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Feb 05 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 4 ~ SHOPIFY INC. - Beneficial Ownership Changes",
+      "formType": "4 (Edgar)",
+      "formCode": "4",
+      "isEdgar": true,
+      "date": "Jan 30 '26",
+      "docType": "4"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Jan 05 '26",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Shannan Tobyn - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hertz Jessica - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Finkelstein Harley - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Niehaus Jean - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hoffmeister Jeff - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 11 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hertz Jessica - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 11 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Shannan Tobyn - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 10 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Dec 05 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 4 ~ SHOPIFY INC. - Beneficial Ownership Changes",
+      "formType": "4 (Edgar)",
+      "formCode": "4",
+      "isEdgar": true,
+      "date": "Nov 14 '25",
+      "docType": "4"
+    },
+    {
+      "description": "Form 144 ~ Nejatian Kasra - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Nov 10 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Nov 05 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Niehaus Jean - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Oct 30 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Oct 27 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Oct 06 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Shannan Tobyn - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Lutke Tobias - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hertz Jessica - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hoffmeister Jeff - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Finkelstein Harley - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 19 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Shannan Tobyn - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 09 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Sep 05 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Simo Fidji - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Aug 15 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Ashe Robert G. - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Aug 08 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Ashe Robert G. - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Aug 07 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Nejatian Kasra - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Aug 07 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Aug 05 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 4 ~ SHOPIFY INC. - Beneficial Ownership Changes",
+      "formType": "4 (Edgar)",
+      "formCode": "4",
+      "isEdgar": true,
+      "date": "Jul 29 '25",
+      "docType": "4"
+    },
+    {
+      "description": "Form 144 ~ Ashe Robert G. - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Jul 17 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Simo Fidji - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Jul 15 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Goodman Gail F - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Jul 07 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Lutke Tobias - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Jun 20 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form 144 ~ Hertz Jessica - Beneficial Ownership Changes",
+      "formType": "144 (Edgar)",
+      "formCode": "144",
+      "isEdgar": true,
+      "date": "Jun 20 '25",
+      "docType": "144"
+    },
+    {
+      "description": "Form S-8 POS ~ Registration Statement",
+      "formType": "S-8 POS (Edgar)",
+      "formCode": "S-8 POS",
+      "isEdgar": true,
+      "date": "May 05 '26",
+      "docType": "S-8"
+    },
+    {
+      "description": "Form 25 ~ Registration Withdrawal or Termination",
+      "formType": "25 (Edgar)",
+      "formCode": "25",
+      "isEdgar": true,
+      "date": "Mar 28 '25",
+      "docType": "25"
+    },
+    {
+      "description": "Form 8-A12B ~ Registration Statement",
+      "formType": "8-A12B (Edgar)",
+      "formCode": "8-A12B",
+      "isEdgar": true,
+      "date": "Mar 28 '25",
+      "docType": "8-A12B"
+    },
+    {
+      "description": "Form F-X ~ Registration Statement",
+      "formType": "F-X (Edgar)",
+      "formCode": "F-X",
+      "isEdgar": true,
+      "date": "Nov 12 '24",
+      "docType": "F-X"
+    },
+    {
+      "description": "Form F-10 ~ Registration Statement",
+      "formType": "F-10 (Edgar)",
+      "formCode": "F-10",
+      "isEdgar": true,
+      "date": "Nov 12 '24",
+      "docType": "F-10"
+    },
+    {
+      "description": "Form S-8 POS ~ Registration Statement",
+      "formType": "S-8 POS (Edgar)",
+      "formCode": "S-8 POS",
+      "isEdgar": true,
+      "date": "Aug 07 '24",
+      "docType": "S-8"
+    },
+    {
+      "description": "Form S-8 ~ Registration Statement",
+      "formType": "S-8 (Edgar)",
+      "formCode": "S-8",
+      "isEdgar": true,
+      "date": "Sep 09 '22",
+      "docType": "S-8"
+    },
+    {
+      "description": "Form F-X ~ Registration Statement",
+      "formType": "F-X (Edgar)",
+      "formCode": "F-X",
+      "isEdgar": true,
+      "date": "Sep 09 '22",
+      "docType": "F-X"
+    },
+    {
+      "description": "Form F-10 ~ Registration Statement",
+      "formType": "F-10 (Edgar)",
+      "formCode": "F-10",
+      "isEdgar": true,
+      "date": "Sep 09 '22",
+      "docType": "F-10"
+    },
+    {
+      "description": "Form S-8 ~ Registration Statement",
+      "formType": "S-8 (Edgar)",
+      "formCode": "S-8",
+      "isEdgar": true,
+      "date": "Jul 20 '22",
+      "docType": "S-8"
+    },
+    {
+      "description": "Form S-8 ~ Registration Statement",
+      "formType": "S-8 (Edgar)",
+      "formCode": "S-8",
+      "isEdgar": true,
+      "date": "Jul 28 '21",
+      "docType": "S-8"
+    },
+    {
+      "description": "Form F-X ~ Registration Statement",
+      "formType": "F-X (Edgar)",
+      "formCode": "F-X",
+      "isEdgar": true,
+      "date": "Jul 27 '21",
+      "docType": "F-X"
+    },
+    {
+      "description": "Form F-10 ~ Registration Statement",
+      "formType": "F-10 (Edgar)",
+      "formCode": "F-10",
+      "isEdgar": true,
+      "date": "Jul 27 '21",
+      "docType": "F-10"
+    },
+    {
+      "description": "Form FWP ~ Prospectus",
+      "formType": "FWP (Edgar)",
+      "formCode": "FWP",
+      "isEdgar": true,
+      "date": "Sep 16 '20",
+      "docType": "FWP"
+    },
+    {
+      "description": "Form FWP ~ Prospectus",
+      "formType": "FWP (Edgar)",
+      "formCode": "FWP",
+      "isEdgar": true,
+      "date": "Sep 16 '20",
+      "docType": "FWP"
+    },
+    {
+      "description": "Form F-10/A ~ Registration Statement",
+      "formType": "F-10/A (Edgar)",
+      "formCode": "F-10/A",
+      "isEdgar": true,
+      "date": "Aug 06 '20",
+      "docType": "F-10/A"
+    },
+    {
+      "description": "Form F-X ~ Registration Statement",
+      "formType": "F-X (Edgar)",
+      "formCode": "F-X",
+      "isEdgar": true,
+      "date": "Jul 28 '20",
+      "docType": "F-X"
+    },
+    {
+      "description": "Form F-10 ~ Registration Statement",
+      "formType": "F-10 (Edgar)",
+      "formCode": "F-10",
+      "isEdgar": true,
+      "date": "Jul 28 '20",
+      "docType": "F-10"
+    },
+    {
+      "description": "Form D - Notice of Exempt Offering of Securities - Item 06b",
+      "formType": "D (Edgar)",
+      "formCode": "D",
+      "isEdgar": true,
+      "date": "Oct 17 '19",
+      "docType": "D"
+    },
+    {
+      "description": "Form S-8 ~ Registration Statement",
+      "formType": "S-8 (Edgar)",
+      "formCode": "S-8",
+      "isEdgar": true,
+      "date": "Oct 17 '19",
+      "docType": "S-8"
+    },
+    {
+      "description": "Form F-10/A ~ Registration Statement",
+      "formType": "F-10/A (Edgar)",
+      "formCode": "F-10/A",
+      "isEdgar": true,
+      "date": "Aug 03 '18",
+      "docType": "F-10/A"
+    },
+    {
+      "description": "Form F-X ~ Registration Statement",
+      "formType": "F-X (Edgar)",
+      "formCode": "F-X",
+      "isEdgar": true,
+      "date": "Jul 30 '18",
+      "docType": "F-X"
+    },
+    {
+      "description": "Form F-10 ~ Registration Statement",
+      "formType": "F-10 (Edgar)",
+      "formCode": "F-10",
+      "isEdgar": true,
+      "date": "Jul 30 '18",
+      "docType": "F-10"
+    },
+    {
+      "description": "Form F-X ~ Registration Statement",
+      "formType": "F-X (Edgar)",
+      "formCode": "F-X",
+      "isEdgar": true,
+      "date": "May 17 '17",
+      "docType": "F-X"
+    },
+    {
+      "description": "Form F-10 ~ Registration Statement",
+      "formType": "F-10 (Edgar)",
+      "formCode": "F-10",
+      "isEdgar": true,
+      "date": "May 17 '17",
+      "docType": "F-10"
+    },
+    {
+      "description": "Form F-10/A ~ Registration Statement",
+      "formType": "F-10/A (Edgar)",
+      "formCode": "F-10/A",
+      "isEdgar": true,
+      "date": "Aug 05 '16",
+      "docType": "F-10/A"
+    },
+    {
+      "description": "Form F-X ~ Registration Statement",
+      "formType": "F-X (Edgar)",
+      "formCode": "F-X",
+      "isEdgar": true,
+      "date": "Jul 29 '16",
+      "docType": "F-X"
+    },
+    {
+      "description": "Form F-10 ~ Registration Statement",
+      "formType": "F-10 (Edgar)",
+      "formCode": "F-10",
+      "isEdgar": true,
+      "date": "Jul 29 '16",
+      "docType": "F-10"
+    },
+    {
+      "description": "Form S-8 ~ Registration Statement",
+      "formType": "S-8 (Edgar)",
+      "formCode": "S-8",
+      "isEdgar": true,
+      "date": "May 12 '16",
+      "docType": "S-8"
+    },
+    {
+      "description": "Form S-8 ~ Registration Statement",
+      "formType": "S-8 (Edgar)",
+      "formCode": "S-8",
+      "isEdgar": true,
+      "date": "May 29 '15",
+      "docType": "S-8"
+    },
+    {
+      "description": "Form 424B4 ~ Prospectus",
+      "formType": "424B4 (Edgar)",
+      "formCode": "424B4",
+      "isEdgar": true,
+      "date": "May 21 '15",
+      "docType": "424B4"
+    },
+    {
+      "description": "Form 8-A12B ~ Registration Statement",
+      "formType": "8-A12B (Edgar)",
+      "formCode": "8-A12B",
+      "isEdgar": true,
+      "date": "May 19 '15",
+      "docType": "8-A12B"
+    },
+    {
+      "description": "Form F-1/A ~ Registration Statement",
+      "formType": "F-1/A (Edgar)",
+      "formCode": "F-1/A",
+      "isEdgar": true,
+      "date": "May 18 '15",
+      "docType": "F-1/A"
+    },
+    {
+      "description": "Form F-1/A ~ Registration Statement",
+      "formType": "F-1/A (Edgar)",
+      "formCode": "F-1/A",
+      "isEdgar": true,
+      "date": "May 06 '15",
+      "docType": "F-1/A"
+    },
+    {
+      "description": "Form F-1 ~ Registration Statement",
+      "formType": "F-1 (Edgar)",
+      "formCode": "F-1",
+      "isEdgar": true,
+      "date": "Apr 14 '15",
+      "docType": "F-1"
+    },
+    {
+      "description": "Form DRSLTR ~ Registration Statement",
+      "formType": "DRSLTR (Edgar)",
+      "formCode": "DRSLTR",
+      "isEdgar": true,
+      "date": "Mar 23 '15",
+      "docType": "DRSLTR"
+    },
+    {
+      "description": "Form DRS/A ~ Registration Statement",
+      "formType": "DRS/A (Edgar)",
+      "formCode": "DRS/A",
+      "isEdgar": true,
+      "date": "Mar 23 '15",
+      "docType": "DRS/A"
+    },
+    {
+      "description": "Form DRS ~ Registration Statement",
+      "formType": "DRS (Edgar)",
+      "formCode": "DRS",
+      "isEdgar": true,
+      "date": "Feb 18 '15",
+      "docType": "DRS"
+    },
+    {
+      "description": "Form D - Notice of Exempt Offering of Securities - Item 06b",
+      "formType": "D (Edgar)",
+      "formCode": "D",
+      "isEdgar": true,
+      "date": "Jan 09 '14",
+      "docType": "D"
+    },
+    {
+      "description": "Form 15-12G ~ Registration Withdrawal or Termination",
+      "formType": "15-12G (Edgar)",
+      "formCode": "15-12G",
+      "isEdgar": true,
+      "date": "Aug 30 '05",
+      "docType": "15-12G"
+    },
+    {
+      "description": "Form DEFA14A ~ Prospectus",
+      "formType": "DEFA14A (Edgar)",
+      "formCode": "DEFA14A",
+      "isEdgar": true,
+      "date": "Jun 17 '05",
+      "docType": "DEFA14A"
+    },
+    {
+      "description": "Form DEFA14A ~ Prospectus",
+      "formType": "DEFA14A (Edgar)",
+      "formCode": "DEFA14A",
+      "isEdgar": true,
+      "date": "Jun 07 '05",
+      "docType": "DEFA14A"
+    },
+    {
+      "description": "Form DEF 14A ~ Prospectus",
+      "formType": "DEF 14A (Edgar)",
+      "formCode": "DEF 14A",
+      "isEdgar": true,
+      "date": "Apr 29 '05",
+      "docType": "DEF"
+    },
+    {
+      "description": "Form PRE 14A ~ Prospectus",
+      "formType": "PRE 14A (Edgar)",
+      "formCode": "PRE 14A",
+      "isEdgar": true,
+      "date": "Apr 13 '05",
+      "docType": "PRE"
+    },
+    {
+      "description": "Form DEF 14A ~ Prospectus",
+      "formType": "DEF 14A (Edgar)",
+      "formCode": "DEF 14A",
+      "isEdgar": true,
+      "date": "Dec 22 '04",
+      "docType": "DEF"
+    },
+    {
+      "description": "Form S-8 ~ Registration Statement",
+      "formType": "S-8 (Edgar)",
+      "formCode": "S-8",
+      "isEdgar": true,
+      "date": "Oct 29 '04",
+      "docType": "S-8"
+    },
+    {
+      "description": "Form 424B1 ~ Prospectus",
+      "formType": "424B1 (Edgar)",
+      "formCode": "424B1",
+      "isEdgar": true,
+      "date": "Oct 26 '04",
+      "docType": "424B1"
+    },
+    {
+      "description": "Form S-1/A ~ Registration Statement",
+      "formType": "S-1/A (Edgar)",
+      "formCode": "S-1/A",
+      "isEdgar": true,
+      "date": "Oct 25 '04",
+      "docType": "S-1/A"
+    },
+    {
+      "description": "Form S-1/A ~ Registration Statement",
+      "formType": "S-1/A (Edgar)",
+      "formCode": "S-1/A",
+      "isEdgar": true,
+      "date": "Oct 15 '04",
+      "docType": "S-1/A"
+    },
+    {
+      "description": "Form S-1/A ~ Registration Statement",
+      "formType": "S-1/A (Edgar)",
+      "formCode": "S-1/A",
+      "isEdgar": true,
+      "date": "Oct 06 '04",
+      "docType": "S-1/A"
+    }
+  ]
+}

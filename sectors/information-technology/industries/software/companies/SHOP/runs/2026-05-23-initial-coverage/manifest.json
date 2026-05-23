@@ -1,0 +1,38 @@
+{
+  "run_id": "2026-05-23-initial-coverage",
+  "run_type": "initial-coverage",
+  "company_ticker": "SHOP",
+  "created_at": "2026-05-23",
+  "source_files": [
+    "data/raw/koyfin/meta.json",
+    "data/raw/koyfin/outputs.json",
+    "data/normalized/koyfin_extraction_summary.md",
+    "data/normalized/web_business_strategy.md",
+    "data/normalized/web_financials.md",
+    "data/normalized/web_competition_market.md",
+    "data/normalized/web_valuation_risks.md",
+    "report.md",
+    "thesis_tracker.md",
+    "valuation_framework.md",
+    "dcf_assumptions.md",
+    "model.xlsx",
+    "outputs.json"
+  ],
+  "artifacts": {
+    "raw_data": "data/raw/",
+    "normalized_data": "data/normalized/",
+    "assets": "assets/",
+    "charts": "assets/charts/",
+    "model": "model.xlsx",
+    "workbook_spec": "workbook.spec.json",
+    "workbook_json": "workbook.json",
+    "workbook_html": "workbook.html",
+    "outputs": "outputs.json",
+    "report": "report.md",
+    "thesis_tracker": "thesis_tracker.md",
+    "valuation_framework": "valuation_framework.md",
+    "dcf_assumptions": "dcf_assumptions.md",
+    "deck": "deck.pptx"
+  },
+  "notes": "Initial coverage run for Shopify Inc.; one Koyfin subagent extracted all 27 Koyfin tabs via unified pipeline, with manual fallbacks for multiples and ROIC; multiple web research subagents gathered strategy, financial, market/competition, and valuation/risk sources. DCF model created as model.xlsx and Univer workbook.html from workbook.spec.json. Investment committee deck created as deck.pptx using report, thesis tracker, valuation framework and model outputs."
+}

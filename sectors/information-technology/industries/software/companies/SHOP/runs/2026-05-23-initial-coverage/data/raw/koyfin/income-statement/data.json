@@ -1,0 +1,944 @@
+{
+  "headers": [
+    "",
+    "Fiscal Years",
+    "FY 2016",
+    "FY 2017",
+    "FY 2018",
+    "FY 2019",
+    "FY 2020",
+    "FY 2021",
+    "FY 2022",
+    "FY 2023",
+    "FY 2024",
+    "FY 2025",
+    "Current/LTM"
+  ],
+  "sections": [
+    {
+      "section": "Revenues",
+      "rows": [
+        {
+          "label": "Total Revenues",
+          "values": [
+            "0.4B",
+            "0.7B",
+            "1.1B",
+            "1.6B",
+            "2.9B",
+            "4.6B",
+            "5.6B",
+            "7.1B",
+            "8.9B",
+            "11.6B",
+            "12.4B"
+          ]
+        },
+        {
+          "label": "Revenues",
+          "values": [
+            "0.4B",
+            "0.7B",
+            "1.1B",
+            "1.6B",
+            "2.9B",
+            "4.6B",
+            "5.6B",
+            "7.1B",
+            "8.9B",
+            "11.6B",
+            "12.4B"
+          ]
+        },
+        {
+          "label": "Finance Div. Revenues",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Insurance Division Revenues",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Other Revenues",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "YoY Growth %",
+          "values": [
+            "89.70%",
+            "72.94%",
+            "59.40%",
+            "47.05%",
+            "85.63%",
+            "57.43%",
+            "21.43%",
+            "26.07%",
+            "25.78%",
+            "30.14%",
+            "31.85%"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "Gross Profit",
+      "rows": [
+        {
+          "label": "Cost Of Revenues",
+          "values": [
+            "0.2B",
+            "0.3B",
+            "0.5B",
+            "0.7B",
+            "1.4B",
+            "2.1B",
+            "2.8B",
+            "3.5B",
+            "4.4B",
+            "6.0B",
+            "6.4B"
+          ]
+        },
+        {
+          "label": "Gross Profit (Loss)",
+          "values": [
+            "0.2B",
+            "0.4B",
+            "0.6B",
+            "0.9B",
+            "1.5B",
+            "2.5B",
+            "2.8B",
+            "3.5B",
+            "4.5B",
+            "5.6B",
+            "5.9B"
+          ]
+        },
+        {
+          "label": "YoY Growth %",
+          "values": [
+            "84.98%",
+            "81.51%",
+            "56.81%",
+            "45.18%",
+            "78.08%",
+            "60.95%",
+            "11.00%",
+            "27.63%",
+            "27.23%",
+            "24.22%",
+            "26.64%"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "Operating Income & Expenses",
+      "rows": [
+        {
+          "label": "Selling General & Admin Expenses",
+          "values": [
+            "0.2B",
+            "0.3B",
+            "0.5B",
+            "0.6B",
+            "0.8B",
+            "1.2B",
+            "1.7B",
+            "1.6B",
+            "1.9B",
+            "2.1B",
+            "2.2B"
+          ]
+        },
+        {
+          "label": "R&D Expenses",
+          "values": [
+            "0.1B",
+            "0.1B",
+            "0.2B",
+            "0.4B",
+            "0.5B",
+            "0.8B",
+            "1.5B",
+            "1.6B",
+            "1.4B",
+            "1.5B",
+            "1.6B"
+          ]
+        },
+        {
+          "label": "Depreciation & Amortization",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Other Operating Expenses",
+          "values": [
+            "0.0B",
+            "0.0B",
+            "0.0B",
+            "-",
+            "0.0B",
+            "0.1B",
+            "0.0B",
+            "0.0B",
+            "0.0B",
+            "0.0B",
+            "0.0B"
+          ]
+        },
+        {
+          "label": "Operating Income",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.2B",
+            "0.4B",
+            "(0.5)B",
+            "0.3B",
+            "1.2B",
+            "1.9B",
+            "2.1B"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "Net Interest Expense",
+      "rows": [
+        {
+          "label": "Net Interest Expenses",
+          "values": [
+            "0.0B",
+            "0.0B",
+            "0.0B",
+            "-",
+            "0.0B",
+            "0.0B",
+            "0.1B",
+            "0.2B",
+            "0.3B",
+            "0.3B",
+            "0.3B"
+          ]
+        },
+        {
+          "label": "Interest Expense",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "(0.0)B",
+            "(0.0)B",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Interest And Investment Income",
+          "values": [
+            "0.0B",
+            "0.0B",
+            "0.0B",
+            "-",
+            "0.0B",
+            "0.0B",
+            "0.1B",
+            "0.2B",
+            "0.3B",
+            "0.3B",
+            "0.3B"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "Earnings Before Taxes (EBT)",
+      "rows": [
+        {
+          "label": "Income (Loss) On Equity Affiliates",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "(0.1)B",
+            "(0.1)B",
+            "(0.0)B",
+            "(0.0)B"
+          ]
+        },
+        {
+          "label": "Other Non Operating Income (Expenses)",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "0.0B",
+            "(0.1)B",
+            "(0.1)B",
+            "(0.1)B",
+            "(0.2)B",
+            "(0.2)B",
+            "(0.5)B",
+            "(0.6)B"
+          ]
+        },
+        {
+          "label": "EBT, Excl. Unusual Items",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.1B",
+            "0.3B",
+            "(0.5)B",
+            "0.3B",
+            "1.2B",
+            "1.7B",
+            "1.9B"
+          ]
+        },
+        {
+          "label": "Restructuring Charges",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "(0.0)B",
+            "(0.1)B",
+            "-",
+            "-",
+            "0.2B"
+          ]
+        },
+        {
+          "label": "Impairment of Goodwill",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Gain (Loss) On Sale Of Assets",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "(1.3)B",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Gain (Loss) On Sale Of Investments",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "0.1B",
+            "2.9B",
+            "(2.9)B",
+            "1.4B",
+            "1.0B",
+            "(0.2)B",
+            "(0.2)B"
+          ]
+        },
+        {
+          "label": "Other Unusual Items, Total",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "(0.0)B",
+            "(0.0)B",
+            "(0.2)B",
+            "(0.0)B",
+            "0.1B",
+            "(0.0)B",
+            "(0.0)B"
+          ]
+        },
+        {
+          "label": "EBT, Incl. Unusual Items",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.2B",
+            "3.1B",
+            "(3.6)B",
+            "0.2B",
+            "2.2B",
+            "1.5B",
+            "1.6B"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "Earnings from Operations | Net Income",
+      "rows": [
+        {
+          "label": "Income Tax Expense",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "0.0B",
+            "(0.1)B",
+            "0.2B",
+            "(0.2)B",
+            "0.1B",
+            "0.2B",
+            "0.3B",
+            "0.3B"
+          ]
+        },
+        {
+          "label": "Earnings From Continuing Operations",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.3B",
+            "2.9B",
+            "(3.5)B",
+            "0.1B",
+            "2.0B",
+            "1.2B",
+            "1.3B"
+          ]
+        },
+        {
+          "label": "Minority Interest",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Net Income",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.3B",
+            "2.9B",
+            "(3.5)B",
+            "0.1B",
+            "2.0B",
+            "1.2B",
+            "1.3B"
+          ]
+        },
+        {
+          "label": "Preferred Dividend and Other Adjustments",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Net Income to Common Incl Extra Items",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.3B",
+            "2.9B",
+            "(3.5)B",
+            "0.1B",
+            "2.0B",
+            "1.2B",
+            "1.3B"
+          ]
+        },
+        {
+          "label": "Net Income to Common Excl. Extra Items",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.3B",
+            "2.9B",
+            "(3.5)B",
+            "0.1B",
+            "2.0B",
+            "1.2B",
+            "1.3B"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "Per Share Items",
+      "rows": [
+        {
+          "label": "Net EPS - Basic",
+          "values": [
+            "(0.04)",
+            "(0.04)",
+            "(0.06)",
+            "(0.11)",
+            "0.27",
+            "2.34",
+            "(2.73)",
+            "0.10",
+            "1.57",
+            "0.95",
+            "1.02"
+          ]
+        },
+        {
+          "label": "Basic EPS - Continuing Operations",
+          "values": [
+            "(0.04)",
+            "(0.04)",
+            "(0.06)",
+            "(0.11)",
+            "0.27",
+            "2.34",
+            "(2.73)",
+            "0.10",
+            "1.57",
+            "0.95",
+            "1.02"
+          ]
+        },
+        {
+          "label": "Basic Weighted Average Shares Outstanding",
+          "values": [
+            "0.8B",
+            "1.0B",
+            "1.1B",
+            "1.1B",
+            "1.2B",
+            "1.2B",
+            "1.3B",
+            "1.3B",
+            "1.3B",
+            "1.3B",
+            "1.3B"
+          ]
+        },
+        {
+          "label": "Net EPS - Diluted",
+          "values": [
+            "(0.04)",
+            "(0.04)",
+            "(0.06)",
+            "(0.11)",
+            "0.26",
+            "2.29",
+            "(2.73)",
+            "0.10",
+            "1.55",
+            "0.94",
+            "1.02"
+          ]
+        },
+        {
+          "label": "Diluted EPS - Continuing Operations",
+          "values": [
+            "(0.04)",
+            "(0.04)",
+            "(0.06)",
+            "(0.11)",
+            "0.26",
+            "2.29",
+            "(2.73)",
+            "0.10",
+            "1.55",
+            "0.94",
+            "1.02"
+          ]
+        },
+        {
+          "label": "Diluted Weighted Average Shares Outstanding",
+          "values": [
+            "0.8B",
+            "1.0B",
+            "1.1B",
+            "1.1B",
+            "1.2B",
+            "1.3B",
+            "1.3B",
+            "1.3B",
+            "1.3B",
+            "1.3B",
+            "1.3B"
+          ]
+        },
+        {
+          "label": "Normalized Basic EPS",
+          "values": [
+            "(0.03)",
+            "(0.03)",
+            "(0.04)",
+            "(0.05)",
+            "0.07",
+            "0.16",
+            "(0.27)",
+            "0.14",
+            "0.57",
+            "0.81",
+            "0.89"
+          ]
+        },
+        {
+          "label": "Normalized Diluted EPS",
+          "values": [
+            "(0.03)",
+            "(0.03)",
+            "(0.04)",
+            "(0.05)",
+            "0.07",
+            "0.15",
+            "(0.27)",
+            "0.14",
+            "0.57",
+            "0.80",
+            "0.89"
+          ]
+        },
+        {
+          "label": "Dividend Per Share",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Payout Ratio",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "Supplemental Items",
+      "rows": [
+        {
+          "label": "Total Revenues (As Reported)",
+          "values": [
+            "0.4B",
+            "0.7B",
+            "1.1B",
+            "1.6B",
+            "2.9B",
+            "4.6B",
+            "5.6B",
+            "7.1B",
+            "8.9B",
+            "11.6B",
+            "12.4B"
+          ]
+        },
+        {
+          "label": "EBITDA",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.2B",
+            "0.4B",
+            "(0.4)B",
+            "0.3B",
+            "1.3B",
+            "1.9B",
+            "2.1B"
+          ]
+        },
+        {
+          "label": "EBITA",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.2B",
+            "0.4B",
+            "(0.4)B",
+            "0.3B",
+            "1.3B",
+            "1.9B",
+            "2.1B"
+          ]
+        },
+        {
+          "label": "EBIT",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "(0.1)B",
+            "0.2B",
+            "0.4B",
+            "(0.5)B",
+            "0.3B",
+            "1.2B",
+            "1.9B",
+            "2.1B"
+          ]
+        },
+        {
+          "label": "Effective Tax Rate - (Ratio)",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "7.19%",
+            "-",
+            "28.65%",
+            "9.38%",
+            "18.42%",
+            "19.03%"
+          ]
+        },
+        {
+          "label": "Normalized Net Income",
+          "values": [
+            "(0.0)B",
+            "(0.0)B",
+            "(0.0)B",
+            "(0.1)B",
+            "0.1B",
+            "0.2B",
+            "(0.3)B",
+            "0.2B",
+            "0.7B",
+            "1.0B",
+            "1.2B"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "Supplemental Operating Expenses Items",
+      "rows": [
+        {
+          "label": "Research And Development Expense From Footnotes",
+          "values": [
+            "0.1B",
+            "0.1B",
+            "0.2B",
+            "0.4B",
+            "0.6B",
+            "0.9B",
+            "1.5B",
+            "1.7B",
+            "1.4B",
+            "1.5B",
+            "1.6B"
+          ]
+        },
+        {
+          "label": "D&A for EBITDA",
+          "values": [
+            "0.0B",
+            "0.0B",
+            "0.0B",
+            "0.0B",
+            "0.1B",
+            "0.1B",
+            "0.1B",
+            "0.1B",
+            "0.0B",
+            "0.0B",
+            "0.0B"
+          ]
+        },
+        {
+          "label": "Selling and Marketing Expenses",
+          "values": [
+            "0.1B",
+            "0.2B",
+            "0.3B",
+            "0.5B",
+            "0.6B",
+            "0.9B",
+            "1.2B",
+            "1.2B",
+            "1.4B",
+            "1.7B",
+            "1.8B"
+          ]
+        },
+        {
+          "label": "General and Administrative Expenses",
+          "values": [
+            "0.0B",
+            "0.1B",
+            "0.1B",
+            "0.2B",
+            "0.2B",
+            "0.3B",
+            "0.5B",
+            "0.4B",
+            "0.5B",
+            "0.4B",
+            "0.5B"
+          ]
+        },
+        {
+          "label": "Stock-Based Comp., Other (Total)",
+          "values": [
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-",
+            "-"
+          ]
+        },
+        {
+          "label": "Total Stock-Based Compensation",
+          "values": [
+            "0.0B",
+            "0.0B",
+            "0.1B",
+            "-",
+            "0.2B",
+            "0.3B",
+            "0.5B",
+            "0.6B",
+            "0.4B",
+            "0.4B",
+            "0.5B"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "workbook_id": "shop-dcf-2026-05-23",
+  "workbook_name": "SHOP DCF Model",
+  "generated_at": "2026-05-23T13:46:24.459Z",
+  "outputs": [
+    {
+      "key": "valuation.implied_share_price",
+      "sheet": "DCF",
+      "cell": "B107",
+      "value": 96.3,
+      "unit": "USD/share"
+    },
+    {
+      "key": "valuation.upside_downside",
+      "sheet": "DCF",
+      "cell": "B109",
+      "value": -0.065,
+      "unit": "percent"
+    },
+    {
+      "key": "valuation.enterprise_value",
+      "sheet": "DCF",
+      "cell": "B102",
+      "value": 119625,
+      "unit": "USD millions"
+    },
+    {
+      "key": "valuation.equity_value",
+      "sheet": "DCF",
+      "cell": "B105",
+      "value": 125186,
+      "unit": "USD millions"
+    },
+    {
+      "key": "market.current_price",
+      "sheet": "DCF",
+      "cell": "B108",
+      "value": 103,
+      "unit": "USD/share"
+    },
+    {
+      "key": "assumption.wacc",
+      "sheet": "DCF",
+      "cell": "B97",
+      "value": 0.095,
+      "unit": "percent"
+    },
+    {
+      "key": "assumption.terminal_growth",
+      "sheet": "DCF",
+      "cell": "B98",
+      "value": 0.035,
+      "unit": "percent"
+    },
+    {
+      "key": "financial.fy2026_revenue",
+      "sheet": "DCF",
+      "cell": "F71",
+      "value": 14800,
+      "unit": "USD millions"
+    },
+    {
+      "key": "financial.fy2035_fcf",
+      "sheet": "DCF",
+      "cell": "O82",
+      "value": 10978,
+      "unit": "USD millions"
+    }
+  ]
+}
