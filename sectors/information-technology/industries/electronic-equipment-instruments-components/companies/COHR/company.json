@@ -1,0 +1,16 @@
+{
+  "company_name": "Coherent Corp.",
+  "ticker": "COHR",
+  "exchange": "NYSE",
+  "sector": "information-technology",
+  "subsector": "optical transceivers / lasers / engineered materials",
+  "currency": "USD",
+  "fiscal_year_end": "06-30",
+  "koyfin_id": "COHR US",
+  "sec_cik": "0000820313",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-22-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "electronic-equipment-instruments-components"
+}
