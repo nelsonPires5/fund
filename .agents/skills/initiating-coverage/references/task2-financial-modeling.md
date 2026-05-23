@@ -13,18 +13,11 @@ This document provides step-by-step instructions for executing Task 2 (Financial
   - OR: Pre-extracted historical financials provided by user
 - **Optional**: Company research (Task 1) for business context
 
-**Output**: Excel Financial Model (.xlsx) with repo-standard tabs:
-1. Summary
-2. Revenue Model
-3. Income Statement
-4. Balance Sheet
-5. Cash Flow
-6. DCF
-7. Sensitivity
-8. Comps
-9. Thesis Tracker
-10. DCF Assumptions
-11. Checks
+**Output**: Run-local quantitative artifacts written to the active `<run>/` directory:
+- **`<run>/model.xlsx`** — canonical financial model with repo-standard tabs: Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks
+- **`<run>/outputs.json`** — stable key-value outputs extracted from the model (revenue, EBITDA, EPS, FCF, key multiples, scenario outputs)
+- **Model extracts** — clean CSVs under `<run>/data/normalized/model_extracts/` for revenue build, P&L, cash flow, balance sheet, and key metrics
+- **Scripts** — build scripts under `<run>/data/scripts/model/` and validation scripts under `<run>/data/scripts/validation/`
 
 For quick standalone tasks, the minimum six tabs remain Revenue Model, Income Statement, Cash Flow, Balance Sheet, Scenarios, and DCF Inputs; initial coverage should use the full repo-standard set.
 
@@ -585,6 +578,50 @@ Cumulative FCF 2025-2029 ($M)   $XXX        $XXX        $XXX
 9. [ ] Test that revenue totals tie across all tabs
 10. [ ] Review formatting and presentation
 
+### Step 10: Export Outputs and Extracts
+
+After the model passes quality checks, export the following:
+
+#### A. Generate `outputs.json`
+
+Create `<run>/outputs.json` with stable keys for every material model output used by reports or presentations. Keys must be stable across model revisions.
+
+```json
+{
+  "workbook_id": "ticker-model-run-id",
+  "workbook_name": "Ticker Financial Model",
+  "model": "<run>/model.xlsx",
+  "generated_at": "<ISO timestamp>",
+  "outputs": [
+    { "key": "financial.revenue.2024A", "sheet": "Income Statement", "cell": "B10", "value": 0, "unit": "USD millions" },
+    { "key": "financial.revenue.2025E", "sheet": "Income Statement", "cell": "C10", "value": 0, "unit": "USD millions" },
+    { "key": "financial.revenue_cagr.2024_2029", "sheet": "Summary", "cell": "B12", "value": 0.0, "unit": "percent" },
+    { "key": "financial.ebitda.2025E", "sheet": "Income Statement", "cell": "C30", "value": 0, "unit": "USD millions" },
+    { "key": "financial.fcf.2025E", "sheet": "Cash Flow", "cell": "C40", "value": 0, "unit": "USD millions" },
+    { "key": "valuation.implied_share_price", "sheet": "DCF", "cell": "B107", "value": 0, "unit": "USD/share" }
+  ]
+}
+```
+
+Fill in all values from the model. Keep keys stable — never rename or remove keys between runs of the same company.
+
+#### B. Export Model Extracts
+
+Save clean machine-readable CSVs under `<run>/data/normalized/model_extracts/`:
+- `revenue_build.csv` — product and geography revenue rows
+- `income_statement.csv` — full P&L rows × years
+- `cash_flow.csv` — full cash flow rows × years
+- `balance_sheet.csv` — full balance sheet rows × years
+- `key_metrics.csv` — margins, growth rates, ratios
+
+#### C. Save Build and Validation Scripts
+
+Under `<run>/data/scripts/model/`:
+- Any scripts used to build or populate the model workbook
+
+Under `<run>/data/scripts/validation/`:
+- Any scripts used to cross-check model integrity (balance checks, formula audits, cross-tab reconciliations)
+
 ---
 
 ## Quality Standards
@@ -622,8 +659,7 @@ Cumulative FCF 2025-2029 ($M)   $XXX        $XXX        $XXX
 
 ## File Naming Convention
 
-Save the financial model as:
-`[Company]_Financial_Model_[Date].xlsx`
+The canonical model path is `<run>/model.xlsx`. If writing outside a run folder, save as `[Company]_Financial_Model_[Date].xlsx`.
 
 Example: `Tesla_Financial_Model_2024-10-27.xlsx`
 
@@ -632,16 +668,19 @@ Example: `Tesla_Financial_Model_2024-10-27.xlsx`
 ## Success Criteria
 
 A successful financial model should:
-1. Have all 6 essential tabs (Revenue Model, Income Statement, Cash Flow Statement, Balance Sheet, Scenarios, DCF Inputs)
-2. Be fully dynamic (change assumption → model updates)
-3. Have no hardcoded numbers in projections
-4. Include detailed revenue breakdowns (20-30 rows by product, 15-20 rows by geography)
-5. Contain 40-50 line items in Income Statement
-6. Include Bull/Base/Bear scenarios
-7. Be professionally formatted with color coding
-8. Balance properly (balance sheet, cash flows)
-9. Be auditable and easy to follow
-10. Support valuation analysis with proper FCF calculations
+1. Write to `<run>/model.xlsx` with all repo-standard tabs
+2. Generate `<run>/outputs.json` with stable keys for all material outputs
+3. Export model extracts to `<run>/data/normalized/model_extracts/`
+4. Save build/validation scripts under `<run>/data/scripts/`
+5. Be fully dynamic (change assumption → model updates)
+6. Have no hardcoded numbers in projections
+7. Include detailed revenue breakdowns (20-30 rows by product, 15-20 rows by geography)
+8. Contain 40-50 line items in Income Statement
+9. Include Bull/Base/Bear scenarios
+10. Be professionally formatted with color coding
+11. Balance properly (balance sheet, cash flows)
+12. Be auditable and easy to follow
+13. Support valuation analysis with proper FCF calculations
 
 ---
 

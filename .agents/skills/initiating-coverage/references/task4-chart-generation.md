@@ -7,6 +7,10 @@ This document provides step-by-step instructions for executing Task 4 (Chart Gen
 **Purpose**: Generate 25-35 professional financial charts for the report.
 
 **Prerequisites**: ⚠️ Verify before starting
+- **Hard prerequisites** (must exist in the run folder before chart generation):
+  - `<run>/model.xlsx` — the financial model (with Task 3 valuation tabs)
+  - `<run>/outputs.json` — named valuation/model outputs for chart data
+  - `<run>/data/normalized/model_extracts/` — extracted data tables from the model
 - **Required**: Company research from Task 1
   - Company history, milestones (for timeline charts)
   - Management team, org structure (for org charts)
@@ -38,7 +42,10 @@ This task requires outputs from all three previous tasks. Starting without them 
 
 Do not attempt to create placeholder charts or skip charts due to missing data.
 
-**Output**: 25-35 Professional Chart Files (PNG/JPG, 300 DPI) stored under the active run's `<run>/assets/charts/`
+**Output**: 25-35 Professional Chart Files (PNG/JPG, 300 DPI)
+- **Chart generation scripts** → `<run>/data/scripts/charts/` (one focused script per chart)
+- **Final used charts** → `<run>/assets/charts/`
+- **Unused / intermediate chart outputs** → `<run>/data/intermediate/`
 
 ---
 
@@ -200,14 +207,16 @@ Understanding where each chart's data comes from:
 
 ## Step-by-Step Chart Generation Workflow
 
-### Step 1: Set Up Environment
+### Step 1: Set Up Environment and Script Structure
+
+**Chart scripts location**: All chart generation scripts live under `<run>/data/scripts/charts/`. Create one focused, self-contained script per chart so each chart is independently reproducible and auditable. Each script reads from `model.xlsx`, `outputs.json`, or `<run>/data/normalized/model_extracts/` and writes its final chart to `<run>/assets/charts/`.
 
 **Install required libraries:**
 ```bash
 pip install matplotlib seaborn pandas numpy plotly
 ```
 
-**Create Python script header:**
+**Python script header (use at the top of every chart script):**
 ```python
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -750,7 +759,7 @@ verify_charts()
 - [ ] 25-35 total charts
 - [ ] Proper file naming (chart_01, chart_02, etc.)
 - [ ] Chart index created
-- [ ] Ready for embedding in Word
+- [ ] Ready for embedding in `report.md` (or DOCX if explicitly requested)
 
 ---
 
@@ -830,11 +839,11 @@ A successful chart package should:
 5. Be high resolution (300 DPI) for print quality
 6. Have clear labels, legends, and titles on every chart
 7. Include proper figure numbers and concise source notes
-8. Be ready for immediate embedding in Word
+8. Be ready for immediate embedding in `report.md` (or DOCX if explicitly requested)
 9. Cover all key financial metrics and analyses
 10. Tell a visual story complementing the written analysis
 11. Be accurate and auditable to source data (model/valuation)
-12. All charts packaged in zip file with chart index
+12. Final used charts saved under `<run>/assets/charts/`; chart index created; zip only if explicitly requested
 
 **Remember**: Task 5 will embed ALL charts created (25-35) throughout the report for visual density.
 
@@ -881,40 +890,28 @@ After completing Task 4, deliverables include:
 
 **All chart files must be:**
 - 300 DPI resolution (print quality)
-- 6-10 inches wide (standard Word embedding size)
+- 6-10 inches wide (standard embedding size)
 - White background (professional appearance)
 - PNG format (lossless quality)
-- Ready for immediate Word embedding
+- Ready for embedding in `report.md` (or DOCX if requested)
 
-**Final Step: Package All Charts**
+**Chart Output Routing**:
+- **Final charts** (used in report) → `<run>/assets/charts/`
+- **Unused / intermediate** → `<run>/data/intermediate/`
 
-Create a zip file containing all chart files and the chart index:
+**Chart Index** (1 text file):
+- `chart_index.txt` (listing all charts with descriptions and categories)
 
-```
-[Company]_Charts_[Date].zip
-├── chart_01_stock_price_performance.png
-├── chart_02_revenue_growth_trajectory.png
-├── chart_03_revenue_by_product_stacked_area.png ⭐
-├── chart_04_revenue_by_geography_stacked_bar.png ⭐
-├── chart_05_company_overview.png
-├── ... (all 25-35 chart files)
-├── chart_28_dcf_sensitivity_heatmap.png ⭐
-├── chart_32_valuation_football_field.png ⭐
-├── chart_34_historical_valuation_multiples.png
-└── chart_index.txt
-```
-
-**Example**: `Tesla_Charts_2024-10-28.zip`
-
-**Why this matters**: Task 5 will embed ALL charts created (25-35) throughout the report. The report requires visual density (1 chart per 200-300 words), so all charts serve a purpose—either for specific analytical sections or for visual storytelling and page density.
-- Verify all 25-35 charts are present
-- Extract charts for Task 5 (Report Assembly)
+**Why this matters**: Task 5 will embed charts from `<run>/assets/charts/` throughout the report. Every file in `assets/charts/` should serve a purpose in the report, deck, or model; unused/exploratory charts belong in `<run>/data/intermediate/`.
+- Verify all final charts are present in `<run>/assets/charts/`
+- Verify unused charts are not left in `assets/charts/`
+- Charts in `<run>/assets/charts/` are ready for Task 5 (Report Assembly)
 
 ---
 
 ## Next Steps
 
-After completing Task 4, the zip file will be used for:
-- **Task 5 (Report Assembly)**: Reference or embed charts from `<run>/assets/charts/` into `report.md` (or DOCX if explicitly requested) at appropriate locations throughout the document
+After completing Task 4:
+- **Task 5 (Report Assembly)** references or embeds charts from `<run>/assets/charts/` into `report.md` (or DOCX if explicitly requested) at appropriate locations throughout the document
 
 The 4 mandatory charts are critical for the valuation and financial analysis sections of the report.

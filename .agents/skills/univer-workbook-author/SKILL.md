@@ -5,7 +5,7 @@ description: Create or update static Univer spreadsheet workbooks for investment
 
 # Univer Workbook Author
 
-Use this skill when a task needs an interactive spreadsheet/model artifact. Default to Univer workbook artifacts.
+Use this skill when a task needs an interactive spreadsheet/model artifact **and the user explicitly requests a Univer workbook**. By default, `model.xlsx` (via xlsx-author) is the primary quantitative artifact; Univer workbooks are optional/secondary unless the user asks for them.
 
 ## Output contract
 
@@ -21,6 +21,8 @@ outputs.json         # stable named model outputs for reports/decks
 `workbook.html` must show only the workbook. No mission dashboard, report, or deck content.
 
 ## Workflow
+
+Before building a Univer view for a model-backed run, prefer sourcing tables from `<run>/data/normalized/model_extracts/` and named values from `<run>/outputs.json` so the Univer artifact stays aligned with `model.xlsx`.
 
 1. Create or update `workbook.spec.json`.
 2. Run:
@@ -62,9 +64,22 @@ node skills/univer-workbook-author/scripts/build-workbook-page.js <run>/workbook
 - `Thesis Tracker` must connect qualitative thesis pillars and events/catalysts to quantitative KPIs, current values, trigger thresholds, scenario impact, and next review date.
 - Short thesis bullets may live in workbook sheets; detailed discussion belongs in `report.md`.
 - Use formulas for derived values. Hardcoded values should be raw data or explicit assumptions.
-- Add stable output keys for any number used by reports or presentations.
-- Format numbers and tables in the spec where possible: units, percentage/currency formats, thousands separators, shaded headers, frozen panes, column widths, and borders.
+- Add stable `outputs` keys in `workbook.spec.json` for any number used by reports or presentations.
+- Format in the spec using fields supported by the builder:
+  - `freeze`: sheet freeze panes (e.g., `{ "xSplit": 1, "ySplit": 3, "startRow": 3, "startColumn": 1 }`)
+  - `columnData`: sparse column widths (e.g., `{ "0": { "w": 160 }, "1": { "w": 220 } }`)
+  - `rowData`: sparse row heights (e.g., `{ "0": { "h": 36 } }`)
+  - `mergeData` / `merges`: merged title/header ranges in Univer snapshot shape
+  - `styles`: workbook-level style map; set cell `style` or `s` to a style id
+  - `numFmt`: cell-level number format metadata (e.g., `{ "value": 0.12, "numFmt": "0.0%" }`). Note: `numFmt` only applies when the cell is specified as an object; bare scalar cells cannot carry formats.
 - Prefer updating `workbook.spec.json`; do not hand-edit generated `workbook.json` unless necessary.
+
+## Limits vs model.xlsx
+
+- Univer workbooks are browser-rendered JSON snapshots; they do not support native Excel features like Power Query, Data Tables, VBA, or external data connections.
+- Formula support is limited to basic arithmetic, SUM, IF, VLOOKUP, and similar; complex array formulas or dynamic array functions may not work.
+- Large datasets (10,000+ rows) may render slowly; for raw data storage, prefer CSV in `data/normalized/` and reference it via the `csv` field.
+- For production-grade, auditable financial models, prefer `model.xlsx` (xlsx-author) as the source of truth. Use Univer for interactive exploration, dashboards, or lightweight model views.
 
 ## Static save behavior
 

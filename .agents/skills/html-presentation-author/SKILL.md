@@ -19,19 +19,33 @@ Optional source file:
 <run>/deck.spec.json
 ```
 
+## Prerequisites
+
+Before building the deck, confirm these artifacts exist and are current:
+
+- `<run>/model.xlsx`
+- `<run>/outputs.json`
+- `<run>/data/normalized/model_extracts/`
+- Charts under `<run>/assets/charts/`
+- `report.md` (for narrative, thesis, risks)
+- `manifest.json` (run metadata)
+
+Do not start deck creation until the model and charts are ready.
+
 ## Workflow
 
-1. Confirm the run folder and source artifacts: `manifest.json`, `outputs.json`, `report.md`, `model.xlsx` / `workbook.html`, and any charts/assets under `<run>/assets/`.
+1. Confirm the run folder and prerequisite source artifacts above.
 2. Draft slide outline first if the deck is substantial.
-3. Use visuals from `<run>/assets/charts/` or `<run>/assets/screenshots/`; do not reference raw screenshots directly from `<run>/data/raw/`.
-4. In `deck.spec.json`, slides may use `image`, `chartImage`, or `images` fields with paths relative to `deck/index.html` (for example `../assets/charts/revenue_mix.png`).
-5. Build standalone HTML directly or create `deck.spec.json` and run:
+3. Use only final assets from `<run>/assets/charts/` or `<run>/assets/screenshots/`; do not reference raw captures from `<run>/data/raw/`.
+4. Every material number must trace to a named key in `outputs.json` or a `data/normalized/model_extracts/` entry; footnote the source run id.
+5. In `deck.spec.json`, slides may use `image`, `chartImage`, or `images` fields with paths relative to `deck/index.html` (for example `../assets/charts/revenue_mix.png`).
+6. Build standalone HTML directly or create `deck.spec.json` and run via scripts under `data/scripts/presentation/` (or the skill's bundled scripts):
 
 ```bash
 node skills/html-presentation-author/scripts/build-deck.js <run>/deck.spec.json <run>/deck/index.html
 ```
 
-4. Every model number should trace to `outputs.json` key and run id.
+7. Optional: embed Mermaid diagrams (e.g., thesis flow, catalyst timeline, competitive map) directly in the HTML via `<pre class="mermaid">` blocks and the Mermaid CDN.
 
 ## Conventions
 
@@ -40,6 +54,7 @@ node skills/html-presentation-author/scripts/build-deck.js <run>/deck.spec.json 
 - Use standalone HTML/CSS/JS.
 - Initial coverage decks should normally have 12-16+ slides covering: title, agenda, investment summary, company overview, business model, market/industry, competitive landscape/peers, financial trends, model/scenarios, valuation, thesis tracker/catalysts, risks, and a final End/Q&A slide.
 - Use charts/images liberally: revenue mix, margin trends, FCF trends, DCF sensitivity, valuation football field, peer comparison, market map, and thesis/catalyst visuals when available.
-- Every material number should trace to `outputs.json`, `model.xlsx`, or `workbook.html`.
+- Every material number must trace to an `outputs.json` key or `data/normalized/model_extracts/` entry. For workbook references, prefer named output keys over raw cell addresses in deck text.
+- Embed Mermaid diagrams for thesis flow, catalyst timelines, or competitive maps when helpful.
 - Treat the deck as a point-in-time snapshot of a run, not the source of truth.
 - Include source run id in the footer or final methodology / End slide.

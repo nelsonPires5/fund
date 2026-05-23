@@ -75,7 +75,9 @@ const html = `<!doctype html>
     ${slides}
   </main>
   <div class="counter" id="counter"></div>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
+    if (window.mermaid) mermaid.initialize({ startOnLoad: true, theme: 'default' });
     const slides = [...document.querySelectorAll('.slide')];
     let current = 0;
     function show(index) {

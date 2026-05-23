@@ -16,11 +16,15 @@ sectors/<sector>/companies/<ticker>/
     <yyyy-mm-dd>-<run-type>/
       manifest.json
       data/
-        raw/koyfin/       # raw captures; ignored by git
-        normalized/       # optional cleaned/model-ready data
+        raw/koyfin/           # raw captures; ignored by git
+        scripts/              # reusable data-processing or analysis scripts
+        intermediate/         # work-in-progress data; do not use in deliverables
+        normalized/
+          model_extracts/     # structured CSV/JSON extracts from model.xlsx
       assets/
-        charts/           # charts/images used in report and deck
-        screenshots/      # selected screenshots used in report and deck
+        charts/               # final charts used in report and deck
+        screenshots/          # final screenshots used in report and deck
+        diagrams/             # final diagrams used in report and deck
       model.xlsx
       outputs.json
       report.md
@@ -66,7 +70,10 @@ Each run gets a manifest:
   "source_files": [],
   "artifacts": {
     "raw_data": "data/raw/",
+    "scripts": "data/scripts/",
+    "intermediate": "data/intermediate/",
     "normalized_data": "data/normalized/",
+    "model_extracts": "data/normalized/model_extracts/",
     "assets": "assets/",
     "model": "model.xlsx",
     "outputs": "outputs.json",
@@ -82,8 +89,12 @@ Each run gets a manifest:
 - Run folders are snapshots. For meaningful revisions, create a new run.
 - Put all raw source captures under the active run's `data/raw/`; never create company-level `data/raw/`.
 - Raw source captures under `runs/*/data/raw/` should not be committed.
+- Put reusable data-processing or analysis scripts under `data/scripts/`.
+- Put work-in-progress data under `data/intermediate/`; never use intermediate data directly in deliverables.
 - Put model-ready cleaned data under the active run's `data/normalized/` when needed.
-- Put final report/deck visuals under the active run's `assets/charts/` or `assets/screenshots/`.
+- Put structured CSV/JSON extracts from `model.xlsx` under `data/normalized/model_extracts/`.
+- `assets/` is for final, curated assets only. Every file under `assets/` must be directly referenced by a deliverable (`report.md` or `deck.pptx`). Do not dump raw screenshots, intermediate charts, or scratch work here.
+- Put final charts under `assets/charts/`, diagrams under `assets/diagrams/`, and screenshots under `assets/screenshots/`.
 - Use `model.xlsx` for workbook/model artifacts by default in this comparison phase.
 - Use `deck.pptx` for presentation artifacts by default when requested.
 - Use `report.md` for detailed research discussion.

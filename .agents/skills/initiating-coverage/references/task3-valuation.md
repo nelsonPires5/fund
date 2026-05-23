@@ -19,12 +19,14 @@ This task requires the financial model from Task 2. Starting without it will res
 
 **IF TASK 2 IS NOT COMPLETE**: Stop immediately and inform the user that Task 2 (Financial Modeling) must be completed first. Do not attempt to proceed or create placeholder valuations.
 
-**Output**: Valuation Analysis (4-6 pages + Excel tabs)
+**Output**: Valuation Analysis (4-6 pages + model updates)
 - DCF analysis with sensitivity tables
 - Comparable companies analysis
 - Precedent transactions (if applicable)
 - Valuation football field
 - Price target and recommendation
+- **Updates `<run>/model.xlsx`** (valuation tabs) and **`<run>/outputs.json`** (valuation keys)
+- **Valuation extracts** under `<run>/data/normalized/model_extracts/`
 
 ---
 
@@ -658,10 +660,9 @@ Create the following deliverables:
 - Investment recommendation (1 page)
 - Key catalysts and risks (1 page)
 
-### 2. Excel Valuation Tabs
-**Add to Task 2's financial model file:** `[Company]_Financial_Model_[Date].xlsx`
+### 2. Update Model and Outputs
 
-**IMPORTANT**: Do NOT create a separate Excel file. Add these tabs to the existing financial model from Task 2. This keeps all quantitative data in one place.
+**Update `<run>/model.xlsx`** — add valuation tabs to the canonical model workbook from Task 2. Do NOT create a separate Excel file.
 
 **Tabs to add:**
 - DCF tab with full calculations
@@ -670,22 +671,47 @@ Create the following deliverables:
 - Precedent transactions tab (if applicable)
 - Valuation summary tab
 
+**Update `<run>/outputs.json`** — append stable valuation output objects to the `outputs[]` array. Each must include `key`, `sheet`, `cell`, `value`, and `unit`:
+```json
+{
+  "outputs": [
+    { "key": "valuation.price_target", "sheet": "Summary", "cell": "B6", "value": 0.0, "unit": "USD/share" },
+    { "key": "market.current_price", "sheet": "Summary", "cell": "B7", "value": 0.0, "unit": "USD/share" },
+    { "key": "valuation.upside_pct", "sheet": "Summary", "cell": "B8", "value": 0.0, "unit": "percent" },
+    { "key": "valuation.recommendation", "sheet": "Summary", "cell": "B5", "value": "BUY/HOLD/SELL", "unit": "text" },
+    { "key": "valuation.dcf_value", "sheet": "DCF", "cell": "B107", "value": 0.0, "unit": "USD/share" },
+    { "key": "valuation.comps_value", "sheet": "Comps", "cell": "B30", "value": 0.0, "unit": "USD/share" },
+    { "key": "assumption.wacc", "sheet": "DCF", "cell": "B97", "value": 0.0, "unit": "percent" },
+    { "key": "assumption.terminal_growth", "sheet": "DCF", "cell": "B98", "value": 0.0, "unit": "percent" }
+  ]
+}
+```
+
+### 3. Valuation Extracts
+Save clean CSVs under `<run>/data/normalized/model_extracts/`:
+- `dcf_sensitivity.csv` — WACC × terminal growth sensitivity matrix
+- `comps_table.csv` — peer companies with multiples and statistical summary
+- `valuation_summary.csv` — scenario-weighted valuation bridge
+
 ---
 
 ## Success Criteria
 
 A successful valuation analysis should:
-1. Use at least 2 methods (DCF + Comps minimum)
-2. Include comprehensive DCF sensitivity analysis (2-way tables)
-3. Include statistical summary in comps (max/75th/median/25th/min)
-4. Provide valuation range (low/base/high), not point estimate
-5. Document all key assumptions with clear rationale
-6. Perform sanity checks
-7. Arrive at defensible price target
-8. Provide clear buy/hold/sell recommendation
-9. Identify 3-5 key catalysts
-10. Identify 3-5 key risks
-11. Be auditable and transparent
+1. Update `<run>/model.xlsx` with valuation tabs
+2. Update `<run>/outputs.json` with valuation keys
+3. Save valuation extracts to `<run>/data/normalized/model_extracts/`
+4. Use at least 2 methods (DCF + Comps minimum)
+5. Include comprehensive DCF sensitivity analysis (2-way tables)
+6. Include statistical summary in comps (max/75th/median/25th/min)
+7. Provide valuation range (low/base/high), not point estimate
+8. Document all key assumptions with clear rationale
+9. Perform sanity checks
+10. Arrive at defensible price target
+11. Provide clear buy/hold/sell recommendation
+12. Identify 3-5 key catalysts
+13. Identify 3-5 key risks
+14. Be auditable and transparent
 
 ---
 

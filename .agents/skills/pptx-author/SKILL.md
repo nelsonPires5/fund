@@ -9,8 +9,21 @@ Use this skill when running **headless** (managed-agent / CMA mode) and you need
 
 ## Output contract
 
-- Write to `./out/<name>.pptx`. Create `./out/` if it does not exist.
+- For company/run workspaces, write to `<run>/deck.pptx`.
+- For standalone non-run tasks only, write to `./out/<name>.pptx` and create `./out/` if it does not exist.
 - Return the relative path in your final message so the orchestration layer can collect it.
+
+## Prerequisites
+
+Before building the deck, confirm these artifacts exist and are current:
+
+- `<run>/model.xlsx`
+- `<run>/outputs.json`
+- `<run>/data/normalized/model_extracts/`
+- Charts under `<run>/assets/charts/`
+- `report.md`
+
+Do not start deck creation until the model and charts are ready.
 
 ## How to build the deck
 
@@ -27,16 +40,16 @@ slide = prs.slides.add_slide(prs.slide_layouts[5])    # title-only
 slide.shapes.title.text = "Valuation Summary"
 # ... add tables / charts / text boxes ...
 
-prs.save("./out/pitch-<target>.pptx")
+prs.save("<run>/deck.pptx")  # or ./out/pitch-<target>.pptx for standalone non-run tasks
 ```
 
 ## Conventions (mirror the live-Office `pitch-deck` skill)
 
 - **One idea per slide.** Title states the takeaway; body supports it.
-- **Every number traces to the model.** If a figure comes from `./out/model.xlsx`, footnote the sheet and cell.
-- **Use run assets.** For company runs, source charts/images from `<run>/assets/charts/` or `<run>/assets/screenshots/`; do not embed raw captures directly from `<run>/data/raw/`.
+- **Every number traces to the model.** Every material figure must trace to a named key in `outputs.json` or a `data/normalized/model_extracts/` entry, not just a raw cell address. Footnote the output key and run id.
+- **Use run assets.** Source charts/images only from `<run>/assets/charts/` or `<run>/assets/screenshots/`; do not embed raw captures directly from `<run>/data/raw/`.
 - **Use the firm template** when one is mounted at `./templates/`; otherwise default layouts.
-- **Charts**: prefer embedding a PNG rendered from the model over native pptx charts when fidelity matters.
+- **Scripts.** Prefer run-specific scripts under `<run>/data/scripts/presentation/` for deck generation and asset prep.
 - **Initial coverage structure**: title, agenda, investment summary, company overview, business model, market/industry, competitive landscape/peers, financial trends, model/scenarios, valuation, thesis tracker/catalysts, risks, and final End/Q&A slide.
 - **Visual density**: include charts/images where they improve analysis; avoid all-text decks.
 - **No external sends.** This skill writes a file; it never emails or uploads.

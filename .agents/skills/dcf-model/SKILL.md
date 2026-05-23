@@ -78,7 +78,7 @@ This applies to every merged section header in the DCF (market data, scenario bl
 - Test formulas immediately after creation
 
 **Formula Recalculation:**
-- Run `python recalc.py model.xlsx 30` before delivery
+- Run `python recalc.py model.xlsx 30` before delivery. Use the bundled script at `scripts/recalc.py` from this skill, or copy it into `<run>/data/scripts/validation/recalc.py` for auditability.
 - Fix ALL errors until status is "success"
 - Zero formula errors required (#REF!, #DIV/0!, #VALUE!, etc.)
 
@@ -768,12 +768,29 @@ All Excel files created by this skill must follow xlsx skill requirements, inclu
 ## Quality Rubric
 
 Every DCF model must maximize for:
-1. **Realistic revenue and margin assumptions** based on historical performance
-2. **Appropriate cost of capital calculation** with proper CAPM methodology
-3. **Comprehensive sensitivity analysis** showing valuation ranges
-4. **Clear terminal value calculation** with supporting rationale
-5. **Professional model structure** enabling scenario analysis
-6. **Transparent documentation** of all key assumptions
+
+### Financial Modeling Quality
+1. **Realistic revenue and margin assumptions** based on historical performance and industry benchmarks — not aspirational targets
+2. **Appropriate cost of capital calculation** with proper CAPM methodology, current risk-free rate, and reasoned equity risk premium
+3. **Comprehensive sensitivity analysis** showing valuation ranges across WACC/g, growth/margin, and beta/risk-free dimensions — all 75+ cells formula-populated
+4. **Clear terminal value calculation** with supporting rationale; terminal value 50-70% of EV; terminal growth < risk-free rate
+5. **Professional model structure** enabling scenario analysis via case selector, consolidation columns, and clean formula references
+
+### Workbook Completeness
+6. **Full tab set** — Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks — populated, not placeholder
+7. **Summary tab is self-contained** — recommendation, target/current price, upside, bull/base/bear values, key metrics, trends, risk summary; a reader should understand the investment case without opening other sheets
+8. **Thesis Tracker ties to model KPIs** — each thesis pillar references a quantitative KPI cell in the model; catalyst calendar with dates; bull/base/bear trigger values; model/scenario impact column populated
+9. **Comps tab is actionable** — 5-8 relevant peers with operating metrics and valuation multiples; implied valuation range derived from comps, not just a list of tickers
+10. **Checks tab is functional** — all checks output TRUE/FALSE, not placeholder text; covers BS balance, CF tie, WACC cross-check, terminal value sanity, share count consistency
+
+### Formula and Color Discipline
+11. **Formulas over hardcodes (non-negotiable)** — every projection, margin, discount factor, PV, and sensitivity cell is a live Excel formula; the only hardcoded numbers are raw inputs, assumption drivers, and current market data
+12. **Semantic colors disciplined** — blue font for inputs, black for formulas, green for cross-sheet links; use the professional blue/grey palette for structure, with limited scenario accents allowed on presentation-facing sheets (green = bull/upside, red/pink = bear/downside, yellow = key editable assumption) when they improve readability
+13. **Cell comments on every hardcoded input** — format "Source: [System/Document], [Date], [Reference], [URL if applicable]" — added AS cells are created, never deferred
+
+### Downstream Readiness
+14. **outputs.json written after successful recalc** — maps stable keys to sheet/cell locations; includes scenario range, comps summary, and thesis summary; regenerated after every model change
+15. **Run-specific scripts saved under `data/scripts/model/` and `data/scripts/validation/`** — modular, not monolithic; provides full audit trail and reproducibility
 
 ## Input Requirements
 
@@ -813,7 +830,9 @@ A compact two-sheet DCF (`DCF`, `WACC`) is acceptable only when the user explici
 After creating or modifying the Excel model, **recalculate all formulas** using the recalc.py script from the xlsx skill:
 
 ```bash
-python recalc.py [path_to_excel_file] [timeout_seconds]
+python .agents/skills/dcf-model/scripts/recalc.py [path_to_excel_file] [timeout_seconds]
+# or, after copying into the run for auditability:
+python <run>/data/scripts/validation/recalc.py [path_to_excel_file] [timeout_seconds]
 ```
 
 Example:
@@ -864,15 +883,15 @@ The script will:
 - **Black text (RGB: 0,0,0)**: ALL formulas and calculations
 - **Green text (RGB: 0,128,0)**: Links to other sheets (WACC sheet references)
 
-**Layer 2: Fill Colors — Professional Blue/Grey Palette (Default unless user specifies otherwise)**
-- **Keep it minimal** — use only blues and greys for fills. Do NOT introduce greens, yellows, oranges, or multiple accent colors. A model with too many colors looks amateurish.
-- **Default fill palette:**
+**Layer 2: Fill Colors — Professional Structure Palette + Limited Scenario Accents**
+- **Keep it minimal** — use blues/greys for structural formatting. Add scenario accents only when they improve reader navigation.
+- **Default structure palette:**
   - **Section headers**: Dark blue (RGB: 31,78,121 / `#1F4E79`) background with white bold text
   - **Sub-headers/column headers**: Light blue (RGB: 217,225,242 / `#D9E1F2`) background with black bold text
   - **Input cells**: Light grey (RGB: 242,242,242 / `#F2F2F2`) background with blue font — or just white with blue font if you want maximum minimalism
   - **Calculated cells**: White background with black font
   - **Output/summary rows** (per-share value, EV, etc.): Medium blue (RGB: 189,215,238 / `#BDD7EE`) background with black bold font
-- **That's it — 3 blues + 1 grey + white.** Resist the urge to add more.
+- **Optional scenario accents for reader-facing sheets:** bull/upside = soft green, bear/downside = soft red/pink, key editable assumption = pale yellow. Use sparingly, mainly in Summary, Scenarios, Sensitivity, Comps, and Thesis Tracker.
 - User-provided templates or explicit color preferences ALWAYS override these defaults.
 
 **How the layers work together:**
@@ -1142,9 +1161,168 @@ This approach centralizes scenario logic, making the model easier to audit and m
 
 **File naming**: in this repo, write the primary model as `<run>/model.xlsx`.
 
-**Default repo tabs**: Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks.
+**Default repo tabs** (11 tabs for institutional-quality models):
 
-**Key features**: Case selector (1/2/3), consolidation column with INDEX/OFFSET formulas, color-coded cells, cell comments on all inputs, professional borders, formatted numbers/tables, named outputs, and thesis/catalyst tracking tied to model KPIs.
+1. **Summary** — investment recommendation, current price vs target price, upside/downside, bull/base/bear implied values, key valuation metrics (EV/EBITDA, P/E, FCF yield), revenue/EBIT/FCF trends, scenario snapshot, and key risk highlights. This is the first sheet anyone opens — make it self-contained.
+
+2. **Revenue Model** — product/segment/geography/channel revenue build where data supports it. Show unit economics (ASP, volume, subscribers, ARPU) alongside dollar projections when available.
+
+3. **Income Statement** — historical (3-5 years) and projected (5+ years) P&L with revenue, COGS, gross profit, OpEx (S&M, R&D, G&A), EBIT, interest, taxes, net income, EPS. All projections are live formulas referencing assumption blocks.
+
+4. **Balance Sheet** — historical and projected balance sheet with key line items (cash, AR, inventory, PP&E, goodwill, debt, payables, equity). Projections driven by revenue ratios and CapEx/depreciation schedules.
+
+5. **Cash Flow** — historical and projected cash flow statement with operating CF (net income + D&A + working capital changes), investing CF (CapEx, acquisitions), financing CF (debt issuance/repayment, dividends, buybacks), and free cash flow to firm.
+
+6. **DCF** — main valuation model with market data, scenario assumptions (Bear/Base/Bull blocks), historical & projected financials, 5-year FCF build, WACC discounting, terminal value, and equity bridge to implied share price.
+
+7. **Sensitivity** — three sensitivity tables (WACC vs Terminal Growth, Revenue Growth vs EBIT Margin, Beta vs Risk-Free Rate) fully populated with formulas. Each cell recalculates the full DCF. Base case centered with highlighted cell.
+
+8. **Comps** — peer operating metrics (revenue growth, gross/EBIT/FCF margins, ROIC, net debt/EBITDA) and valuation multiples (EV/Revenue, EV/EBITDA, P/E, P/B, FCF yield). Include company name, ticker, market cap, and last-updated date for each comp.
+
+9. **Thesis Tracker** — thesis pillars with supporting/hindering qualitative evidence, quantitative KPIs tied to model cells, current vs baseline vs trigger values, event/catalyst calendar with dates, and model/scenario impact column. Each thesis row links to a KPI cell in the model so changes propagate automatically.
+
+10. **DCF Assumptions** — explicit assumption register listing every material assumption, its base value, rationale/source, sensitivity range (low/high), and the model cells it drives. This is the single source of truth for all inputs — every blue cell on other sheets traces here.
+
+11. **Checks** — formula and cross-artifact integrity checks: BS balances (A = L + E), CF ties to cash, sum-of-parts agrees, share count consistency, WACC cross-check, terminal value sanity (50-70% of EV), and any user-defined validation rules. All checks output TRUE/FALSE or pass/fail.
+
+**Key features**: Case selector (1/2/3), consolidation column with INDEX/OFFSET formulas, semantic font colors (blue=input, black=formula, green=cross-sheet link), professional fill colors (blue/grey structure plus limited scenario accents where useful), cell comments on all inputs, professional borders around major sections, formatted numbers/tables, and named outputs in outputs.json for downstream consumers (reports, presentations, dashboards).
+
+**Semantic colors — two-layer system:**
+- **Font color (WHAT):** blue = hardcoded input, black = formula/calculation, green = cross-sheet or cross-file reference.
+- **Fill color (WHERE):** dark blue (#1F4E79) = section headers with white text, light blue (#D9E1F2) = sub-headers / column headers, light grey (#F2F2F2) = input cells, medium blue (#BDD7EE) = key outputs / base case cells, white = calculated cells.
+- **Scenario accents (limited):** soft green = bull/upside, soft red/pink = bear/downside, pale yellow = key editable assumption. Use sparingly and consistently.
+- **Together:** blue font on light grey fill = "I am an editable assumption"; black font on white = "I am a derived calculation"; green font on white = "I pull from another sheet."
+
+## Outputs JSON
+
+After recalc passes (status: "success"), write `<run>/outputs.json` mapping stable output keys to their sheet/cell locations. Also export workbook-derived tables to `<run>/data/normalized/model_extracts/` for downstream consumers (charts, reports, presentations, dashboards).
+
+### Schema
+
+Use the array shape below. This matches the repo's run-level `outputs.json` pattern and the Univer builder output shape.
+
+```json
+{
+  "workbook_id": "ticker-dcf-run-id",
+  "workbook_name": "Ticker DCF Model",
+  "model": "<run>/model.xlsx",
+  "generated_at": "<ISO timestamp>",
+  "recalc": { "status": "success", "errors": 0, "checked_at": "<ISO timestamp>" },
+  "outputs": [
+    { "key": "valuation.implied_share_price", "sheet": "DCF", "cell": "E85", "value": 142.50, "unit": "USD/share" },
+    { "key": "market.current_price", "sheet": "DCF", "cell": "E12", "value": 118.30, "unit": "USD/share" },
+    { "key": "valuation.upside_downside", "sheet": "DCF", "cell": "E86", "value": 0.205, "unit": "percent" },
+    { "key": "valuation.enterprise_value", "sheet": "DCF", "cell": "E81", "value": 125000, "unit": "USD millions" },
+    { "key": "valuation.equity_value", "sheet": "DCF", "cell": "E83", "value": 114000, "unit": "USD millions" },
+    { "key": "assumption.wacc", "sheet": "DCF", "cell": "E28", "value": 0.092, "unit": "percent" },
+    { "key": "assumption.terminal_growth", "sheet": "DCF", "cell": "E18", "value": 0.030, "unit": "percent" },
+    { "key": "valuation.terminal_value_pct_ev", "sheet": "DCF", "cell": "E78", "value": 0.62, "unit": "percent" },
+    { "key": "financial.revenue_ltm", "sheet": "DCF", "cell": "D29", "value": 48500, "unit": "USD millions" },
+    { "key": "financial.revenue_5yr_cagr", "sheet": "DCF", "cell": "E30", "value": 0.122, "unit": "percent" },
+    { "key": "financial.ebit_margin_terminal", "sheet": "DCF", "cell": "E46", "value": 0.52, "unit": "percent" },
+    { "key": "capital_structure.net_debt", "sheet": "DCF", "cell": "E16", "value": -8500, "unit": "USD millions" },
+    { "key": "capital_structure.shares_outstanding", "sheet": "DCF", "cell": "E14", "value": 800, "unit": "millions" }
+  ],
+  "scenarios": {
+    "bear":  { "implied_share_price": 98.00,  "implied_upside_pct": -0.172 },
+    "base":  { "implied_share_price": 142.50, "implied_upside_pct":  0.205 },
+    "bull":  { "implied_share_price": 195.00, "implied_upside_pct":  0.648 }
+  },
+  "comps": {
+    "peers": ["Peer A (TICKER)", "Peer B (TICKER)", "..."],
+    "implied_ev_ebitda_range": [12.5, 18.2],
+    "fwd_pe_range": [18.0, 28.5]
+  },
+  "thesis": {
+    "active_pillars": 4,
+    "key_catalysts_next_12m": ["Catalyst 1 (Q3 2026)", "Catalyst 2 (H2 2026)"],
+    "risk_flags": ["Risk 1", "Risk 2"]
+  }
+}
+```
+
+
+### Requirements
+
+- Write `outputs.json` ONLY after `recalc.py` returns status "success" with zero errors.
+- Every object in `outputs[]` MUST include `key`, `sheet`, `cell`, `value`, and `unit`; `sheet` + `cell` must resolve to an actual workbook cell. Do not fabricate values.
+- Values are workbook-derived — read them from the recalculated model, do not recompute in Python.
+- Include the `scenarios` block with bull/base/bear implied prices to give downstream a quick range.
+- Include `comps` and `thesis` summary blocks so reports and decks can reference peer multiples and thesis status without scraping the workbook.
+- Export supporting CSV/JSON tables under `<run>/data/normalized/model_extracts/` (e.g., `dcf_projection.csv`, `scenario_summary.csv`, `wacc_tgr_sensitivity.csv`, `comps_table.csv`, `kpi_tracker.csv`).
+- Regenerate `outputs.json` and model extracts after every model change that affects outputs.
+
+### Model Extract Schemas
+
+Use stable column names so chart/report/deck scripts do not break.
+
+`dcf_projection.csv`:
+- `year` (string, e.g., `2026E`)
+- `period_type` (`actual` or `estimate`)
+- `revenue_usd_m` (number)
+- `revenue_growth_pct` (number, decimal)
+- `gross_margin_pct` (number, decimal)
+- `ebit_margin_pct` (number, decimal)
+- `unlevered_fcf_usd_m` (number)
+- `fcf_margin_pct` (number, decimal)
+- `source_sheet`, `source_cell` (audit fields)
+
+`scenario_summary.csv`:
+- `scenario` (`bear`, `base`, `bull`)
+- `revenue_cagr_pct` (number, decimal)
+- `terminal_fcf_margin_pct` (number, decimal)
+- `wacc_pct` (number, decimal)
+- `terminal_growth_pct` (number, decimal)
+- `implied_share_price_usd` (number)
+- `upside_downside_pct` (number, decimal)
+- `source_sheet`, `source_cell`
+
+`wacc_tgr_sensitivity.csv`:
+- `wacc_pct` (number, decimal)
+- `terminal_growth_pct` (number, decimal)
+- `implied_share_price_usd` (number)
+- `is_base_case` (boolean)
+- `source_sheet`, `source_cell`
+
+`comps_table.csv`:
+- `company`, `ticker`
+- `market_cap_usd_m`, `enterprise_value_usd_m`
+- `revenue_growth_pct`, `gross_margin_pct`, `ebitda_margin_pct`, `fcf_margin_pct`
+- `ev_sales`, `ev_ebitda`, `pe`, `fcf_yield_pct`
+- `row_type` (`company`, `mean`, `median`, `p25`, `p75`, `min`, `max`, `implied_value`)
+- `source`, `as_of_date`
+
+`kpi_tracker.csv`:
+- `pillar`, `kpi`, `current_value`, `unit`
+- `bear_trigger`, `base_case`, `bull_trigger`
+- `model_impact`, `next_review_date`
+- `source_sheet`, `source_cell`
+
+## Run-Specific Scripts
+
+Scripts used to build, recalculate, or validate the model must be saved under the active run directory — not at the repo root and not as a single monolithic script. Use modular, purpose-specific scripts:
+
+### Directory Convention
+
+```
+<run>/data/scripts/
+  model/
+    build_model.py        # workbook construction (openpyxl)
+    populate_assumptions.py  # assumption blocks and scenario data
+    sensitivity_tables.py    # sensitivity grid formula generation
+  validation/
+    recalc.py             # LibreOffice recalculation and error scan
+    check_outputs.py      # validate outputs.json against model cells
+    cross_checks.py       # balance checks, terminal value sanity, formula audit
+```
+
+### Rules
+
+- **Modular, not monolithic.** One script per concern. `build_model.py` constructs the workbook; `sensitivity_tables.py` writes the sensitivity formulas; `recalc.py` handles recalculation and error scanning. Do NOT write a single `do_everything.py`.
+- **Idempotent.** Running the same script twice produces the same result.
+- **Save scripts before delivering.** Scripts are part of the audit trail. If you built the model with a Python script, save it. If you used Office JS in a live session, save the JS snippet that mirrors the key operations.
+- **Validation scripts run after `recalc.py` passes.** Only run `check_outputs.py` and `cross_checks.py` when the workbook has zero formula errors.
+- **Do not commit `data/` to git** unless explicitly asked — the `.gitignore` covers `runs/*/data/raw/` already. Model and validation scripts under `data/scripts/` are small and useful to keep under version control; add them unless the user opts out.
 
 ## Best Practices
 
@@ -1257,17 +1435,35 @@ This approach centralizes scenario logic, making the model easier to audit and m
 
 Before delivering DCF model:
 
-**Required:**
-- Run `python recalc.py model.xlsx 30` until status is "success" (zero formula errors)
-- Two sheets: DCF (with sensitivity at bottom), WACC
-- Font colors: Blue=inputs, Black=formulas, Green=sheet links
-- Cell comments on ALL hardcoded inputs
-- Sensitivity tables fully populated with formulas
-- Professional borders around major sections
+**Structure:**
+- [ ] Full tab set populated: Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks
+- [ ] Summary tab is self-contained with recommendation, target/current price, upside, bull/base/bear values, key metrics, and risk highlights
+- [ ] Thesis Tracker ties each pillar to a model KPI cell; catalyst calendar with dates; bull/base/bear trigger values populated
+- [ ] Comps tab has 5-8 peers with operating metrics and valuation multiples
+- [ ] Checks tab outputs TRUE/FALSE for all integrity checks
+
+**Formulas & Recalculation:**
+- [ ] Run `python recalc.py model.xlsx 30` until status is "success" (zero formula errors across ALL sheets)
+- [ ] All projections, margins, discount factors, PVs, and sensitivity cells are live formulas — no hardcoded computed values
+- [ ] Sensitivity tables fully populated with formulas (75+ cells across 3 tables, not approximations or placeholders)
+- [ ] Case selector functional; consolidation columns use INDEX/OFFSET, not nested IFs
+
+**Colors & Formatting:**
+- [ ] Font colors: Blue=inputs, Black=formulas, Green=cross-sheet links
+- [ ] Fill colors: professional blue/grey structure palette, with limited consistent scenario accents only where useful
+- [ ] Cell comments on ALL hardcoded inputs with source/date/reference
+- [ ] Professional borders around major sections
+- [ ] Number formats: years as text, percentages at 0.0%, currency in millions with units in headers, zeros as "-"
 
 **Validation:**
-- OpEx based on revenue (not gross profit)
-- Terminal value 50-70% of EV
-- Terminal growth < WACC
-- Tax rate 21-28%
-- File naming: `[Ticker]_DCF_Model_[Date].xlsx`
+- [ ] OpEx based on revenue (not gross profit)
+- [ ] Terminal value 50-70% of EV
+- [ ] Terminal growth < WACC and < risk-free rate
+- [ ] Tax rate 21-28%
+- [ ] Net debt sign correct (negative = net cash position)
+
+**Downstream Artifacts:**
+- [ ] `outputs.json` written to `<run>/outputs.json` with stable key → sheet/cell mappings, scenario range, comps summary, and thesis summary
+- [ ] Workbook-derived extracts written to `<run>/data/normalized/model_extracts/` for charts/reports/decks
+- [ ] Run-specific scripts saved under `<run>/data/scripts/model/` and `<run>/data/scripts/validation/` — modular, not monolithic
+- [ ] File naming: primary model is `<run>/model.xlsx`

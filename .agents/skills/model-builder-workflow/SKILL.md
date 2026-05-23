@@ -17,12 +17,26 @@ This workflow decides whether to build from scratch, update an existing model, r
 |---|---|
 | Build DCF from scratch | `dcf-model` |
 | Build or analyze peer multiples | `comps-analysis` |
-| Build full financial model | `3-statement-model` |
+| Build full financial model | `xlsx-author` with repo-standard model tabs |
 | Update existing model with new data | `model-update` |
-| Audit formulas and workbook integrity | `audit-xls` |
+| Audit formulas and workbook integrity | `xlsx-author` conventions + run validation scripts |
 | Create Excel workbook | `xlsx-author` |
 | Create presentation | `pptx-author` |
 | Full company report | `initiating-coverage` |
+
+## Strict Phase Order
+
+All model-builder runs must follow this sequence. Do not skip phases.
+
+| Phase | Artifacts | Pre-requisite |
+|---|---|---|
+| 1. Model / Valuation | `model.xlsx` | Historical data gathered |
+| 2. Outputs + Extracts | `outputs.json`, `data/normalized/model_extracts/` | Phase 1 complete |
+| 3. Charts / Diagrams | `assets/charts/`, `assets/diagrams/` | Phase 2 complete |
+| 4. Report | `report.md` | Phases 2-3 complete |
+| 5. Presentation (optional) | `deck.pptx` | Phases 2-4 complete |
+
+**Guardrail:** Do not produce `report.md` before `outputs.json` and charts are ready. Do not produce `deck.pptx` before `report.md` is complete. Every chart and diagram must trace to a value in `outputs.json`.
 
 ## Workflow
 
@@ -66,18 +80,19 @@ Use this routing:
 If building intrinsic valuation:
 1. `dcf-model`
 2. `comps-analysis`
-3. `audit-xls` if Excel is created
-4. `xlsx-author` if standalone workbook is needed
+3. `xlsx-author` conventions and run validation scripts if Excel is created
 
 If updating an existing model:
 1. `model-update`
-2. `audit-xls`
+2. Run validation scripts under `<run>/data/scripts/validation/`
 3. `thesis-tracker` if the update changes thesis or conviction
 
 If preparing an investment deliverable:
 1. `dcf-model`
 2. `comps-analysis`
-3. `initiating-coverage` or `pptx-author`
+3. Write `outputs.json` and `data/normalized/model_extracts/`
+4. Generate charts/diagrams from model outputs
+5. `initiating-coverage` for `report.md`, then `pptx-author` only if a deck is requested
 ```
 
 ### Step 4: Validate Model Logic
@@ -154,6 +169,7 @@ Recommend:
 
 ## Guardrails
 
+* Follow the strict phase order above. Do not produce `report.md` or `deck.pptx` before `outputs.json` and charts are ready.
 * Do not hardcode calculated model outputs.
 * Clearly distinguish sourced data from assumptions.
 * Do not present a price target without methodology.

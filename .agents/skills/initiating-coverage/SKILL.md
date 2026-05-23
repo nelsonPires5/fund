@@ -1,6 +1,6 @@
 ---
 name: initiating-coverage
-description: Create institutional-quality equity research initiation reports through a 5-task workflow. Tasks must be executed individually with verified prerequisites - (1) company research, (2) financial modeling, (3) valuation analysis, (4) chart generation, (5) final report assembly. Each task produces specific deliverables (markdown docs, Excel models, charts, or DOCX reports). Tasks 3-5 have dependencies on earlier tasks.
+description: Create institutional-quality equity research initiation reports through a 5-task workflow. Tasks must be executed individually with verified prerequisites - (1) company research, (2) financial modeling, (3) valuation analysis, (4) chart generation, (5) final report assembly. This repo is model-first: model.xlsx and outputs.json precede charts, report.md, and optional decks. Tasks 3-5 have dependencies on earlier tasks.
 ---
 
 # Initiating Coverage
@@ -15,22 +15,24 @@ This skill produces comprehensive first-time coverage reports following institut
 
 ## Repository Output Override
 
-In this investment research workspace, the default final artifacts are run-local files, not loose task folders:
+In this investment research workspace, the default final artifacts are run-local files, not loose task folders. The repo is **model-first**: `model.xlsx` and `outputs.json` are the quantitative source of truth. `report.md` is generated only after both exist.
 
 ```text
 sectors/<sector>/companies/<ticker>/runs/<yyyy-mm-dd>-initial-coverage/
   data/raw/              # raw source captures; ignored by git
   data/normalized/       # optional cleaned/model-ready data
+  data/scripts/          # model-build and validation scripts
+    model/               # scripts that build/populate model.xlsx
+    validation/          # scripts that cross-check/audit the model
   assets/charts/         # charts/images used in report and deck
   assets/screenshots/    # curated screenshots used in report and deck
-  model.xlsx
-  workbook.html
-  outputs.json
-  report.md
-  deck.pptx
+  model.xlsx             # quantitative source of truth (Task 2 builds, Task 3 updates)
+  outputs.json           # stable key-value model outputs (Task 2 builds, Task 3 updates)
+  report.md              # detailed written analysis (Task 5; only after model.xlsx + outputs.json)
+  deck.pptx              # optional presentation artifact
 ```
 
-For this repo, produce `report.md` as the written source of truth unless the user explicitly asks for DOCX. Report/deck visuals must be stored under `<run>/assets/` and referenced from the report/deck. Do not reference raw screenshots directly from `data/raw/` in final deliverables.
+`workbook.html` (Univer) is **not** a default artifact — produce it only when the user explicitly requests Univer/HTML output. Report/deck visuals must be stored under `<run>/assets/` and referenced from the report/deck. Do not reference raw screenshots directly from `data/raw/` in final deliverables.
 
 ---
 
@@ -72,7 +74,7 @@ When user requests:
    We're working on a seamless end-to-end workflow that will make this process
    more automated, but for now, we'll need to complete each task separately.
 
-   Would you like to start with Task 1 (Company Research)?
+   Would you like to start with Task 2 (Financial Modeling) so the workbook becomes the quantitative source of truth, or Task 1 (Company Research) if you only want to gather qualitative research first?
    ```
 
 3. **Never automatically assume which task to start** - always ask user to confirm.
@@ -104,11 +106,11 @@ Each task specifies exact deliverables. Do NOT create:
 **Why**: These extras waste context and are not part of the professional workflow.
 
 **What TO deliver**:
-- ✅ Task 1: Research document (.md) — **NOTHING ELSE**
-- ✅ Task 2: Financial model (.xlsx) — **NOTHING ELSE**
-- ✅ Task 3: Valuation analysis (.md) + Excel tabs added to Task 2 file — **NOTHING ELSE**
-- ✅ Task 4: Charts zip file (.zip) — **NOTHING ELSE**
-- ✅ Task 5: Final report (.docx) — **NOTHING ELSE**
+- ✅ Task 1: Research notes / document under the run folder or `data/normalized/` — **NOTHING ELSE**
+- ✅ Task 2: `<run>/model.xlsx`, `<run>/outputs.json`, model extracts, and saved model/validation scripts — **NOTHING ELSE**
+- ✅ Task 3: Updates to `<run>/model.xlsx`, `<run>/outputs.json`, valuation extracts, and optional `valuation_framework.md` — **NOTHING ELSE**
+- ✅ Task 4: Final used charts in `<run>/assets/charts/`, chart scripts in `<run>/data/scripts/charts/`, and chart index — **NOTHING ELSE**
+- ✅ Task 5: `<run>/report.md` by default (`.docx` only if explicitly requested) — **NOTHING ELSE**
 
 **If a deliverable is not listed above, DO NOT CREATE IT.**
 
@@ -120,11 +122,11 @@ Select which task to execute:
 
 | Task | Name | Prerequisites | Output |
 |------|------|--------------|--------|
-| **1** | Company Research | Company name/ticker | 6-8K word document |
-| **2** | Financial Modeling | 10-K or financials access | Excel model (6 tabs) |
-| **3** | Valuation Analysis | Financial model (Task 2) | Valuation + price target |
-| **4** | Chart Generation | Tasks 1, 2, 3 + external data | 25-35 PNG/JPG charts |
-| **5** | Report Assembly | ALL previous tasks (1-4) | 30-50 page DOCX report |
+| **1** | Company Research | Company name/ticker | Research notes / document |
+| **2** | Financial Modeling | Financial data access | `<run>/model.xlsx` + `outputs.json` + extracts |
+| **3** | Valuation Analysis | Task 2 model and outputs | Model/outputs valuation update + optional `valuation_framework.md` |
+| **4** | Chart Generation | Tasks 1-3 + outputs/extracts | Final PNG/JPG charts in `assets/charts/` |
+| **5** | Report Assembly | ALL previous tasks (1-4) | `<run>/report.md` by default |
 
 ---
 
@@ -150,7 +152,7 @@ Response: ❌ DO NOT start any task automatically
 User: "I want to complete all 5 tasks for Tesla"
 Response: ❌ DO NOT chain tasks together
          ✅ Explain one-at-a-time limitation (see template above)
-         ✅ Ask if they want to start with Task 1
+         ✅ Ask if they want to start with Task 2 (model-first default) or Task 1 (research first)
 ```
 
 ### Correct Usage Examples
@@ -265,8 +267,8 @@ Optional:
 4. **Step 2+**: Build projection model with repo-standard tabs
 5. Deliver Excel model
 
-**Output**: Excel Financial Model (.xlsx)
-- Repo-standard initial coverage tabs:
+**Output**: Run-local quantitative artifacts in `<run>/`:
+- **`<run>/model.xlsx`** — canonical financial model with repo-standard tabs:
   1. **Summary** - recommendation, price target, key metrics, trends, scenarios, and valuation bridge
   2. **Revenue Model** - Product breakdown (20-30 rows) + Geography breakdown (15-20 rows)
   3. **Income Statement** - Full P&L with 40-50 line items, historical (3-5 years) + projected (5 years)
@@ -278,10 +280,13 @@ Optional:
   9. **Thesis Tracker** - Thesis pillars, key events, KPIs, and scenario/model impact
   10. **DCF Assumptions** - Assumption register with rationale and sensitivity ranges
   11. **Checks** - Formula and cross-artifact checks
+- **`<run>/outputs.json`** — stable key-value outputs extracted from the model (revenue, EBITDA, EPS, FCF, key multiples, scenario outputs). Every material model output used by reports/presentations must have a stable key in this file.
+- **Model extracts** — clean machine-readable CSVs under `<run>/data/normalized/model_extracts/` for revenue build, P&L, cash flow, balance sheet, and key metrics.
+- **Build and validation scripts** — under `<run>/data/scripts/model/` (scripts that build/populate the model) and `<run>/data/scripts/validation/` (scripts that cross-check/audit model integrity).
 
-**File name**: `[Company]_Financial_Model_[Date].xlsx`
+**Canonical path**: `<run>/model.xlsx`
 
-**⚠️ DELIVER ONLY THIS 1 FILE. NO completion summaries, no extra documents.**
+**⚠️ DELIVER ONLY THESE ARTIFACTS. NO completion summaries, no extra documents.**
 
 **⚠️ DO NOT TAKE SHORTCUTS:**
 - ✅ If extracting financials: Extract ALL line items from 3 financial statements (3-5 years)
@@ -295,9 +300,11 @@ Optional:
 - ❌ Do not skip historical financials extraction if needed
 
 **Verification before proceeding to Task 3**:
-- [ ] Historical financials extracted (if needed) or provided
-- [ ] Excel file created and can be opened
+- [ ] `<run>/model.xlsx` created and opens cleanly
 - [ ] Model has repo-standard tabs (Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks)
+- [ ] `<run>/outputs.json` generated with stable keys for all material model outputs
+- [ ] Model extracts saved under `<run>/data/normalized/model_extracts/`
+- [ ] Build/validation scripts saved under `<run>/data/scripts/model/` and `<run>/data/scripts/validation/`
 - [ ] Historical data (3-5 years) incorporated
 - [ ] Projections complete (5 years forward)
 - [ ] Scenarios complete (Bull/Base/Bear)
@@ -341,7 +348,7 @@ Required from model:
 3. Execute valuation workflow
 4. Deliver valuation analysis
 
-**Output**: Valuation Analysis (4-6 pages + Excel tabs)
+**Output**: Valuation Analysis (4-6 pages + model updates)
 - DCF analysis with sensitivity tables
 - Comparable companies (5-10 peers with statistical summary)
 - Precedent transactions (if applicable)
@@ -352,14 +359,16 @@ Required from model:
 - Key catalysts (3-5)
 
 **Files**:
-- `[Company]_Valuation_Analysis_[Date].md` (written analysis document)
-- Excel tabs added to `[Company]_Financial_Model_[Date].xlsx` (from Task 2)
+- **Update `<run>/model.xlsx`** — add or update these tabs:
   - DCF tab with calculations
   - Sensitivity analysis tab
   - Comparable companies tab
   - Valuation summary tab
+- **Update `<run>/outputs.json`** — add valuation keys (price_target, recommendation, upside_pct, dcf_value, comps_value, football_field_range, catalysts, key_risks)
+- **Valuation extracts** — save clean CSVs of DCF, sensitivity, and comps data under `<run>/data/normalized/model_extracts/`
+- `[Company]_Valuation_Analysis_[Date].md` (written analysis document)
 
-**⚠️ DELIVER ONLY: 1 markdown file + 4 tabs added to existing Excel. NO completion summaries, no extra documents.**
+**⚠️ DELIVER ONLY: model/outputs.json updates + valuation extracts + 1 markdown file. NO completion summaries, no extra documents.**
 
 **⚠️ DO NOT TAKE SHORTCUTS:**
 - ✅ Complete full DCF analysis with sensitivity matrix (not simplified)
@@ -372,6 +381,9 @@ Required from model:
 - ❌ Do not create simplified DCF without sensitivity
 
 **Verification before proceeding to Task 4**:
+- [ ] `<run>/model.xlsx` updated with valuation tabs
+- [ ] `<run>/outputs.json` updated with valuation keys
+- [ ] Valuation extracts saved under `<run>/data/normalized/model_extracts/`
 - [ ] Price target determined
 - [ ] Valuation uses multiple methods (DCF + Comps minimum)
 - [ ] DCF sensitivity table complete
@@ -449,13 +461,13 @@ Required from External Sources:
 ```
 
 **Process**:
-1. Verify model and valuation outputs are accessible
+1. Verify `<run>/model.xlsx`, `<run>/outputs.json`, and `<run>/data/normalized/model_extracts/` are accessible
 2. Load detailed instructions from references/task4-chart-generation.md
-3. Execute chart generation workflow
-4. Package all charts into a zip file
-5. Deliver zip file
+3. Execute chart generation workflow using focused scripts under `<run>/data/scripts/charts/`
+4. Save only final, used visuals to `<run>/assets/charts/`; keep exploratory/unused outputs in `<run>/data/intermediate/`
+5. Deliver the chart folder and chart index; package a zip only if explicitly requested
 
-**Output**: 25-35 Professional Chart Files (PNG/JPG, 300 DPI) stored under `<run>/assets/charts/` and optionally packaged in a zip
+**Output**: 25-35 Professional Chart Files (PNG/JPG, 300 DPI) stored under `<run>/assets/charts/`, with generation scripts under `<run>/data/scripts/charts/`
 
 **4 MANDATORY Charts** (must be present) ⭐:
 - chart_03: Revenue by product (stacked area)
@@ -478,9 +490,9 @@ Required from External Sources:
 
 **File naming**: `chart_01_description.png`, `chart_02_description.png`, etc.
 
-**Deliverable**: `<run>/assets/charts/` containing all 25-35 chart files + `chart_index.md` (and, if requested, `[Company]_Charts_[Date].zip`)
+**Deliverable**: `<run>/assets/charts/` containing all 25-35 final chart files + `chart_index.md`; chart scripts saved under `<run>/data/scripts/charts/` (and, if explicitly requested, `[Company]_Charts_[Date].zip`).
 
-**⚠️ DELIVER ONLY THIS 1 ZIP FILE. NO completion summaries, no separate chart lists, no extra documents.**
+**⚠️ DELIVER ONLY THESE CHART ARTIFACTS. NO completion summaries, no extra documents.**
 
 **⚠️ DO NOT TAKE SHORTCUTS:**
 - ✅ Create ALL 25 required charts minimum (specific list provided in task4-chart-generation.md)
@@ -492,7 +504,7 @@ Required from External Sources:
 - ✅ Optional: Add 1-10 more charts to reach 26-35 total for greater visual density
 - ✅ Generate professional-quality charts at 300 DPI (not low-res placeholders)
 - ✅ Create unique, well-formatted charts for each visualization
-- ✅ Package all charts in zip file with chart index
+- ✅ Create a chart index; package charts in a zip only if explicitly requested
 - ❌ Do not create only 10-15 charts (minimum is 25)
 - ❌ Do not skip any of the 4 mandatory charts
 - ❌ Do not use low-quality/placeholder images
@@ -507,14 +519,14 @@ Required from External Sources:
 - [ ] All charts open and display correctly
 - [ ] Charts saved at 300 DPI (print quality)
 - [ ] Chart index created listing all files with categories
-- [ ] All charts packaged in zip file
+- [ ] Chart scripts saved under `<run>/data/scripts/charts/`; zip created only if explicitly requested
 - [ ] File naming follows convention: chart_##_description.png
 
 ---
 
 ## Task 5: Report Assembly
 
-**Purpose**: Write and assemble the comprehensive final DOCX report.
+**Purpose**: Write and assemble the comprehensive final initial-coverage report. The repo default is `<run>/report.md`; create DOCX only if explicitly requested.
 
 **Prerequisites**: ⚠️ Verify before starting
 - **Required**: Company research from Task 1
@@ -523,15 +535,19 @@ Required from External Sources:
   - Competitive analysis
   - Risk assessment
 - **Required**: Financial model from Task 2
-  - Excel workbook
+  - `<run>/model.xlsx` workbook
+  - `<run>/outputs.json` stable model outputs
   - All projections and scenarios
 - **Required**: Valuation analysis from Task 3
+  - `<run>/model.xlsx` with valuation tabs
+  - `<run>/outputs.json` with valuation keys
   - Price target and recommendation
   - DCF, comps, precedent transactions
   - All valuation data
 - **Required**: Chart files from Task 4
-  - Zip file containing all 25-35 PNG/JPG files
-  - Chart index included in zip
+  - Final chart files under `<run>/assets/charts/`
+  - Chart index included in `<run>/assets/charts/`
+  - Chart scripts under `<run>/data/scripts/charts/`
 
 **⚠️ CRITICAL: DO NOT START THIS TASK UNLESS ALL TASKS 1-4 ARE COMPLETE**
 
@@ -541,7 +557,7 @@ This is the final assembly task. It cannot be completed without all previous wor
 - Task 1: Company research document (6-8K words)
 - Task 2: Financial model with all 6 tabs
 - Task 3: Valuation analysis with price target and recommendation
-- Task 4: Charts zip file with 25-35 charts
+- Task 4: Final charts under `<run>/assets/charts/` with 25-35 charts and chart index
 
 Do not attempt to create placeholder content, substitute missing sections, or assemble an incomplete report. The report requires ALL inputs to be publication-ready.
 
@@ -567,8 +583,8 @@ Task 3 Verification:
 - [ ] DCF and comps complete?
 
 Task 4 Verification:
-- [ ] Chart zip file exists?
-- [ ] Can extract/access all 25-35 chart files from zip?
+- [ ] `<run>/assets/charts/` exists?
+- [ ] Can access all 25-35 final chart files?
 - [ ] All 4 mandatory charts present?
   - [ ] Revenue by product (stacked area)
   - [ ] Revenue by geography (stacked bar)
@@ -582,21 +598,19 @@ IF ANY VERIFICATION FAILS: Stop and complete missing task first.
 **Process**:
 1. **CRITICAL**: Verify ALL prerequisites before starting
 2. Load detailed instructions from references/task5-report-assembly.md
-3. Execute report assembly workflow using Claude's built-in skills:
-   - **Use DOCX skill** to create and manipulate the Word document
-   - **Use XLSX skill** to read Excel data from Task 2/3
-   - **Use Read tool** to read Task 1 and Task 3 markdown files
-   - Read Task 1 .md file → Convert to Word formatting → Insert charts inline
-   - Read Task 2 .xlsx file → Extract tables → Write quantitative analysis
-   - Read Task 3 .md file + Excel tabs → Copy/adapt valuation analysis
-   - Insert Task 4 .png chart files throughout using DOCX skill
-   - Create text-dense report with charts interspersed every 200-300 words
-4. Save and deliver final DOCX report
+3. Execute report assembly workflow:
+   - Read `<run>/outputs.json` and `<run>/data/normalized/model_extracts/` for model numbers
+   - Read `<run>/model.xlsx` only to verify or extract tables not already exported
+   - Read Task 1/Task 3 notes for qualitative context
+   - Embed Task 4 charts from `<run>/assets/charts/`
+   - Use Mermaid blocks for timelines, org charts, process/flywheel diagrams when useful
+   - Create a self-contained report with charts interspersed every 200-300 words
+4. Save and deliver `<run>/report.md` by default; create DOCX only if explicitly requested
 
 **Key Principles**:
-- Use Claude's DOCX and XLSX skills (NOT Python libraries)
-- Use actual file operations (read .md/.xlsx/.png files, write .docx file)
-- Good equity research reports are text-dense with lots of illustrating images (60-80% page coverage, 1+ chart per page)
+- Report numbers must trace to `outputs.json`, model extracts, or citations
+- Use actual file operations (read .md/.xlsx/.json/.csv/.png files, write report.md)
+- Good equity research reports are text-dense with lots of illustrating images (high visual density, 1+ chart per major section)
 
 **🔥 CRITICAL: GO ALL OUT ON THIS TASK**
 
@@ -604,7 +618,7 @@ IF ANY VERIFICATION FAILS: Stop and complete missing task first.
 
 - ✅ **Use full token budget** - This is the culmination of all previous work
 - ✅ **Write every section completely** - Do not summarize or abbreviate
-- ✅ **Hit ALL minimum requirements** - 30+ pages, 10,000+ words, 25+ charts, 12+ tables
+- ✅ **Hit ALL minimum requirements** - for `report.md`, 3,500-6,000+ words minimum with model-backed tables/charts; for DOCX if requested, 30+ pages / 10,000+ words
 - ✅ **Be thorough on projection assumptions** - 2,000-3,000 words with product-by-product detail
 - ✅ **Be comprehensive on scenarios** - 1,500-2,000 words with specific Bull/Base/Bear parameters
 - ✅ **Insert ALL charts from Task 4** - Not just a few, ALL 25-35 charts throughout
@@ -630,12 +644,12 @@ IF ANY VERIFICATION FAILS: Stop and complete missing task first.
 - **Format**: professional Markdown for this repo; professional DOCX only when explicitly requested
 
 **Structure**:
-- Page 1: Investment Summary (INITIATING COVERAGE format)
-- Pages 2-5: Investment thesis & risks
-- Pages 6-17: Company 101
-- Pages 18-30: Financial analysis & projections
-- Pages 31-40: Valuation analysis
-- Pages 41-50: Appendices
+- Investment Summary / INITIATING COVERAGE header
+- Investment thesis & risks
+- Company 101
+- Financial analysis & projections
+- Valuation analysis
+- Catalysts, risks, and appendices
 
 **File name**: `report.md` in the active run folder (or `[Company]_Initiation_Report_[Date].docx` if the user explicitly requested DOCX)
 
@@ -767,18 +781,26 @@ All outputs meet institutional standards from leading investment banks (JPMorgan
 
 Recommended structure during workflow:
 ```
-ProjectFolder/
-├── Task1_Research/
-│   └── [Company]_Research_Document.md
-├── Task2_Model/
-│   └── [Company]_Financial_Model.xlsx
-├── Task3_Valuation/
-│   └── [Company]_Valuation_Analysis.pdf
-├── Task4_Charts/
-│   ├── chart_01.png
-│   └── ... (25-35 files)
-└── Task5_Report/
-    └── [Company]_Initiation_Report.docx
+<run>/
+├── data/
+│   ├── raw/
+│   ├── normalized/
+│   │   └── model_extracts/
+│   ├── scripts/
+│   │   ├── model/
+│   │   ├── charts/
+│   │   ├── report/
+│   │   └── validation/
+│   └── intermediate/
+├── assets/
+│   ├── charts/
+│   ├── diagrams/
+│   └── screenshots/
+├── model.xlsx
+├── outputs.json
+├── valuation_framework.md        # optional support note
+├── report.md
+└── deck.pptx                     # optional if requested
 ```
 
 ### No End-to-End Execution
@@ -796,7 +818,7 @@ This skill does **NOT** support running all tasks automatically in sequence. Eac
 ## Success Criteria
 
 A successful initiation report workflow should:
-1. Complete all 5 tasks in order
+1. Complete model-first phases: model/outputs before charts, charts before report
 2. Pass all input verifications
 3. Meet all quality standards
 4. Produce all required deliverables

@@ -213,14 +213,14 @@ class DCFModelValidator:
 
             if terminal_value is not None and enterprise_value is not None and enterprise_value > 0:
                 proportion = terminal_value / enterprise_value
-                if proportion > 0.80:
+                if proportion > 0.70:
                     self.warnings.append(
-                        f"Terminal value is {proportion:.1%} of EV (typically should be 50-70%). "
+                        f"Terminal value is {proportion:.1%} of EV (target range is 50-70%). "
                         "Model may be over-reliant on terminal assumptions."
                     )
-                elif proportion < 0.40:
+                elif proportion < 0.50:
                     self.warnings.append(
-                        f"Terminal value is {proportion:.1%} of EV (typically should be 50-70%). "
+                        f"Terminal value is {proportion:.1%} of EV (target range is 50-70%). "
                         "Check if terminal assumptions are too conservative."
                     )
                 else:
@@ -255,7 +255,7 @@ def main():
         print("  - Formula errors (#REF!, #DIV/0!, etc.)")
         print("  - Terminal growth < WACC (critical)")
         print("  - WACC in reasonable range (5-20%)")
-        print("  - Terminal value proportion of EV (40-80%)")
+        print("  - Terminal value proportion of EV (50-70% target range)")
         print("\nReturns JSON with errors, warnings, and info")
         print("\nExample: python validate_dcf.py model.xlsx")
         print("Example: python validate_dcf.py model.xlsx results.json")
