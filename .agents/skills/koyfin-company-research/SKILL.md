@@ -67,7 +67,7 @@ Raw Koyfin screenshots are evidence, not final visuals. When a chart/table/scree
 
 1. Keep the original under `<run>/data/raw/koyfin/<tab-slug>/`.
 2. Create a cleaned chart or selected screenshot under `<run>/assets/charts/` or `<run>/assets/screenshots/`.
-3. Reference only the asset path from `report.md`, `deck.spec.json`, or `deck/index.html`.
+3. Reference only the asset path from `report.md`, `deck.spec.json`, or `deck.html`.
 4. Include the originating raw file/tab in `manifest.json` or the figure source line.
 
 ## Security Analysis tab map
