@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="slides-format" content="viewport">
+  <title>TSMC — Investment Committee Presentation | May 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #060d1a;
+      --color-bg-deep: #020812;
+      --color-surface: #0d1f3a;
+      --color-text: #e8f0fe;
+      --color-text-secondary: #a8c4e8;
+      --color-text-muted: #5c7aa0;
+      --color-accent-1: #3b9eff;
+      --color-accent-2: #00d4aa;
+      --color-accent-3: #c9a84c;
+      --color-glass-bg: rgba(59,158,255,0.05);
+      --color-glass-border: rgba(59,158,255,0.12);
+      --color-vignette: rgba(0,0,0,0.5);
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Manrope', sans-serif;
+    }
+  </style>
+  <style>
+    :root {
+      --color-bg: #060d1a;
+      --color-text: #e8f0fe;
+      --glow-color-rgb: 59,158,255;
+      --gold-rgb: 201,168,76;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { background: var(--color-bg); margin: 0; }
+    body { font-family: 'Manrope', sans-serif; color: var(--color-text); overflow: hidden; height: 100vh; width: 100vw; }
+    .deck { width: 100vw; height: 100vh; position: relative; }
+    .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: scale(0.95); transition: opacity 0.7s ease, transform 0.7s ease; pointer-events: none; overflow: hidden; }
+    .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+    .slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1140px; padding: clamp(1.5rem, 3.5vw, 3.5rem); }
+    .nav-controls { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; z-index: 100; background: rgba(6,13,26,0.85); backdrop-filter: blur(12px); padding: 8px 22px; border-radius: 40px; border: 1px solid rgba(59,158,255,0.15); }
+    .nav-btn { width: 36px; height: 36px; border: none; background: rgba(59,158,255,0.08); color: #3b9eff; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+    .nav-btn:hover { background: rgba(59,158,255,0.18); }
+    .slide-dots { display: flex; gap: 7px; }
+    .slide-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(59,158,255,0.2); cursor: pointer; transition: background 0.3s, transform 0.3s; }
+    .slide-dots .dot.active { background: #3b9eff; transform: scale(1.35); }
+    .slide-counter { font-size: 0.75rem; color: #5c7aa0; min-width: 36px; text-align: center; font-family: 'Manrope', sans-serif; }
+    .reveal { opacity: 0; transform: translateY(20px); }
+    .text-glow { text-shadow: 0 0 20px rgba(59,158,255,0.5), 0 0 40px rgba(59,158,255,0.2); }
+    .gold-glow { text-shadow: 0 0 20px rgba(201,168,76,0.6), 0 0 40px rgba(201,168,76,0.25); }
+    .stat-glow { text-shadow: 0 0 30px rgba(59,158,255,0.6), 0 0 60px rgba(59,158,255,0.25); animation: glow-pulse 3s ease-in-out infinite; }
+    @keyframes glow-pulse { 0%,100%{text-shadow:0 0 20px rgba(59,158,255,0.5),0 0 40px rgba(59,158,255,0.2)} 50%{text-shadow:0 0 35px rgba(59,158,255,0.85),0 0 65px rgba(59,158,255,0.35)} }
+    @keyframes float-slow { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(60px,-50px) scale(1.12)} 50%{transform:translate(-40px,40px) scale(0.9)} 75%{transform:translate(50px,20px) scale(1.08)} 100%{transform:translate(0,0) scale(1)} }
+    @keyframes float-drift { 0%{transform:translate(0,0) scale(1) rotate(0deg)} 33%{transform:translate(-50px,-60px) scale(1.15) rotate(3deg)} 66%{transform:translate(40px,30px) scale(0.88) rotate(-2deg)} 100%{transform:translate(0,0) scale(1) rotate(0deg)} }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+    .gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float-slow 12s ease-in-out infinite; }
+    .blob:nth-child(2) { animation: float-drift 16s ease-in-out infinite; }
+    .blob:nth-child(3) { animation: float-slow 20s ease-in-out infinite reverse; }
+    .blob:nth-child(4) { animation: float-drift 24s ease-in-out infinite reverse; }
+    .slide::before { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); background-repeat:repeat; background-size:256px 256px; opacity:0.03; mix-blend-mode:overlay; }
+    .slide::after { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background:radial-gradient(ellipse at center, transparent 50%, var(--color-vignette) 100%); }
+    .glass-card { background: rgba(59,158,255,0.05); backdrop-filter: blur(14px); border: 1px solid rgba(59,158,255,0.12); border-radius: 14px; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .glass-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(59,158,255,0.12); }
+    .gold-card { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.18); border-radius: 14px; transition: transform 0.25s ease; }
+    .gold-card:hover { transform: translateY(-4px); }
+    .accent-border-l { border-left: 3px solid #3b9eff; }
+    .gold-border-l { border-left: 3px solid #c9a84c; }
+    .red-border-l { border-left: 3px solid #ef4444; }
+    .green-border-l { border-left: 3px solid #22c55e; }
+    .badge { display: inline-flex; align-items: center; padding: 3px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .badge-buy { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+    .badge-hold { background: rgba(201,168,76,0.15); color: #c9a84c; border: 1px solid rgba(201,168,76,0.3); }
+    .badge-sell { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+    .badge-critical { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+    .badge-high { background: rgba(249,115,22,0.15); color: #f97316; border: 1px solid rgba(249,115,22,0.3); }
+    .badge-med { background: rgba(201,168,76,0.15); color: #c9a84c; border: 1px solid rgba(201,168,76,0.3); }
+    .badge-low { background: rgba(100,116,139,0.15); color: #64748b; border: 1px solid rgba(100,116,139,0.3); }
+    .divider-line { width: 60px; height: 2px; background: linear-gradient(90deg, #3b9eff, #00d4aa); border-radius: 2px; }
+    .bar-track { background: rgba(59,158,255,0.1); border-radius: 6px; height: 26px; width: 100%; position: relative; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, #3b9eff, #00d4aa); border-radius: 6px; width: 0%; transition: width 0.8s ease; }
+    .bar-fill-gold { background: linear-gradient(90deg, #c9a84c, #e8d5b5); }
+    .bar-fill-red { background: linear-gradient(90deg, #ef4444, #f97316); }
+    .kpi-pill { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; background: rgba(59,158,255,0.05); border: 1px solid rgba(59,158,255,0.1); border-radius: 8px; font-size: 0.78rem; }
+    table.fin-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    table.fin-table th { color: #5c7aa0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; padding: 6px 10px; text-align: right; border-bottom: 1px solid rgba(59,158,255,0.12); }
+    table.fin-table th:first-child { text-align: left; }
+    table.fin-table td { padding: 7px 10px; text-align: right; border-bottom: 1px solid rgba(59,158,255,0.06); color: #a8c4e8; }
+    table.fin-table td:first-child { text-align: left; color: #e8f0fe; font-weight: 500; }
+    table.fin-table tr.highlight td { color: #3b9eff; font-weight: 700; }
+    table.fin-table tr.gold td { color: #c9a84c; font-weight: 700; }
+    .risk-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(59,158,255,0.08); margin-bottom: 6px; }
+    .catalyst-item { display: flex; gap: 14px; padding: 10px 14px; border-radius: 10px; background: rgba(0,212,170,0.04); border: 1px solid rgba(0,212,170,0.1); margin-bottom: 6px; align-items: flex-start; }
+    .football-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.78rem; }
+    .football-label { width: 130px; color: #5c7aa0; font-weight: 600; text-align: right; flex-shrink: 0; }
+    .football-track { flex: 1; background: rgba(59,158,255,0.08); border-radius: 6px; height: 20px; position: relative; overflow: visible; }
+    .football-bar { height: 100%; border-radius: 6px; position: absolute; }
+    .football-marker { position: absolute; top: -5px; bottom: -5px; width: 2px; background: #c9a84c; }
+    .football-values { width: 140px; color: #a8c4e8; font-size: 0.72rem; flex-shrink: 0; }
+    .wacc-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 14px; border-bottom: 1px solid rgba(59,158,255,0.07); font-size: 0.8rem; }
+    .wacc-row:last-child { border-bottom: none; }
+    .section-tag { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #3b9eff; margin-bottom: 6px; display: block; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } }
+  </style>
+</head>
+<body>
+<div class="mouse-spotlight" style="position:fixed;inset:0;z-index:99;pointer-events:none;"></div>
+<div class="deck">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide active" data-slide="1">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:580px;height:580px;top:-140px;right:-120px;background:#1a4480;opacity:0.22;"></div>
+      <div class="blob" style="width:360px;height:360px;bottom:-100px;left:-80px;background:#003d2e;opacity:0.18;"></div>
+      <div class="blob" style="width:240px;height:240px;top:38%;left:12%;background:#5c3a00;opacity:0.14;"></div>
+      <div class="blob" style="width:200px;height:200px;bottom:20%;right:15%;background:#0d4a8a;opacity:0.12;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+      <div style="font-size:5.5rem;margin-bottom:1rem;animation:float 3.5s ease-in-out infinite;" class="reveal">🔬</div>
+      <div class="reveal" style="font-size:0.7rem;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:#3b9eff;margin-bottom:0.6rem;">Investment Committee — May 2026</div>
+      <h1 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,6.5vw,5.5rem);font-weight:700;background:linear-gradient(135deg,#3b9eff 0%,#00d4aa 45%,#c9a84c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em;margin-bottom:0.5rem;line-height:1.05;">Taiwan Semiconductor</h1>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2.2rem);font-weight:400;color:#a8c4e8;letter-spacing:0.04em;margin-bottom:1.4rem;font-style:italic;">Manufacturing Company (NYSE: TSM)</h2>
+      <div class="reveal" style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:1.4rem;flex-wrap:wrap;">
+        <span class="badge badge-hold" style="font-size:0.72rem;padding:5px 16px;">HOLD</span>
+        <span style="color:#5c7aa0;font-size:0.8rem;">Current Price: <strong style="color:#e8f0fe;">$399.80</strong></span>
+        <span style="color:#5c7aa0;font-size:0.8rem;">Price Target: <strong style="color:#c9a84c;">$425</strong></span>
+        <span style="color:#5c7aa0;font-size:0.8rem;">Upside: <strong style="color:#22c55e;">+6.3%</strong></span>
+      </div>
+      <p class="reveal" style="font-size:clamp(0.8rem,1.3vw,1rem);color:#5c7aa0;letter-spacing:0.12em;text-transform:uppercase;">Initiating Coverage · Semiconductor · Global Foundry Leader</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: AGENDA -->
+  <div class="slide" data-slide="2">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:400px;height:400px;top:-80px;right:-60px;background:#1a4480;opacity:0.1;"></div>
+      <div class="blob" style="width:280px;height:280px;bottom:-60px;left:-40px;background:#003d2e;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">Agenda</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.8vw,3rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">Today's Presentation</h2>
+      <div class="divider-line reveal" style="margin-bottom:1.6rem;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="glass-card reveal" style="padding:16px 20px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3b9eff,#00d4aa);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#060d1a;flex-shrink:0;">01</div>
+          <div><div style="font-weight:700;font-size:0.9rem;color:#e8f0fe;margin-bottom:3px;">Investment Summary</div><div style="font-size:0.75rem;color:#5c7aa0;">Rating, price target, thesis overview</div></div>
+        </div>
+        <div class="glass-card reveal" style="padding:16px 20px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3b9eff,#00d4aa);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#060d1a;flex-shrink:0;">02</div>
+          <div><div style="font-weight:700;font-size:0.9rem;color:#e8f0fe;margin-bottom:3px;">Business &amp; Competitive Moat</div><div style="font-size:0.75rem;color:#5c7aa0;">Platform model, market share, node leadership</div></div>
+        </div>
+        <div class="glass-card reveal" style="padding:16px 20px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3b9eff,#00d4aa);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#060d1a;flex-shrink:0;">03</div>
+          <div><div style="font-weight:700;font-size:0.9rem;color:#e8f0fe;margin-bottom:3px;">Financial Performance</div><div style="font-size:0.75rem;color:#5c7aa0;">Revenue, margins, returns, Q1 2026 results</div></div>
+        </div>
+        <div class="glass-card reveal" style="padding:16px 20px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3b9eff,#00d4aa);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#060d1a;flex-shrink:0;">04</div>
+          <div><div style="font-weight:700;font-size:0.9rem;color:#e8f0fe;margin-bottom:3px;">Thesis Tracker</div><div style="font-size:0.75rem;color:#5c7aa0;">3 pillars, risks, catalysts, KPIs</div></div>
+        </div>
+        <div class="glass-card reveal" style="padding:16px 20px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3b9eff,#00d4aa);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#060d1a;flex-shrink:0;">05</div>
+          <div><div style="font-weight:700;font-size:0.9rem;color:#e8f0fe;margin-bottom:3px;">Valuation &amp; DCF</div><div style="font-size:0.75rem;color:#5c7aa0;">WACC, DCF, comps, football field</div></div>
+        </div>
+        <div class="glass-card reveal" style="padding:16px 20px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3b9eff,#00d4aa);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#060d1a;flex-shrink:0;">06</div>
+          <div><div style="font-weight:700;font-size:0.9rem;color:#e8f0fe;margin-bottom:3px;">Risks &amp; Recommendation</div><div style="font-size:0.75rem;color:#5c7aa0;">Risk register, triggers, final view</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: INVESTMENT SUMMARY -->
+  <div class="slide" data-slide="3">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;top:-80px;right:-60px;background:#1a4480;opacity:0.1;"></div>
+      <div class="blob" style="width:300px;height:300px;bottom:-60px;left:-40px;background:#5c3a00;opacity:0.09;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">01 · Investment Summary</span>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:0.8rem;" class="reveal">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:700;color:#e8f0fe;margin:0;">HOLD — Price Target $425</h2>
+        <span class="badge badge-hold">+6.3% Upside</span>
+      </div>
+      <div class="divider-line reveal" style="margin-bottom:1rem;"></div>
+      <p class="reveal" style="font-size:0.88rem;color:#a8c4e8;line-height:1.6;margin-bottom:1rem;">TSMC is the irreplaceable backbone of global semiconductor supply chains, commanding ~70% pure-play foundry market share and >90% sub-3nm capacity. AI/HPC demand constitutes 61% of Q1 2026 revenue — the single most powerful secular growth driver in tech capex. At ~$400 the stock prices in a high-confidence base case, offering limited near-term upside absent N2 margin beats or incremental AI CapEx acceleration. Initiate at <strong style="color:#c9a84c;">HOLD</strong>; upgrade triggers identified.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;" class="reveal">
+        <div class="glass-card" style="padding:14px;text-align:center;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">FY2025 Revenue</div>
+          <div class="stat-glow" style="font-size:1.6rem;font-weight:800;color:#3b9eff;font-family:'Cormorant Garamond',serif;">$122B</div>
+          <div style="font-size:0.68rem;color:#22c55e;font-weight:600;">+35.9% YoY</div>
+        </div>
+        <div class="glass-card" style="padding:14px;text-align:center;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Gross Margin</div>
+          <div class="stat-glow" style="font-size:1.6rem;font-weight:800;color:#3b9eff;font-family:'Cormorant Garamond',serif;">59.9%</div>
+          <div style="font-size:0.68rem;color:#22c55e;font-weight:600;">+3.8 ppt YoY</div>
+        </div>
+        <div class="glass-card" style="padding:14px;text-align:center;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Net Margin</div>
+          <div class="stat-glow" style="font-size:1.6rem;font-weight:800;color:#3b9eff;font-family:'Cormorant Garamond',serif;">45%</div>
+          <div style="font-size:0.68rem;color:#22c55e;font-weight:600;">Record FY</div>
+        </div>
+        <div class="glass-card" style="padding:14px;text-align:center;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">FY2026E Rev</div>
+          <div class="stat-glow" style="font-size:1.6rem;font-weight:800;color:#c9a84c;font-family:'Cormorant Garamond',serif;">$160B</div>
+          <div style="font-size:0.68rem;color:#22c55e;font-weight:600;">~30%+ guided</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;" class="reveal">
+        <div class="glass-card accent-border-l" style="padding:12px 14px;">
+          <div style="font-size:0.68rem;color:#5c7aa0;font-weight:700;text-transform:uppercase;margin-bottom:4px;">Q1 2026 Beat</div>
+          <div style="font-size:0.82rem;color:#e8f0fe;">Revenue $35.9B, EPS $3.49 — beat by 5.4%. Q2 guided $39-40.2B (+9% QoQ).</div>
+        </div>
+        <div class="glass-card accent-border-l" style="padding:12px 14px;">
+          <div style="font-size:0.68rem;color:#5c7aa0;font-weight:700;text-transform:uppercase;margin-bottom:4px;">N2 Ramp</div>
+          <div style="font-size:0.82rem;color:#e8f0fe;">Volume production confirmed 4Q25. 100k wpm in 2026; larger ramp than N3.</div>
+        </div>
+        <div class="glass-card accent-border-l" style="padding:12px 14px;">
+          <div style="font-size:0.68rem;color:#5c7aa0;font-weight:700;text-transform:uppercase;margin-bottom:4px;">CapEx Surge</div>
+          <div style="font-size:0.82rem;color:#e8f0fe;">$52-56B 2026 budget. Arizona Fab 2 pulled forward to 2H 2027. 3-year elevated cycle.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: BUSINESS MODEL & PLATFORM -->
+  <div class="slide" data-slide="4">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:400px;height:400px;top:-80px;left:-60px;background:#003d2e;opacity:0.12;"></div>
+      <div class="blob" style="width:300px;height:300px;bottom:-60px;right:-40px;background:#1a4480;opacity:0.09;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">02 · Business &amp; Competitive Moat</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">The Open Foundry Platform</h2>
+      <div class="divider-line reveal" style="margin-bottom:1rem;"></div>
+      <div style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:16px;">
+        <div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" class="reveal">
+            <div class="glass-card" style="padding:13px 15px;">
+              <div style="font-size:1.5rem;margin-bottom:5px;">🏭</div>
+              <div style="font-weight:700;font-size:0.82rem;color:#e8f0fe;margin-bottom:3px;">Pure-Play Model</div>
+              <div style="font-size:0.73rem;color:#a8c4e8;">No captive chip design — TSMC never competes with customers. Trust moat is irreplaceable.</div>
+            </div>
+            <div class="glass-card" style="padding:13px 15px;">
+              <div style="font-size:1.5rem;margin-bottom:5px;">⚡</div>
+              <div style="font-weight:700;font-size:0.82rem;color:#e8f0fe;margin-bottom:3px;">Process Leadership</div>
+              <div style="font-size:0.73rem;color:#a8c4e8;">2nm GAA in production since 4Q25. N2P &amp; A16 on track for 2H 2026. Sole HVM at sub-3nm.</div>
+            </div>
+            <div class="glass-card" style="padding:13px 15px;">
+              <div style="font-size:1.5rem;margin-bottom:5px;">🌐</div>
+              <div style="font-weight:700;font-size:0.82rem;color:#e8f0fe;margin-bottom:3px;">Global Scale</div>
+              <div style="font-size:0.73rem;color:#a8c4e8;">Fabs in Taiwan, Arizona (Fab 21 &amp; 22), Japan, Germany. $52-56B CapEx in 2026 alone.</div>
+            </div>
+            <div class="glass-card" style="padding:13px 15px;">
+              <div style="font-size:1.5rem;margin-bottom:5px;">🤝</div>
+              <div style="font-weight:700;font-size:0.82rem;color:#e8f0fe;margin-bottom:3px;">Anchor Customers</div>
+              <div style="font-size:0.73rem;color:#a8c4e8;">Apple, NVIDIA, AMD, Qualcomm, Broadcom, Intel. >5 years avg. design-to-volume cycle.</div>
+            </div>
+          </div>
+          <div class="glass-card reveal" style="padding:13px 15px;margin-top:8px;">
+            <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Revenue Mix — Q1 2026</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:#3b9eff;"></div><span style="font-size:0.73rem;color:#a8c4e8;">HPC/AI <strong style="color:#3b9eff;">61%</strong></span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:#00d4aa;"></div><span style="font-size:0.73rem;color:#a8c4e8;">Smartphone <strong style="color:#00d4aa;">26%</strong></span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:#c9a84c;"></div><span style="font-size:0.73rem;color:#a8c4e8;">IoT <strong style="color:#c9a84c;">6%</strong></span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:#7c6cd0;"></div><span style="font-size:0.73rem;color:#a8c4e8;">Auto <strong style="color:#7c6cd0;">4%</strong></span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:#5c7aa0;"></div><span style="font-size:0.73rem;color:#a8c4e8;">Other <strong style="color:#5c7aa0;">3%</strong></span></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="reveal" style="margin-bottom:8px;">
+            <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Foundry Market Share (2026E)</div>
+            <div style="margin-bottom:6px;">
+              <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#a8c4e8;margin-bottom:3px;"><span>TSMC</span><strong style="color:#3b9eff;">~72%</strong></div>
+              <div class="bar-track"><div class="bar-fill" data-width="72"></div></div>
+            </div>
+            <div style="margin-bottom:6px;">
+              <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#a8c4e8;margin-bottom:3px;"><span>Samsung Foundry</span><strong style="color:#a8c4e8;">~13%</strong></div>
+              <div class="bar-track"><div class="bar-fill" data-width="13" style="background:linear-gradient(90deg,#5c7aa0,#7c9abc);"></div></div>
+            </div>
+            <div style="margin-bottom:6px;">
+              <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#a8c4e8;margin-bottom:3px;"><span>SMIC</span><strong style="color:#a8c4e8;">~6%</strong></div>
+              <div class="bar-track"><div class="bar-fill" data-width="6" style="background:linear-gradient(90deg,#4a6080,#6080a0);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#a8c4e8;margin-bottom:3px;"><span>Intel Foundry + Other</span><strong style="color:#a8c4e8;">~9%</strong></div>
+              <div class="bar-track"><div class="bar-fill" data-width="9" style="background:linear-gradient(90deg,#3a5070,#506080);"></div></div>
+            </div>
+          </div>
+          <div class="glass-card reveal" style="padding:13px;margin-top:8px;">
+            <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;margin-bottom:7px;">Node Revenue Mix — Q4 2025</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:8px;font-size:0.73rem;"><span style="width:26px;height:10px;border-radius:2px;background:linear-gradient(90deg,#3b9eff,#00d4aa);display:inline-block;"></span><span style="color:#a8c4e8;">3nm</span><strong style="color:#3b9eff;margin-left:auto;">28%</strong></div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:0.73rem;"><span style="width:26px;height:10px;border-radius:2px;background:linear-gradient(90deg,#00d4aa,#3b9eff);display:inline-block;"></span><span style="color:#a8c4e8;">5nm</span><strong style="color:#00d4aa;margin-left:auto;">35%</strong></div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:0.73rem;"><span style="width:26px;height:10px;border-radius:2px;background:linear-gradient(90deg,#c9a84c,#e8d5b5);display:inline-block;"></span><span style="color:#a8c4e8;">7nm</span><strong style="color:#c9a84c;margin-left:auto;">14%</strong></div>
+              <div style="font-size:0.72rem;color:#22c55e;font-weight:700;padding-top:4px;border-top:1px solid rgba(59,158,255,0.1);">≥7nm advanced nodes: <strong>77%</strong> of revenue</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: FINANCIALS -->
+  <div class="slide" data-slide="5">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:380px;height:380px;top:-80px;right:-60px;background:#1a4480;opacity:0.1;"></div>
+      <div class="blob" style="width:260px;height:260px;bottom:-50px;left:-40px;background:#003d2e;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">03 · Financial Performance</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.2vw,2.4rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">Record Revenue &amp; Expanding Margins</h2>
+      <div class="divider-line reveal" style="margin-bottom:0.9rem;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="reveal">
+          <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Annual Revenue ($B) &amp; Gross Margin (%)</div>
+          <div class="glass-card" style="padding:12px 14px;">
+            <table class="fin-table">
+              <thead><tr><th>FY</th><th>Revenue</th><th>Gr. Mgn</th><th>Net Mgn</th><th>EPS ADR</th></tr></thead>
+              <tbody>
+                <tr><td>2021</td><td>$56.8B</td><td>51.6%</td><td>37.9%</td><td>$4.81</td></tr>
+                <tr><td>2022</td><td>$75.9B</td><td>59.6%</td><td>44.9%</td><td>$6.54</td></tr>
+                <tr><td>2023</td><td>$69.3B</td><td>54.4%</td><td>40.0%</td><td>$5.18</td></tr>
+                <tr class="highlight"><td>2024</td><td>$89.9B</td><td>56.1%</td><td>40.7%</td><td>$7.02</td></tr>
+                <tr class="gold"><td>2025A</td><td>$122.0B</td><td>59.9%</td><td>45.0%</td><td>$10.67</td></tr>
+                <tr class="highlight"><td>2026E</td><td>~$159B</td><td>~66%</td><td>~48%</td><td>~$14.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="glass-card accent-border-l reveal" style="padding:10px 14px;margin-top:8px;">
+            <div style="font-size:0.72rem;color:#a8c4e8;"><strong style="color:#3b9eff;">Q1 2026:</strong> Revenue $35.9B (+40.6% YoY), EPS $3.49 (+64.6% YoY), Gross Margin ~64%. Beat consensus on both lines.</div>
+          </div>
+        </div>
+        <div>
+          <div class="reveal" style="margin-bottom:8px;">
+            <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Key Return Metrics</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+              <div class="glass-card" style="padding:11px;text-align:center;">
+                <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">ROIC</div>
+                <div style="font-size:1.4rem;font-weight:800;color:#22c55e;font-family:'Cormorant Garamond',serif;">43.8%</div>
+                <div style="font-size:0.66rem;color:#5c7aa0;">WACC Spread 33.6%</div>
+              </div>
+              <div class="glass-card" style="padding:11px;text-align:center;">
+                <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">ROE</div>
+                <div style="font-size:1.4rem;font-weight:800;color:#3b9eff;font-family:'Cormorant Garamond',serif;">35.2%</div>
+                <div style="font-size:0.66rem;color:#5c7aa0;">Q4 2025: 38.8%</div>
+              </div>
+              <div class="glass-card" style="padding:11px;text-align:center;">
+                <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">FCF Margin</div>
+                <div style="font-size:1.4rem;font-weight:800;color:#00d4aa;font-family:'Cormorant Garamond',serif;">~18%</div>
+                <div style="font-size:0.66rem;color:#5c7aa0;">Post $40.9B CapEx</div>
+              </div>
+              <div class="glass-card" style="padding:11px;text-align:center;">
+                <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">5Y Rev CAGR</div>
+                <div style="font-size:1.4rem;font-weight:800;color:#c9a84c;font-family:'Cormorant Garamond',serif;">22.5%</div>
+                <div style="font-size:0.66rem;color:#5c7aa0;">2020–2025</div>
+              </div>
+            </div>
+          </div>
+          <div class="glass-card reveal" style="padding:11px 14px;">
+            <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Balance Sheet Highlights</div>
+            <div style="font-size:0.76rem;color:#a8c4e8;display:flex;flex-direction:column;gap:4px;">
+              <div class="kpi-pill"><span>Net Cash Position</span><strong style="color:#22c55e;">+$30B+</strong></div>
+              <div class="kpi-pill"><span>CapEx / Revenue 2026E</span><strong style="color:#c9a84c;">~33%</strong></div>
+              <div class="kpi-pill"><span>D&amp;A / Revenue</span><strong style="color:#a8c4e8;">~15.5%</strong></div>
+              <div class="kpi-pill"><span>Net Debt / EBITDA</span><strong style="color:#22c55e;">Negative (net cash)</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: THESIS TRACKER — 3 PILLARS -->
+  <div class="slide" data-slide="6">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;top:-80px;right:-50px;background:#003d2e;opacity:0.12;"></div>
+      <div class="blob" style="width:280px;height:280px;bottom:-60px;left:-40px;background:#5c3a00;opacity:0.09;"></div>
+    </div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+      <span class="section-tag reveal">04 · Thesis Tracker</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.2vw,2.4rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">Three Investment Thesis Pillars</h2>
+      <div class="divider-line reveal" style="margin-bottom:1rem;"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;" class="reveal">
+        <div class="glass-card" style="padding:18px 16px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#3b9eff,#00d4aa);"></div>
+          <div style="font-size:1.8rem;margin-bottom:8px;">🧠</div>
+          <div style="font-weight:800;font-size:0.82rem;color:#3b9eff;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Pillar I — AI Indispensability</div>
+          <div style="font-size:0.76rem;color:#a8c4e8;line-height:1.55;margin-bottom:10px;">TSMC is the sole volume manufacturer of AI training and inference silicon at leading-edge nodes. No credible alternative for N3, N2, or A16.</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;gap:7px;align-items:center;font-size:0.73rem;"><span style="color:#22c55e;">✓</span><span style="color:#a8c4e8;">HPC/AI = 61% of Q1 revenue</span></div>
+            <div style="display:flex;gap:7px;align-items:center;font-size:0.73rem;"><span style="color:#22c55e;">✓</span><span style="color:#a8c4e8;">NVIDIA, AMD, Apple on N2</span></div>
+            <div style="display:flex;gap:7px;align-items:center;font-size:0.73rem;"><span style="color:#22c55e;">✓</span><span style="color:#a8c4e8;">HPC QoQ +20% in Q1 2026</span></div>
+          </div>
+          <div style="margin-top:10px;padding:6px 10px;background:rgba(34,197,94,0.08);border-radius:6px;font-size:0.68rem;color:#22c55e;font-weight:700;">STATUS: ✅ ON TRACK</div>
+        </div>
+        <div class="glass-card" style="padding:18px 16px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8d5b5);"></div>
+          <div style="font-size:1.8rem;margin-bottom:8px;">⚗️</div>
+          <div style="font-weight:800;font-size:0.82rem;color:#c9a84c;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Pillar II — Process Supremacy</div>
+          <div style="font-size:0.76rem;color:#a8c4e8;line-height:1.55;margin-bottom:10px;">2nm GAA nanosheet in HVM, 1-2 nodes ahead of nearest competitor. N2P and A16 backside power supply extend lead through 2027+.</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;gap:7px;align-items:center;font-size:0.73rem;"><span style="color:#22c55e;">✓</span><span style="color:#a8c4e8;">N2 in volume since 4Q25</span></div>
+            <div style="display:flex;gap:7px;align-items:center;font-size:0.73rem;"><span style="color:#22c55e;">✓</span><span style="color:#a8c4e8;">100k wpm N2 by year-end</span></div>
+            <div style="display:flex;gap:7px;align-items:center;font-size:0.73rem;"><span style="color:#c9a84c;">⚠</span><span style="color:#a8c4e8;">A16 ramp visibility limited</span></div>
+          </div>
+          <div style="margin-top:10px;padding:6px 10px;background:rgba(201,168,76,0.08);border-radius:6px;font-size:0.68rem;color:#c9a84c;font-weight:700;">STATUS: ✅ ON TRACK / WATCH A16</div>
+        </div>
+        <div class="glass-card" style="padding:18px 16px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c6cd0,#3b9eff);"></div>
+          <div style="font-size:1.8rem;margin-bottom:8px;">🌎</div>
+          <div style="font-weight:800;font-size:0.82rem;color:#7c6cd0;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Pillar III — Geopolitical Resilience</div>
+          <div style="font-size:0.76rem;color:#a8c4e8;line-height:1.55;margin-bottom:10px;">Arizona, Japan, Europe fabs diversify geopolitical risk. US CHIPS Act subsidies and political will to support domestic production.</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;gap:7px;align-items:center;font-size:0.73rem;"><span style="color:#22c55e;">✓</span><span style="color:#a8c4e8;">Arizona Fab 21 in HVM</span></div>
+            <div style="display:flex;gap:7px;align-items:center;font-size:0.73rem;"><span style="color:#22c55e;">✓</span><span style="color:#a8c4e8;">Fab 22 pulled fwd to 2H27</span></div>
+            <div style="display:flex;gap:7px;align-items:center;font-size:0.73rem;"><span style="color:#c9a84c;">⚠</span><span style="color:#a8c4e8;">Taiwan Strait risk remains</span></div>
+          </div>
+          <div style="margin-top:10px;padding:6px 10px;background:rgba(124,108,208,0.08);border-radius:6px;font-size:0.68rem;color:#7c6cd0;font-weight:700;">STATUS: ⚠ WATCH — STRUCTURAL RISK</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: CATALYSTS & KPIs -->
+  <div class="slide" data-slide="7">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:380px;height:380px;top:-60px;right:-50px;background:#1a4480;opacity:0.1;"></div>
+      <div class="blob" style="width:260px;height:260px;bottom:-50px;left:-30px;background:#003d2e;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">04 · Thesis Tracker</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.2vw,2.4rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">Catalysts &amp; KPI Dashboard</h2>
+      <div class="divider-line reveal" style="margin-bottom:1rem;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;" class="reveal">Near &amp; Medium Term Catalysts</div>
+          <div class="catalyst-item reveal">
+            <div style="font-size:0.65rem;font-weight:800;color:#00d4aa;white-space:nowrap;min-width:52px;padding-top:1px;">0-3 MO</div>
+            <div><strong style="font-size:0.78rem;color:#e8f0fe;">Q2 2026 Earnings (July)</strong><div style="font-size:0.72rem;color:#a8c4e8;">Guided $39-40.2B. Watch gross margin guidance vs. N2 ramp dilution.</div></div>
+          </div>
+          <div class="catalyst-item reveal">
+            <div style="font-size:0.65rem;font-weight:800;color:#00d4aa;white-space:nowrap;min-width:52px;padding-top:1px;">3-6 MO</div>
+            <div><strong style="font-size:0.78rem;color:#e8f0fe;">N2P Volume Ramp (2H 2026)</strong><div style="font-size:0.72rem;color:#a8c4e8;">Any pull-forward announcement would be a material upside catalyst for ASP.</div></div>
+          </div>
+          <div class="catalyst-item reveal">
+            <div style="font-size:0.65rem;font-weight:800;color:#c9a84c;white-space:nowrap;min-width:52px;padding-top:1px;">6-12 MO</div>
+            <div><strong style="font-size:0.78rem;color:#e8f0fe;">Arizona Fab 22 Mass Production</strong><div style="font-size:0.72rem;color:#a8c4e8;">2H 2027 target pulled fwd. Positive for US customer demand and tariff risk mitigation.</div></div>
+          </div>
+          <div class="catalyst-item reveal">
+            <div style="font-size:0.65rem;font-weight:800;color:#c9a84c;white-space:nowrap;min-width:52px;padding-top:1px;">12-18 MO</div>
+            <div><strong style="font-size:0.78rem;color:#e8f0fe;">A16 Backside Power — HPC Ramp</strong><div style="font-size:0.72rem;color:#a8c4e8;">Sole technology for complex HPC AI chips; ASP premium expected +15-25% vs. N2.</div></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;" class="reveal">10 KPI Watch List</div>
+          <div class="reveal" style="display:flex;flex-direction:column;gap:5px;">
+            <div class="kpi-pill"><span style="color:#a8c4e8;">HPC/AI Revenue Mix</span><span style="color:#3b9eff;font-weight:700;">61% → Target >65%</span></div>
+            <div class="kpi-pill"><span style="color:#a8c4e8;">Gross Margin</span><span style="color:#c9a84c;font-weight:700;">59.9% → Target >67%</span></div>
+            <div class="kpi-pill"><span style="color:#a8c4e8;">N2 Wafer Output</span><span style="color:#3b9eff;font-weight:700;">40k → 100k wpm</span></div>
+            <div class="kpi-pill"><span style="color:#a8c4e8;">Revenue Growth (USD)</span><span style="color:#22c55e;font-weight:700;">>30% FY2026E</span></div>
+            <div class="kpi-pill"><span style="color:#a8c4e8;">Advanced Node Mix</span><span style="color:#3b9eff;font-weight:700;">77% → Target >80%</span></div>
+            <div class="kpi-pill"><span style="color:#a8c4e8;">CapEx Execution</span><span style="color:#c9a84c;font-weight:700;">$52-56B in 2026</span></div>
+            <div class="kpi-pill"><span style="color:#a8c4e8;">Arizona Yield Parity</span><span style="color:#22c55e;font-weight:700;">Tracking vs. Taiwan</span></div>
+            <div class="kpi-pill"><span style="color:#a8c4e8;">Foundry Market Share</span><span style="color:#3b9eff;font-weight:700;">72% → Hold >70%</span></div>
+            <div class="kpi-pill"><span style="color:#a8c4e8;">Operating Margin</span><span style="color:#3b9eff;font-weight:700;">Q2E: 54-56% guided</span></div>
+            <div class="kpi-pill"><span style="color:#a8c4e8;">NTD/USD Exchange Rate</span><span style="color:#c9a84c;font-weight:700;">~32.5 base; watch</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: RISK REGISTER -->
+  <div class="slide" data-slide="8">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:400px;height:400px;top:-80px;right:-60px;background:#4a0a0a;opacity:0.12;"></div>
+      <div class="blob" style="width:280px;height:280px;bottom:-60px;left:-40px;background:#1a4480;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">04 · Thesis Tracker — Risk Register</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.2vw,2.4rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">Key Risks — Ranked by Severity × Probability</h2>
+      <div class="divider-line reveal" style="margin-bottom:0.9rem;"></div>
+      <div style="display:flex;flex-direction:column;gap:7px;" class="reveal">
+        <div class="risk-row">
+          <span class="badge badge-critical" style="min-width:68px;justify-content:center;">CRITICAL</span>
+          <div style="flex:1;"><strong style="font-size:0.82rem;color:#e8f0fe;">Taiwan Strait Conflict / Coercive Action</strong><div style="font-size:0.73rem;color:#a8c4e8;margin-top:2px;">Tail risk but existential if realized. Mitigant: geographic fab diversification (Arizona, Japan); government intervention incentive.</div></div>
+        </div>
+        <div class="risk-row">
+          <span class="badge badge-high" style="min-width:68px;justify-content:center;">HIGH</span>
+          <div style="flex:1;"><strong style="font-size:0.82rem;color:#e8f0fe;">AI CapEx Cycle Reversal</strong><div style="font-size:0.73rem;color:#a8c4e8;margin-top:2px;">Hyperscaler capex pullback would hit HPC revenue (61% mix). Mitigant: long-lead order commitments, CoWoS backlog.</div></div>
+        </div>
+        <div class="risk-row">
+          <span class="badge badge-high" style="min-width:68px;justify-content:center;">HIGH</span>
+          <div style="flex:1;"><strong style="font-size:0.82rem;color:#e8f0fe;">US Export Control Tightening</strong><div style="font-size:0.73rem;color:#a8c4e8;margin-top:2px;">BIS restrictions on advanced chips to China. 2025 China revenue ~12%. Tariff uncertainty adds near-term volatility.</div></div>
+        </div>
+        <div class="risk-row">
+          <span class="badge badge-med" style="min-width:68px;justify-content:center;">MEDIUM</span>
+          <div style="flex:1;"><strong style="font-size:0.82rem;color:#e8f0fe;">N2 Margin Dilution — Yield Ramp</strong><div style="font-size:0.73rem;color:#a8c4e8;margin-top:2px;">New node ramps historically compress gross margins 2-4 ppt. N2 GAA is more complex than N3 FinFET. Monitored via QoQ gross margin trend.</div></div>
+        </div>
+        <div class="risk-row">
+          <span class="badge badge-med" style="min-width:68px;justify-content:center;">MEDIUM</span>
+          <div style="flex:1;"><strong style="font-size:0.82rem;color:#e8f0fe;">Samsung GAA Recovery (SF2)</strong><div style="font-size:0.73rem;color:#a8c4e8;margin-top:2px;">Samsung targeting 20% foundry share by 2027; Tesla AI deal potential. If SF2 yield improves, could win back marginal customers.</div></div>
+        </div>
+        <div class="risk-row">
+          <span class="badge badge-low" style="min-width:68px;justify-content:center;">LOW</span>
+          <div style="flex:1;"><strong style="font-size:0.82rem;color:#e8f0fe;">NTD/USD Currency &amp; FX Headwinds</strong><div style="font-size:0.73rem;color:#a8c4e8;margin-top:2px;">Revenue USD-denominated but costs NTD-denominated. Appreciation is natural hedge; 10% NTD move = ~3-4 ppt gross margin impact.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: VALUATION — DCF -->
+  <div class="slide" data-slide="9">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;top:-80px;right:-60px;background:#5c3a00;opacity:0.11;"></div>
+      <div class="blob" style="width:280px;height:280px;bottom:-60px;left:-40px;background:#1a4480;opacity:0.09;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">05 · Valuation</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.2vw,2.4rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">DCF Model &amp; WACC</h2>
+      <div class="divider-line reveal" style="margin-bottom:0.9rem;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;" class="reveal">WACC Build</div>
+          <div class="glass-card reveal" style="padding:2px 0;">
+            <div class="wacc-row"><span style="color:#a8c4e8;">Risk-Free Rate (10Y UST)</span><strong style="color:#e8f0fe;">4.40%</strong></div>
+            <div class="wacc-row"><span style="color:#a8c4e8;">Beta (5Y weekly vs. S&amp;P 500)</span><strong style="color:#e8f0fe;">1.05×</strong></div>
+            <div class="wacc-row"><span style="color:#a8c4e8;">Equity Risk Premium</span><strong style="color:#e8f0fe;">5.50%</strong></div>
+            <div class="wacc-row"><span style="color:#a8c4e8;">Cost of Equity (CAPM)</span><strong style="color:#3b9eff;">10.18%</strong></div>
+            <div class="wacc-row"><span style="color:#a8c4e8;">Capital Structure</span><strong style="color:#e8f0fe;">100% Equity (net cash)</strong></div>
+            <div class="wacc-row" style="background:rgba(59,158,255,0.07);border-radius:0;"><span style="color:#3b9eff;font-weight:700;">WACC</span><strong style="color:#3b9eff;font-size:1rem;">10.18%</strong></div>
+          </div>
+          <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-top:10px;margin-bottom:6px;" class="reveal">Terminal Value Assumptions</div>
+          <div class="glass-card reveal" style="padding:2px 0;">
+            <div class="wacc-row"><span style="color:#a8c4e8;">Terminal Growth Rate (Base)</span><strong style="color:#e8f0fe;">4.0%</strong></div>
+            <div class="wacc-row"><span style="color:#a8c4e8;">TV / EV</span><strong style="color:#c9a84c;">80.9% ⚠ Flagged</strong></div>
+            <div class="wacc-row"><span style="color:#a8c4e8;">Exit EV/EBITDA (cross-check)</span><strong style="color:#e8f0fe;">20× NTM</strong></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.68rem;font-weight:700;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;" class="reveal">5-Year UFCF Projections ($B, Base)</div>
+          <div class="glass-card reveal" style="padding:12px 14px;">
+            <table class="fin-table">
+              <thead><tr><th>Year</th><th>Revenue</th><th>EBITDA%</th><th>CapEx</th><th>UFCF</th></tr></thead>
+              <tbody>
+                <tr><td>2026E</td><td>$159B</td><td>67%</td><td>$54B</td><td>$27B</td></tr>
+                <tr><td>2027E</td><td>$194B</td><td>68%</td><td>$58B</td><td>$35B</td></tr>
+                <tr><td>2028E</td><td>$225B</td><td>69%</td><td>$60B</td><td>$45B</td></tr>
+                <tr><td>2029E</td><td>$252B</td><td>70%</td><td>$62B</td><td>$54B</td></tr>
+                <tr class="gold"><td>2030E</td><td>$277B</td><td>71%</td><td>$62B</td><td>$62B</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;" class="reveal">
+            <div class="glass-card" style="padding:10px;text-align:center;">
+              <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">Bear PT</div>
+              <div style="font-size:1.1rem;font-weight:800;color:#ef4444;font-family:'Cormorant Garamond',serif;">$320</div>
+              <div style="font-size:0.63rem;color:#5c7aa0;">-19.9%</div>
+            </div>
+            <div class="gold-card" style="padding:10px;text-align:center;">
+              <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">Base PT</div>
+              <div style="font-size:1.1rem;font-weight:800;color:#c9a84c;font-family:'Cormorant Garamond',serif;">$425</div>
+              <div style="font-size:0.63rem;color:#22c55e;">+6.3%</div>
+            </div>
+            <div class="glass-card" style="padding:10px;text-align:center;border-color:rgba(34,197,94,0.2);">
+              <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">Bull PT</div>
+              <div style="font-size:1.1rem;font-weight:800;color:#22c55e;font-family:'Cormorant Garamond',serif;">$520</div>
+              <div style="font-size:0.63rem;color:#22c55e;">+30.1%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: COMPS TABLE -->
+  <div class="slide" data-slide="10">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:380px;height:380px;top:-70px;left:-50px;background:#1a4480;opacity:0.1;"></div>
+      <div class="blob" style="width:260px;height:260px;bottom:-50px;right:-30px;background:#003d2e;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">05 · Valuation — Comparable Companies</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.2vw,2.4rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">Peer Multiples &amp; Implied Value</h2>
+      <div class="divider-line reveal" style="margin-bottom:0.9rem;"></div>
+      <div class="glass-card reveal" style="padding:10px 14px;margin-bottom:10px;">
+        <table class="fin-table" style="font-size:0.76rem;">
+          <thead><tr><th style="text-align:left;">Company</th><th>NTM P/E</th><th>EV/EBITDA</th><th>P/S</th><th>Rev Growth</th><th>Gr. Margin</th></tr></thead>
+          <tbody>
+            <tr class="highlight"><td>TSMC (TSM)</td><td>28.5×</td><td>16.8×</td><td>12.4×</td><td>~30%</td><td>~66%</td></tr>
+            <tr><td>Samsung Electronics</td><td>22×</td><td>11×</td><td>2.1×</td><td>~15%</td><td>~38%</td></tr>
+            <tr><td>NVIDIA (NVDA)</td><td>35×</td><td>27×</td><td>18×</td><td>~55%</td><td>~78%</td></tr>
+            <tr><td>ASML Holding</td><td>33×</td><td>24×</td><td>10×</td><td>~20%</td><td>~53%</td></tr>
+            <tr><td>Broadcom (AVGO)</td><td>26×</td><td>20×</td><td>9×</td><td>~22%</td><td>~64%</td></tr>
+            <tr><td>Applied Materials (AMAT)</td><td>20×</td><td>15×</td><td>5×</td><td>~12%</td><td>~47%</td></tr>
+            <tr><td>Intel Foundry / IDM</td><td>NM</td><td>NM</td><td>2×</td><td>-5%</td><td>~40%</td></tr>
+            <tr><td>SMIC</td><td>18×</td><td>8×</td><td>2.5×</td><td>~18%</td><td>~23%</td></tr>
+            <tr style="border-top:2px solid rgba(59,158,255,0.2);"><td style="color:#5c7aa0;font-style:italic;">Peer Median (ex-TSMC/NVDA)</td><td style="color:#5c7aa0;">24×</td><td style="color:#5c7aa0;">17×</td><td style="color:#5c7aa0;">5.5×</td><td style="color:#5c7aa0;">—</td><td style="color:#5c7aa0;">~45%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;" class="reveal">
+        <div class="glass-card" style="padding:12px;text-align:center;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:4px;">P/E Comps Implied</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#3b9eff;font-family:'Cormorant Garamond',serif;">$336</div>
+          <div style="font-size:0.68rem;color:#5c7aa0;">24× × $14.0 NTM EPS</div>
+        </div>
+        <div class="glass-card" style="padding:12px;text-align:center;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:4px;">EV/EBITDA Implied</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#00d4aa;font-family:'Cormorant Garamond',serif;">$390</div>
+          <div style="font-size:0.68rem;color:#5c7aa0;">17× NTM EBITDA bridge</div>
+        </div>
+        <div class="glass-card" style="padding:12px;text-align:center;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:4px;">DCF Implied (Base)</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#c9a84c;font-family:'Cormorant Garamond',serif;">$448</div>
+          <div style="font-size:0.68rem;color:#5c7aa0;">WACC 10.18%, TGR 4.0%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: FOOTBALL FIELD -->
+  <div class="slide" data-slide="11">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:380px;height:380px;top:-70px;right:-50px;background:#5c3a00;opacity:0.11;"></div>
+      <div class="blob" style="width:260px;height:260px;bottom:-50px;left:-30px;background:#003d2e;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">05 · Valuation — Summary</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.2vw,2.4rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">Valuation Football Field</h2>
+      <div class="divider-line reveal" style="margin-bottom:1rem;"></div>
+      <div style="font-size:0.72rem;color:#5c7aa0;margin-bottom:8px;" class="reveal">All ranges imply per-share equity value. Current price $399.80 marked in gold.</div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:9px;">
+        <!-- Football field helper: scale is $200–$620, total = 420 -->
+        <div class="football-row">
+          <div class="football-label">DCF Base Case</div>
+          <div class="football-track">
+            <div class="football-bar" style="left:26.2%;width:34.5%;background:linear-gradient(90deg,rgba(59,158,255,0.3),rgba(59,158,255,0.6));"></div>
+            <div class="football-marker" style="left:47.6%;"></div>
+          </div>
+          <div class="football-values">$310 – $545 | Mid $448</div>
+        </div>
+        <div class="football-row">
+          <div class="football-label">DCF Bull Case</div>
+          <div class="football-track">
+            <div class="football-bar" style="left:35.7%;width:35.7%;background:linear-gradient(90deg,rgba(34,197,94,0.3),rgba(34,197,94,0.55));"></div>
+            <div class="football-marker" style="left:47.6%;"></div>
+          </div>
+          <div class="football-values">$350 – $600 | Mid $520</div>
+        </div>
+        <div class="football-row">
+          <div class="football-label">DCF Bear Case</div>
+          <div class="football-track">
+            <div class="football-bar" style="left:9.5%;width:35.7%;background:linear-gradient(90deg,rgba(239,68,68,0.3),rgba(239,68,68,0.55));"></div>
+            <div class="football-marker" style="left:47.6%;"></div>
+          </div>
+          <div class="football-values">$240 – $390 | Mid $320</div>
+        </div>
+        <div class="football-row">
+          <div class="football-label">EV/EBITDA Comps</div>
+          <div class="football-track">
+            <div class="football-bar" style="left:23.8%;width:28.6%;background:linear-gradient(90deg,rgba(0,212,170,0.3),rgba(0,212,170,0.55));"></div>
+            <div class="football-marker" style="left:47.6%;"></div>
+          </div>
+          <div class="football-values">$300 – $500 | Mid $390</div>
+        </div>
+        <div class="football-row">
+          <div class="football-label">P/E Comps</div>
+          <div class="football-track">
+            <div class="football-bar" style="left:19%;width:21.4%;background:linear-gradient(90deg,rgba(124,108,208,0.3),rgba(124,108,208,0.55));"></div>
+            <div class="football-marker" style="left:47.6%;"></div>
+          </div>
+          <div class="football-values">$280 – $370 | Mid $336</div>
+        </div>
+        <div class="football-row">
+          <div class="football-label">52-Wk Range</div>
+          <div class="football-track">
+            <div class="football-bar" style="left:0%;width:54.3%;background:linear-gradient(90deg,rgba(92,122,160,0.2),rgba(92,122,160,0.4));"></div>
+            <div class="football-marker" style="left:47.6%;"></div>
+          </div>
+          <div class="football-values">$187 – $420 | Now $400</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;" class="reveal">
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:#a8c4e8;"><div style="width:16px;height:2px;background:#c9a84c;"></div>Current Price $399.80</div>
+        <div class="gold-card" style="padding:8px 18px;display:flex;align-items:center;gap:10px;">
+          <span style="font-size:0.72rem;color:#c9a84c;font-weight:700;text-transform:uppercase;">Blended PT (60% DCF / 40% Comps)</span>
+          <span style="font-size:1.3rem;font-weight:800;color:#c9a84c;font-family:'Cormorant Garamond',serif;">$425</span>
+          <span class="badge badge-hold">HOLD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: SENSITIVITY -->
+  <div class="slide" data-slide="12">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:380px;height:380px;top:-70px;right:-50px;background:#1a4480;opacity:0.1;"></div>
+      <div class="blob" style="width:260px;height:260px;bottom:-50px;left:-30px;background:#5c3a00;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">05 · Valuation — Sensitivity</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.2vw,2.4rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">WACC × TGR Sensitivity Table</h2>
+      <div class="divider-line reveal" style="margin-bottom:0.9rem;"></div>
+      <div style="font-size:0.72rem;color:#5c7aa0;margin-bottom:8px;" class="reveal">Implied share price ($) — Base highlighted. Cells above $425 in blue, below in red.</div>
+      <div class="glass-card reveal" style="padding:12px 16px;overflow-x:auto;">
+        <table class="fin-table" style="font-size:0.78rem;min-width:550px;">
+          <thead>
+            <tr>
+              <th style="text-align:center;color:#c9a84c;">WACC ↓ / TGR →</th>
+              <th>2.5%</th><th>3.0%</th><th>3.5%</th><th>4.0%</th><th>4.5%</th><th>5.0%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="color:#e8f0fe;text-align:center;">8.5%</td>
+              <td style="color:#22c55e;">$550</td><td style="color:#22c55e;">$605</td><td style="color:#22c55e;">$665</td><td style="color:#22c55e;">$740</td><td style="color:#22c55e;">$830</td><td style="color:#22c55e;">$950</td>
+            </tr>
+            <tr><td style="color:#e8f0fe;text-align:center;">9.0%</td>
+              <td style="color:#22c55e;">$490</td><td style="color:#22c55e;">$535</td><td style="color:#22c55e;">$585</td><td style="color:#22c55e;">$645</td><td style="color:#22c55e;">$715</td><td style="color:#22c55e;">$800</td>
+            </tr>
+            <tr><td style="color:#e8f0fe;text-align:center;">9.5%</td>
+              <td style="color:#3b9eff;">$435</td><td style="color:#3b9eff;">$470</td><td style="color:#3b9eff;">$510</td><td style="color:#3b9eff;">$558</td><td style="color:#22c55e;">$615</td><td style="color:#22c55e;">$685</td>
+            </tr>
+            <tr style="background:rgba(201,168,76,0.06);"><td style="color:#c9a84c;text-align:center;font-weight:700;">10.18% ★</td>
+              <td style="color:#a8c4e8;">$375</td><td style="color:#a8c4e8;">$400</td><td style="color:#3b9eff;">$428</td><td style="color:#c9a84c;font-weight:700;">$448★</td><td style="color:#3b9eff;">$492</td><td style="color:#3b9eff;">$548</td>
+            </tr>
+            <tr><td style="color:#e8f0fe;text-align:center;">11.0%</td>
+              <td style="color:#ef4444;">$315</td><td style="color:#ef4444;">$335</td><td style="color:#ef4444;">$355</td><td style="color:#a8c4e8;">$380</td><td style="color:#3b9eff;">$408</td><td style="color:#3b9eff;">$443</td>
+            </tr>
+            <tr><td style="color:#e8f0fe;text-align:center;">12.0%</td>
+              <td style="color:#ef4444;">$265</td><td style="color:#ef4444;">$280</td><td style="color:#ef4444;">$295</td><td style="color:#ef4444;">$312</td><td style="color:#ef4444;">$335</td><td style="color:#a8c4e8;">$360</td>
+            </tr>
+            <tr><td style="color:#e8f0fe;text-align:center;">13.0%</td>
+              <td style="color:#ef4444;">$220</td><td style="color:#ef4444;">$232</td><td style="color:#ef4444;">$245</td><td style="color:#ef4444;">$258</td><td style="color:#ef4444;">$275</td><td style="color:#ef4444;">$295</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;" class="reveal">
+        <div class="glass-card" style="padding:10px 14px;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">Key Upside Driver</div>
+          <div style="font-size:0.8rem;color:#e8f0fe;">N2 gross margin beats → WACC spread widens → target moves toward $500+</div>
+        </div>
+        <div class="glass-card" style="padding:10px 14px;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">Base Assumption</div>
+          <div style="font-size:0.8rem;color:#c9a84c;font-weight:700;">WACC 10.18% × TGR 4.0% → $448</div>
+        </div>
+        <div class="glass-card" style="padding:10px 14px;">
+          <div style="font-size:0.65rem;color:#5c7aa0;text-transform:uppercase;margin-bottom:3px;">Key Downside Risk</div>
+          <div style="font-size:0.8rem;color:#e8f0fe;">AI capex cuts + WACC re-rate to 11.5% → price target below current price</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: DCF ASSUMPTIONS -->
+  <div class="slide" data-slide="13">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:400px;height:400px;top:-80px;left:-50px;background:#003d2e;opacity:0.12;"></div>
+      <div class="blob" style="width:280px;height:280px;bottom:-60px;right:-40px;background:#5c3a00;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+      <span class="section-tag reveal">05 · Valuation — DCF Assumptions</span>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.2vw,2.4rem);font-weight:700;color:#e8f0fe;margin-bottom:0.3rem;">Key Model Assumptions — Bull / Base / Bear</h2>
+      <div class="divider-line reveal" style="margin-bottom:0.9rem;"></div>
+      <div class="glass-card reveal" style="padding:10px 14px;margin-bottom:8px;">
+        <table class="fin-table" style="font-size:0.76rem;">
+          <thead><tr><th>Assumption</th><th>Bear</th><th>Base</th><th>Bull</th><th>Source / Rationale</th></tr></thead>
+          <tbody>
+            <tr class="highlight"><td>FY2026 Revenue Growth</td><td>+20%</td><td>+31%</td><td>+38%</td><td>Mgmt guided "close to 30%"; Q1 at +40.6%</td></tr>
+            <tr><td>5Y Revenue CAGR (2026-30)</td><td>12%</td><td>21.4%</td><td>27%</td><td>AI secular growth; consensus ~20%+</td></tr>
+            <tr class="highlight"><td>Gross Margin (Long-term)</td><td>60%</td><td>66.5%</td><td>70%</td><td>Q2 guidance 63-65%; N2P ASP premium</td></tr>
+            <tr><td>EBITDA Margin (Long-term)</td><td>58%</td><td>67%</td><td>72%</td><td>D&amp;A ~15.5% of rev; opex leverage</td></tr>
+            <tr class="highlight"><td>CapEx / Revenue</td><td>35%</td><td>33%</td><td>30%</td><td>$52-56B in 2026 on ~$159B rev</td></tr>
+            <tr><td>Terminal Growth Rate</td><td>2.5%</td><td>4.0%</td><td>5.0%</td><td>Nominal GDP + AI secular premium</td></tr>
+            <tr class="highlight"><td>WACC</td><td>11.5%</td><td>10.18%</td><td>9.0%</td><td>Risk-free 4.4% + Beta 1.05 × ERP 5.5%</td></tr>
+            <tr><td>Effective Tax Rate</td><td>18%</td><td>17%</td><td>16%</td><td>R&amp;D incentives, CHIPS Act benefits</td></tr>
+            <tr class="highlight"><td>NTD/USD Exchange Rate</td><td>30.5</td><td>32.5</td><td>33.5</td><td>NTD strengthening = margin headwind</td></tr>
+            <tr><td>Diluted Share Count</td><td>Flat</td><td>5,186M ADR</td><td>-1% pa</td><td>Minimal buyback history</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:0.72rem;color:#5c7aa0;padding:8px 12px;background:rgba(201,168,76,0.06);border-radius:8px;border:1px solid rgba(201,168,76,0.12);" class="reveal">
+        ⚠ TV/EV = 80.9% flagged (above 75% threshold) — expected for a high-ROIC secular compounder. Validated via exit EV/EBITDA cross-check (20× NTM EBITDA → $448 consistent with perpetuity method).
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: RECOMMENDATION -->
+  <div class="slide" data-slide="14">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:520px;height:520px;top:-120px;right:-100px;background:#1a4480;opacity:0.18;"></div>
+      <div class="blob" style="width:360px;height:360px;bottom:-100px;left:-80px;background:#003d2e;opacity:0.14;"></div>
+      <div class="blob" style="width:220px;height:220px;top:35%;left:10%;background:#5c3a00;opacity:0.12;"></div>
+    </div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+      <span class="section-tag reveal" style="text-align:center;display:block;">06 · Recommendation</span>
+      <div style="text-align:center;margin-bottom:1rem;" class="reveal">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,3.2rem);font-weight:700;color:#e8f0fe;margin-bottom:0.4rem;">Initiating Coverage</h2>
+        <div style="font-size:clamp(3rem,7vw,5.5rem);font-weight:900;font-family:'Cormorant Garamond',serif;background:linear-gradient(135deg,#c9a84c,#e8d5b5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.05;" class="gold-glow">HOLD</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-top:0.6rem;flex-wrap:wrap;" class="reveal">
+          <span style="color:#5c7aa0;font-size:0.85rem;">Current: <strong style="color:#e8f0fe;">$399.80</strong></span>
+          <span style="color:#c9a84c;font-size:1rem;font-weight:700;">▶ PT: $425</span>
+          <span style="color:#22c55e;font-size:0.85rem;font-weight:700;">+6.3% Upside</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="reveal">
+        <div class="glass-card green-border-l" style="padding:14px 16px;">
+          <div style="font-weight:800;font-size:0.78rem;color:#22c55e;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">🔼 Upgrade to BUY If...</div>
+          <div style="font-size:0.76rem;color:#a8c4e8;display:flex;flex-direction:column;gap:5px;">
+            <div>→ N2 gross margin proves >67% on volume; structural margin re-rating</div>
+            <div>→ AI hyperscaler capex guides accelerate beyond current $320B+ cycle</div>
+            <div>→ A16 backside power ramp pulls forward above schedule</div>
+            <div>→ Stock retraces to $360-370 (>15% discount to PT)</div>
+          </div>
+        </div>
+        <div class="glass-card red-border-l" style="padding:14px 16px;">
+          <div style="font-weight:800;font-size:0.78rem;color:#ef4444;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">🔻 Downgrade to SELL If...</div>
+          <div style="font-size:0.76rem;color:#a8c4e8;display:flex;flex-direction:column;gap:5px;">
+            <div>→ Major hyperscaler cuts AI capex >20% YoY guidance</div>
+            <div>→ N2 yield issues persist into 2H 2026; gross margin below 62%</div>
+            <div>→ Taiwan Strait escalation or new BIS export restrictions</div>
+            <div>→ Valuation >35× NTM P/E without earnings acceleration</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 15: THANK YOU / CLOSE -->
+  <div class="slide" data-slide="15">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:600px;height:600px;top:-140px;right:-120px;background:#0d3060;opacity:0.22;"></div>
+      <div class="blob" style="width:380px;height:380px;bottom:-100px;left:-80px;background:#003d2e;opacity:0.16;"></div>
+      <div class="blob" style="width:260px;height:260px;top:35%;left:8%;background:#4a2e00;opacity:0.14;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+      <div style="font-size:4.5rem;margin-bottom:0.8rem;animation:float 3.5s ease-in-out infinite;" class="reveal">📋</div>
+      <div class="reveal" style="font-size:0.68rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#5c7aa0;margin-bottom:0.5rem;">Investment Committee — May 13, 2026</div>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;background:linear-gradient(135deg,#3b9eff,#00d4aa,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.5rem;line-height:1.1;">TSMC — Hold at $425</h2>
+      <p class="reveal" style="font-size:0.88rem;color:#5c7aa0;max-width:640px;margin:0 auto 1.4rem;line-height:1.65;">The world's most critical semiconductor infrastructure. Indispensable to AI, irreplaceable at the leading edge. Fair value captured in current price — await N2 margin validation for conviction upgrade.</p>
+      <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;" class="reveal">
+        <div class="gold-card" style="padding:10px 20px;text-align:center;">
+          <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;">Rating</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#c9a84c;font-family:'Cormorant Garamond',serif;">HOLD</div>
+        </div>
+        <div class="glass-card" style="padding:10px 20px;text-align:center;">
+          <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;">Price Target</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#e8f0fe;font-family:'Cormorant Garamond',serif;">$425</div>
+        </div>
+        <div class="glass-card" style="padding:10px 20px;text-align:center;">
+          <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;">Upside</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#22c55e;font-family:'Cormorant Garamond',serif;">+6.3%</div>
+        </div>
+        <div class="glass-card" style="padding:10px 20px;text-align:center;">
+          <div style="font-size:0.62rem;color:#5c7aa0;text-transform:uppercase;letter-spacing:0.08em;">FY2026E Rev</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#3b9eff;font-family:'Cormorant Garamond',serif;">~$159B</div>
+        </div>
+      </div>
+      <p class="reveal" style="font-size:0.65rem;color:#3a5070;margin-top:1.2rem;max-width:700px;margin-left:auto;margin-right:auto;">This presentation is for informational purposes only. All financial projections are estimates based on publicly available data. Not investment advice.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav-controls">
+  <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 15</span>
+</div>
+
+<script>
+  let current = 1;
+  const total = document.querySelectorAll('.slide').length;
+  const dotsContainer = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  for (let i = 1; i <= total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 1 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+  function goToSlide(n) {
+    const prev = document.querySelector('.slide.active');
+    const next = document.querySelector(`.slide[data-slide="${n}"]`);
+    if (prev) prev.classList.remove('active');
+    if (next) { next.classList.add('active'); animateSlide(next); }
+    current = n; updateNav();
+  }
+  function changeSlide(dir) { let n = current + dir; if (n < 1) n = total; if (n > total) n = 1; goToSlide(n); }
+  function updateNav() {
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i + 1 === current));
+    counter.textContent = current + ' / ' + total;
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); } });
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => { const diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1); });
+
+  function animateSlide(slide) {
+    slide.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+      el.offsetHeight;
+      const delay = i * 0.075;
+      el.style.transition = `opacity 0.4s ease ${delay}s, transform 0.4s ease ${delay}s`;
+      el.style.opacity = '1'; el.style.transform = 'translateY(0px)';
+    });
+    animateEffects(slide);
+  }
+  function animateEffects(slide) {
+    slide.querySelectorAll('.bar-fill:not(.fill-done)').forEach((bar, i) => {
+      bar.classList.add('fill-done');
+      bar.style.width = '0%';
+      bar.style.transition = `width 0.7s ease ${i * 0.1}s`;
+      bar.offsetHeight;
+      bar.style.width = (bar.dataset.width || '0') + '%';
+    });
+  }
+
+  document.addEventListener('mousemove', e => {
+    const s = document.querySelector('.mouse-spotlight');
+    if (s) s.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(59,158,255,0.05), transparent 40%)`;
+  });
+
+  (function() {
+    let mx = window.innerWidth/2, my = window.innerHeight/2;
+    const cx = window.innerWidth/2, cy = window.innerHeight/2;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function tick() {
+      const ox = (mx-cx)/cx, oy = (my-cy)/cy;
+      document.querySelectorAll('.deco-shape').forEach(s => {
+        const sp = parseFloat(s.dataset.speed)||0.03;
+        s.style.transform = `translate(${ox*sp*100}px,${oy*sp*100}px)`;
+      });
+      requestAnimationFrame(tick);
+    })();
+  })();
+
+  window.initParticles = function(canvas, opts) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+    const interactive = opts.interactive !== false;
+    const count = opts.count || (interactive ? 50 : 16);
+    let mx2 = -1000, my2 = -1000;
+    const particles = Array.from({length: count}, () => ({
+      x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+      vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.3,
+      size: Math.random()*2.2+0.7, alpha: Math.random()*.3+0.08
+    }));
+    if (interactive) {
+      canvas.addEventListener('mousemove', e => { const r = canvas.getBoundingClientRect(); mx2 = e.clientX-r.left; my2 = e.clientY-r.top; });
+      canvas.addEventListener('mouseleave', () => { mx2=-1000; my2=-1000; });
+    }
+    (function anim() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(p => {
+        if (interactive) { const dx=p.x-mx2, dy=p.y-my2, d=Math.sqrt(dx*dx+dy*dy); if(d<100){const f=(100-d)/100*2;p.vx+=(dx/d)*f*.1;p.vy+=(dy/d)*f*.1;} }
+        p.vx*=.98; p.vy*=.98; p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0)p.x=canvas.width; if(p.x>canvas.width)p.x=0;
+        if(p.y<0)p.y=canvas.height; if(p.y>canvas.height)p.y=0;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.fillStyle=`rgba(59,158,255,${p.alpha})`; ctx.fill();
+      });
+      requestAnimationFrame(anim);
+    })();
+  };
+  document.querySelectorAll('.particle-canvas').forEach(c => initParticles(c, {interactive:true,count:50}));
+  document.querySelectorAll('.particle-canvas-ambient').forEach(c => initParticles(c, {interactive:false,count:16}));
+
+  try { animateSlide(document.querySelector('.slide.active')); } catch(e) {}
+</script>
+</body>
+</html>

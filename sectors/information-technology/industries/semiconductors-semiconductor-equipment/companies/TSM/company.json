@@ -1,0 +1,16 @@
+{
+  "company_name": "Taiwan Semiconductor Manufacturing Company Limited",
+  "ticker": "TSM",
+  "exchange": "NYSE",
+  "sector": "information-technology",
+  "subsector": "foundry services / logic ICs",
+  "currency": "USD",
+  "fiscal_year_end": "12-31",
+  "koyfin_id": "TSM US",
+  "sec_cik": "0001046179",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-13-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "semiconductors-semiconductor-equipment"
+}
