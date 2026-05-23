@@ -1,0 +1,778 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="slides-format" content="viewport" />
+  <title>ASML Investment Committee - Initiating Coverage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #020617;
+      --color-bg-deep: #020617;
+      --color-surface: #020617;
+      --color-text: #e2e8f0;
+      --color-text-secondary: #cbd5f5;
+      --color-text-muted: #94a3b8;
+      --color-accent-1: #eab308;
+      --color-accent-2: #22c55e;
+      --color-accent-3: #38bdf8;
+      --color-glass-bg: rgba(15,23,42,0.78);
+      --color-glass-border: rgba(148,163,184,0.45);
+      --color-vignette: rgba(0,0,0,0.66);
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+  </style>
+  <style>
+    :root { --color-bg: #020617; --color-text: #e2e8f0; --glow-color-rgb: 234,179,8; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { background: var(--color-bg); margin: 0; }
+    body { font-family: var(--font-body, 'Inter'); color: var(--color-text); overflow: hidden; height: 100vh; width: 100vw; }
+    .deck { width: 100vw; height: 100vh; position: relative; }
+    .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top left, #0b172a 0, #020617 55%, #000 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: scale(0.95); transition: opacity 0.7s ease, transform 0.7s ease; pointer-events: none; overflow: hidden; }
+    .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+    .slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1100px; padding: clamp(1.5rem, 4vw, 4rem); }
+    .nav-controls { position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; z-index: 100; background: rgba(15,23,42,0.9); backdrop-filter: blur(14px); padding: 10px 24px; border-radius: 40px; border: 1px solid rgba(148,163,184,0.6); box-shadow: 0 18px 45px rgba(0,0,0,0.6); }
+    .nav-btn { width: 40px; height: 40px; border: none; background: rgba(15,23,42,0.9); color: #eab308; border-radius: 999px; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.25s ease, transform 0.25s ease; box-shadow: 0 0 0 1px rgba(234,179,8,0.25); }
+    .nav-btn:hover { background: rgba(30,64,175,0.9); transform: translateY(-1px); }
+    .slide-dots { display: flex; gap: 8px; }
+    .slide-dots .dot { width: 9px; height: 9px; border-radius: 999px; background: rgba(148,163,184,0.6); cursor: pointer; transition: background 0.25s ease, transform 0.25s ease; }
+    .slide-dots .dot.active { background: #eab308; transform: scale(1.35); box-shadow: 0 0 12px rgba(234,179,8,0.9); }
+    .slide-counter { font-size: 0.78rem; color: #94a3b8; min-width: 44px; text-align: center; letter-spacing: 0.08em; text-transform: uppercase; }
+    .reveal { opacity: 0; transform: translateY(18px); }
+    .gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: float-slow 16s ease-in-out infinite; }
+    .blob:nth-child(2) { animation-duration: 22s; animation-direction: reverse; }
+    .blob:nth-child(3) { animation-duration: 26s; }
+    @keyframes float-slow {
+      0% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(60px, -40px) scale(1.12); }
+      50% { transform: translate(-40px, 40px) scale(0.9); }
+      75% { transform: translate(40px, 10px) scale(1.08); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+    .slide::before { content: ''; position: absolute; inset: -40px; z-index: 1; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"); opacity: 0.07; mix-blend-mode: soft-light; }
+    .slide::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.78) 100%); }
+    .mouse-spotlight { background: radial-gradient(600px circle at 50% 50%, rgba(234,179,8,0.05), transparent 40%); mix-blend-mode: screen; }
+    .text-glow { text-shadow: 0 0 18px rgba(234,179,8,0.65), 0 0 42px rgba(234,179,8,0.25); }
+    .glow-pulse { animation: glow-pulse 3.2s ease-in-out infinite; }
+    @keyframes glow-pulse {
+      0%, 100% { text-shadow: 0 0 18px rgba(234,179,8,0.5), 0 0 38px rgba(234,179,8,0.2); }
+      50% { text-shadow: 0 0 30px rgba(234,179,8,0.9), 0 0 60px rgba(234,179,8,0.35); }
+    }
+    .glass-card { background: rgba(15,23,42,0.84); border-radius: 18px; border: 1px solid rgba(148,163,184,0.55); box-shadow: 0 18px 45px rgba(15,23,42,0.95); }
+    .glass-card-soft { background: rgba(15,23,42,0.78); border-radius: 16px; border: 1px solid rgba(148,163,184,0.4); box-shadow: 0 14px 35px rgba(15,23,42,0.9); }
+    .pill { border-radius: 999px; border: 1px solid rgba(148,163,184,0.7); background: radial-gradient(circle at top left, rgba(234,179,8,0.18), rgba(15,23,42,0.86)); }
+    .metric-pill { border-radius: 999px; border: 1px solid rgba(148,163,184,0.7); background: linear-gradient(90deg, rgba(234,179,8,0.18), rgba(56,189,248,0.12)); }
+    .bar-track { width: 100%; height: 0.9rem; border-radius: 999px; background: rgba(15,23,42,0.9); border: 1px solid rgba(148,163,184,0.55); overflow: hidden; box-shadow: inset 0 0 12px rgba(15,23,42,0.95); }
+    .bar-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #22c55e, #eab308); width: 0%; }
+    .gauge-ring { background: conic-gradient(from 220deg, rgba(34,197,94,0.1), rgba(234,179,8,0.55), rgba(248,113,113,0.1)); }
+    .gauge-inner { background: radial-gradient(circle at top, rgba(15,23,42,0.1), rgba(15,23,42,1)); }
+    .odometer { display: inline-flex; overflow: hidden; gap: 0; font-variant-numeric: tabular-nums; }
+    .odometer-digit { display: flex; flex-direction: column; transition: transform 1.5s cubic-bezier(0.16,1,0.3,1); line-height: 1; height: 1em; overflow: hidden; }
+    .odometer-digit span { display: block; text-align: center; }
+    .odometer-separator { opacity: 0.7; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="mouse-spotlight" style="position:fixed;inset:0;z-index:99;pointer-events:none;"></div>
+<div class="deck">
+  <!-- Slide 1: Title / Cover -->
+  <div class="slide slide-1 active" data-slide="1">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:520px;height:520px;top:-120px;right:-80px;background:#eab308;"></div>
+      <div class="blob" style="width:420px;height:420px;bottom:-140px;left:-140px;background:#22c55e;"></div>
+      <div class="blob" style="width:320px;height:320px;top:36%;left:10%;background:#38bdf8;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+      <div class="inline-flex items-center justify-center mb-5 px-4 py-1 pill reveal">
+        <span class="text-[0.75rem] tracking-[0.22em] uppercase text-slate-300">Investment Committee</span>
+      </div>
+      <div class="mb-6 flex flex-col items-center gap-3">
+        <h1 class="font-display text-[clamp(2.6rem,5.3vw,4.4rem)] font-black bg-linear-to-br from-accent-1 via-accent-2 to-accent-3 bg-clip-text text-transparent tracking-tight leading-tight reveal">
+          ASML Holding N.V.
+        </h1>
+        <p class="text-[clamp(1rem,1.7vw,1.3rem)] text-text-muted tracking-[0.32em] uppercase reveal">
+          Initiating Coverage & Investment Case
+        </p>
+      </div>
+      <div class="mx-auto max-w-3xl glass-card-soft px-6 py-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 reveal">
+        <div class="flex items-baseline gap-2">
+          <span class="text-xs tracking-[0.22em] uppercase text-slate-400">Recommendation</span>
+          <span class="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-300 border border-emerald-400/60">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-[pulse_1.8s_ease-in-out_infinite]"></span>
+            Buy
+          </span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span class="text-xs tracking-[0.22em] uppercase text-slate-400">Price target</span>
+          <span class="text-sm font-semibold text-slate-100">
+            ~$2,100 / ~€1,950
+          </span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span class="text-xs tracking-[0.22em] uppercase text-slate-400">Upside</span>
+          <span class="text-sm font-semibold text-amber-300">+33%</span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span class="text-xs tracking-[0.22em] uppercase text-slate-400">As of</span>
+          <span class="text-sm text-slate-200">13 May 2026</span>
+        </div>
+      </div>
+      <p class="mt-5 text-xs text-slate-500 reveal">Confidential – For Investment Committee discussion only</p>
+    </div>
+  </div>
+
+  <!-- Slide 2: Agenda -->
+  <div class="slide slide-2" data-slide="2">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;top:-140px;right:-120px;background:#22c55e;"></div>
+      <div class="blob" style="width:320px;height:320px;bottom:-120px;left:-80px;background:#38bdf8;"></div>
+    </div>
+    <div class="content">
+      <h2 class="font-display text-[clamp(2rem,3.6vw,2.8rem)] font-bold text-slate-50 mb-6 reveal">
+        Agenda
+      </h2>
+      <div class="grid grid-cols-2 gap-6 max-w-4xl">
+        <div class="glass-card-soft px-5 py-4 flex gap-4 items-start reveal">
+          <span class="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500/20 text-amber-300 text-sm font-semibold">1</span>
+          <div>
+            <p class="text-xs tracking-[0.2em] uppercase text-slate-400 mb-1">Context</p>
+            <p class="text-sm font-semibold text-slate-100 mb-1">Investment summary & role in AI stack</p>
+            <p class="text-xs text-slate-400">ASML as the indispensable EUV lithography monopoly in the AI infrastructure value chain.</p>
+          </div>
+        </div>
+        <div class="glass-card-soft px-5 py-4 flex gap-4 items-start reveal">
+          <span class="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300 text-sm font-semibold">2</span>
+          <div>
+            <p class="text-xs tracking-[0.2em] uppercase text-slate-400 mb-1">Moat</p>
+            <p class="text-sm font-semibold text-slate-100 mb-1">Business model & competitive position</p>
+            <p class="text-xs text-slate-400">Review of EUV/DUV franchises, installed base, and structural barriers to entry.</p>
+          </div>
+        </div>
+        <div class="glass-card-soft px-5 py-4 flex gap-4 items-start reveal">
+          <span class="flex h-8 w-8 items-center justify-center rounded-full bg-sky-500/20 text-sky-300 text-sm font-semibold">3</span>
+          <div>
+            <p class="text-xs tracking-[0.2em] uppercase text-slate-400 mb-1">Thesis</p>
+            <p class="text-sm font-semibold text-slate-100 mb-1">Pillars, KPIs & thesis tracker</p>
+            <p class="text-xs text-slate-400">Five-pillar thesis, key KPIs, and what would change our view (upside & downside).</p>
+          </div>
+        </div>
+        <div class="glass-card-soft px-5 py-4 flex gap-4 items-start reveal">
+          <span class="flex h-8 w-8 items-center justify-center rounded-full bg-rose-500/20 text-rose-300 text-sm font-semibold">4</span>
+          <div>
+            <p class="text-xs tracking-[0.2em] uppercase text-slate-400 mb-1">Valuation</p>
+            <p class="text-sm font-semibold text-slate-100 mb-1">DCF, comps & recommendation</p>
+            <p class="text-xs text-slate-400">Base / bull / bear scenarios, DCF & comps framework, and price target rationale.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Company Snapshot -->
+  <div class="slide slide-3" data-slide="3">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:480px;height:480px;top:-160px;right:-60px;background:#38bdf8;"></div>
+      <div class="blob" style="width:340px;height:340px;bottom:-120px;left:-120px;background:#eab308;"></div>
+    </div>
+    <div class="content">
+      <h2 class="font-display text-[clamp(2rem,3.4vw,2.7rem)] font-bold text-slate-50 mb-5 reveal">
+        ASML in One Slide
+      </h2>
+      <div class="grid grid-cols-[1.4fr_1fr] gap-6 items-stretch">
+        <div class="glass-card px-7 py-6 flex flex-col gap-4 reveal">
+          <p class="text-xs tracking-[0.24em] uppercase text-slate-400">Role in value chain</p>
+          <p class="text-sm text-slate-200 leading-relaxed">
+            Sole supplier of EUV lithography systems required to manufacture leading-edge chips below 7nm – every NVIDIA Blackwell, Apple A-series, AMD MI-series and HBM stack ultimately depends on ASML tools.[cite:15]
+          </p>
+          <div class="grid grid-cols-3 gap-4 pt-2">
+            <div>
+              <p class="text-[0.7rem] tracking-[0.18em] uppercase text-slate-400 mb-1">FY25 revenue</p>
+              <p class="text-xl font-semibold text-glow glow-pulse">€32.7bn</p>
+              <p class="text-[0.72rem] text-slate-400">+15.6% YoY; EUV +39%, services +26%.</p>
+            </div>
+            <div>
+              <p class="text-[0.7rem] tracking-[0.18em] uppercase text-slate-400 mb-1">Gross margin</p>
+              <p class="text-xl font-semibold text-emerald-300">52.8%</p>
+              <p class="text-[0.72rem] text-slate-400">Mid‑cycle margin with High‑NA upside.</p>
+            </div>
+            <div>
+              <p class="text-[0.7rem] tracking-[0.18em] uppercase text-slate-400 mb-1">Backlog</p>
+              <p class="text-xl font-semibold text-sky-300">€38.8bn</p>
+              <p class="text-[0.72rem] text-slate-400">Covers 2026 guidance and EUV capacity.[cite:16]</p>
+            </div>
+          </div>
+          <div class="mt-2 grid grid-cols-2 gap-4 text-xs text-slate-300">
+            <div class="flex gap-2">
+              <span class="mt-[0.2rem] text-lg">🏭</span>
+              <p>Monopoly on EUV with machines priced at ~€180m (Low‑NA) and ~€380m (High‑NA) each.[cite:16]</p>
+            </div>
+            <div class="flex gap-2">
+              <span class="mt-[0.2rem] text-lg">🔁</span>
+              <p>Installed‑base services ~30% of revenue, adding recurring, high‑margin cash flows.[cite:15]</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card px-6 py-6 flex flex-col justify-between reveal">
+          <div>
+            <p class="text-xs tracking-[0.24em] uppercase text-slate-400 mb-2">Investment snapshot</p>
+            <p class="text-sm text-slate-200 mb-3">Monopoly equipment exposure to the AI infrastructure capex cycle, with multi‑year visibility and structural pricing power.</p>
+          </div>
+          <div class="space-y-2 text-xs text-slate-300">
+            <div class="flex items-center justify-between">
+              <span>Business model</span><span class="font-medium text-slate-100">Equipment – EUV / DUV / services</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Cycle exposure</span><span class="font-medium text-amber-300">High (2nd derivative of capex)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Moat rating</span><span class="font-medium text-emerald-300">Extreme – EUV monopoly</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Key risk</span><span class="font-medium text-rose-300 text-right">China export controls; AI capex normalization</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Thesis Pillars -->
+  <div class="slide slide-4" data-slide="4">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:460px;height:460px;top:-150px;right:-90px;background:#22c55e;"></div>
+      <div class="blob" style="width:360px;height:360px;bottom:-140px;left:-80px;background:#eab308;"></div>
+    </div>
+    <div class="content">
+      <h2 class="font-display text-[clamp(2rem,3.4vw,2.7rem)] font-bold text-slate-50 mb-2 reveal">
+        Five‑Pillar Investment Thesis
+      </h2>
+      <p class="text-sm text-slate-300 mb-5 max-w-3xl reveal">
+        A structurally advantaged monopoly on the most critical tool in AI chip manufacturing, with compounding services, a High‑NA upgrade cycle and credible 2030 targets underwritten by backlog and customer roadmaps.[cite:15]
+      </p>
+      <div class="grid grid-cols-2 gap-5">
+        <div class="glass-card-soft px-5 py-4 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-1">Pillar 1</p>
+          <p class="text-sm font-semibold text-slate-100 mb-1">Unassailable EUV monopoly</p>
+          <p class="text-xs text-slate-300">Only producer of EUV scanners required for <7nm nodes; 40 years of IP and €9bn+ EUV R&D make replication extremely unlikely before 2030.[cite:15]</p>
+        </div>
+        <div class="glass-card-soft px-5 py-4 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-1">Pillar 2</p>
+          <p class="text-sm font-semibold text-slate-100 mb-1">High‑NA EUV ASP step‑change</p>
+          <p class="text-xs text-slate-300">High‑NA EXE:5200 units at ~€380m per tool create a multi‑year upgrade cycle as logic at 2nm and below transitions to tighter pitches.[cite:16]</p>
+        </div>
+        <div class="glass-card-soft px-5 py-4 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-1">Pillar 3</p>
+          <p class="text-sm font-semibold text-slate-100 mb-1">AI‑driven capex super‑cycle</p>
+          <p class="text-xs text-slate-300">AI infrastructure spending is driving an extended up‑cycle in foundry and memory capex; ASML is levered to every leading‑edge wafer start.[cite:1]</p>
+        </div>
+        <div class="glass-card-soft px-5 py-4 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-1">Pillar 4</p>
+          <p class="text-sm font-semibold text-slate-100 mb-1">Compounding services base</p>
+          <p class="text-xs text-slate-300">Services and field options ~30% of revenue, growing faster than systems and stabilizing free‑cash‑flow through cycles.[cite:15]</p>
+        </div>
+        <div class="glass-card-soft px-5 py-4 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-1">Pillar 5</p>
+          <p class="text-sm font-semibold text-slate-100 mb-1">Visible roadmap to 2030</p>
+          <p class="text-xs text-slate-300">Company targets €44–60bn revenue and 56–60% gross margin by 2030, with High‑NA and services as primary drivers.[cite:41]</p>
+        </div>
+        <div class="glass-card-soft px-5 py-4 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-1">Committee focus</p>
+          <p class="text-sm font-semibold text-slate-100 mb-1">What we need to believe</p>
+          <p class="text-xs text-slate-300">High‑NA adoption broadly follows foundry roadmaps, AI capex normalizes but does not collapse, and China remains ≥15% of sales without systemic sanctions escalation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Thesis Tracker (Pillars & KPIs) -->
+  <div class="slide slide-5" data-slide="5">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:460px;height:460px;top:-150px;right:-90px;background:#38bdf8;"></div>
+      <div class="blob" style="width:360px;height:360px;bottom:-140px;left:-80px;background:#22c55e;"></div>
+    </div>
+    <div class="content">
+      <h2 class="font-display text-[clamp(2rem,3.4vw,2.7rem)] font-bold text-slate-50 mb-2 reveal">
+        Thesis Tracker – Pillars & KPIs
+      </h2>
+      <p class="text-sm text-slate-300 mb-4 max-w-3xl reveal">
+        Live view of where the thesis stands today and what we watch to detect early drift versus our base case.
+      </p>
+      <div class="grid grid-cols-[1.4fr_1fr] gap-6 items-stretch">
+        <div class="glass-card px-6 py-5 flex flex-col gap-3 reveal">
+          <div class="flex items-center justify-between mb-1">
+            <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400">Pillars</p>
+            <span class="text-[0.7rem] text-slate-400">Status</span>
+          </div>
+          <div class="space-y-2 text-xs text-slate-200">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-semibold">EUV monopoly</p>
+                <p class="text-slate-400">No credible EUV competitor; xLight only targets light source and is pre‑commercial.[cite:16]</p>
+              </div>
+              <span class="mt-1 inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-0.5 text-[0.7rem] text-emerald-300 border border-emerald-400/60">Intact</span>
+            </div>
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-semibold">High‑NA upgrade cycle</p>
+                <p class="text-slate-400">EXE:5200 shipments starting 2026; Intel/TSMC/Samsung committed for 2nm nodes.[cite:28]</p>
+              </div>
+              <span class="mt-1 inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-0.5 text-[0.7rem] text-emerald-300 border border-emerald-400/60">Intact</span>
+            </div>
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-semibold">AI capex support</p>
+                <p class="text-slate-400">Backlog covers 2026 shipments; Morningstar flags risk of AI capex slowdown post‑2025.[cite:46]</p>
+              </div>
+              <span class="mt-1 inline-flex items-center rounded-full bg-amber-500/10 px-2 py-0.5 text-[0.7rem] text-amber-300 border border-amber-400/60">Monitor</span>
+            </div>
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-semibold">Services mix expansion</p>
+                <p class="text-slate-400">Installed‑base services trending toward ~30% of revenue with high incremental margins.[cite:15]</p>
+              </div>
+              <span class="mt-1 inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-0.5 text-[0.7rem] text-emerald-300 border border-emerald-400/60">Intact</span>
+            </div>
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-semibold">2030 roadmap</p>
+                <p class="text-slate-400">Management guide €44–60bn revenue and 56–60% GM; path depends on High‑NA and China.[cite:41]</p>
+              </div>
+              <span class="mt-1 inline-flex items-center rounded-full bg-amber-500/10 px-2 py-0.5 text-[0.7rem] text-amber-300 border border-amber-400/60">Monitor</span>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card px-6 py-5 flex flex-col justify-between reveal">
+          <div>
+            <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-2">Key KPIs to watch</p>
+            <ul class="space-y-2 text-xs text-slate-300 list-disc list-inside">
+              <li>EUV & High‑NA unit shipments per year versus foundry node roadmaps.</li>
+              <li>Services & field options as % of total revenue (target ≥30%).</li>
+              <li>China revenue share trending toward ~20% but not collapsing below mid‑teens.[cite:1]</li>
+              <li>Backlog coverage vs. annual net sales and book‑to‑bill ratio.</li>
+              <li>Foundry and memory capex guidance at TSMC, Samsung, SK Hynix, Micron.</li>
+            </ul>
+          </div>
+          <div class="mt-3 text-[0.7rem] text-slate-400">
+            <span class="font-semibold text-slate-200">Action standard:</span> two or more pillars moving to "At risk" or sustained backlog erosion → review rating and target.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Risk & Catalyst Map -->
+  <div class="slide slide-6" data-slide="6">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;top:-130px;right:-90px;background:#e11d48;"></div>
+      <div class="blob" style="width:320px;height:320px;bottom:-120px;left:-80px;background:#22c55e;"></div>
+    </div>
+    <div class="content">
+      <h2 class="font-display text-[clamp(2rem,3.4vw,2.7rem)] font-bold text-slate-50 mb-2 reveal">
+        Key Risks & Catalysts
+      </h2>
+      <p class="text-sm text-slate-300 mb-5 max-w-3xl reveal">
+        We see China export policy and AI capex normalization as the primary risk vectors, partially offset by a rich catalyst path across High‑NA ramp and Investor Day guidance.
+      </p>
+      <div class="grid grid-cols-2 gap-6">
+        <div class="glass-card px-6 py-5 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-2">Top risks</p>
+          <div class="space-y-3 text-xs text-slate-300">
+            <div>
+              <p class="font-semibold text-rose-300">1. China export controls (High)</p>
+              <p>China ~20–33% of sales; US/EU policy could further restrict DUV immersion tools beyond current EUV bans.[cite:26]</p>
+            </div>
+            <div>
+              <p class="font-semibold text-rose-200">2. AI capex down‑cycle (High)</p>
+              <p>Morningstar warns AI capex may have peaked in 2025 with slowdown risk in 2026; equipment orders lag by 12–18 months.[cite:46]</p>
+            </div>
+            <div>
+              <p class="font-semibold text-rose-200">3. High‑NA adoption delays (Medium)</p>
+              <p>Foundry ROI scrutiny could push EXE:5200 volume ramp to the right by 1–2 years vs. base case.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-rose-200">4. xLight technology risk (Low probability)</p>
+              <p>US‑funded FEL light‑source project; even success would not replicate full EUV scanner stack before 2028+.[cite:16]</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card px-6 py-5 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-2">Key catalysts</p>
+          <div class="space-y-3 text-xs text-slate-300">
+            <div>
+              <p class="font-semibold text-emerald-300">1. High‑NA shipments & node announcements</p>
+              <p>Public confirmation of 2nm/1.4nm logic nodes in HVM with High‑NA and >€380m tool ASP uplift.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-emerald-200">2. Investor Day 2026+ guidance</p>
+              <p>Any upward revision to 2030 revenue (>€60bn) or margin targets would support premium multiple.[cite:41]</p>
+            </div>
+            <div>
+              <p class="font-semibold text-emerald-200">3. Services mix ~35% of revenue</p>
+              <p>Evidence of faster services growth would de‑risk FCF through cycles and justify higher DCF terminal assumptions.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-emerald-200">4. China stabilization</p>
+              <p>Clarity that DUV immersion exports stabilize around current levels would remove a key overhang.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Financial & Segment Snapshot -->
+  <div class="slide slide-7" data-slide="7">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:460px;height:460px;top:-150px;right:-90px;background:#22c55e;"></div>
+      <div class="blob" style="width:360px;height:360px;bottom:-140px;left:-80px;background:#38bdf8;"></div>
+    </div>
+    <div class="content">
+      <h2 class="font-display text-[clamp(2rem,3.4vw,2.7rem)] font-bold text-slate-50 mb-2 reveal">
+        Financial Snapshot & Segment Mix
+      </h2>
+      <p class="text-sm text-slate-300 mb-5 max-w-3xl reveal">
+        High‑growth EUV and services are reshaping the mix toward more recurring and structurally higher‑margin revenue streams.
+      </p>
+      <div class="grid grid-cols-[1.3fr_1fr] gap-6 items-stretch">
+        <div class="glass-card px-6 py-5 flex flex-col gap-4 reveal">
+          <div class="grid grid-cols-4 gap-4 text-xs text-slate-200 mb-2">
+            <div>
+              <p class="tracking-[0.18em] uppercase text-slate-400 mb-1 text-[0.7rem]">FY25 net sales</p>
+              <p class="text-xl font-semibold text-glow">€32.7bn</p>
+              <p class="text-[0.7rem] text-slate-400">+15.6% YoY; guidance €36–40bn for FY26.[cite:15]</p>
+            </div>
+            <div>
+              <p class="tracking-[0.18em] uppercase text-slate-400 mb-1 text-[0.7rem]">Gross margin</p>
+              <p class="text-xl font-semibold text-emerald-300">52.8%</p>
+              <p class="text-[0.7rem] text-slate-400">Within 51–53% target range.</p>
+            </div>
+            <div>
+              <p class="tracking-[0.18em] uppercase text-slate-400 mb-1 text-[0.7rem]">Capex / sales</p>
+              <p class="text-xl font-semibold text-sky-300">4.8%</p>
+              <p class="text-[0.7rem] text-slate-400">Capital‑light vs. foundry peers.</p>
+            </div>
+            <div>
+              <p class="tracking-[0.18em] uppercase text-slate-400 mb-1 text-[0.7rem]">FCF margin</p>
+              <p class="text-xl font-semibold text-emerald-300">~37%</p>
+              <p class="text-[0.7rem] text-slate-400">Supports buybacks & dividends.</p>
+            </div>
+          </div>
+          <div class="mt-1">
+            <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-2">Segment mix FY25</p>
+            <div class="space-y-2 text-xs text-slate-300">
+              <div class="flex items-center gap-3">
+                <span class="inline-flex h-2.5 w-2.5 rounded-sm bg-emerald-400"></span>
+                <span class="w-28">EUV systems</span>
+                <div class="flex-1 bar-track"><div class="bar-fill" data-width="36"></div></div>
+                <span class="w-12 text-right">~36%</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="inline-flex h-2.5 w-2.5 rounded-sm bg-sky-400"></span>
+                <span class="w-28">DUV systems</span>
+                <div class="flex-1 bar-track"><div class="bar-fill" data-width="37"></div></div>
+                <span class="w-12 text-right">~37%</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="inline-flex h-2.5 w-2.5 rounded-sm bg-amber-300"></span>
+                <span class="w-28">Services & F.O.</span>
+                <div class="flex-1 bar-track"><div class="bar-fill" data-width="25"></div></div>
+                <span class="w-12 text-right">~25%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card px-6 py-5 flex flex-col items-center justify-center gap-4 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400">Cycle exposure</p>
+          <div class="relative flex items-center justify-center">
+            <div class="gauge-ring h-36 w-36 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(234,179,8,0.35)]"></div>
+            <div class="absolute h-24 w-24 rounded-full gauge-inner flex flex-col items-center justify-center">
+              <span class="text-[0.7rem] text-slate-400 uppercase tracking-[0.18em] mb-1">Cycle</span>
+              <span class="text-lg font-semibold text-amber-300">High</span>
+            </div>
+          </div>
+          <p class="text-[0.7rem] text-slate-400 text-center max-w-xs">
+            Orders are a second derivative of foundry and memory capex. Backlog and services mitigate but do not eliminate cyclicality.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: Scenario Summary -->
+  <div class="slide slide-8" data-slide="8">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:460px;height:460px;top:-150px;right:-90px;background:#22c55e;"></div>
+      <div class="blob" style="width:360px;height:360px;bottom:-140px;left:-80px;background:#eab308;"></div>
+    </div>
+    <div class="content">
+      <h2 class="font-display text-[clamp(2rem,3.4vw,2.7rem)] font-bold text-slate-50 mb-2 reveal">
+        Scenario Framework – Revenue & Thesis Outcomes
+      </h2>
+      <p class="text-sm text-slate-300 mb-5 max-w-3xl reveal">
+        The DCF, valuation range and rating are anchored on a three‑scenario view out to 2030 with explicit assumptions around High‑NA, China and AI capex.
+      </p>
+      <div class="glass-card px-6 py-5 reveal">
+        <div class="grid grid-cols-3 gap-4 text-xs text-slate-300 mb-3">
+          <div>
+            <p class="tracking-[0.2em] uppercase text-slate-400 mb-1">Bull</p>
+            <p class="font-semibold text-emerald-300 mb-1">€40.5bn → €67bn</p>
+            <p>High‑NA adoption ahead of plan, China stabilizes at ~25% of sales, AI capex remains elevated.</p>
+          </div>
+          <div>
+            <p class="tracking-[0.2em] uppercase text-slate-400 mb-1">Base</p>
+            <p class="font-semibold text-slate-100 mb-1">€38bn → €60bn</p>
+            <p>Management midpoint guide; High‑NA inline with roadmaps; China ~20%; AI capex normalizes but remains structurally higher.[cite:41]</p>
+          </div>
+          <div>
+            <p class="tracking-[0.2em] uppercase text-slate-400 mb-1">Bear</p>
+            <p class="font-semibold text-rose-300 mb-1">€35bn → €48bn</p>
+            <p>Stricter China controls, delayed High‑NA ROI, pronounced AI capex slowdown.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 text-[0.7rem] text-slate-400 mt-2">
+          <div class="border-t border-slate-700 pt-2">
+            <p class="font-semibold text-slate-200 mb-1">Committee implication – Bull</p>
+            <p>Upside to target; would revisit for potential add if High‑NA units and services outpace base trajectory.</p>
+          </div>
+          <div class="border-t border-slate-700 pt-2">
+            <p class="font-semibold text-slate-200 mb-1">Committee implication – Base</p>
+            <p>Current BUY thesis; hold if tracking, revisit valuation if multiples expand beyond 65x NTM PE.</p>
+          </div>
+          <div class="border-t border-slate-700 pt-2">
+            <p class="font-semibold text-slate-200 mb-1">Committee implication – Bear</p>
+            <p>Signals thesis drift; under this path, rating likely cut to HOLD/REDUCE and position size trimmed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: Valuation – DCF & Sensitivity -->
+  <div class="slide slide-9" data-slide="9">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:460px;height:460px;top:-150px;right:-90px;background:#38bdf8;"></div>
+      <div class="blob" style="width:360px;height:360px;bottom:-140px;left:-80px;background:#22c55e;"></div>
+    </div>
+    <div class="content">
+      <h2 class="font-display text-[clamp(2rem,3.4vw,2.7rem)] font-bold text-slate-50 mb-2 reveal">
+        Valuation – DCF, Comps & Target
+      </h2>
+      <p class="text-sm text-slate-300 mb-4 max-w-3xl reveal">
+        A conservative DCF underwrites the downside, while peer multiples and monopoly premium explain why the market pays a structurally higher multiple for ASML.
+      </p>
+      <div class="grid grid-cols-[1.3fr_1fr] gap-6 items-stretch">
+        <div class="glass-card px-6 py-5 reveal">
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-2">DCF summary (Base case)</p>
+          <div class="grid grid-cols-3 gap-3 text-xs text-slate-300 mb-3">
+            <div>
+              <p class="text-slate-400 text-[0.7rem] mb-1">WACC</p>
+              <p class="text-lg font-semibold text-slate-100">7.6%</p>
+              <p class="text-[0.7rem] text-slate-400">Rf 2.85%, beta 0.8, ERP 5.6%.[cite:53]</p>
+            </div>
+            <div>
+              <p class="text-slate-400 text-[0.7rem] mb-1">Terminal growth</p>
+              <p class="text-lg font-semibold text-slate-100">3.0%</p>
+              <p class="text-[0.7rem] text-slate-400">Within 2.0–4.5% sensitivity band.</p>
+            </div>
+            <div>
+              <p class="text-slate-400 text-[0.7rem] mb-1">Implied value</p>
+              <p class="text-lg font-semibold text-emerald-300">~€848/sh</p>
+              <p class="text-[0.7rem] text-slate-400">Pure DCF, 5‑year explicit forecast.</p>
+            </div>
+          </div>
+          <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-1">WACC vs terminal growth – implied DCF value</p>
+          <p class="text-[0.7rem] text-slate-400 mb-3">Band runs from ~€558/sh (9% / 2%) to ~€1,703/sh (6.5% / 4%).</p>
+          <div class="grid grid-cols-5 gap-1 text-[0.7rem] text-slate-300">
+            <div class="text-slate-400">WACC \ g</div>
+            <div>2.0%</div><div>2.5%</div><div>3.0%</div><div>3.5%</div>
+            <div class="text-slate-400">6.5%</div>
+            <div>€1,023</div><div>€1,128</div><div>€1,262</div><div>€1,442</div>
+            <div class="text-slate-400">7.6%</div>
+            <div>€745</div><div>€795</div><div class="text-emerald-300 font-semibold">€848</div><div>€917</div>
+          </div>
+        </div>
+        <div class="glass-card px-6 py-5 flex flex-col justify-between reveal">
+          <div>
+            <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-2">Comps & target</p>
+            <p class="text-xs text-slate-300 mb-2">Peers (equipment, fabless, foundry) trade ~22x NTM PE on average; ASML at ~50x reflecting its EUV monopoly.[cite:55]</p>
+            <ul class="text-xs text-slate-300 space-y-1">
+              <li>• DCF (60%) → ~€848/sh.</li>
+              <li>• Peer PE (40%) at 25x NTM EPS → ~€775/sh.</li>
+              <li>• Structural monopoly premium (+20%) + 2030 optionality uplift.</li>
+            </ul>
+          </div>
+          <div class="mt-3 text-xs text-slate-200">
+            <p class="font-semibold mb-1">Committee takeaway</p>
+            <p>Target set at ~€1,950 / ~$2,100 – above mechanical blend but supported by moat analysis and sector valuation work in the AI infrastructure primer.[cite:55]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 10: Recommendation & Next Steps -->
+  <div class="slide slide-10" data-slide="10">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:520px;height:520px;top:-160px;right:-80px;background:#eab308;"></div>
+      <div class="blob" style="width:420px;height:420px;bottom:-140px;left:-140px;background:#22c55e;"></div>
+      <div class="blob" style="width:320px;height:320px;top:36%;left:10%;background:#38bdf8;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-3 reveal">Conclusion</p>
+        <h2 class="font-display text-[clamp(2.2rem,4.2vw,3.4rem)] font-bold bg-linear-to-br from-accent-1 via-accent-2 to-accent-3 bg-clip-text text-transparent mb-4 reveal">
+          Initiating <span class="text-glow">BUY</span> – Own the Picks & Shovels of the AI Cycle
+        </h2>
+        <p class="text-sm text-slate-300 mb-5 max-w-3xl mx-auto reveal">
+          ASML offers rare exposure to a structural AI capex theme with monopoly economics, deep visibility and a credible decade‑long roadmap. The primary debate is not whether EUV is needed – it is how fast customers will adopt High‑NA and how long the AI super‑cycle can stretch.
+        </p>
+        <div class="grid grid-cols-2 gap-5 text-left">
+          <div class="glass-card-soft px-6 py-5 reveal">
+            <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-2">Base case action</p>
+            <ul class="text-xs text-slate-300 space-y-2">
+              <li>• Initiate a core **BUY** position sized to recognize cyclicality but reflect high‑conviction moat.</li>
+              <li>• Re‑underwrite after major policy moves on China or High‑NA adoption inflection points.</li>
+              <li>• Use volatility from macro / export headlines to add, provided thesis tracker pillars remain intact.</li>
+            </ul>
+          </div>
+          <div class="glass-card-soft px-6 py-5 reveal">
+            <p class="text-[0.7rem] tracking-[0.24em] uppercase text-slate-400 mb-2">Monitoring & next steps</p>
+            <ul class="text-xs text-slate-300 space-y-2">
+              <li>• Maintain a live thesis tracker updated quarterly with KPIs from ASML and key customers.</li>
+              <li>• Refresh valuation annually using updated DCF inputs and peer multiples from the AI primer.[cite:1]</li>
+              <li>• Prepare a downside playbook (position reduction, hedge structures) for a sharp AI capex slowdown scenario.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="mt-6 text-[0.7rem] text-slate-500 reveal">Appendices: full model, detailed valuation and sensitivity outputs available in the accompanying Excel file.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 10</span>
+</div>
+
+<script>
+  let current = 1;
+  const total = document.querySelectorAll('.slide').length;
+  const dotsContainer = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  for (let i = 1; i <= total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 1 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+  function goToSlide(n) {
+    const prev = document.querySelector('.slide.active');
+    const next = document.querySelector(`.slide[data-slide="${n}"]`);
+    if (prev) prev.classList.remove('active');
+    if (next) { next.classList.add('active'); animateSlide(next); }
+    current = n; updateNav();
+  }
+  function changeSlide(dir) {
+    let next = current + dir; if (next < 1) next = total; if (next > total) next = 1; goToSlide(next);
+  }
+  function updateNav() {
+    document.querySelectorAll('.dot').forEach((d, i) => { d.classList.toggle('active', i + 1 === current); });
+    counter.textContent = current + ' / ' + total;
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+  });
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+  });
+  function animateSlide(slide) {
+    slide.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(18px)';
+      el.offsetHeight;
+      const delay = i * 0.08;
+      el.style.transition = `opacity 0.38s ease ${delay}s, transform 0.38s ease ${delay}s`;
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0px)';
+    });
+    animateSlideEffects(slide);
+  }
+  function animateSlideEffects(slide) {
+    slide.querySelectorAll('.bar-track .bar-fill:not(.fill-init)').forEach((bar, i) => {
+      bar.classList.add('fill-init');
+      bar.style.width = '0%'; bar.style.transition = `width 0.5s ease ${i * 0.08}s`;
+      bar.offsetHeight; bar.style.width = (bar.dataset.width || 0) + '%';
+    });
+  }
+  document.addEventListener('mousemove', (e) => {
+    const spotlight = document.querySelector('.mouse-spotlight');
+    if (spotlight) {
+      spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(${getComputedStyle(document.documentElement).getPropertyValue('--glow-color-rgb') || '234,179,8'}, 0.06), transparent 40%)`;
+    }
+  });
+  window.initParticles = function(canvas, options) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+    const interactive = options.interactive !== false;
+    const count = options.count || (interactive ? 55 : 18);
+    let mx = -1000, my = -1000;
+    const rgb = getComputedStyle(document.documentElement).getPropertyValue('--glow-color-rgb').trim() || '234,179,8';
+    const [r, g, b] = rgb.split(',').map(Number);
+    const particles = Array.from({ length: count }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 2.4 + 0.8,
+      alpha: Math.random() * 0.35 + 0.12,
+    }));
+    if (interactive) {
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect(); mx = e.clientX - rect.left; my = e.clientY - rect.top;
+      });
+      canvas.addEventListener('mouseleave', () => { mx = -1000; my = -1000; });
+    }
+    (function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        if (interactive) {
+          const dx = p.x - mx, dy = p.y - my, dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            const force = (120 - dist) / 120 * 2; p.vx += (dx / dist) * force * 0.08; p.vy += (dy / dist) * force * 0.08;
+          }
+        }
+        p.vx *= 0.98; p.vy *= 0.98; p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},${p.alpha})`; ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    })();
+  };
+  document.querySelectorAll('.particle-canvas').forEach(c => window.initParticles(c, { interactive: true, count: 55 }));
+  try { animateSlide(document.querySelector('.slide.active')); } catch(e) { console.warn('Initial animation error:', e); }
+</script>
+</body>
+</html>

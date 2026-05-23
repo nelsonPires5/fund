@@ -1,0 +1,16 @@
+{
+  "company_name": "ASML Holding N.V.",
+  "ticker": "ASML",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "lithography equipment / semiconductor manufacturing equipment",
+  "currency": "EUR",
+  "fiscal_year_end": "12-31",
+  "koyfin_id": "ASML US",
+  "sec_cik": "0000937966",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-13-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "semiconductors-semiconductor-equipment"
+}
