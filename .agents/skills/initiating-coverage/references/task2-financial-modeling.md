@@ -13,13 +13,20 @@ This document provides step-by-step instructions for executing Task 2 (Financial
   - OR: Pre-extracted historical financials provided by user
 - **Optional**: Company research (Task 1) for business context
 
-**Output**: Excel Financial Model (.xlsx) with 6 essential tabs:
-1. Revenue Model
-2. Income Statement
-3. Cash Flow Statement
+**Output**: Excel Financial Model (.xlsx) with repo-standard tabs:
+1. Summary
+2. Revenue Model
+3. Income Statement
 4. Balance Sheet
-5. Scenarios
-6. DCF Inputs
+5. Cash Flow
+6. DCF
+7. Sensitivity
+8. Comps
+9. Thesis Tracker
+10. DCF Assumptions
+11. Checks
+
+For quick standalone tasks, the minimum six tabs remain Revenue Model, Income Statement, Cash Flow, Balance Sheet, Scenarios, and DCF Inputs; initial coverage should use the full repo-standard set.
 
 ---
 
@@ -45,6 +52,12 @@ This document provides step-by-step instructions for executing Task 2 (Financial
 ---
 
 ## Model Structure and Formatting
+
+### Summary and Thesis Tracker Requirements
+
+The `Summary` tab should include recommendation, current price, price target, upside/downside, bull/base/bear valuation, key metrics, trends, and scenario outputs.
+
+The `Thesis Tracker` tab should include thesis pillars, business-relevant events/catalysts, qualitative evidence, financial/KPI metrics to track, current value, trigger threshold, scenario impact, and next review date.
 
 ### Color Coding (Industry Standard)
 - **Blue text**: Hardcoded inputs (user can change)

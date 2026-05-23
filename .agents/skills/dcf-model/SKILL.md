@@ -788,14 +788,25 @@ Every DCF model must maximize for:
 
 ## Excel Model Structure
 
-### Sheet Architecture
+### Repository Sheet Architecture
 
-Create **two sheets**:
+For this investment research workspace, create a fuller workbook by default:
 
-1. **DCF** - Main valuation model with sensitivity analysis at bottom
-2. **WACC** - Cost of capital calculation
+1. **Summary** - recommendation, current price, target price, upside/downside, bull/base/bear values, key metrics, trends, and scenario snapshot
+2. **Revenue Model** - product/segment/geography/channel revenue build where applicable
+3. **Income Statement** - historical and projected P&L
+4. **Balance Sheet** - historical and projected balance sheet
+5. **Cash Flow** - historical and projected cash flow / FCF
+6. **DCF** - main valuation model
+7. **Sensitivity** - WACC/g, growth/margin, and beta/risk-free sensitivities
+8. **Comps** - peer operating metrics and valuation multiples
+9. **Thesis Tracker** - thesis pillars, events/catalysts, qualitative evidence, quantitative KPIs, and model/scenario impact
+10. **DCF Assumptions** - explicit assumption register with rationale and sensitivity ranges
+11. **Checks** - formula and cross-artifact checks
 
-**CRITICAL**: Sensitivity tables go at the BOTTOM of the DCF sheet (not on a separate sheet). This keeps all valuation outputs together.
+A compact two-sheet DCF (`DCF`, `WACC`) is acceptable only when the user explicitly requests a quick standalone DCF.
+
+**CRITICAL**: Sensitivity tables may live on a dedicated `Sensitivity` tab for the repo workbook; in compact DCF mode, place them at the bottom of the DCF sheet.
 
 ### Formula Recalculation (MANDATORY)
 
@@ -1129,13 +1140,11 @@ This approach centralizes scenario logic, making the model easier to audit and m
 
 ## Deliverables Structure
 
-**File naming**: `[Ticker]_DCF_Model_[Date].xlsx`
+**File naming**: in this repo, write the primary model as `<run>/model.xlsx`.
 
-**Two sheets**:
-1. **DCF** - Complete model with Bear/Base/Bull cases + three sensitivity tables at bottom (WACC vs Terminal Growth, Revenue Growth vs EBIT Margin, Beta vs Risk-Free Rate)
-2. **WACC** - Cost of capital calculation
+**Default repo tabs**: Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks.
 
-**Key features**: Case selector (1/2/3), consolidation column with INDEX/OFFSET formulas, color-coded cells, cell comments on all inputs, professional borders
+**Key features**: Case selector (1/2/3), consolidation column with INDEX/OFFSET formulas, color-coded cells, cell comments on all inputs, professional borders, formatted numbers/tables, named outputs, and thesis/catalyst tracking tied to model KPIs.
 
 ## Best Practices
 

@@ -148,6 +148,13 @@ function cellToUniver(cell, context) {
   }
   if (cell.type !== undefined) out.t = cell.type;
   if (cell.t !== undefined) out.t = cell.t;
+  // Optional Univer style id/object. Prefer style ids that point at spec.styles.
+  if (cell.style !== undefined) out.s = cell.style;
+  if (cell.s !== undefined) out.s = cell.s;
+  // Optional number format / pattern metadata for future renderers. Univer ignores
+  // unknown keys safely in most snapshots, but preserving it keeps the spec auditable.
+  if (cell.numFmt !== undefined) out.numFmt = cell.numFmt;
+  if (cell.n !== undefined) out.n = cell.n;
   return Object.keys(out).length ? out : undefined;
 }
 
@@ -200,6 +207,9 @@ function buildSheet(sheetSpec, sheetIndex, specDir, outputKeys) {
     rowCount: sheetSpec.rowCount || Math.max(maxRow, 100),
     columnCount: sheetSpec.columnCount || Math.max(maxCol, 26),
     cellData,
+    rowData: sheetSpec.rowData || undefined,
+    columnData: sheetSpec.columnData || sheetSpec.columns || undefined,
+    mergeData: sheetSpec.mergeData || sheetSpec.merges || undefined,
     freeze: sheetSpec.freeze || undefined,
     hidden: !!sheetSpec.hidden,
   };

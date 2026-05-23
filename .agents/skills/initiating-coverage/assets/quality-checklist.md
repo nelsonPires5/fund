@@ -5,30 +5,31 @@ Before delivering an initiation report, verify all items below are complete.
 ## Critical Minimums - Reports Must Meet These
 
 **CRITICAL DO NOT DELIVER IF:**
-- ❌ DOCX report fewer than 30 pages → INCOMPLETE
-- ❌ Fewer than 25 embedded charts → INCOMPLETE
-- ❌ Fewer than 12 comprehensive tables → INCOMPLETE
-- ❌ Fewer than 10,000 words → INCOMPLETE
+- ❌ `report.md` fewer than 3,500 words for initial coverage → INCOMPLETE
+- ❌ No charts/images referenced from `<run>/assets/` → INCOMPLETE
+- ❌ Fewer than 8 comprehensive tables → INCOMPLETE
+- ❌ Company / market / industry / business model / competitors sections are shallow → INCOMPLETE
 - ❌ No XLS financial model → MISSING DELIVERABLE
 - ❌ Charts are text descriptions, not actual PNG/JPG files → MAJOR FAILURE
 
 ## Deliverables Checklist
 
-- [ ] DOCX report file created
+- [ ] `report.md` created in the active run folder
 - [ ] XLS financial model file created
-- [ ] Both files named properly: `[Company]_Initiation_Report_[Date].docx` and `[Company]_Financial_Model_[Date].xlsx`
+- [ ] Run-local `assets/charts/` or `assets/screenshots/` contains visuals used by report/deck
+- [ ] Raw data, if any, is under `<run>/data/raw/` and not company-level `data/raw/`
 
-## DOCX Report - Length & Content
+## Report - Length & Content
 
 **Length Verification:**
-- [ ] Report is 30-50 pages (count pages in final document)
-- [ ] Word count is 10,000-15,000 words
-- [ ] If under 30 pages: STOP and add more content
+- [ ] `report.md` is 3,500-6,000+ words for initial coverage
+- [ ] If DOCX explicitly requested, report is 30-50 pages
+- [ ] If under minimum depth: STOP and add more company, market, industry, business model, competitor, valuation, scenario, and thesis content
 
 **Visual Elements:**
-- [ ] 25-35 charts embedded (count them: _____ charts)
-- [ ] All charts are actual PNG/JPG image files (NOT text descriptions)
-- [ ] 12-20 comprehensive tables included (count them: _____ tables)
+- [ ] Charts/images referenced from `<run>/assets/` (count them: _____ visuals)
+- [ ] All visuals are actual PNG/JPG/SVG files (NOT text descriptions)
+- [ ] 8-20 comprehensive tables included (count them: _____ tables)
 - [ ] Charts and tables interspersed throughout, not grouped at end
 
 **Chart Requirements:**
@@ -51,7 +52,7 @@ Before delivering an initiation report, verify all items below are complete.
 - [ ] Two sensitivity tables
 - [ ] 2-3 additional financial/competitive tables
 
-## DOCX Report - Structure
+## Report - Structure
 
 **Page 1 Requirements:**
 - [ ] "INITIATING COVERAGE" header present (NOT "Company Update")
@@ -77,7 +78,7 @@ Before delivering an initiation report, verify all items below are complete.
 - [ ] Scenario Analysis (1,500-2,000 words with Bull/Base/Bear parameters)
 - [ ] Appendices including Data Sources & References page
 
-## DOCX Report - Formatting
+## Report - Formatting
 
 **Figure & Table Formatting:**
 - [ ] Every figure has caption above: "Figure X - [Company] [Descriptive Title]"
@@ -94,31 +95,18 @@ Before delivering an initiation report, verify all items below are complete.
 - [ ] Every page has both text AND visuals (charts or tables)
 - [ ] Professional business report template used
 
-## Citations & Sources ⭐⭐⭐ CRITICAL
+## Sources and Asset Traceability
 
 **Source Attribution:**
-- [ ] Every figure has specific source with document name and date
-- [ ] Every table has specific source with document reference
-- [ ] Key statistics throughout text have footnotes with sources
-- [ ] NOT just generic "Company data" - must be specific
+- [ ] Every figure has a concise source note or source context when useful
+- [ ] Every table states whether it comes from model, outputs.json, Koyfin, company filings, or estimates
+- [ ] Key statistics are traceable to model/outputs/source data, but formal citations and links are optional unless requested
+- [ ] No distracting raw URL dumps
 
-**Hyperlinks:** ⭐⭐⭐ MANDATORY
-- [ ] ALL URLs are CLICKABLE HYPERLINKS (not plain text)
-- [ ] SEC filings hyperlinked to EDGAR viewer
-- [ ] Earnings transcripts hyperlinked (Seeking Alpha or company IR)
-- [ ] Press releases hyperlinked to company IR page
-- [ ] Presentations hyperlinked to PDF URLs
-- [ ] Industry reports hyperlinked (if publicly available)
-- [ ] Subscription data (Bloomberg, FactSet) noted as "(subscription required)"
-- [ ] No raw URLs displayed anywhere - all formatted as hyperlinks
-- [ ] Test 3-5 sample hyperlinks to ensure they work (Ctrl+Click)
-
-**Reference Page:**
-- [ ] "Data Sources & References" page at end of report
-- [ ] Lists ALL sources used in report
-- [ ] Sources organized by category (SEC Filings, Earnings Transcripts, etc.)
-- [ ] Every source has date
-- [ ] Every source has clickable hyperlink (where applicable)
+**Asset Traceability:**
+- [ ] Report/deck visuals live under `<run>/assets/`, not `<run>/data/raw/`
+- [ ] Raw source captures remain under `<run>/data/raw/`
+- [ ] Manifest lists `data/raw/` and `assets/` paths
 
 ## XLS Financial Model - Structure
 
@@ -223,14 +211,14 @@ Before delivering an initiation report, verify all items below are complete.
 
 Run through this quick final review:
 
-1. **Deliverables**: Both DOCX and XLS files created ✓
-2. **Length**: DOCX is 30-50 pages ✓
-3. **Charts**: 25-35 actual PNG/JPG files embedded ✓
-4. **Tables**: 12-20 comprehensive tables included ✓
-5. **Words**: 10,000-15,000 words ✓
-6. **Hyperlinks**: Test 3-5 hyperlinks - all work ✓
-7. **Cross-check**: Spot check 10 numbers match between DOCX and XLS ✓
-8. **Page 1**: "INITIATING COVERAGE" header present ✓
+1. **Deliverables**: `report.md`, `model.xlsx`, and requested deck files created ✓
+2. **Length**: `report.md` is 3,500-6,000+ words for initial coverage ✓
+3. **Charts/images**: actual visual files referenced from `<run>/assets/` ✓
+4. **Tables**: 8-20 comprehensive tables included ✓
+5. **Depth**: company, market, industry, business model, competitors, valuation, scenarios, and thesis tracking are substantive ✓
+6. **Raw data**: source captures are under `<run>/data/raw/` and ignored by git ✓
+7. **Cross-check**: Spot check 10 numbers match between report/deck and model/outputs ✓
+8. **Opening section**: "INITIATING COVERAGE" framing present ✓
 
 If ANY item fails, DO NOT DELIVER. Go back and fix.
 
@@ -238,11 +226,11 @@ If ANY item fails, DO NOT DELIVER. Go back and fix.
 
 **Before delivery, fill in actual counts:**
 
-DOCX Report:
-- Page count: _____ pages (MUST BE 30-50)
-- Chart count: _____ charts (MUST BE 25-35)
-- Table count: _____ tables (MUST BE 12-20)
-- Word count: _____ words (MUST BE 10,000-15,000)
+Report:
+- Word count: _____ words (MUST BE 3,500-6,000+ for initial coverage)
+- Visual count: _____ charts/images (must reference `<run>/assets/`)
+- Table count: _____ tables (MUST BE 8-20)
+- DOCX page count if requested: _____ pages
 
 XLS Model:
 - Tab count: _____ tabs (SHOULD BE 15+)

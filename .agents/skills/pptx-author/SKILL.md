@@ -34,8 +34,11 @@ prs.save("./out/pitch-<target>.pptx")
 
 - **One idea per slide.** Title states the takeaway; body supports it.
 - **Every number traces to the model.** If a figure comes from `./out/model.xlsx`, footnote the sheet and cell.
+- **Use run assets.** For company runs, source charts/images from `<run>/assets/charts/` or `<run>/assets/screenshots/`; do not embed raw captures directly from `<run>/data/raw/`.
 - **Use the firm template** when one is mounted at `./templates/`; otherwise default layouts.
 - **Charts**: prefer embedding a PNG rendered from the model over native pptx charts when fidelity matters.
+- **Initial coverage structure**: title, agenda, investment summary, company overview, business model, market/industry, competitive landscape/peers, financial trends, model/scenarios, valuation, thesis tracker/catalysts, risks, and final End/Q&A slide.
+- **Visual density**: include charts/images where they improve analysis; avoid all-text decks.
 - **No external sends.** This skill writes a file; it never emails or uploads.
 
 ## When NOT to use

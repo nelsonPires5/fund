@@ -335,7 +335,7 @@ Identify 8-12 risks across four categories. For each risk, write 50-100 words.
 - Lead with key insights
 - Use concrete examples and data
 - Avoid generic statements
-- Proper citations throughout
+- Source notes where useful; clickable citations/links are optional unless the user requests them
 
 ---
 

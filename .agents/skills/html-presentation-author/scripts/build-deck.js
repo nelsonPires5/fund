@@ -32,13 +32,16 @@ if (!Array.isArray(spec.slides) || spec.slides.length === 0) {
   throw new Error('deck.spec.json must include a non-empty slides array');
 }
 
-const slides = spec.slides.map((slide, i) => {
-  if (slide.html) return `<section class="slide">${slide.html}</section>`;
-  const title = slide.title ? `<h1>${escapeHtml(slide.title)}</h1>` : '';
-  const body = Array.isArray(slide.body) ? renderLines(slide.body) : renderLines(String(slide.body || '').split('\n'));
-  const footnote = slide.footnote ? `<footer>${escapeHtml(slide.footnote)}</footer>` : '';
-  return `<section class="slide">${title}<div class="body">${body}</div>${footnote}</section>`;
-}).join('\n');
+const sourceSlides = [...spec.slides];
+if (spec.autoFinalSlide !== false && !hasClosingSlide(sourceSlides[sourceSlides.length - 1])) {
+  sourceSlides.push({
+    title: 'End / Q&A',
+    body: [`Source run: ${spec.run_id || 'N/A'}`],
+    final: true,
+  });
+}
+
+const slides = sourceSlides.map((slide, i) => renderSlide(slide, i, path.dirname(specPath))).join('\n');
 
 const html = `<!doctype html>
 <html lang="en">
@@ -61,6 +64,10 @@ const html = `<!doctype html>
     table { border-collapse: collapse; font-size: 1.1rem; }
     td, th { border-bottom: 1px solid #e2e8f0; padding: 0.45rem 0.7rem; text-align: right; }
     th:first-child, td:first-child { text-align: left; }
+    .slide-image { max-width: 100%; max-height: 62vh; object-fit: contain; border-radius: 0.5rem; box-shadow: 0 8px 20px rgba(15,23,42,0.10); }
+    .image-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: center; }
+    .final-slide { align-items: center; text-align: center; background: #0f172a; color: #fff; }
+    .final-slide h1 { color: #fff; }
   </style>
 </head>
 <body>
@@ -88,7 +95,30 @@ const html = `<!doctype html>
 
 fs.mkdirSync(path.dirname(htmlPath), { recursive: true });
 fs.writeFileSync(htmlPath, html);
-console.log(JSON.stringify({ status: 'success', html: htmlPath, slides: spec.slides.length }, null, 2));
+console.log(JSON.stringify({ status: 'success', html: htmlPath, slides: sourceSlides.length }, null, 2));
+
+function renderSlide(slide, i, specDir) {
+  const finalClass = slide.final ? ' final-slide' : '';
+  if (slide.html) return `<section class="slide${finalClass}">${slide.html}</section>`;
+  const title = slide.title ? `<h1>${escapeHtml(slide.title)}</h1>` : '';
+  const body = Array.isArray(slide.body) ? renderLines(slide.body) : renderLines(String(slide.body || '').split('\n'));
+  const images = [];
+  for (const key of ['image', 'chartImage']) {
+    if (slide[key]) images.push(slide[key]);
+  }
+  if (Array.isArray(slide.images)) images.push(...slide.images);
+  const imageHtml = images.length
+    ? `<div class="${images.length > 1 ? 'image-grid' : ''}">${images.map((img) => `<img class="slide-image" src="${escapeHtml(String(img))}" alt="${escapeHtml(slide.title || 'slide image')}" />`).join('')}</div>`
+    : '';
+  const footnote = slide.footnote ? `<footer>${escapeHtml(slide.footnote)}</footer>` : '';
+  return `<section class="slide${finalClass}">${title}<div class="body">${body}</div>${imageHtml}${footnote}</section>`;
+}
+
+function hasClosingSlide(slide) {
+  if (!slide) return false;
+  const text = `${slide.title || ''} ${slide.html || ''} ${Array.isArray(slide.body) ? slide.body.join(' ') : (slide.body || '')}`.toLowerCase();
+  return /\b(end|q&a|questions|thank you|appendix)\b/.test(text);
+}
 
 function renderLines(lines) {
   const out = [];

@@ -12,19 +12,22 @@ Use this skill for file organization only. It does not perform valuation or writ
 ```text
 sectors/<sector>/companies/<ticker>/
   company.json
-  data/
-    raw/koyfin/
-    normalized/
   runs/
     <yyyy-mm-dd>-<run-type>/
       manifest.json
+      data/
+        raw/koyfin/       # raw captures; ignored by git
+        normalized/       # optional cleaned/model-ready data
+      assets/
+        charts/           # charts/images used in report and deck
+        screenshots/      # selected screenshots used in report and deck
       model.xlsx
       outputs.json
       report.md
       deck.pptx
 ```
 
-`deck.pptx` is optional.
+`deck.pptx` is optional. Raw data is run-local so every run is self-contained and auditable.
 
 ## `company.json`
 
@@ -62,6 +65,9 @@ Each run gets a manifest:
   "created_at": "2026-05-18",
   "source_files": [],
   "artifacts": {
+    "raw_data": "data/raw/",
+    "normalized_data": "data/normalized/",
+    "assets": "assets/",
     "model": "model.xlsx",
     "outputs": "outputs.json",
     "report": "report.md",
@@ -74,6 +80,10 @@ Each run gets a manifest:
 ## Rules
 
 - Run folders are snapshots. For meaningful revisions, create a new run.
+- Put all raw source captures under the active run's `data/raw/`; never create company-level `data/raw/`.
+- Raw source captures under `runs/*/data/raw/` should not be committed.
+- Put model-ready cleaned data under the active run's `data/normalized/` when needed.
+- Put final report/deck visuals under the active run's `assets/charts/` or `assets/screenshots/`.
 - Use `model.xlsx` for workbook/model artifacts by default in this comparison phase.
 - Use `deck.pptx` for presentation artifacts by default when requested.
 - Use `report.md` for detailed research discussion.

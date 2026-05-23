@@ -11,7 +11,26 @@ Create institutional-quality equity research initiation reports through a struct
 
 This skill produces comprehensive first-time coverage reports following institutional standards (JPMorgan, Goldman Sachs, Morgan Stanley format). Tasks are executed individually, each verifying prerequisites before proceeding.
 
-**Default Font**: Times New Roman throughout all documents (unless user specifies otherwise).
+**Default Font**: Times New Roman throughout Office documents (unless user specifies otherwise).
+
+## Repository Output Override
+
+In this investment research workspace, the default final artifacts are run-local files, not loose task folders:
+
+```text
+sectors/<sector>/companies/<ticker>/runs/<yyyy-mm-dd>-initial-coverage/
+  data/raw/              # raw source captures; ignored by git
+  data/normalized/       # optional cleaned/model-ready data
+  assets/charts/         # charts/images used in report and deck
+  assets/screenshots/    # curated screenshots used in report and deck
+  model.xlsx
+  workbook.html
+  outputs.json
+  report.md
+  deck.pptx
+```
+
+For this repo, produce `report.md` as the written source of truth unless the user explicitly asks for DOCX. Report/deck visuals must be stored under `<run>/assets/` and referenced from the report/deck. Do not reference raw screenshots directly from `data/raw/` in final deliverables.
 
 ---
 
@@ -185,13 +204,15 @@ Request 5: Task 5 - Report Assembly (requires ALL previous task outputs)
 3. Execute qualitative research workflow
 4. Deliver research document
 
-**Output**: Company Research Document (6,000-8,000 words)
+**Output**: Company Research Document (6,000-8,000 words) or run-local research section inputs for `report.md`
 - Company overview & history
+- Business model mechanics and revenue streams
 - Management bios (300-400 words × 3-4 execs)
 - Products & services analysis
-- Industry overview
+- Customer segments and go-to-market model
+- Industry overview and market structure
 - Competitive analysis (5-10 competitors)
-- TAM sizing
+- TAM sizing and market growth drivers
 - Risk assessment (8-12 risks)
 
 **File name**: `[Company]_Research_Document_[Date].md`
@@ -241,17 +262,22 @@ Optional:
 1. Verify access to financial data
 2. Load detailed instructions from references/task2-financial-modeling.md
 3. **Step 1**: Extract historical financials (if needed)
-4. **Step 2+**: Build projection model with 6 essential tabs
+4. **Step 2+**: Build projection model with repo-standard tabs
 5. Deliver Excel model
 
 **Output**: Excel Financial Model (.xlsx)
-- 6 essential tabs:
-  1. **Revenue Model** - Product breakdown (20-30 rows) + Geography breakdown (15-20 rows)
-  2. **Income Statement** - Full P&L with 40-50 line items, historical (3-5 years) + projected (5 years)
-  3. **Cash Flow Statement** - Operating/Investing/Financing activities, historical + projected
+- Repo-standard initial coverage tabs:
+  1. **Summary** - recommendation, price target, key metrics, trends, scenarios, and valuation bridge
+  2. **Revenue Model** - Product breakdown (20-30 rows) + Geography breakdown (15-20 rows)
+  3. **Income Statement** - Full P&L with 40-50 line items, historical (3-5 years) + projected (5 years)
   4. **Balance Sheet** - Assets/Liabilities/Equity, historical + projected
-  5. **Scenarios** - Bull/Base/Bear comparison table
-  6. **DCF Inputs** - Prepared for Task 3 valuation
+  5. **Cash Flow** - Operating/Investing/Financing activities, historical + projected
+  6. **DCF** - Prepared valuation model
+  7. **Sensitivity** - WACC/g, growth/margin, and scenario sensitivities
+  8. **Comps** - Peer operating metrics and valuation multiples
+  9. **Thesis Tracker** - Thesis pillars, key events, KPIs, and scenario/model impact
+  10. **DCF Assumptions** - Assumption register with rationale and sensitivity ranges
+  11. **Checks** - Formula and cross-artifact checks
 
 **File name**: `[Company]_Financial_Model_[Date].xlsx`
 
@@ -259,19 +285,19 @@ Optional:
 
 **⚠️ DO NOT TAKE SHORTCUTS:**
 - ✅ If extracting financials: Extract ALL line items from 3 financial statements (3-5 years)
-- ✅ Build ALL 6 projection tabs completely with full detail
+- ✅ Build ALL repo-standard projection/model tabs completely with full detail
 - ✅ Create detailed revenue model with 20-30 product rows AND 15-20 geography rows
 - ✅ Build complete income statement with 40-50 line items (not abbreviated)
 - ✅ Include full cash flow statement and balance sheet with all line items
 - ✅ Complete ALL three scenarios (Bull/Base/Bear) with different parameters
 - ❌ Do not create simplified/abbreviated versions
-- ❌ Do not skip any of the 6 essential tabs
+- ❌ Do not skip Summary, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, or Checks in initial coverage models
 - ❌ Do not skip historical financials extraction if needed
 
 **Verification before proceeding to Task 3**:
 - [ ] Historical financials extracted (if needed) or provided
 - [ ] Excel file created and can be opened
-- [ ] Model has all 6 essential tabs (Revenue Model, Income Statement, Cash Flow, Balance Sheet, Scenarios, DCF Inputs)
+- [ ] Model has repo-standard tabs (Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks)
 - [ ] Historical data (3-5 years) incorporated
 - [ ] Projections complete (5 years forward)
 - [ ] Scenarios complete (Bull/Base/Bear)
@@ -429,7 +455,7 @@ Required from External Sources:
 4. Package all charts into a zip file
 5. Deliver zip file
 
-**Output**: 25-35 Professional Chart Files (PNG/JPG, 300 DPI) packaged in zip
+**Output**: 25-35 Professional Chart Files (PNG/JPG, 300 DPI) stored under `<run>/assets/charts/` and optionally packaged in a zip
 
 **4 MANDATORY Charts** (must be present) ⭐:
 - chart_03: Revenue by product (stacked area)
@@ -452,7 +478,7 @@ Required from External Sources:
 
 **File naming**: `chart_01_description.png`, `chart_02_description.png`, etc.
 
-**Deliverable**: `[Company]_Charts_[Date].zip` containing all 25-35 chart files + chart_index.txt
+**Deliverable**: `<run>/assets/charts/` containing all 25-35 chart files + `chart_index.md` (and, if requested, `[Company]_Charts_[Date].zip`)
 
 **⚠️ DELIVER ONLY THIS 1 ZIP FILE. NO completion summaries, no separate chart lists, no extra documents.**
 
@@ -595,14 +621,13 @@ IF ANY VERIFICATION FAILS: Stop and complete missing task first.
 
 **This is publication-ready institutional research. Spare no effort, tokens, or detail.**
 
-**Output**: Comprehensive Equity Research Report (.docx)
+**Output**: Comprehensive Equity Research Report (`report.md` by repo default; `.docx` only when explicitly requested)
 
 **Specifications**:
-- **Length**: 30-50 pages (MINIMUM 30)
-- **Word count**: 10,000-15,000 words (MINIMUM 10,000)
-- **Charts**: 25-35 embedded images
-- **Tables**: 12-20 comprehensive tables
-- **Format**: Professional DOCX with clickable hyperlinks
+- **Length**: institutional initial-coverage depth; for `report.md`, target 3,500-6,000+ words minimum; for DOCX, 30-50 pages
+- **Charts/images**: use run-local visuals from `<run>/assets/charts/` and `<run>/assets/screenshots/`
+- **Tables**: 8-20 comprehensive tables depending on output format
+- **Format**: professional Markdown for this repo; professional DOCX only when explicitly requested
 
 **Structure**:
 - Page 1: Investment Summary (INITIATING COVERAGE format)
@@ -612,16 +637,15 @@ IF ANY VERIFICATION FAILS: Stop and complete missing task first.
 - Pages 31-40: Valuation analysis
 - Pages 41-50: Appendices
 
-**File name**: `[Company]_Initiation_Report_[Date].docx`
+**File name**: `report.md` in the active run folder (or `[Company]_Initiation_Report_[Date].docx` if the user explicitly requested DOCX)
 
-**⚠️ DELIVER ONLY THIS 1 DOCX FILE. NO executive summaries, no "highlights" documents, no extra files.**
+**⚠️ DELIVER ONLY THE REQUESTED REPORT ARTIFACT. NO executive summaries, no "highlights" documents, no extra files.**
 
 **Final Verification**:
-- [ ] Report is 30-50 pages
-- [ ] Word count is 10,000-15,000
-- [ ] 25-35 charts embedded
-- [ ] 12-20 tables included
-- [ ] All citations are clickable hyperlinks
+- [ ] `report.md` is detailed enough for initial coverage (target 3,500-6,000+ words) or DOCX is 30-50 pages if requested
+- [ ] Charts/images are referenced from `<run>/assets/`
+- [ ] Tables included for financials, valuation, peers, scenarios, and thesis tracking
+- [ ] Company, market, industry, business model, and competitors are covered in depth
 - [ ] Numbers match financial model exactly
 
 ---
@@ -712,7 +736,7 @@ All outputs meet institutional standards from leading investment banks (JPMorgan
 - **Comprehensive**: Meet all minimum requirements
 - **Detailed**: Specific data and examples, not generic statements
 - **Quantified**: Lead with numbers and metrics
-- **Cited**: Proper sources with clickable hyperlinks
+- **Traceable**: Key numbers and visuals tie back to model outputs, source files, or concise source notes; clickable links are optional unless requested
 - **Professional**: Institutional-quality formatting
 - **Accurate**: All numbers verified and cross-checked
 

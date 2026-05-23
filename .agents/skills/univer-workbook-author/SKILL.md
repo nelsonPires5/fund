@@ -57,10 +57,13 @@ node skills/univer-workbook-author/scripts/build-workbook-page.js <run>/workbook
 
 ## Workbook conventions
 
-- Use sheets for model structure: `Summary`, `Thesis`, `Raw Data`, `Assumptions`, `DCF`, `Comps`, `Sensitivity`, `Checks`.
+- Use sheets for model structure: `Summary`, `Revenue Model`, `Income Statement`, `Balance Sheet`, `Cash Flow`, `DCF`, `Sensitivity`, `Comps`, `Thesis Tracker`, `DCF Assumptions`, `Checks`.
+- `Summary` must include key metrics, trends, valuation bridge, recommendation, current price, target price, upside/downside, and bull/base/bear scenarios.
+- `Thesis Tracker` must connect qualitative thesis pillars and events/catalysts to quantitative KPIs, current values, trigger thresholds, scenario impact, and next review date.
 - Short thesis bullets may live in workbook sheets; detailed discussion belongs in `report.md`.
 - Use formulas for derived values. Hardcoded values should be raw data or explicit assumptions.
 - Add stable output keys for any number used by reports or presentations.
+- Format numbers and tables in the spec where possible: units, percentage/currency formats, thousands separators, shaded headers, frozen panes, column widths, and borders.
 - Prefer updating `workbook.spec.json`; do not hand-edit generated `workbook.json` unless necessary.
 
 ## Static save behavior

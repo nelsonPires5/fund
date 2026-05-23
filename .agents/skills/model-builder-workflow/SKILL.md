@@ -82,6 +82,8 @@ If preparing an investment deliverable:
 
 ### Step 4: Validate Model Logic
 
+For initial coverage / full DCF workbooks in this repo, use the standard model structure: Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks. The Summary tab should show key metrics/trends/scenarios, and the Thesis Tracker should connect catalysts/events to qualitative thesis status and quantitative model KPIs.
+
 Check:
 
 * Historical numbers tie to source

@@ -38,7 +38,7 @@ This task requires outputs from all three previous tasks. Starting without them 
 
 Do not attempt to create placeholder charts or skip charts due to missing data.
 
-**Output**: 25-35 Professional Chart Files (PNG/JPG, 300 DPI)
+**Output**: 25-35 Professional Chart Files (PNG/JPG, 300 DPI) stored under the active run's `<run>/assets/charts/`
 
 ---
 
@@ -558,7 +558,7 @@ create_valuation_football_field()
 - Professional color scheme
 - Clear labels, legends, and titles
 - Figure numbers (e.g., "Figure 5 - Company Timeline")
-- Source citations at bottom
+- Source notes at bottom
 
 ### Step 4B: Create Optional Charts (For 26-35 Total)
 
@@ -742,7 +742,7 @@ verify_charts()
 - [ ] Consistent styling across all charts
 - [ ] Proper figure numbering (sequential)
 - [ ] Clear titles and captions
-- [ ] Source citations on every chart
+- [ ] Source notes on every chart
 - [ ] Professional appearance
 
 ### Completeness
@@ -829,7 +829,7 @@ A successful chart package should:
 4. Have consistent professional styling across all charts
 5. Be high resolution (300 DPI) for print quality
 6. Have clear labels, legends, and titles on every chart
-7. Include proper figure numbers and source citations
+7. Include proper figure numbers and concise source notes
 8. Be ready for immediate embedding in Word
 9. Cover all key financial metrics and analyses
 10. Tell a visual story complementing the written analysis
@@ -915,6 +915,6 @@ Create a zip file containing all chart files and the chart index:
 ## Next Steps
 
 After completing Task 4, the zip file will be used for:
-- **Task 5 (Report Assembly)**: Extract charts and embed all into the final DOCX report at appropriate locations throughout the document
+- **Task 5 (Report Assembly)**: Reference or embed charts from `<run>/assets/charts/` into `report.md` (or DOCX if explicitly requested) at appropriate locations throughout the document
 
 The 4 mandatory charts are critical for the valuation and financial analysis sections of the report.

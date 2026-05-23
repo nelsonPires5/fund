@@ -11,8 +11,10 @@ Use this skill to research one company ticker in `https://app.koyfin.com` and ex
 
 1. Load the browser-harness skill: `/Users/nelson/.agents/skills/browser-harness/SKILL.md`.
 2. Use the user's authenticated Chrome session. Do not enter credentials or change account settings.
-3. Put all transient screenshots, raw captures, debug logs, and scratch outputs under `/tmp/<TICKER>/<tab-slug>/`.
-4. Keep only final skill/docs/scripts in the repo.
+3. Put temporary debug logs and scratch outputs under `/tmp/<TICKER>/<tab-slug>/` while iterating.
+4. For a company research/model run, write final raw Koyfin exports to the active run at `<run>/data/raw/koyfin/`.
+5. Raw exports and raw screenshots are source captures and must remain under `data/raw/` (ignored by git). If a screenshot/chart will be used in `report.md` or a presentation, copy or regenerate a curated version under `<run>/assets/charts/` or `<run>/assets/screenshots/`.
+6. Keep only final skill/docs/scripts in the repo.
 
 ## Company research workflow
 
@@ -32,16 +34,17 @@ You can extract data either systematically via the unified pipeline script or ta
 The automated script in `@scripts/run_pipeline.py` handles the entire process for all 27 tabs:
 - Queries the Koyfin Search API (`https://app.koyfin.com/api/v1/bfc/tickers/search`) to automatically retrieve the security ID (`KID`) for the ticker.
 - Sequentially navigates directly to the page for each tab.
-- Executes the corresponding extraction script and writes outputs, metadata, and screenshots to `/tmp/koyfin-company-research/{TICKER}/`.
+- Executes the corresponding extraction script and writes outputs, metadata, and screenshots to an output directory.
+- For durable research runs, set `OUTPUT_DIR=<run>/data/raw/koyfin`; otherwise use `/tmp/koyfin-company-research/{TICKER}/` for disposable extraction.
 
 Run the pipeline from the command line:
 ```bash
-TICKER=MSFT browser-harness < skills/koyfin-company-research/scripts/run_pipeline.py
+TICKER=MSFT OUTPUT_DIR=sectors/software/companies/MSFT/runs/2026-05-18-initial-coverage/data/raw/koyfin browser-harness < skills/koyfin-company-research/scripts/run_pipeline.py
 ```
 
 *Optional Environment Variables:*
 - `SLUGS`: A comma-separated list of tab slugs to run (e.g. `SLUGS=historical,intraday` or `SLUGS=all`).
-- `OUTPUT_DIR`: Custom destination directory for output files.
+- `OUTPUT_DIR`: Custom destination directory for output files. For repository runs, use `<run>/data/raw/koyfin`.
 
 ### 2. Manual Tab-by-Tab Fallback
 If you need to manually navigate and extract data for a single active tab:
@@ -57,6 +60,15 @@ PY
 ```
 
 If preflight returns `status: "auth_required"`, stop normal extraction, save that status, and ask the user to log in to Koyfin in the Chrome session before retrying. Do not treat it as a genuine empty table. Required fields for every output: `ticker`, `tab`, `extracted_at`. Add tab-specific fields such as `section`, `metric`, `period`, `value`, `unit`, `date`, `source`, `title`, `url`, `series`, or `status`.
+
+## Asset promotion pattern
+
+Raw Koyfin screenshots are evidence, not final visuals. When a chart/table/screenshot is useful for a report or deck:
+
+1. Keep the original under `<run>/data/raw/koyfin/<tab-slug>/`.
+2. Create a cleaned chart or selected screenshot under `<run>/assets/charts/` or `<run>/assets/screenshots/`.
+3. Reference only the asset path from `report.md`, `deck.spec.json`, or `deck/index.html`.
+4. Include the originating raw file/tab in `manifest.json` or the figure source line.
 
 ## Security Analysis tab map
 

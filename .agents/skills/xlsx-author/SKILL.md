@@ -32,10 +32,14 @@ wb.save("./out/model.xlsx")
 ## Conventions (mirror `audit-xls`)
 
 - **Blue / black / green.** Blue = hardcoded input, black = formula, green = link to another sheet/file.
-- **No hardcodes in calc cells.** Every calculation cell is a formula; every input lives on an Inputs tab.
+- **No hardcodes in calc cells.** Every calculation cell is a formula; every input lives on an Inputs or Assumptions area/tab.
 - **Named ranges** for any value referenced from a deck or memo.
 - **Balance checks.** Include a Checks tab that ties (BS balances, CF ties to cash, etc.) and surfaces TRUE/FALSE.
 - **One model per file.** Do not append to an existing workbook unless explicitly asked.
+- **Repo default tab set for initial coverage / DCF models:** Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks.
+- **Summary tab depth:** include key metrics, trends, valuation bridge, recommendation, current price, target price, upside/downside, and bull/base/bear scenarios.
+- **Thesis Tracker tab:** include thesis pillars, key events/catalysts, qualitative evidence, KPI/financial metric to track, current value, bull/base/bear trigger, and model/scenario impact.
+- **Formatting:** use thousands separators, percentage formats, currency formats, negative numbers in parentheses, frozen panes, set column widths, shaded headers, borders, and clear units in row/column labels.
 
 ## When NOT to use
 

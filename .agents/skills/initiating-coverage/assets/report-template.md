@@ -2,18 +2,18 @@
 
 This template provides the structure for creating a comprehensive equity research initiation report. Use this as a guide when constructing the final report document.
 
-**NOTE:** The actual report MUST be created using the DOCX skill. DO NOT generate markdown content.
+**NOTE:** In this repository, the default report artifact is `report.md` in the active run folder. Create DOCX only if the user explicitly requests it.
 
 **CRITICAL REQUIREMENTS:**
-1. **Generate 20-30+ chart images** using Python (matplotlib/plotly) BEFORE creating the Word document
-2. **Use DOCX skill**: Create professional report with proper styles, headers/footers, and formatting
-3. **Embed actual chart images**: Insert the generated PNG/JPG chart files into the Word document at appropriate locations
-4. **NO MARKDOWN**: Do not generate markdown content. Use DOCX skill to create a .docx file.
+1. **Generate 20-30+ chart/images** using Python (matplotlib/plotly) or curated screenshots before assembling the report
+2. **Store visuals under `<run>/assets/charts/` or `<run>/assets/screenshots/`**; raw screenshots remain under `<run>/data/raw/`
+3. **Reference actual image files** from `report.md` at appropriate locations
+4. **If DOCX is requested**: use DOCX skill to create professional report with proper styles, headers/footers, formatting, and embedded images.
 
 **CRITICAL FORMATTING GUIDANCE:**
 - **MAXIMUM DENSITY**: Every page should be packed with information. Intersperse text, charts, and tables throughout.
 - **NO ORPHANED SECTIONS**: Never have a section header alone or a single chart on its own page.
-- **20-30+ ACTUAL CHART IMAGES**: Generate charts as image files, then embed within text sections using DOCX skill.
+- **20-30+ ACTUAL CHART IMAGES**: Generate charts as image files under `<run>/assets/charts/`, then reference them within text sections (or embed with DOCX skill if requested).
 
 ---
 
@@ -805,7 +805,7 @@ Catalysts:
 - **Consistent color scheme** throughout (pick 3-5 brand colors)
 - **Professional fonts** (Arial, Calibri, or similar)
 - **Clear labels and legends** on every chart
-- **Source citations** at bottom of each chart
+- **Source notes** at bottom of each chart
 - **High information density** - use chart space efficiently
 - **Mix of chart types** for visual interest
 - **Annotations** to highlight key insights
@@ -834,7 +834,7 @@ Catalysts:
 
 7. **Consistent Formatting:** Use consistent styles for headers, body text, tables, and charts throughout. Pick a color scheme and stick to it.
 
-8. **References:** Include citations and sources for all data points
+8. **References:** Include concise source notes where useful; formal citations/links are optional unless requested
 
 9. **Proofread:** Always proofread for accuracy, especially financial data and calculations
 

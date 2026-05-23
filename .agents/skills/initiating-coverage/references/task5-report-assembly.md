@@ -4,7 +4,7 @@ This document provides step-by-step instructions for executing Task 5 (Report As
 
 ## Task Overview
 
-**Purpose**: Write and assemble the comprehensive final DOCX report.
+**Purpose**: Write and assemble the comprehensive final initial-coverage report. In this repository, the default written deliverable is run-local `report.md`; create DOCX only if explicitly requested.
 
 **Prerequisites**: ⚠️ Verify before starting - ALL PREVIOUS TASKS REQUIRED
 - **Required**: Company research from Task 1
@@ -20,15 +20,15 @@ This is the final assembly task. It cannot be completed without all previous wor
 - Task 1: Company research document (6-8K words)
 - Task 2: Financial model with all 6 tabs
 - Task 3: Valuation analysis with price target and recommendation
-- Task 4: Charts zip file with 25-35 charts
+- Task 4: Charts in `<run>/assets/charts/` (or charts zip) with 25-35 charts
 
 Do not attempt to create placeholder content, substitute missing sections, or assemble an incomplete report. The report requires ALL inputs to be publication-ready.
 
-**Output**: Comprehensive Equity Research Report (.docx)
-- Length: 30-50 pages (MINIMUM 30)
-- Word count: 10,000-15,000 words (MINIMUM 10,000)
-- Charts: 25-35 embedded images
-- Tables: 12-20 comprehensive tables
+**Output**: Comprehensive Equity Research Report (`report.md` by repository default; `.docx` only if explicitly requested)
+- Markdown length: target 3,500-6,000+ words minimum for initial coverage
+- DOCX length if requested: 30-50 pages
+- Charts/images: reference curated visuals from `<run>/assets/charts/` and `<run>/assets/screenshots/`
+- Tables: 8-20 comprehensive tables depending on output format
 
 ---
 
@@ -43,13 +43,13 @@ After completing 4 previous tasks, this final task assembles everything into pub
 **DO:**
 - ✅ **Use ENTIRE token budget if needed** - This is what it's for
 - ✅ **Write EVERY section in FULL** - Not summaries, not placeholders, FULL CONTENT
-- ✅ **Include ALL 25-35 charts** - Embed every single chart from Task 4 throughout the document
+- ✅ **Use the chart set** - Reference every material chart from `<run>/assets/charts/` throughout the document
 - ✅ **Create ALL 12-20 tables** - Extract every financial table from Excel, don't skip any
 - ✅ **Copy ALL 6-8K words from Task 1** - Use Company 101 content verbatim (40-50% of report)
 - ✅ **Write 2,000-3,000 words on Projection Assumptions** - Product-by-product, region-by-region detail
 - ✅ **Write 1,500-2,000 words on Scenario Analysis** - Specific Bull/Base/Bear parameters
-- ✅ **Achieve 10,000-15,000 total words** - This is a MINIMUM, not a suggestion
-- ✅ **Produce 30-50 pages minimum** - Text-dense with charts every 200-300 words
+- ✅ **Achieve 3,500-6,000+ words in `report.md`** - initial coverage must be detailed, not a brief note
+- ✅ **If DOCX requested, produce 30-50 pages minimum** - text-dense with charts every 200-300 words
 - ✅ **Professional institutional quality** - Indistinguishable from JPMorgan/Goldman Sachs
 
 **NEVER:**
@@ -68,7 +68,7 @@ After completing 4 previous tasks, this final task assembles everything into pub
 It must be:
 - **Complete**: Every section written in full with no placeholders
 - **Comprehensive**: All data extracted and included, all charts embedded
-- **Professional**: Proper formatting, citations, tables, charts throughout
+- **Professional**: Proper formatting, source notes where useful, tables, and charts throughout
 - **Thorough**: Deep analysis with specific numbers, detailed assumptions, complete scenarios
 - **Dense**: 60-80% page coverage with text and visuals on every page
 
@@ -117,11 +117,11 @@ It must be:
 ## Report Specifications
 
 ### Length Requirements
-- **Pages**: 30-50 (MINIMUM 30 pages)
-- **Word Count**: 10,000-15,000 words (MINIMUM 10,000 words)
-- **Charts**: 25-35 embedded PNG/JPG images
-- **Tables**: 12-20 comprehensive financial tables
-- **Density**: 60-80% page coverage
+- **Markdown default**: 3,500-6,000+ words minimum for initial coverage
+- **DOCX only if requested**: 30-50 pages and 10,000-15,000 words
+- **Charts/images**: use curated PNG/JPG assets from `<run>/assets/`
+- **Tables**: 8-20 comprehensive financial / valuation / peer / scenario tables
+- **Density**: concise but detailed; avoid text-only deliverables when visuals are available
 
 ### Critical Sections with Word Counts
 
@@ -439,7 +439,7 @@ Valuation Implications:
   - Company Materials
   - Industry Reports
   - News Articles
-- **ALL URLs must be clickable hyperlinks**
+- Links are optional; when URLs are included, prefer clean descriptive link text over raw URLs
 
 **Detailed Financial Model Assumptions**
 - Comprehensive assumptions detail
@@ -471,7 +471,7 @@ Valuation Implications:
   - Insert images from Task 4 chart files
   - Create tables
   - Format text, headers, footers, page numbers
-  - Add hyperlinks
+  - Add optional links if requested or useful
 - **XLSX skill** - To read data from Excel files
   - Extract tables from Task 2 financial model
   - Read Task 3 valuation tabs
@@ -992,7 +992,7 @@ Use Claude's DOCX skill to:
      - Company Materials (investor presentations, press releases)
      - Industry Reports (Gartner, Forrester, etc.)
      - News Articles
-   - **CRITICAL**: All URLs must be clickable hyperlinks (not plain text)
+   - Links are optional unless the user requests source links
    - Include dates for all sources
 
 2. **Additional Tables**
@@ -1019,7 +1019,7 @@ Use Claude's DOCX skill to:
 - Section breaks between major sections
 - Embed all 25-35 charts inline throughout text
 - Insert all 12-20 tables inline with text
-- **All URLs as clickable hyperlinks** (NOT plain text)
+- Optional clean source links where useful
 - **60-80% page density** - Every page has text AND visuals
 
 **Visual Density Strategy:**
@@ -1126,8 +1126,7 @@ MANDATORY TABLES:
 CITATIONS & HYPERLINKS:
 - [ ] All figures have source lines
 - [ ] All tables have source lines
-- [ ] All URLs are clickable hyperlinks (NOT plain text)
-- [ ] Test 5-10 random hyperlinks to verify they work
+- [ ] Optional source links are clean and not distracting
 - [ ] Data Sources & References page included
 - [ ] All sources have dates
 
@@ -1238,7 +1237,7 @@ Many reports fail because they use placeholders like "details would be included 
 7. **Short sections**: Must meet minimum word counts
 8. **Thin assumptions**: Projection Assumptions MUST be 2,000-3,000 words with product-by-product and region-by-region detail
 9. **Vague scenarios**: Must have specific parameters for Bull/Base/Bear
-10. **Plain text URLs**: All citations must be clickable hyperlinks
+10. **Raw URL clutter**: Avoid dumping raw URLs; use concise source notes or optional clean links
 11. **Missing statistical summary**: Comps table must have max/75th/median/25th/min
 12. **Charts not embedded**: All 25-35 charts must be IN document, not just referenced
 13. **Numbers don't match model**: Verify all figures against source
@@ -1276,7 +1275,7 @@ A successful equity research report should:
 6. **Include comprehensive comps table**
    - With statistical summary (max/75th/median/25th/min)
 
-7. **Have all citations as clickable hyperlinks**
+7. **Have concise source notes where useful; clickable citations are optional unless requested**
    - Test multiple links to verify they work
 
 8. **Be professionally formatted**
