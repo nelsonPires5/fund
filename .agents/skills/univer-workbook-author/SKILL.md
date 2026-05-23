@@ -33,7 +33,7 @@ node skills/univer-workbook-author/scripts/build-workbook-page.js <run>/workbook
 ```
 
 3. Validate generated JSON parses and artifact paths exist.
-4. Reference named outputs from `outputs.json` in `report.md` and `deck/index.html`.
+4. Reference named outputs from `outputs.json` in `report.md` and `deck.html`.
 
 ## Spec pattern
 
