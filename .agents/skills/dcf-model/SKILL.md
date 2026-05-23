@@ -7,7 +7,7 @@ description: Real DCF (Discounted Cash Flow) model creation for equity valuation
 
 ## Overview
 
-This skill creates institutional-quality DCF models for equity valuation following investment banking standards. Each analysis produces a detailed Excel model (with sensitivity analysis included at the bottom of the DCF sheet).
+This skill creates institutional-quality single-company DCF / valuation models following investment banking standards and the repo's hybrid workbook architecture. Each analysis produces a detailed Excel model with sector-native operating drivers, intrinsic valuation, sensitivity tables, and a dedicated scenario/return framework. Peer/comps analysis is external by default and should not be embedded as a company-model worksheet.
 
 ## Tools
 
@@ -77,16 +77,21 @@ This applies to every merged section header in the DCF (market data, scenario bl
 - THEN write formulas using the locked row positions
 - Test formulas immediately after creation
 
-**Formula Recalculation:**
+**Formula Recalculation and Validation:**
 - Run `python recalc.py model.xlsx 30` before delivery. Use the bundled script at `scripts/recalc.py` from this skill, or copy it into `<run>/data/scripts/validation/recalc.py` for auditability.
-- Fix ALL errors until status is "success"
-- Zero formula errors required (#REF!, #DIV/0!, #VALUE!, etc.)
+- Fix ALL errors until status is "success".
+- Zero formula errors required (#REF!, #DIV/0!, #VALUE!, etc.).
+- After recalc succeeds, run `validate_model.py` before generating `outputs.json`.
+- After `outputs.json` is generated from recalculated workbook cells, run `validate_outputs.py`.
+- If report/deck artifacts already exist or are being delivered, run `validate_artifacts.py` after they are built.
 
-**Scenario Blocks:**
-- Create separate blocks for Bear/Base/Bull cases
-- Show assumptions horizontally across projection years within each block
-- Use IF formulas: `=IF($B$6=1,[Bear cell],IF($B$6=2,[Base cell],[Bull cell]))`
-- Verify formulas reference correct scenario block cells
+**Scenario Blocks and Return Framework:**
+- Create separate blocks for Bear/Base/Bull cases.
+- Show assumptions horizontally across projection years within each block.
+- Use IF formulas or a clean case selector/consolidation column: `=IF($B$6=1,[Bear cell],IF($B$6=2,[Base cell],[Bull cell]))`.
+- Verify formulas reference correct scenario block cells.
+- Build a dedicated `Scenarios` sheet for forward-return analysis. It MUST include 1-year return and 3-year return/IRR for Bear/Base/Bull cases, plus exit-multiple scenarios across holding periods.
+- Surface the same 1-year and 3-year return/IRR outputs at the top of `Summary` so the user sees the return setup before detailed financials.
 
 ## DCF Process Workflow
 
@@ -127,27 +132,41 @@ CapEx % of revenue: X%
 FCF margin: X%
 ```
 
-### Step 3: Build Revenue Projections
+### Step 3: Build Sector-Native Drivers and Revenue Projections
 
-**Methodology:**
-1. Start with latest actual revenue (LTM or most recent fiscal year)
-2. Apply growth rates for each projection year
-3. Show both dollar amounts AND calculated growth %
+**Primitive-first methodology (required):**
+1. Identify the company's revenue primitive before projecting revenue. Do not default to generic CAGR unless data is unavailable.
+2. Build the primitive on the `Drivers` sheet, then link the resulting revenue lines into `Income Statement`.
+3. Show both operating drivers and dollar amounts: volumes, pricing, mix, unit count, ARPU/ASP, take rate, churn, utilization, tariff, commodity deck, or sector-equivalent.
+4. If only top-down data is available, use revenue CAGR as a fallback and clearly label the hidden primitive it approximates.
 
-**Growth Rate Framework:**
-- Year 1-2: Higher growth reflecting near-term visibility
-- Year 3-4: Gradual moderation toward industry average
-- Year 5+: Approaching terminal growth rate
+**Common revenue primitives:**
+- SaaS/software: beginning ARR + new ARR + expansion/price - churn = ending ARR; subscription + services; billings/RPO where relevant.
+- Marketplace/ecommerce: GMV/TPV × take rate; orders × AOV; merchant/customer count × ARPU.
+- Semiconductors/hardware: units/bits/wafers × ASP; node/product mix; utilization/capacity.
+- Banks/fintech: earning assets/loans × NIM + fees; customers × ARPAC; cost of risk.
+- Healthcare insurers: average members × PMPM/ticket; MLR/MCR; reserves.
+- Hospitals: beds × occupancy × patient-days × ticket; surgeries/complexity mix.
+- Consumer/retail: stores × revenue/store; SSS; ticket × traffic; membership fees.
+- Real estate/malls: GLA × occupancy × rent/m² + services/media; NOI.
+- Utilities/infrastructure: RAB × allowed return or tariff × volume; regulated capex.
+- Commodities/energy: production volume × realized price × FX; cash cost and sustaining capex.
 
-**Formula structure:**
-- Revenue(Year N) = Revenue(Year N-1) × (1 + Growth Rate)
-- Growth %(Year N) = Revenue(Year N) / Revenue(Year N-1) - 1
+**Growth framework:**
+- Year 1-2: Tie to visible drivers, backlog, guidance, consensus, capacity, pricing, or macro deck.
+- Year 3-5: Fade drivers toward normalized industry economics.
+- Terminal year: Converge to mature growth, mature margin, and mature reinvestment.
+
+**Formula structure examples:**
+- Driver-based revenue: `=Units * ASP`, `=GMV * TakeRate`, `=AvgMembers * Ticket * 12`, `=Stores * RevenuePerStore`.
+- Fallback revenue: `=PriorYearRevenue * (1 + GrowthRate)` only when operating drivers are unavailable.
+- Growth %: `=CurrentRevenue / PriorRevenue - 1`.
 
 **Three-scenario approach:**
 ```
-Bear Case: Conservative growth (e.g., 8-12%)
-Base Case: Most likely scenario (e.g., 12-16%)
-Bull Case: Optimistic growth (e.g., 16-20%)
+Bear Case: weaker units/pricing/margins or worse macro
+Base Case: most likely driver path
+Bull Case: stronger units/pricing/margins or better macro
 ```
 
 ### Step 4: Operating Expense Modeling
@@ -160,10 +179,13 @@ Operating expenses should model realistic operating leverage:
 - **General & Administrative**: Typically 8-15% of revenue, shows leverage as company scales
 
 **Key principles:**
-- ALL percentages based on REVENUE, not gross profit
-- Model operating leverage: % should decline as revenue scales
-- Maintain separate line items for S&M, R&D, G&A
-- Calculate EBIT = Gross Profit - Total OpEx
+- ALL percentages based on REVENUE, not gross profit, unless the sector specifically requires another denominator.
+- Model operating leverage: % should decline as revenue scales when justified.
+- Maintain separate line items for S&M, R&D, G&A or sector equivalents.
+- Calculate EBIT = Gross Profit - Total OpEx.
+- Put complex cost logic on `Drivers`; put clean P&L presentation on `Income Statement`.
+  - Example: store-level SG&A, utilization-driven labor, data center cost/MW, claims cost/member, vehicle depreciation/fleet, fuel cost/MWh, cash cost/ton, or R&D capitalization logic belongs in `Drivers`.
+  - The `Income Statement` then links to these calculated outputs and presents COGS, SG&A, R&D, EBITDA, D&A, EBIT, interest, tax, NI, and EPS in a clean financial statement format.
 
 **Margin expansion framework:**
 ```
@@ -174,15 +196,17 @@ EBIT Margin: X% → Y% (result of revenue growth + opex leverage)
 
 ### Step 5: Free Cash Flow Calculation
 
+**Source of truth:** build the operating forecast in `Income Statement`, `Balance Sheet`, and `Cash Flow`. The `DCF` sheet should reference those forecast outputs; it should not duplicate revenue, SG&A, capex, D&A, or working-capital logic.
+
 **Build FCF in proper sequence:**
 
 ```
-EBIT
-(-) Taxes (EBIT × Tax Rate)
-= NOPAT (Net Operating Profit After Tax)
-(+) D&A (non-cash expense, % of revenue)
-(-) CapEx (% of revenue, typically 4-8%)
-(-) Δ NWC (change in working capital)
+EBIT                    ← linked from Income Statement
+(-) Taxes               ← linked from Assumptions / Income Statement
+= NOPAT
+(+) D&A                 ← linked from Cash Flow or Income Statement
+(-) CapEx               ← linked from Cash Flow / Drivers
+(-) Δ NWC               ← linked from Cash Flow / Balance Sheet
 = Unlevered Free Cash Flow
 ```
 
@@ -357,13 +381,13 @@ Implied Upside/(Downside),+XX%
 
 ### Step 10: Sensitivity Analysis
 
-Build **three sensitivity tables** at the bottom of the DCF sheet showing how valuation changes with different assumptions:
+Build sensitivity tables on the dedicated `Sensitivity` sheet for repo workbooks (or at the bottom of `DCF` only in compact mode). Show how valuation changes with different assumptions:
 
-1. **WACC vs Terminal Growth** - Shows enterprise value sensitivity to discount rate and perpetuity growth
-2. **Revenue Growth vs EBIT Margin** - Shows impact of top-line growth and operating leverage
-3. **Beta vs Risk-Free Rate** - Shows sensitivity to cost of equity components
+1. **WACC vs Terminal Growth** or sector-equivalent discount-rate/terminal-value table.
+2. **Growth vs Margin / Reinvestment** - Shows impact of top-line growth, operating leverage, and FCF conversion.
+3. **Sector-native sensitivity** - Pick the variables that actually drive the business: churn × FCF margin, ASP × utilization, NIM × cost of risk, MLR × ticket growth, commodity price × FX, cap rate × NOI, tariff × RAB, etc.
 
-**Implementation**: These are simple 2D grids (NOT Excel's "Data Table" feature) with formulas in each cell. Each cell must contain a full DCF recalculation for that specific assumption combination. See Critical Constraints section for detailed requirements on populating all 75 cells programmatically using openpyxl.
+**Implementation**: These are simple 2D grids (NOT Excel's "Data Table" feature) with formulas in each cell. Each cell must contain a full DCF recalculation for that specific assumption combination. See Critical Constraints section for detailed requirements on populating all cells programmatically using openpyxl.
 
 <correct_patterns>
 
@@ -416,14 +440,15 @@ The consolidation column approach centralizes logic and makes the model easier t
 `=INDEX([Bear FY1 growth]:[Bull FY1 growth], 1, $B$6)`
 
 **Step 2 - Revenue projection references the consolidation column:**
-`Revenue Year 1: =D29*(1+$E$10)`
+- In `Drivers` or compact mode: `Revenue Year 1: =D29*(1+$E$10)`
+- In repo-standard DCF links: `DCF selected revenue: ='Income Statement'!F10`
 
 Where:
-- D29 = Prior year revenue
+- D29 = Prior year revenue, when building the actual operating forecast on `Drivers` / `Income Statement`
 - $E$10 = Consolidation column cell for FY1 growth (contains INDEX formula)
 - $B$6 = Case selector (1=Bear, 2=Base, 3=Bull)
 
-**This approach is cleaner than embedding IF statements in every projection formula** and makes it much easier to audit which scenario assumptions are being used.
+**This approach is cleaner than embedding IF statements in every projection formula** and makes it much easier to audit which scenario assumptions are being used. Build operating projection formulas in `Drivers` / `Income Statement`; use cross-sheet references in `DCF`.
 
 ### Correct FCF Formula Pattern
 
@@ -772,16 +797,16 @@ Every DCF model must maximize for:
 ### Financial Modeling Quality
 1. **Realistic revenue and margin assumptions** based on historical performance and industry benchmarks — not aspirational targets
 2. **Appropriate cost of capital calculation** with proper CAPM methodology, current risk-free rate, and reasoned equity risk premium
-3. **Comprehensive sensitivity analysis** showing valuation ranges across WACC/g, growth/margin, and beta/risk-free dimensions — all 75+ cells formula-populated
+3. **Comprehensive sensitivity analysis** showing valuation ranges across WACC/g or sector-equivalent, growth/margin, and at least one sector-native key driver — all sensitivity cells formula-populated
 4. **Clear terminal value calculation** with supporting rationale; terminal value 50-70% of EV; terminal growth < risk-free rate
 5. **Professional model structure** enabling scenario analysis via case selector, consolidation columns, and clean formula references
 
 ### Workbook Completeness
-6. **Full tab set** — Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks — populated, not placeholder
-7. **Summary tab is self-contained** — recommendation, target/current price, upside, bull/base/bear values, key metrics, trends, risk summary; a reader should understand the investment case without opening other sheets
-8. **Thesis Tracker ties to model KPIs** — each thesis pillar references a quantitative KPI cell in the model; catalyst calendar with dates; bull/base/bear trigger values; model/scenario impact column populated
-9. **Comps tab is actionable** — 5-8 relevant peers with operating metrics and valuation multiples; implied valuation range derived from comps, not just a list of tickers
-10. **Checks tab is functional** — all checks output TRUE/FALSE, not placeholder text; covers BS balance, CF tie, WACC cross-check, terminal value sanity, share count consistency
+6. **Full core tab set** — Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks — populated, not placeholder. Optional tabs: QTracker, MarketData, Ownership.
+7. **Summary tab is self-contained and return-first** — the beginning of the sheet must show recommendation, current price, target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear values, exit-multiple scenario summary, key metrics, trends, and risk summary; a reader should understand the return setup without opening other sheets.
+8. **Drivers tab exposes the economic primitive** — revenue and major cost drivers are built from sector-native units before flowing to the financial statements.
+9. **No company-comparison tab by default** — do not include Comps/Peer Comps/Comparative sheets in `model.xlsx`. Peer analysis lives in an external comps artifact; the model may include only a small dated peer-derived assumption/output if needed.
+10. **Checks tab is functional** — all checks output TRUE/FALSE, not placeholder text; covers active output formula errors, BS balance, CF tie, revenue-driver tie, WACC cross-check, DCF sensitivity center, Summary-to-active-case ties, scenario ordering, rating/recommendation vs return sanity, 1Y/3Y return math, terminal value sanity, share count consistency, outputs.json references, and formula errors.
 
 ### Formula and Color Discipline
 11. **Formulas over hardcodes (non-negotiable)** — every projection, margin, discount factor, PV, and sensitivity cell is a live Excel formula; the only hardcoded numbers are raw inputs, assumption drivers, and current market data
@@ -789,41 +814,50 @@ Every DCF model must maximize for:
 13. **Cell comments on every hardcoded input** — format "Source: [System/Document], [Date], [Reference], [URL if applicable]" — added AS cells are created, never deferred
 
 ### Downstream Readiness
-14. **outputs.json written after successful recalc** — maps stable keys to sheet/cell locations; includes scenario range, comps summary, and thesis summary; regenerated after every model change
-15. **Run-specific scripts saved under `data/scripts/model/` and `data/scripts/validation/`** — modular, not monolithic; provides full audit trail and reproducibility
+14. **outputs.json written after successful recalc + model validation** — maps stable keys to sheet/cell locations; includes DCF value, current price, target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear values, exit-multiple scenario outputs, and key driver/financial extracts; regenerated after every model change. Values must be read from recalculated workbook cells, not recomputed independently.
+15. **Validation scripts saved and run** — `recalc.py`, `validate_model.py`, and `validate_outputs.py` must pass before model delivery. If report/deck artifacts are included, `validate_artifacts.py` must also pass.
+16. **External comps reference only when applicable** — if peer analysis is used, outputs.json may include the external artifact path/date and final peer-derived value/range, not the full peer table.
+17. **Run-specific scripts saved under `data/scripts/model/` and `data/scripts/validation/`** — modular, not monolithic; provides full audit trail and reproducibility
 
 ## Input Requirements
 
 ### Minimum Required Inputs
-1. **Company identifier**: Ticker symbol or company name
-2. **Growth assumptions**: Revenue growth rates for projection period (or "use consensus")
-3. **Optional parameters**:
-   - Projection period (default: 5 years)
-   - Scenario cases (Bear/Base/Bull growth and margin assumptions)
-   - Terminal growth rate (default: 2.5-3.0%)
-   - Specific WACC inputs if not using CAPM
+1. **Company identifier**: Ticker symbol or company name.
+2. **Historical actuals**: revenue/segment data, margins, cash flow, cash/debt, share count, and sector KPIs where available.
+3. **Business driver assumptions**: the operating primitive, not just revenue CAGR. Examples: ARR/churn, volume × ASP, stores × SSS, members × ticket, RAB/tariff, commodity deck, utilization/capacity.
+4. **Macro/rate assumptions** for the `Assumptions` sheet when relevant: risk-free rate, ERP, beta, cost of debt, tax rate, FX, CPI, IPCA, inflation, GDP, SELIC/CDI, commodity prices, or sector-specific rates/fees.
+5. **Optional parameters**:
+   - Projection period (default: 5 years; 7-10 years for long-runway businesses)
+   - Scenario cases (Bear/Base/Bull driver, margin, and valuation assumptions)
+   - Terminal growth rate (default: 2.5-3.0% unless sector/country context requires different)
+   - Specific WACC/Ke inputs if not using CAPM
+   - Exit multiple range and holding periods for 1-year and 3-year return scenarios
 
 ## Excel Model Structure
 
 ### Repository Sheet Architecture
 
-For this investment research workspace, create a fuller workbook by default:
+For this investment research workspace, create the canonical single-company workbook by default:
 
-1. **Summary** - recommendation, current price, target price, upside/downside, bull/base/bear values, key metrics, trends, and scenario snapshot
-2. **Revenue Model** - product/segment/geography/channel revenue build where applicable
-3. **Income Statement** - historical and projected P&L
-4. **Balance Sheet** - historical and projected balance sheet
-5. **Cash Flow** - historical and projected cash flow / FCF
-6. **DCF** - main valuation model
-7. **Sensitivity** - WACC/g, growth/margin, and beta/risk-free sensitivities
-8. **Comps** - peer operating metrics and valuation multiples
-9. **Thesis Tracker** - thesis pillars, events/catalysts, qualitative evidence, quantitative KPIs, and model/scenario impact
-10. **DCF Assumptions** - explicit assumption register with rationale and sensitivity ranges
-11. **Checks** - formula and cross-artifact checks
+1. **Summary** - recommendation, current price, target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear values, exit-multiple scenario summary, key metrics, trends, and risk highlights.
+2. **Drivers** - sector-native revenue and major operating/cost driver build. This is the detailed operating logic formerly called `Revenue Model`.
+3. **Income Statement** - historical and projected P&L, linked from Drivers and Assumptions.
+4. **Balance Sheet** - historical and projected balance sheet.
+5. **Cash Flow** - historical and projected cash flow / FCF.
+6. **DCF** - intrinsic valuation engine, referencing Income Statement, Balance Sheet, and Cash Flow forecasts.
+7. **Scenarios** - bull/base/bear values, 1-year and 3-year returns/IRRs, and exit-multiple return frameworks.
+8. **Sensitivity** - WACC/g or sector-equivalent plus sector-native sensitivity grids.
+9. **Assumptions** - explicit assumption register with macro/rates/fees, scenario values, rationale, sources, and cells driven.
+10. **Checks** - formula and cross-artifact checks.
+
+Optional tabs only when needed:
+- **QTracker** - quarterly actuals, consensus vs actuals, guidance vs actuals, and KPI tracking.
+- **MarketData** - current price, shares, market cap, beta, risk-free rate, net debt, and company-only trading history/multiples. No peer table.
+- **Ownership** - shareholders, float, insider/management ownership, and basic governance reference data.
 
 A compact two-sheet DCF (`DCF`, `WACC`) is acceptable only when the user explicitly requests a quick standalone DCF.
 
-**CRITICAL**: Sensitivity tables may live on a dedicated `Sensitivity` tab for the repo workbook; in compact DCF mode, place them at the bottom of the DCF sheet.
+**CRITICAL**: Sensitivity tables may live on a dedicated `Sensitivity` tab for the repo workbook; in compact DCF mode, place them at the bottom of the DCF sheet. Forward-return and exit-multiple IRR tables belong in `Scenarios`, not in `DCF`.
 
 ### Formula Recalculation (MANDATORY)
 
@@ -891,7 +925,7 @@ The script will:
   - **Input cells**: Light grey (RGB: 242,242,242 / `#F2F2F2`) background with blue font — or just white with blue font if you want maximum minimalism
   - **Calculated cells**: White background with black font
   - **Output/summary rows** (per-share value, EV, etc.): Medium blue (RGB: 189,215,238 / `#BDD7EE`) background with black bold font
-- **Optional scenario accents for reader-facing sheets:** bull/upside = soft green, bear/downside = soft red/pink, key editable assumption = pale yellow. Use sparingly, mainly in Summary, Scenarios, Sensitivity, Comps, and Thesis Tracker.
+- **Optional scenario accents for reader-facing sheets:** bull/upside = soft green, bear/downside = soft red/pink, key editable assumption = pale yellow. Use sparingly, mainly in Summary, Scenarios, Sensitivity, and Assumptions.
 - User-provided templates or explicit color preferences ALWAYS override these defaults.
 
 **How the layers work together:**
@@ -940,6 +974,8 @@ Per the xlsx skill, ALL hardcoded values must have cell comments documenting the
 
 ### DCF Sheet Detailed Structure
 
+**Repo-standard vs compact mode:** In repo-standard 10-tab workbooks, the DCF sheet is the intrinsic valuation engine and should contain cross-sheet links to `Income Statement`, `Balance Sheet`, `Cash Flow`, and `Assumptions`. It must not duplicate the operating model. The inline single-sheet examples below are acceptable only for compact standalone DCF mode; for repo-standard workbooks, translate each operating line into a cross-sheet reference.
+
 **Section 1: Header**
 ```csv
 Row,Content
@@ -959,68 +995,60 @@ Market Cap ($M),[Formula]
 Net Debt ($M),XXX [or Net Cash if negative]
 ```
 
-**Section 3: DCF Scenario Assumptions**
+**Section 3: DCF Input Links / Selected Case**
 
-Create separate assumption blocks for each scenario (Bear, Base, Bull) with DCF-specific assumptions (Revenue Growth %, EBIT Margin %, Tax Rate %, D&A % of Revenue, CapEx % of Revenue, NWC Change % of ΔRev, Terminal Growth Rate, WACC) laid out horizontally across projection years. Each block must include section header, column header row showing the projection years (FY1, FY2, etc.), and data rows. See `<correct_patterns>` section "Correct Assumption Table Structure" for the exact layout.
+The DCF should link to the selected-case outputs from `Income Statement`, `Balance Sheet`, and `Cash Flow`, plus valuation inputs from `Assumptions` and optional `MarketData`. Do not rebuild operating drivers here.
+
+Create a small DCF input/link block showing:
+- Selected scenario name / case selector
+- Linked revenue, EBIT/EBITDA, tax rate, D&A, capex, ΔNWC, FCF
+- WACC or Ke inputs from `Assumptions`
+- Terminal growth and/or terminal multiple assumption from `Assumptions`
+- Current price, shares, net debt from `MarketData`, `Balance Sheet`, or `Assumptions`
+
+Full Bear/Base/Bull operating assumptions live in `Assumptions` and `Drivers`; full forward-return cases live in `Scenarios`.
 
 **Section 4: Historical & Projected Financials**
 
-**Reference a consolidation column (e.g., "Selected Case") that pulls from scenario blocks**, not scattered IF formulas in every projection row.
+**Reference the selected-case forecast lines from the financial statements**, not scattered IF formulas or duplicated operating-model rows inside DCF.
 
 ```csv
-Income Statement ($M),2020A,2021A,2022A,2023A,2024E,2025E,2026E
-Revenue,XXX,XXX,XXX,XXX,[=E29*(1+$E$10)],[=F29*(1+$E$11)],[=G29*(1+$E$12)]
-  % growth,XX%,XX%,XX%,XX%,[=E29/D29-1],[=F29/E29-1],[=G29/F29-1]
-,,,,,,
-Gross Profit,XXX,XXX,XXX,XXX,[=E29*E33],[=F29*F33],[=G29*G33]
-  % margin,XX%,XX%,XX%,XX%,[=E33/E29],[=F33/F29],[=G33/G29]
-,,,,,,
-Operating Expenses:,,,,,,,
-  S&M,XXX,XXX,XXX,XXX,[=E29*0.15],[=F29*0.14],[=G29*0.13]
-  R&D,XXX,XXX,XXX,XXX,[=E29*0.12],[=F29*0.11],[=G29*0.10]
-  G&A,XXX,XXX,XXX,XXX,[=E29*0.08],[=F29*0.07],[=G29*0.07]
-  Total OpEx,XXX,XXX,XXX,XXX,[=E36+E37+E38],[=F36+F37+F38],[=G36+G37+G38]
-,,,,,,
-EBIT,XXX,XXX,XXX,XXX,[=E33-E39],[=F33-F39],[=G33-G39]
-  % margin,XX%,XX%,XX%,XX%,[=E41/E29],[=F41/F29],[=G41/G29]
-,,,,,,
-Taxes,(XX),(XX),(XX),(XX),[=E41*$E$24],[=F41*$E$24],[=G41*$E$24]
-  Tax rate,XX%,XX%,XX%,XX%,[=E43/E41],[=F43/F41],[=G43/G41]
-,,,,,,
-NOPAT,XXX,XXX,XXX,XXX,[=E41-E43],[=F41-F43],[=G41-G43]
+Selected Financials ($M),2020A,2021A,2022A,2023A,2024E,2025E,2026E
+Revenue,='Income Statement'!B10,='Income Statement'!C10,='Income Statement'!D10,='Income Statement'!E10,='Income Statement'!F10,='Income Statement'!G10,='Income Statement'!H10
+  % growth,='Income Statement'!B11,='Income Statement'!C11,='Income Statement'!D11,='Income Statement'!E11,='Income Statement'!F11,='Income Statement'!G11,='Income Statement'!H11
+Gross Profit,='Income Statement'!B15,='Income Statement'!C15,='Income Statement'!D15,='Income Statement'!E15,='Income Statement'!F15,='Income Statement'!G15,='Income Statement'!H15
+EBITDA,='Income Statement'!B30,='Income Statement'!C30,='Income Statement'!D30,='Income Statement'!E30,='Income Statement'!F30,='Income Statement'!G30,='Income Statement'!H30
+EBIT,='Income Statement'!B35,='Income Statement'!C35,='Income Statement'!D35,='Income Statement'!E35,='Income Statement'!F35,='Income Statement'!G35,='Income Statement'!H35
+Tax Rate,='Income Statement'!B40,='Income Statement'!C40,='Income Statement'!D40,='Income Statement'!E40,='Income Statement'!F40,='Income Statement'!G40,='Income Statement'!H40
+NOPAT,=B6*(1-B7),=C6*(1-C7),=D6*(1-D7),=E6*(1-E7),=F6*(1-F7),=G6*(1-G7),=H6*(1-H7)
 ```
 
 **Key Formula Pattern**:
-- Revenue growth: `=E29*(1+$E$10)` where $E$10 is consolidation column for Year 1 growth
+- Repo-standard operating line: `='Income Statement'!F10` or `='Cash Flow'!F25`.
+- Compact-mode projection only: `=PriorYearRevenue*(1+SelectedGrowth)` where `SelectedGrowth` comes from the consolidation column.
 - NOT: `=E29*(1+IF($B$6=1,$B$10,IF($B$6=2,$C$10,$D$10)))`
 
-This approach is cleaner, easier to audit, and prevents formula errors by centralizing the scenario logic.
+This approach is cleaner, easier to audit, and prevents formula errors by centralizing operating logic outside the DCF sheet.
 
 **Section 5: Free Cash Flow Build**
 
 **CRITICAL**: Verify row references point to the CORRECT assumption rows. Test formulas immediately after creation.
 
 ```csv
-Cash Flow ($M),2020A,2021A,2022A,2023A,2024E,2025E,2026E
-NOPAT,XXX,XXX,XXX,XXX,[=E45],[=F45],[=G45]
-(+) D&A,XXX,XXX,XXX,XXX,[=E29*$E$21],[=F29*$E$21],[=G29*$E$21]
-    % of Rev,XX%,XX%,XX%,XX%,[=E58/E29],[=F58/F29],[=G58/G29]
-(-) CapEx,(XX),(XX),(XX),(XX),[=E29*$E$22],[=F29*$E$22],[=G29*$E$22]
-    % of Rev,XX%,XX%,XX%,XX%,[=E60/E29],[=F60/F29],[=G60/G29]
-(-) Δ NWC,(XX),(XX),(XX),(XX),[=(E29-D29)*$E$23],[=(F29-E29)*$E$23],[=(G29-F29)*$E$23]
-    % of Δ Rev,XX%,XX%,XX%,XX%,[=E62/(E29-D29)],[=F62/(F29-E29)],[=G62/(G29-F29)]
-,,,,,,
-Unlevered FCF,XXX,XXX,XXX,XXX,[=E57+E58-E60-E62],[=F57+F58-F60-F62],[=G57+G58-G60-G62]
+Cash Flow Links ($M),2020A,2021A,2022A,2023A,2024E,2025E,2026E
+NOPAT,=B6*(1-B7),=C6*(1-C7),=D6*(1-D7),=E6*(1-E7),=F6*(1-F7),=G6*(1-G7),=H6*(1-H7)
+(+) D&A,='Cash Flow'!B18,='Cash Flow'!C18,='Cash Flow'!D18,='Cash Flow'!E18,='Cash Flow'!F18,='Cash Flow'!G18,='Cash Flow'!H18
+(-) CapEx,='Cash Flow'!B25,='Cash Flow'!C25,='Cash Flow'!D25,='Cash Flow'!E25,='Cash Flow'!F25,='Cash Flow'!G25,='Cash Flow'!H25
+(-) Δ NWC,='Cash Flow'!B22,='Cash Flow'!C22,='Cash Flow'!D22,='Cash Flow'!E22,='Cash Flow'!F22,='Cash Flow'!G22,='Cash Flow'!H22
+Unlevered FCF,=B10+B11-B12-B13,=C10+C11-C12-C13,=D10+D11-D12-D13,=E10+E11-E12-E13,=F10+F11-F12-F13,=G10+G11-G12-G13,=H10+H11-H12-H13
 ```
 
-**Row reference examples** (based on layout planning):
-- $E$21 = D&A % assumption (consolidation column, row 21)
-- $E$22 = CapEx % assumption (consolidation column, row 22)
-- $E$23 = NWC % assumption (consolidation column, row 23)
-- E29 = Revenue for year (row 29)
-- E45 = NOPAT for year (row 45)
+**Reference examples** (based on layout planning):
+- D&A comes from `Cash Flow` or `Income Statement`.
+- CapEx and ΔNWC come from `Cash Flow` / `Balance Sheet`.
+- NOPAT can be calculated in DCF from linked EBIT and linked tax rate.
 
-**Before writing formulas**: Confirm these row numbers match the actual layout. Test one column, then copy across.
+**Before writing formulas**: Confirm these row numbers match the actual workbook layout. Test one column, then copy across.
 
 **Section 6: Discounting & Valuation**
 ```csv
@@ -1048,6 +1076,8 @@ Implied Upside/(Downside),XX%,,,,,
 ```
 
 ### WACC Sheet Structure
+
+**Compact standalone DCF mode only:** If the workbook is a quick two-sheet DCF, a separate `WACC` sheet is acceptable. In repo-standard 10-tab workbooks, put WACC/Ke inputs on `Assumptions` and link the DCF to those cells.
 
 ```csv
 COST OF EQUITY CALCULATION,,
@@ -1090,19 +1120,19 @@ Debt Weight = Net Debt / EV
 WACC = (Cost of Equity × Equity Weight) + (After-tax Cost of Debt × Debt Weight)
 ```
 
-### Sensitivity Analysis (Bottom of DCF Sheet)
+### Sensitivity Analysis
 
 **TERMINOLOGY REMINDER**: "Sensitivity tables" = simple 2D grids with row headers, column headers, and formulas in each data cell. NOT Excel's "Data Table" feature (Data → What-If Analysis → Data Table). You will use openpyxl to write regular Excel formulas into each cell.
 
-**Location**: Rows 87+ on DCF sheet (NOT a separate sheet)
+**Location**: Dedicated `Sensitivity` sheet for repo workbooks. In compact standalone DCF mode only, put sensitivities at the bottom of `DCF`.
 
 **Three sensitivity tables, vertically stacked:**
 
-1. **WACC vs Terminal Growth** (rows 87-100) - 5x5 grid = 25 cells with formulas
-2. **Revenue Growth vs EBIT Margin** (rows 102-115) - 5x5 grid = 25 cells with formulas
-3. **Beta vs Risk-Free Rate** (rows 117-130) - 5x5 grid = 25 cells with formulas
+1. **WACC vs Terminal Growth** or sector-equivalent terminal value table - 5x5 grid = 25 cells with formulas
+2. **Growth vs EBIT/FCF Margin** - 5x5 grid = 25 cells with formulas
+3. **Sector-native key driver table** - 5x5 grid = 25 cells with formulas. Examples: churn × FCF margin, ASP × utilization, NIM × cost of risk, MLR × ticket growth, commodity price × FX, cap rate × NOI.
 
-**Total formulas to write: 75** (this is required, not optional)
+**Total formulas to write: 75+** (this is required, not optional)
 
 **CRITICAL**: All sensitivity table cells must be populated programmatically with formulas using openpyxl. DO NOT use linear approximation shortcuts. DO NOT leave placeholder text or notes about manual steps. DO NOT rationalize leaving cells empty because "it's complex" - use a Python loop to generate the formulas.
 
@@ -1161,29 +1191,31 @@ This approach centralizes scenario logic, making the model easier to audit and m
 
 **File naming**: in this repo, write the primary model as `<run>/model.xlsx`.
 
-**Default repo tabs** (11 tabs for institutional-quality models):
+**Default repo tabs** (10 core tabs for institutional-quality single-company models):
 
-1. **Summary** — investment recommendation, current price vs target price, upside/downside, bull/base/bear implied values, key valuation metrics (EV/EBITDA, P/E, FCF yield), revenue/EBIT/FCF trends, scenario snapshot, and key risk highlights. This is the first sheet anyone opens — make it self-contained.
+1. **Summary** — investment recommendation and return setup. The beginning of the sheet must show current price vs target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear implied values, exit-multiple scenario summary, key valuation metrics (EV/EBITDA, P/E, FCF yield or sector-equivalent), revenue/EBIT/FCF trends, and key risk highlights. This is the first sheet anyone opens — make it self-contained.
 
-2. **Revenue Model** — product/segment/geography/channel revenue build where data supports it. Show unit economics (ASP, volume, subscribers, ARPU) alongside dollar projections when available.
+2. **Drivers** — sector-native revenue and operating build. Show unit economics (ASP, volume, subscribers, ARPU, stores, SSS, members, ticket, utilization, capacity, tariff, commodity price, FX, etc.) alongside dollar projections when available. Also include complex cost-driver logic when business-specific: gross margin by segment, SG&A per unit/store/customer, R&D intensity, CAC, claims cost/member, fuel cost, fleet depreciation, cash cost/ton, capex capacity build.
 
-3. **Income Statement** — historical (3-5 years) and projected (5+ years) P&L with revenue, COGS, gross profit, OpEx (S&M, R&D, G&A), EBIT, interest, taxes, net income, EPS. All projections are live formulas referencing assumption blocks.
+3. **Income Statement** — historical (3-5 years) and projected (5+ years) P&L with revenue, COGS, gross profit, OpEx (S&M, R&D, G&A or sector equivalents), EBITDA, D&A, EBIT, interest, taxes, net income, EPS. All projections are live formulas referencing `Drivers` and `Assumptions`.
 
-4. **Balance Sheet** — historical and projected balance sheet with key line items (cash, AR, inventory, PP&E, goodwill, debt, payables, equity). Projections driven by revenue ratios and CapEx/depreciation schedules.
+4. **Balance Sheet** — historical and projected balance sheet with key line items (cash, AR, inventory, PP&E, goodwill, debt, payables, equity, shares, invested capital). Projections driven by revenue ratios, working capital, and CapEx/depreciation schedules.
 
-5. **Cash Flow** — historical and projected cash flow statement with operating CF (net income + D&A + working capital changes), investing CF (CapEx, acquisitions), financing CF (debt issuance/repayment, dividends, buybacks), and free cash flow to firm.
+5. **Cash Flow** — historical and projected cash flow statement with operating CF (net income + D&A + working capital changes), investing CF (CapEx, acquisitions), financing CF (debt issuance/repayment, dividends, buybacks), and free cash flow to firm/equity as appropriate.
 
-6. **DCF** — main valuation model with market data, scenario assumptions (Bear/Base/Bull blocks), historical & projected financials, 5-year FCF build, WACC discounting, terminal value, and equity bridge to implied share price.
+6. **DCF** — intrinsic valuation engine. Reference `Income Statement`, `Balance Sheet`, and `Cash Flow` forecasts. Calculate UFCF/FCFE, WACC/Ke, discount factors, terminal value, enterprise/equity value, and value per share. Do not duplicate the operating model.
 
-7. **Sensitivity** — three sensitivity tables (WACC vs Terminal Growth, Revenue Growth vs EBIT Margin, Beta vs Risk-Free Rate) fully populated with formulas. Each cell recalculates the full DCF. Base case centered with highlighted cell.
+7. **Scenarios** — bull/base/bear valuation and forward-return framework. Must include 1-year return and 3-year return/IRR. Must include exit-multiple scenarios across holding periods using sector-appropriate multiples (EV/EBITDA, P/E, P/BV, EV/Sales, cap rate, EV/RAB, NAV, etc.). Link headline scenario outputs to `Summary`.
 
-8. **Comps** — peer operating metrics (revenue growth, gross/EBIT/FCF margins, ROIC, net debt/EBITDA) and valuation multiples (EV/Revenue, EV/EBITDA, P/E, P/B, FCF yield). Include company name, ticker, market cap, and last-updated date for each comp.
+8. **Sensitivity** — sensitivity tables fully populated with formulas. Required: WACC vs Terminal Growth or sector-equivalent. Required: at least one sector-native sensitivity, e.g. churn × FCF margin, ASP × utilization, NIM × cost of risk, MLR × ticket growth, commodity price × FX, cap rate × NOI. Base case centered with highlighted cell.
 
-9. **Thesis Tracker** — thesis pillars with supporting/hindering qualitative evidence, quantitative KPIs tied to model cells, current vs baseline vs trigger values, event/catalyst calendar with dates, and model/scenario impact column. Each thesis row links to a KPI cell in the model so changes propagate automatically.
+9. **Assumptions** — explicit assumption register listing every material assumption, base/bear/bull or low/base/high values, rationale/source, sensitivity range, model cells it drives, and last-updated date. Include macro/rate assumptions here: risk-free rate, ERP, beta, cost of debt, tax rate, FX, CPI, IPCA, inflation, GDP, SELIC/CDI, commodity decks, sector rates/fees, and valuation multiples.
 
-10. **DCF Assumptions** — explicit assumption register listing every material assumption, its base value, rationale/source, sensitivity range (low/high), and the model cells it drives. This is the single source of truth for all inputs — every blue cell on other sheets traces here.
+10. **Checks** — formula, model-sanity, and cross-artifact integrity checks: active output cells are not Excel errors, BS balances (A = L + E), CF ties to cash, revenue equals sum of drivers, DCF center sensitivity equals base DCF, Summary target/base case ties to active DCF/Scenarios output, scenario ordering (Bear ≤ Base ≤ Bull for value and returns), recommendation/rating is consistent with base upside and 1Y/3Y IRR thresholds, return math ties, share count consistency, WACC cross-check, terminal value sanity (50-70% of EV or sector-equivalent), outputs.json references exist, and any user-defined validation rules. All checks output TRUE/FALSE or pass/fail.
 
-11. **Checks** — formula and cross-artifact integrity checks: BS balances (A = L + E), CF ties to cash, sum-of-parts agrees, share count consistency, WACC cross-check, terminal value sanity (50-70% of EV), and any user-defined validation rules. All checks output TRUE/FALSE or pass/fail.
+**Optional tabs**: `QTracker` for quarterly actuals/consensus/guidance, `MarketData` for minimal market inputs and company-only trading history, and `Ownership` for shareholder/float/governance reference data.
+
+**No default Comps tab**: company comparisons, peer multiples, broker grids, and sector benchmark tables belong in an external comps artifact. If peer analysis informs valuation, use a dated external reference and import only the final peer-derived value/range or terminal-multiple assumption.
 
 **Key features**: Case selector (1/2/3), consolidation column with INDEX/OFFSET formulas, semantic font colors (blue=input, black=formula, green=cross-sheet link), professional fill colors (blue/grey structure plus limited scenario accents where useful), cell comments on all inputs, professional borders around major sections, formatted numbers/tables, and named outputs in outputs.json for downstream consumers (reports, presentations, dashboards).
 
@@ -1195,7 +1227,7 @@ This approach centralizes scenario logic, making the model easier to audit and m
 
 ## Outputs JSON
 
-After recalc passes (status: "success"), write `<run>/outputs.json` mapping stable output keys to their sheet/cell locations. Also export workbook-derived tables to `<run>/data/normalized/model_extracts/` for downstream consumers (charts, reports, presentations, dashboards).
+After recalc passes (status: "success") and `validate_model.py` passes, write `<run>/outputs.json` mapping stable output keys to their sheet/cell locations. Read every value from the recalculated workbook cell identified by `sheet` + `cell`; do not recompute output values separately in Python. Also export workbook-derived tables to `<run>/data/normalized/model_extracts/` for downstream consumers (charts, reports, presentations, dashboards). Then run `validate_outputs.py` to verify JSON values equal workbook cells within tolerance.
 
 ### Schema
 
@@ -1210,33 +1242,33 @@ Use the array shape below. This matches the repo's run-level `outputs.json` patt
   "recalc": { "status": "success", "errors": 0, "checked_at": "<ISO timestamp>" },
   "outputs": [
     { "key": "valuation.implied_share_price", "sheet": "DCF", "cell": "E85", "value": 142.50, "unit": "USD/share" },
-    { "key": "market.current_price", "sheet": "DCF", "cell": "E12", "value": 118.30, "unit": "USD/share" },
-    { "key": "valuation.upside_downside", "sheet": "DCF", "cell": "E86", "value": 0.205, "unit": "percent" },
+    { "key": "market.current_price", "sheet": "Summary", "cell": "B5", "value": 118.30, "unit": "USD/share" },
+    { "key": "valuation.upside_downside", "sheet": "Summary", "cell": "B7", "value": 0.205, "unit": "percent" },
+    { "key": "return.one_year_base", "sheet": "Summary", "cell": "B8", "value": 0.205, "unit": "percent" },
+    { "key": "return.three_year_irr_base", "sheet": "Summary", "cell": "B9", "value": 0.082, "unit": "percent" },
+    { "key": "scenario.exit_multiple_base", "sheet": "Scenarios", "cell": "F15", "value": 18.0, "unit": "x" },
+    { "key": "scenario.exit_multiple_3yr_irr", "sheet": "Scenarios", "cell": "F22", "value": 0.095, "unit": "percent" },
     { "key": "valuation.enterprise_value", "sheet": "DCF", "cell": "E81", "value": 125000, "unit": "USD millions" },
     { "key": "valuation.equity_value", "sheet": "DCF", "cell": "E83", "value": 114000, "unit": "USD millions" },
-    { "key": "assumption.wacc", "sheet": "DCF", "cell": "E28", "value": 0.092, "unit": "percent" },
-    { "key": "assumption.terminal_growth", "sheet": "DCF", "cell": "E18", "value": 0.030, "unit": "percent" },
+    { "key": "assumption.wacc", "sheet": "Assumptions", "cell": "C20", "value": 0.092, "unit": "percent" },
+    { "key": "assumption.terminal_growth", "sheet": "Assumptions", "cell": "C21", "value": 0.030, "unit": "percent" },
     { "key": "valuation.terminal_value_pct_ev", "sheet": "DCF", "cell": "E78", "value": 0.62, "unit": "percent" },
-    { "key": "financial.revenue_ltm", "sheet": "DCF", "cell": "D29", "value": 48500, "unit": "USD millions" },
-    { "key": "financial.revenue_5yr_cagr", "sheet": "DCF", "cell": "E30", "value": 0.122, "unit": "percent" },
-    { "key": "financial.ebit_margin_terminal", "sheet": "DCF", "cell": "E46", "value": 0.52, "unit": "percent" },
-    { "key": "capital_structure.net_debt", "sheet": "DCF", "cell": "E16", "value": -8500, "unit": "USD millions" },
-    { "key": "capital_structure.shares_outstanding", "sheet": "DCF", "cell": "E14", "value": 800, "unit": "millions" }
+    { "key": "financial.revenue_ltm", "sheet": "Income Statement", "cell": "D10", "value": 48500, "unit": "USD millions" },
+    { "key": "financial.revenue_5yr_cagr", "sheet": "Summary", "cell": "B20", "value": 0.122, "unit": "percent" },
+    { "key": "financial.ebit_margin_terminal", "sheet": "Summary", "cell": "B24", "value": 0.52, "unit": "percent" },
+    { "key": "capital_structure.net_debt", "sheet": "Balance Sheet", "cell": "H35", "value": -8500, "unit": "USD millions" },
+    { "key": "capital_structure.shares_outstanding", "sheet": "Balance Sheet", "cell": "H42", "value": 800, "unit": "millions" }
   ],
   "scenarios": {
-    "bear":  { "implied_share_price": 98.00,  "implied_upside_pct": -0.172 },
-    "base":  { "implied_share_price": 142.50, "implied_upside_pct":  0.205 },
-    "bull":  { "implied_share_price": 195.00, "implied_upside_pct":  0.648 }
+    "bear":  { "implied_share_price": 98.00,  "one_year_return": -0.172, "three_year_irr": -0.060, "exit_multiple": 14.0 },
+    "base":  { "implied_share_price": 142.50, "one_year_return":  0.205, "three_year_irr":  0.082, "exit_multiple": 18.0 },
+    "bull":  { "implied_share_price": 195.00, "one_year_return":  0.648, "three_year_irr":  0.181, "exit_multiple": 22.0 }
   },
-  "comps": {
-    "peers": ["Peer A (TICKER)", "Peer B (TICKER)", "..."],
-    "implied_ev_ebitda_range": [12.5, 18.2],
-    "fwd_pe_range": [18.0, 28.5]
-  },
-  "thesis": {
-    "active_pillars": 4,
-    "key_catalysts_next_12m": ["Catalyst 1 (Q3 2026)", "Catalyst 2 (H2 2026)"],
-    "risk_flags": ["Risk 1", "Risk 2"]
+  "external_comps_reference": {
+    "used": false,
+    "path": null,
+    "snapshot_date": null,
+    "peer_derived_value_per_share": null
   }
 }
 ```
@@ -1244,12 +1276,14 @@ Use the array shape below. This matches the repo's run-level `outputs.json` patt
 
 ### Requirements
 
-- Write `outputs.json` ONLY after `recalc.py` returns status "success" with zero errors.
+- Write `outputs.json` ONLY after `recalc.py` returns status "success" with zero errors and `validate_model.py` passes.
 - Every object in `outputs[]` MUST include `key`, `sheet`, `cell`, `value`, and `unit`; `sheet` + `cell` must resolve to an actual workbook cell. Do not fabricate values.
 - Values are workbook-derived — read them from the recalculated model, do not recompute in Python.
-- Include the `scenarios` block with bull/base/bear implied prices to give downstream a quick range.
-- Include `comps` and `thesis` summary blocks so reports and decks can reference peer multiples and thesis status without scraping the workbook.
-- Export supporting CSV/JSON tables under `<run>/data/normalized/model_extracts/` (e.g., `dcf_projection.csv`, `scenario_summary.csv`, `wacc_tgr_sensitivity.csv`, `comps_table.csv`, `kpi_tracker.csv`).
+- Run `validate_outputs.py` immediately after writing `outputs.json`; it must assert each JSON value equals the referenced workbook cell within tolerance.
+- Include the `scenarios` block with bull/base/bear implied prices, 1-year returns, 3-year IRRs, and exit multiples to give downstream a quick return framework.
+- Do not include a full comps table in `outputs.json` by default. If external peer analysis is used, include only `external_comps_reference` with path/date and final peer-derived value/range.
+- Thesis narrative belongs in `report.md`; only include thesis-derived numeric KPIs if they are workbook outputs.
+- Export supporting CSV/JSON tables under `<run>/data/normalized/model_extracts/` (e.g., `dcf_projection.csv`, `scenario_summary.csv`, `exit_multiple_returns.csv`, `wacc_tgr_sensitivity.csv`, `sector_driver_sensitivity.csv`, `kpi_tracker.csv`).
 - Regenerate `outputs.json` and model extracts after every model change that affects outputs.
 
 ### Model Extract Schemas
@@ -1284,13 +1318,24 @@ Use stable column names so chart/report/deck scripts do not break.
 - `is_base_case` (boolean)
 - `source_sheet`, `source_cell`
 
-`comps_table.csv`:
-- `company`, `ticker`
-- `market_cap_usd_m`, `enterprise_value_usd_m`
-- `revenue_growth_pct`, `gross_margin_pct`, `ebitda_margin_pct`, `fcf_margin_pct`
-- `ev_sales`, `ev_ebitda`, `pe`, `fcf_yield_pct`
-- `row_type` (`company`, `mean`, `median`, `p25`, `p75`, `min`, `max`, `implied_value`)
-- `source`, `as_of_date`
+`exit_multiple_returns.csv`:
+- `scenario` (`bear`, `base`, `bull`)
+- `holding_period_years` (1, 3, or other modeled periods)
+- `exit_multiple_type` (EV/EBITDA, P/E, P/BV, cap_rate, EV/RAB, NAV, or sector-equivalent)
+- `exit_multiple` (number)
+- `exit_price_per_share` (number)
+- `dividends_per_share` (number, if applicable)
+- `total_return_pct` (number, decimal)
+- `irr_pct` (number, decimal)
+- `source_sheet`, `source_cell`
+
+`external_comps_reference.json` (only if external comps are used):
+- `used` (boolean)
+- `path` (string)
+- `snapshot_date` (date)
+- `methodology` (string)
+- `peer_derived_value_per_share` (number, optional)
+- `peer_derived_range_low/high` (number, optional)
 
 `kpi_tracker.csv`:
 - `pillar`, `kpi`, `current_value`, `unit`
@@ -1402,9 +1447,11 @@ Scripts used to build, recalculate, or validate the model must be saved under th
 ### Before Delivering Model (MANDATORY)
 
 1. **Verify structure**:
+   - Core tabs exist: Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks
    - Scenario blocks for Bear/Base/Bull with assumptions across projection years
    - Case selector functional with formulas referencing correct scenario blocks
-   - Sensitivity tables at bottom of DCF sheet (not separate sheet)
+   - Scenarios sheet includes 1-year return, 3-year return/IRR, and exit-multiple return framework; headline outputs link to Summary
+   - Sensitivity tables are on `Sensitivity` for repo workbooks (bottom of DCF only in compact mode)
    - Font colors: Blue inputs, black formulas, green sheet links
    - Cell comments on ALL hardcoded inputs
    - Professional borders around major sections
@@ -1417,12 +1464,20 @@ Scripts used to build, recalculate, or validate the model must be saved under th
 
 4. **Fix errors and re-run recalc.py** until status is "success"
 
-5. **Spot-check formulas**:
+5. **Run validation scripts**:
+   - `validate_model.py` before generating `outputs.json`
+   - Generate `outputs.json` from recalculated workbook cells only
+   - `validate_outputs.py` after writing `outputs.json`
+   - `validate_artifacts.py` if `report.md`, `deck.spec.json`, `deck.html`, or `deck.pptx` exists or is being delivered
+
+6. **Spot-check formulas**:
    - Test one FCF formula - does it reference the correct assumption rows?
    - Change case selector - does the consolidation column update properly?
    - Verify revenue formulas reference consolidation column (not nested IF formulas)
+   - Verify recommendation/rating is consistent with base upside and 1Y/3Y return thresholds
+   - Verify Summary return outputs tie to active DCF/Scenarios outputs
 
-6. **Deliver model**
+7. **Deliver model**
 
 ### Available Data Sources
 
@@ -1436,11 +1491,14 @@ Scripts used to build, recalculate, or validate the model must be saved under th
 Before delivering DCF model:
 
 **Structure:**
-- [ ] Full tab set populated: Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks
-- [ ] Summary tab is self-contained with recommendation, target/current price, upside, bull/base/bear values, key metrics, and risk highlights
-- [ ] Thesis Tracker ties each pillar to a model KPI cell; catalyst calendar with dates; bull/base/bear trigger values populated
-- [ ] Comps tab has 5-8 peers with operating metrics and valuation multiples
-- [ ] Checks tab outputs TRUE/FALSE for all integrity checks
+- [ ] Full core tab set populated: Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks
+- [ ] Summary tab is self-contained and starts with recommendation, target/current price, upside, 1-year return, 3-year return/IRR, bull/base/bear values, exit-multiple summary, key metrics, and risk highlights
+- [ ] Drivers tab exposes the sector-native revenue primitive and major business-specific cost drivers
+- [ ] DCF references Income Statement, Balance Sheet, Cash Flow, and Assumptions; it does not duplicate the operating model
+- [ ] Scenarios tab includes bull/base/bear, 1-year return, 3-year return/IRR, and exit-multiple scenarios across holding periods
+- [ ] Assumptions tab includes company, valuation, macro/rate assumptions (risk-free, ERP, beta, cost of debt, tax, FX, CPI/IPCA/inflation/GDP/SELIC/CDI where relevant), sources, rationale, and cells driven
+- [ ] No Comps/Peer Comps/Comparative sheet in the company model unless explicitly requested; peer analysis is external by default
+- [ ] Checks tab outputs TRUE/FALSE for all integrity checks, including formula-error checks on active outputs and Summary-vs-active-case ties
 
 **Formulas & Recalculation:**
 - [ ] Run `python recalc.py model.xlsx 30` until status is "success" (zero formula errors across ALL sheets)
@@ -1463,7 +1521,11 @@ Before delivering DCF model:
 - [ ] Net debt sign correct (negative = net cash position)
 
 **Downstream Artifacts:**
-- [ ] `outputs.json` written to `<run>/outputs.json` with stable key → sheet/cell mappings, scenario range, comps summary, and thesis summary
+- [ ] `outputs.json` written to `<run>/outputs.json` only after recalc and `validate_model.py` pass; values are read from recalculated workbook cells
+- [ ] `validate_outputs.py` confirms every `outputs.json` value equals its referenced workbook cell within tolerance
+- [ ] `outputs.json` includes stable key → sheet/cell mappings, DCF value, current/target price, upside, 1-year return, 3-year return/IRR, scenario range, and exit-multiple scenario outputs
+- [ ] External comps reference included only if used: path/date/final peer-derived value, not the peer table
 - [ ] Workbook-derived extracts written to `<run>/data/normalized/model_extracts/` for charts/reports/decks
+- [ ] `validate_artifacts.py` passes if report/deck artifacts exist or are delivered
 - [ ] Run-specific scripts saved under `<run>/data/scripts/model/` and `<run>/data/scripts/validation/` — modular, not monolithic
 - [ ] File naming: primary model is `<run>/model.xlsx`
