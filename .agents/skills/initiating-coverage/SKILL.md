@@ -268,21 +268,21 @@ Optional:
 5. Deliver Excel model
 
 **Output**: Run-local quantitative artifacts in `<run>/`:
-- **`<run>/model.xlsx`** — canonical financial model with repo-standard tabs:
-  1. **Summary** - recommendation, price target, key metrics, trends, scenarios, and valuation bridge
-  2. **Revenue Model** - Product breakdown (20-30 rows) + Geography breakdown (15-20 rows)
+- **`<run>/model.xlsx`** — canonical single-company financial model with repo-standard tabs:
+  1. **Summary** - recommendation, current price, target price, upside/downside, 1-year return, 3-year return/IRR, exit-multiple scenarios, key metrics, trends, and valuation bridge
+  2. **Drivers** - sector-native revenue and operating/cost driver build
   3. **Income Statement** - Full P&L with 40-50 line items, historical (3-5 years) + projected (5 years)
   4. **Balance Sheet** - Assets/Liabilities/Equity, historical + projected
   5. **Cash Flow** - Operating/Investing/Financing activities, historical + projected
-  6. **DCF** - Prepared valuation model
-  7. **Sensitivity** - WACC/g, growth/margin, and scenario sensitivities
-  8. **Comps** - Peer operating metrics and valuation multiples
-  9. **Thesis Tracker** - Thesis pillars, key events, KPIs, and scenario/model impact
-  10. **DCF Assumptions** - Assumption register with rationale and sensitivity ranges
-  11. **Checks** - Formula and cross-artifact checks
+  6. **DCF** - Intrinsic valuation model referencing the financial statements
+  7. **Scenarios** - Bull/base/bear, 1-year return, 3-year return/IRR, and exit-multiple return framework
+  8. **Sensitivity** - WACC/g or sector-equivalent plus sector-native sensitivities
+  9. **Assumptions** - Assumption register with macro/rates, scenario values, rationale, sources, and cells driven
+  10. **Checks** - Formula, model-sanity, and cross-artifact checks
+  Optional: **QTracker**, **MarketData**, **Ownership** when needed. No default Comps tab; peer analysis is external by default.
 - **`<run>/outputs.json`** — stable key-value outputs extracted from the model (revenue, EBITDA, EPS, FCF, key multiples, scenario outputs). Every material model output used by reports/presentations must have a stable key in this file.
 - **Model extracts** — clean machine-readable CSVs under `<run>/data/normalized/model_extracts/` for revenue build, P&L, cash flow, balance sheet, and key metrics.
-- **Build and validation scripts** — under `<run>/data/scripts/model/` (scripts that build/populate the model) and `<run>/data/scripts/validation/` (scripts that cross-check/audit model integrity).
+- **Build and validation scripts** — under `<run>/data/scripts/model/` (scripts that build/populate the model) and `<run>/data/scripts/validation/` (scripts that cross-check/audit model integrity). Required validation scripts: `recalc.py`, `validate_model.py`, `validate_outputs.py`, and `validate_artifacts.py` when report/deck artifacts exist.
 
 **Canonical path**: `<run>/model.xlsx`
 
@@ -295,14 +295,19 @@ Optional:
 - ✅ Build complete income statement with 40-50 line items (not abbreviated)
 - ✅ Include full cash flow statement and balance sheet with all line items
 - ✅ Complete ALL three scenarios (Bull/Base/Bear) with different parameters
+- ✅ Include 1-year return, 3-year return/IRR, and exit-multiple scenario logic in Scenarios and Summary
+- ✅ Run validation scripts before delivery; rating/target must be consistent with base upside/return unless an explicit override is documented
 - ❌ Do not create simplified/abbreviated versions
-- ❌ Do not skip Summary, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, or Checks in initial coverage models
+- ❌ Do not skip Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, or Checks in initial coverage models
+- ❌ Do not include a default Comps tab in the company model; peer analysis belongs in an external comps artifact unless explicitly requested
 - ❌ Do not skip historical financials extraction if needed
 
 **Verification before proceeding to Task 3**:
 - [ ] `<run>/model.xlsx` created and opens cleanly
-- [ ] Model has repo-standard tabs (Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks)
-- [ ] `<run>/outputs.json` generated with stable keys for all material model outputs
+- [ ] Model has repo-standard tabs (Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks; optional QTracker/MarketData/Ownership only when needed)
+- [ ] `recalc.py` and `validate_model.py` passed before outputs generation
+- [ ] `<run>/outputs.json` generated from recalculated workbook cells with stable keys for all material model outputs
+- [ ] `validate_outputs.py` passed after outputs generation
 - [ ] Model extracts saved under `<run>/data/normalized/model_extracts/`
 - [ ] Build/validation scripts saved under `<run>/data/scripts/model/` and `<run>/data/scripts/validation/`
 - [ ] Historical data (3-5 years) incorporated

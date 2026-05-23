@@ -512,7 +512,7 @@ Before writing anything, verify the run folder contains:
 <run>/assets/charts/
 ```
 
-Also verify Task 1 research notes and Task 3 valuation notes exist if they were produced. If `outputs.json` or model extracts are missing, stop and return to Task 2/3. Do not write a report from disconnected numbers.
+Also verify Task 1 research notes and Task 3 valuation notes exist if they were produced. If `outputs.json` or model extracts are missing, stop and return to Task 2/3. Confirm `recalc.py`, `validate_model.py`, and `validate_outputs.py` passed after the latest model change. Do not write a report from disconnected or unvalidated numbers.
 
 ### Step 2: Load the quantitative source of truth
 
@@ -532,9 +532,9 @@ Required model-backed tables:
 - Price target derivation.
 - Risk register and catalyst table when available.
 
-Every material number in those tables must trace to an `outputs.json` key, a model extract, or a verifiable citation.
+Every material number in those tables must trace to an `outputs.json` key, a model extract, or a verifiable citation. Prefer referencing `outputs.json` keys for target price, current price, upside/downside, 1-year return, 3-year IRR, scenario values, and valuation outputs.
 
-### Step 3: Validate final assets
+### Step 3: Validate final assets and cross-artifact numbers
 
 Use only final assets from:
 
@@ -545,6 +545,8 @@ Use only final assets from:
 ```
 
 Do not embed raw screenshots or files from `data/raw/`. If an image is useful but still in raw/intermediate storage, curate it first into `assets/` and document it in the manifest. Assets that are not referenced by the final report or deck belong under `data/intermediate/`, not `assets/`.
+
+Before final delivery, run or create `<run>/data/scripts/validation/validate_artifacts.py` to assert material hardcoded numbers in `report.md` match `outputs.json` within tolerance. It should catch stale target prices, rating/upside inconsistencies, scenario values, 1-year returns, 3-year IRRs, and valuation outputs. If validation fails, update the report or outputs before delivery.
 
 ### Step 4: Build the report outline
 

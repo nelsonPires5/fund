@@ -564,7 +564,7 @@ Cumulative FCF 2025-2029 ($M)   $XXX        $XXX        $XXX
 - Base case: [Describe most likely scenario]
 - Bear case: [Describe downside risks and triggers]
 
-### Step 9: Quality Check
+### Step 9: Quality Check and Validation
 
 **Verify model integrity:**
 1. [ ] Test all formulas (spot check calculations)
@@ -578,9 +578,20 @@ Cumulative FCF 2025-2029 ($M)   $XXX        $XXX        $XXX
 9. [ ] Test that revenue totals tie across all tabs
 10. [ ] Review formatting and presentation
 
+**Run validation scripts before generating outputs:**
+1. [ ] `recalc.py` passes with zero formula errors
+2. [ ] `validate_model.py` passes model-sanity checks:
+   - active output cells are not Excel errors (`#VALUE!`, `#REF!`, etc.)
+   - Summary target/base case ties to active DCF/Scenarios output
+   - scenario ordering is logical (Bear ≤ Base ≤ Bull for values and returns)
+   - recommendation/rating is consistent with base upside and 1Y/3Y return thresholds, unless an explicit override is documented
+   - 1-year return and 3-year IRR formulas tie
+   - terminal value, WACC/Ke, revenue-driver, BS, and CF checks pass
+3. [ ] Checks tab mirrors the key validations with TRUE/FALSE outputs
+
 ### Step 10: Export Outputs and Extracts
 
-After the model passes quality checks, export the following:
+After the model passes quality checks and `validate_model.py`, export the following:
 
 #### A. Generate `outputs.json`
 
@@ -603,7 +614,7 @@ Create `<run>/outputs.json` with stable keys for every material model output use
 }
 ```
 
-Fill in all values from the model. Keep keys stable — never rename or remove keys between runs of the same company.
+Fill in all values from the recalculated model cells referenced by `sheet` + `cell`. Do not recompute output values independently in Python. Keep keys stable — never rename or remove keys between runs of the same company. After writing `outputs.json`, run `validate_outputs.py` to assert every JSON value equals its referenced workbook cell within tolerance.
 
 #### B. Export Model Extracts
 
@@ -620,7 +631,10 @@ Under `<run>/data/scripts/model/`:
 - Any scripts used to build or populate the model workbook
 
 Under `<run>/data/scripts/validation/`:
-- Any scripts used to cross-check model integrity (balance checks, formula audits, cross-tab reconciliations)
+- `recalc.py` — workbook recalculation and formula-error scan
+- `validate_model.py` — model-sanity validation including active output errors, Summary-vs-active-case ties, scenario ordering, rating-vs-return consistency, return math, terminal/WACC sanity, and statement/driver ties
+- `validate_outputs.py` — asserts `outputs.json` values equal their referenced recalculated workbook cells
+- `validate_artifacts.py` — when report/deck artifacts exist, asserts material hardcoded prices/returns/targets match `outputs.json`
 
 ---
 
@@ -632,6 +646,11 @@ Under `<run>/data/scripts/validation/`:
 - No circular references
 - Balance sheet balances for all years
 - Scenario switching works properly
+- Active output cells contain no Excel errors
+- Summary values tie to the selected/active DCF and Scenarios outputs
+- Scenario ordering is logical
+- Rating/recommendation is consistent with base upside and 1Y/3Y returns unless explicitly overridden
+- `outputs.json` values match recalculated workbook cells
 
 ### Completeness
 - All 6 essential tabs: Revenue Model, Income Statement, Cash Flow Statement, Balance Sheet, Scenarios, DCF Inputs
