@@ -31,12 +31,13 @@ All model-builder runs must follow this sequence. Do not skip phases.
 | Phase | Artifacts | Pre-requisite |
 |---|---|---|
 | 1. Model / Valuation | `model.xlsx` | Historical data gathered |
-| 2. Outputs + Extracts | `outputs.json`, `data/normalized/model_extracts/` | Phase 1 complete |
-| 3. Charts / Diagrams | `assets/charts/`, `assets/diagrams/` | Phase 2 complete |
-| 4. Report | `report.md` | Phases 2-3 complete |
-| 5. Presentation (optional) | `deck.pptx` | Phases 2-4 complete |
+| 2. Workbook Validation | `data/scripts/validation/recalc.py`, `validate_model.py` pass | Phase 1 complete |
+| 3. Outputs + Extracts | `outputs.json`, `data/normalized/model_extracts/`, `validate_outputs.py` pass | Phase 2 complete |
+| 4. Charts / Diagrams | `assets/charts/`, `assets/diagrams/` | Phase 3 complete |
+| 5. Report | `report.md`, `validate_artifacts.py` pass if material numbers are hardcoded | Phases 3-4 complete |
+| 6. Presentation (optional) | `deck.pptx` / `deck.html`, `validate_artifacts.py` pass | Phases 3-5 complete |
 
-**Guardrail:** Do not produce `report.md` before `outputs.json` and charts are ready. Do not produce `deck.pptx` before `report.md` is complete. Every chart and diagram must trace to a value in `outputs.json`.
+**Guardrail:** Do not produce `outputs.json` until the workbook is recalculated and `validate_model.py` passes. Do not produce `report.md` before `outputs.json`, model extracts, validations, and charts are ready. Do not produce `deck.pptx`/`deck.html` before `report.md` is complete unless explicitly requested. Every chart and diagram must trace to a value in `outputs.json` or model extracts. Before final delivery, `validate_outputs.py` and, when reports/decks exist, `validate_artifacts.py` must pass.
 
 ## Workflow
 
@@ -54,7 +55,7 @@ Classify the request:
 | Investment deck needed | PPTX |
 | New coverage report needed | Initiating coverage |
 
-If the user asks for a valuation view, default to DCF as the core valuation and comps as a sanity check, unless the business model requires a different framework.
+If the user asks for a valuation view, default to DCF / sector-appropriate intrinsic valuation as the core valuation. Use comps only as an external sanity check or separate relative-valuation artifact; do not embed peer comparison sheets in the single-company `model.xlsx` unless explicitly requested.
 
 ### Step 2: Gather Inputs
 
@@ -79,8 +80,8 @@ Use this routing:
 ```markdown
 If building intrinsic valuation:
 1. `dcf-model`
-2. `comps-analysis`
-3. `xlsx-author` conventions and run validation scripts if Excel is created
+2. `xlsx-author` conventions and run validation scripts if Excel is created
+3. Optional external `comps-analysis` only if the user requests relative valuation or a peer sanity check; keep output outside `model.xlsx`
 
 If updating an existing model:
 1. `model-update`
@@ -89,7 +90,7 @@ If updating an existing model:
 
 If preparing an investment deliverable:
 1. `dcf-model`
-2. `comps-analysis`
+2. Optional external `comps-analysis` if relative valuation is needed
 3. Write `outputs.json` and `data/normalized/model_extracts/`
 4. Generate charts/diagrams from model outputs
 5. `initiating-coverage` for `report.md`, then `pptx-author` only if a deck is requested
@@ -97,19 +98,28 @@ If preparing an investment deliverable:
 
 ### Step 4: Validate Model Logic
 
-For initial coverage / full DCF workbooks in this repo, use the standard model structure: Summary, Revenue Model, Income Statement, Balance Sheet, Cash Flow, DCF, Sensitivity, Comps, Thesis Tracker, DCF Assumptions, Checks. The Summary tab should show key metrics/trends/scenarios, and the Thesis Tracker should connect catalysts/events to qualitative thesis status and quantitative model KPIs.
+For initial coverage / full DCF workbooks in this repo, use the canonical single-company model structure: Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks. Optional tabs: QTracker, MarketData, Ownership. Do not include Comps/Peer Comps/Comparative sheets in the company workbook by default.
+
+The Summary tab must show key metrics/trends/scenarios and begin with the return setup: current price, target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear values, and exit-multiple scenario summary. The Scenarios tab must include forward-return logic for 1-year and 3-year holding periods and exit multiples.
 
 Check:
 
 * Historical numbers tie to source
-* Forecast assumptions are explicit
-* Revenue growth and margin assumptions are reasonable
+* Forecast assumptions are explicit in Assumptions, including macro/rate assumptions such as risk-free rate, ERP, beta, cost of debt, tax, FX, CPI/IPCA/inflation/GDP/SELIC/CDI where relevant
+* Revenue is driver-first and sector-native; generic CAGR is clearly labeled as fallback
+* Cost breakdown logic is either cleanly in Income Statement or, if business-specific, built in Drivers and linked into Income Statement
+* DCF references Income Statement, Balance Sheet, Cash Flow, and Assumptions; it does not duplicate the operating model
 * FCF bridge is coherent
-* WACC inputs are sourced or clearly marked as assumptions
+* WACC/Ke inputs are sourced or clearly marked as assumptions
 * Terminal value does not dominate excessively without explanation
-* Sensitivity tables include the base case
+* Sensitivity tables include the base case and at least one sector-native sensitivity
+* Scenarios include 1-year return, 3-year return/IRR, and exit-multiple cases
 * Share count and net debt are current
 * All model outputs are formulas if Excel is created
+* Checks/validation catch rating-vs-return inconsistency, e.g. Buy/Outperform with material base-case downside or Sell/Underperform with material upside
+* `validate_model.py` passes before `outputs.json` is generated
+* `validate_outputs.py` passes after `outputs.json` is generated from recalculated workbook cells
+* `validate_artifacts.py` passes before final report/deck delivery when downstream artifacts exist
 
 ### Step 5: Produce Valuation Bridge
 
@@ -117,10 +127,14 @@ Always summarize:
 
 | Item                            | Output |
 | ------------------------------- | ------ |
-| DCF fair value                  |        |
-| Comps-implied value             |        |
+| DCF / intrinsic fair value      |        |
+| External comps-implied value, if used |        |
 | Current price                   |        |
+| Target price                    |        |
 | Upside/downside                 |        |
+| 1-year return                   |        |
+| 3-year return / IRR             |        |
+| Exit multiple scenario range    |        |
 | Main drivers                    |        |
 | Key sensitivities               |        |
 | What would change the valuation |        |
@@ -171,8 +185,11 @@ Recommend:
 
 * Follow the strict phase order above. Do not produce `report.md` or `deck.pptx` before `outputs.json` and charts are ready.
 * Do not hardcode calculated model outputs.
+* Generate `outputs.json` only after workbook recalc and model validation pass; extract values from workbook cells.
 * Clearly distinguish sourced data from assumptions.
 * Do not present a price target without methodology.
+* Do not allow recommendation/rating to contradict valuation outputs without an explicit override note (e.g. Buy with base-case downside or Sell with base-case upside).
 * Do not update valuation mechanically if the thesis changed qualitatively.
 * Surface model limitations and data gaps.
 * Stage the model for user review before downstream use.
+* Do not deliver reports/decks with material numbers that fail validation against `outputs.json`.
