@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="slides-format" content="viewport">
+<title>Global Semiconductor & AI Infrastructure Value Chain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+@theme {
+  --color-bg: #0b0f19;
+  --color-bg-deep: #060911;
+  --color-surface: #131929;
+  --color-text: #e8edf5;
+  --color-text-secondary: #9aafc8;
+  --color-text-muted: #5a7290;
+  --color-accent-1: #3b82f6;
+  --color-accent-2: #60a5fa;
+  --color-accent-3: #93c5fd;
+  --color-pos: #22c55e;
+  --color-neg: #ef4444;
+  --color-glass-bg: rgba(255,255,255,0.05);
+  --color-glass-border: rgba(255,255,255,0.09);
+  --color-vignette: rgba(0,0,0,0.45);
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+</style>
+<style>
+:root { --color-bg:#0b0f19; --color-text:#e8edf5; }
+*,*::before,*::after{box-sizing:border-box}
+html,body{background:var(--color-bg);margin:0;overflow:hidden;height:100vh;width:100vw}
+body{font-family:'DM Sans',sans-serif;color:var(--color-text)}
+.deck{width:100vw;height:100vh;position:relative}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.5s ease;pointer-events:none;overflow:hidden;background:var(--color-bg)}
+.slide.active{opacity:1;pointer-events:all}
+.slide>.content{position:relative;z-index:2;width:100%;max-width:1160px;padding:clamp(1.2rem,3vw,2.8rem) clamp(1.5rem,4vw,4rem)}
+.slide::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,0.4) 100%)}
+.nav-controls{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);padding:8px 20px;border-radius:40px;border:1px solid rgba(255,255,255,0.09)}
+.nav-btn{width:36px;height:36px;border:none;background:rgba(255,255,255,0.06);color:#3b82f6;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.nav-btn:hover{background:rgba(59,130,246,0.2)}
+.slide-dots{display:flex;gap:6px}
+.slide-dots .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);cursor:pointer;transition:background 0.2s,transform 0.2s}
+.slide-dots .dot.active{background:#3b82f6;transform:scale(1.3)}
+.slide-counter{font-size:0.75rem;color:#5a7290;min-width:38px;text-align:center}
+
+/* Layer color system */
+.l1{color:#a78bfa} .bg-l1{background:#a78bfa}
+.l2{color:#60a5fa} .bg-l2{background:#60a5fa}
+.l3{color:#34d399} .bg-l3{background:#34d399}
+.l4{color:#fbbf24} .bg-l4{background:#fbbf24}
+.l5{color:#f87171} .bg-l5{background:#f87171}
+.l6{color:#fb923c} .bg-l6{background:#fb923c}
+.l7{color:#e879f9} .bg-l7{background:#e879f9}
+
+/* Section label pill */
+.layer-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.7rem}
+
+/* Horizontal bar */
+.hbar-track{background:rgba(255,255,255,0.07);border-radius:4px;height:22px;position:relative;overflow:hidden}
+.hbar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:0.72rem;font-weight:600;color:#fff;white-space:nowrap}
+.bar-label{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.7rem;color:#9aafc8}
+
+/* Glass card */
+.gc{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.1rem 1.3rem}
+
+/* Stat number */
+.stat-n{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);line-height:1;font-style:italic}
+
+/* Chain viz */
+.chain-row{display:flex;align-items:stretch;gap:0;width:100%}
+.chain-box{flex:1;padding:0.9rem 0.6rem;text-align:center;position:relative;cursor:default}
+.chain-arrow{display:flex;align-items:center;color:rgba(255,255,255,0.25);font-size:1.1rem;padding-top:0.5rem}
+
+/* Return bar */
+.ret-row{display:grid;grid-template-columns:110px 1fr 52px;align-items:center;gap:8px;margin-bottom:5px}
+.ret-track{height:18px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;position:relative}
+.ret-bar-pos{height:100%;background:linear-gradient(90deg,#16a34a,#22c55e);border-radius:3px}
+.ret-bar-neg{height:100%;background:linear-gradient(90deg,#ef4444,#fca5a5);border-radius:3px;margin-left:auto}
+.ret-val{font-size:0.72rem;font-weight:700;text-align:right}
+.ret-label{font-size:0.7rem;color:#9aafc8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Bottleneck cards */
+.btn-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem 1.1rem;border-left:3px solid}
+
+/* SVG sparkline */
+svg.spark{overflow:visible}
+
+/* Slide header top stripe */
+.slide-header{border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:0.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.slide-header h2{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.5vw,1.9rem);font-style:italic;margin:0}
+
+/* TAM overview table */
+.tam-row{display:grid;grid-template-columns:2fr 1.2fr 1fr 1.8fr;gap:0;padding:0.55rem 0.7rem;border-radius:6px;align-items:center;font-size:0.8rem}
+.tam-row:nth-child(even){background:rgba(255,255,255,0.025)}
+.tam-head{color:#5a7290;font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em}
+
+/* Company table */
+.co-row{display:grid;gap:0;padding:0.45rem 0.6rem;border-radius:5px;align-items:center;font-size:0.77rem}
+.co-row:nth-child(even){background:rgba(255,255,255,0.025)}
+.co-head{color:#5a7290;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em}
+
+/* Scrollable body if needed */
+.slide .content.scroll{overflow-y:auto;max-height:calc(100vh - 80px)}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 1 — TITLE
+════════════════════════════════════════════ -->
+<div class="slide active" data-slide="1">
+  <div style="position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(59,130,246,0.12),transparent 70%)"></div>
+  <div class="content" style="text-align:center;z-index:2">
+    <p style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#3b82f6;margin-bottom:1.2rem">Equity Research Primer — May 2026</p>
+    <h1 style="font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(2.2rem,5vw,4rem);line-height:1.1;margin-bottom:1rem;background:linear-gradient(135deg,#e8edf5 30%,#60a5fa 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Global Semiconductor &amp;<br>AI Infrastructure Value Chain</h1>
+    <p style="color:#9aafc8;font-size:1rem;max-width:600px;margin:0 auto 2.5rem">A structured primer on industry layers, TAM, key companies, bottlenecks, and margin dynamics</p>
+    <div style="display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap">
+      <div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-style:italic;font-size:1.9rem;color:#3b82f6">~$800B</div><div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.08em">Total Semicon Market 2025</div></div>
+      <div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-style:italic;font-size:1.9rem;color:#a78bfa">7 Layers</div><div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.08em">Value Chain Segments</div></div>
+      <div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-style:italic;font-size:1.9rem;color:#34d399">16</div><div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.08em">Key Public Companies</div></div>
+      <div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-style:italic;font-size:1.9rem;color:#fbbf24">$158B</div><div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.08em">AI Infrastructure 2025</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 2 — VALUE CHAIN OVERVIEW + TAM
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="2">
+  <div class="content scroll">
+    <div class="slide-header">
+      <span style="font-size:1.4rem">🗺️</span>
+      <h2>The 7-Layer Value Chain &amp; TAM Overview</h2>
+    </div>
+
+    <!-- Chain diagram -->
+    <div class="chain-row" style="margin-bottom:1rem">
+      <div class="chain-box" style="background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.3);border-radius:8px">
+        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:#a78bfa;margin-bottom:3px">Layer 1</div>
+        <div style="font-size:0.8rem;font-weight:600">EDA &amp; IP</div>
+      </div>
+      <div class="chain-arrow">›</div>
+      <div class="chain-box" style="background:rgba(96,165,250,0.12);border:1px solid rgba(96,165,250,0.3);border-radius:8px">
+        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:#60a5fa;margin-bottom:3px">Layer 2</div>
+        <div style="font-size:0.8rem;font-weight:600">Design (Fabless/IDM)</div>
+      </div>
+      <div class="chain-arrow">›</div>
+      <div class="chain-box" style="background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.3);border-radius:8px">
+        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:#fbbf24;margin-bottom:3px">Layer 3</div>
+        <div style="font-size:0.8rem;font-weight:600">Equipment</div>
+      </div>
+      <div class="chain-arrow">›</div>
+      <div class="chain-box" style="background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.3);border-radius:8px">
+        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:#34d399;margin-bottom:3px">Layer 4</div>
+        <div style="font-size:0.8rem;font-weight:600">Foundry / IDM Fab</div>
+      </div>
+      <div class="chain-arrow">›</div>
+      <div class="chain-box" style="background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.3);border-radius:8px">
+        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:#f87171;margin-bottom:3px">Layer 5</div>
+        <div style="font-size:0.8rem;font-weight:600">Memory</div>
+      </div>
+      <div class="chain-arrow">›</div>
+      <div class="chain-box" style="background:rgba(251,146,60,0.12);border:1px solid rgba(251,146,60,0.3);border-radius:8px">
+        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:#fb923c;margin-bottom:3px">Layer 6</div>
+        <div style="font-size:0.8rem;font-weight:600">Packaging / OSAT</div>
+      </div>
+      <div class="chain-arrow">›</div>
+      <div class="chain-box" style="background:rgba(232,121,249,0.12);border:1px solid rgba(232,121,249,0.3);border-radius:8px">
+        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:#e879f9;margin-bottom:3px">Layer 7</div>
+        <div style="font-size:0.8rem;font-weight:600">Systems / End Market</div>
+      </div>
+    </div>
+
+    <!-- TAM table -->
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden">
+      <div class="tam-row tam-head" style="background:rgba(255,255,255,0.05)">
+        <div>Layer</div><div>2025 TAM</div><div>CAGR (5yr)</div><div>Key Listed Companies</div>
+      </div>
+      <div class="tam-row"><div><span class="l1">■</span> L1 — EDA &amp; Semiconductor IP</div><div style="font-weight:600;color:#a78bfa">~$18B</div><div style="color:#34d399">+9%</div><div style="color:#9aafc8">Synopsys, Cadence, ARM</div></div>
+      <div class="tam-row"><div><span class="l2">■</span> L2 — Fabless &amp; IDM Design</div><div style="font-weight:600;color:#60a5fa">~$279B</div><div style="color:#34d399">+13%</div><div style="color:#9aafc8">NVIDIA, AMD, Qualcomm, Broadcom, Intel</div></div>
+      <div class="tam-row"><div><span class="l4">■</span> L3 — Wafer Fab Equipment</div><div style="font-weight:600;color:#fbbf24">~$109B</div><div style="color:#34d399">+8%</div><div style="color:#9aafc8">ASML, Applied Materials, AMAT</div></div>
+      <div class="tam-row"><div><span class="l3">■</span> L4 — Foundry / Fab (Foundry 2.0)</div><div style="font-weight:600;color:#34d399">~$320B</div><div style="color:#34d399">+10%</div><div style="color:#9aafc8">TSMC, Samsung Foundry, Intel Foundry</div></div>
+      <div class="tam-row"><div><span class="l5">■</span> L5 — Memory (DRAM + NAND)</div><div style="font-weight:600;color:#f87171">~$203B</div><div style="color:#34d399">+12%</div><div style="color:#9aafc8">Samsung, Micron, SanDisk, SK Hynix</div></div>
+      <div class="tam-row"><div><span class="l6">■</span> L6 — Packaging / OSAT</div><div style="font-weight:600;color:#fb923c">~$77B</div><div style="color:#34d399">+8%</div><div style="color:#9aafc8">ASE Tech, Amkor, TSMC CoWoS</div></div>
+      <div class="tam-row"><div><span class="l7">■</span> L7 — Systems &amp; AI Infrastructure</div><div style="font-weight:600;color:#e879f9">~$158B</div><div style="color:#34d399">+22%</div><div style="color:#9aafc8">Cloud HyperScalers, OEMs</div></div>
+      <div class="tam-row" style="background:rgba(59,130,246,0.08);font-weight:600"><div>Total Semiconductor Market</div><div style="color:#3b82f6">~$800B</div><div style="color:#34d399">+14%</div><div style="color:#9aafc8">—</div></div>
+    </div>
+    <p style="font-size:0.67rem;color:#5a7290;margin-top:6px">Sources: SIA, TechInsights, Counterpoint, Mordor Intelligence, DataM Intelligence (2025)</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 3 — LAYER 1: EDA & IP
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="3">
+  <div class="content scroll">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.8rem">
+      <div class="layer-pill" style="background:rgba(167,139,250,0.15);color:#a78bfa;border:1px solid rgba(167,139,250,0.3)">Layer 1</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.3rem,2.5vw,1.8rem);margin:0">EDA Software &amp; Semiconductor IP</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem">Why it Exists</div>
+        <p style="font-size:0.82rem;color:#9aafc8;line-height:1.5;margin:0">Modern chips contain 100B+ transistors. No human can design these without EDA tools (logic synthesis, verification, layout). IP blocks (ARM cores, PCIe controllers) let designers reuse proven sub-circuits rather than rebuilding from scratch every time.</p>
+      </div>
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem">Why it's Critical</div>
+        <p style="font-size:0.82rem;color:#9aafc8;line-height:1.5;margin:0">The entire design output of every fabless company — worth hundreds of billions — flows through just three EDA vendors. A design tape-out at 3nm costs $50–100M. Without correct EDA sign-off, the chip fails in silicon. There is no workaround.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 1.2fr 1fr;gap:0.8rem;margin-bottom:1rem">
+      <div class="gc">
+        <div style="font-size:0.67rem;color:#5a7290;text-transform:uppercase;margin-bottom:4px">2025 TAM</div>
+        <div class="stat-n l1">~$18B</div>
+        <div style="font-size:0.72rem;color:#9aafc8;margin-top:4px">EDA ~$10.5B + IP ~$7.5B | CAGR +9%/yr</div>
+      </div>
+      <div class="gc">
+        <div style="font-size:0.67rem;color:#5a7290;text-transform:uppercase;margin-bottom:4px">Market Structure</div>
+        <div style="font-size:0.82rem;line-height:1.5">Synopsys + Cadence control <span style="color:#a78bfa;font-weight:700">&gt;60%</span> of EDA revenue<br>ARM licenses to <span style="color:#a78bfa;font-weight:700">99% of mobile SoCs</span></div>
+      </div>
+      <div class="gc">
+        <div style="font-size:0.67rem;color:#5a7290;text-transform:uppercase;margin-bottom:4px">Bottleneck</div>
+        <div style="font-size:0.8rem;color:#fbbf24;line-height:1.5">AI chip complexity is pushing EDA tool limits. Verification of 3nm multi-die designs takes months and is the #1 design schedule risk.</div>
+      </div>
+    </div>
+    <!-- Company performance -->
+    <div style="font-size:0.68rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem">Key Equities — 1-Year Price Return (Jul 2024 → Jul 2025)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.7rem">
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">Synopsys (SNPS)</div>
+        <div style="font-size:0.75rem;color:#9aafc8;margin-bottom:6px">EDA duopoly leader. Pending Ansys merger ($35B). Gross margin ~80%. AI-EDA growing fast.</div>
+        <div style="font-size:1rem;font-weight:700;color:#22c55e">+4.0%</div>
+      </div>
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">Cadence (CDNS)</div>
+        <div style="font-size:0.75rem;color:#9aafc8;margin-bottom:6px">EDA duopoly #2. Strong in analog &amp; verification. Expanding into systems design. Gross margin ~82%.</div>
+        <div style="font-size:1rem;font-weight:700;color:#22c55e">+21.2%</div>
+      </div>
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">Arm Holdings (ARM)</div>
+        <div style="font-size:0.75rem;color:#9aafc8;margin-bottom:6px">IP licensor. Every smartphone, most AI chips use ARM ISA. Royalty model = high leverage to chip volumes.</div>
+        <div style="font-size:1rem;font-weight:700;color:#22c55e">+1.8%</div>
+      </div>
+    </div>
+    <div style="margin-top:0.6rem;padding:0.6rem 0.9rem;background:rgba(167,139,250,0.08);border-left:3px solid #a78bfa;border-radius:0 6px 6px 0;font-size:0.77rem;color:#c4b5fd">
+      <strong>What depends on this layer:</strong> Every chip design company. Without EDA tools there are no tapeouts. Without ARM IP there is no modern mobile or AI compute ecosystem.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 4 — LAYER 2: FABLESS & IDM DESIGN
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="4">
+  <div class="content scroll">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.8rem">
+      <div class="layer-pill" style="background:rgba(96,165,250,0.15);color:#60a5fa;border:1px solid rgba(96,165,250,0.3)">Layer 2</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.3rem,2.5vw,1.8rem);margin:0">Chip Design — Fabless &amp; IDM</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.9rem">
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Why it Exists</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">Fabless companies own the intellectual value of chip architecture — the what, not the how. By outsourcing manufacturing to TSMC/Samsung, they avoid $20B+ fab investments and can iterate designs rapidly. IDMs (Intel, Samsung Logic) own both design and manufacturing.</p>
+      </div>
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Bottleneck / Risk</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">Fabless companies are entirely dependent on TSMC for leading-edge nodes. Any TSMC disruption stops product launches. NVIDIA's H100/B200 are sole-sourced from TSMC CoWoS, creating a single point of failure for the entire AI compute buildout.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.6rem;margin-bottom:0.9rem">
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">NVIDIA</div>
+        <div style="font-size:0.9rem;font-weight:700;color:#60a5fa">~$130B</div>
+        <div style="font-size:0.65rem;color:#9aafc8">Rev 2025</div>
+        <div style="font-size:0.65rem;margin-top:4px;color:#fbbf24">71% GM</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">Broadcom</div>
+        <div style="font-size:0.9rem;font-weight:700;color:#60a5fa">~$52B</div>
+        <div style="font-size:0.65rem;color:#9aafc8">Semi Rev</div>
+        <div style="font-size:0.65rem;margin-top:4px;color:#fbbf24">65% GM</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">Qualcomm</div>
+        <div style="font-size:0.9rem;font-weight:700;color:#60a5fa">~$43B</div>
+        <div style="font-size:0.65rem;color:#9aafc8">Revenue</div>
+        <div style="font-size:0.65rem;margin-top:4px;color:#fbbf24">55% GM</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">AMD</div>
+        <div style="font-size:0.9rem;font-weight:700;color:#60a5fa">~$26B</div>
+        <div style="font-size:0.65rem;color:#9aafc8">Revenue</div>
+        <div style="font-size:0.65rem;margin-top:4px;color:#fbbf24">53% GM</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">Intel</div>
+        <div style="font-size:0.9rem;font-weight:700;color:#60a5fa">~$54B</div>
+        <div style="font-size:0.65rem;color:#9aafc8">Revenue</div>
+        <div style="font-size:0.65rem;margin-top:4px;color:#f87171">35% GM</div>
+      </div>
+    </div>
+    <!-- 1yr return bars -->
+    <div style="font-size:0.68rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem">1-Year Stock Return (Jul 2024 → Jul 2025)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 1.5rem">
+      <div>
+        <div class="ret-row"><span class="ret-label">NVIDIA</span><div class="ret-track"><div class="ret-bar-pos" style="width:57%"></div></div><span class="ret-val" style="color:#22c55e">+46.5%</span></div>
+        <div class="ret-row"><span class="ret-label">Broadcom</span><div class="ret-track"><div class="ret-bar-pos" style="width:100%"></div></div><span class="ret-val" style="color:#22c55e">+81.0%</span></div>
+        <div class="ret-row"><span class="ret-label">AMD</span><div class="ret-track"><div class="ret-bar-neg" style="width:5%"></div></div><span class="ret-val" style="color:#ef4444">-3.7%</span></div>
+      </div>
+      <div>
+        <div class="ret-row"><span class="ret-label">Qualcomm</span><div class="ret-track"><div class="ret-bar-neg" style="width:13%"></div></div><span class="ret-val" style="color:#ef4444">-10.9%</span></div>
+        <div class="ret-row"><span class="ret-label">Intel</span><div class="ret-track"><div class="ret-bar-neg" style="width:30%"></div></div><span class="ret-val" style="color:#ef4444">-23.9%</span></div>
+        <div class="ret-row"><span class="ret-label">Market Ref (SOX)</span><div class="ret-track"><div class="ret-bar-pos" style="width:12%"></div></div><span class="ret-val" style="color:#9aafc8">~+10%</span></div>
+      </div>
+    </div>
+    <div style="margin-top:0.6rem;padding:0.55rem 0.9rem;background:rgba(96,165,250,0.07);border-left:3px solid #60a5fa;border-radius:0 6px 6px 0;font-size:0.76rem;color:#93c5fd">
+      <strong>Intel's structural challenge:</strong> The only major IDM still operating its own leading-edge fabs without competitive yields. Gross margin 35% vs NVIDIA's 71% shows the cost of vertical integration without the scale to match TSMC. A foundry pivot (Intel Foundry Services) is unproven at scale.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 5 — LAYER 3: EQUIPMENT
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="5">
+  <div class="content scroll">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.8rem">
+      <div class="layer-pill" style="background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.3)">Layer 3</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.3rem,2.5vw,1.8rem);margin:0">Wafer Fabrication Equipment (WFE)</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.9rem">
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Why it Exists</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">A semiconductor fab cannot build a chip from silicon without WFE. Lithography machines (ASML) pattern nanometer-scale features. Deposition tools (AMAT) lay down thin films atom by atom. Etch tools carve structures. A leading-edge fab requires ~1,000 unique WFE units.</p>
+      </div>
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Bottleneck</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">ASML is the <strong style="color:#fbbf24">only company on earth</strong> that can make EUV lithography machines. Lead times are 12–18 months. Each machine costs $200M+. ASML's High-NA EUV (for 2nm/1.4nm nodes) is years ahead of any would-be competitor. Zero substitutes.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-bottom:0.9rem">
+      <div class="gc">
+        <div style="font-size:0.67rem;color:#5a7290;text-transform:uppercase;margin-bottom:4px">WFE Market 2025</div>
+        <div class="stat-n" style="color:#fbbf24">~$109B</div>
+        <div style="font-size:0.72rem;color:#9aafc8;margin-top:4px">+8% CAGR; driven by AI fab buildout</div>
+      </div>
+      <div class="gc">
+        <div style="font-size:0.67rem;color:#5a7290;text-transform:uppercase;margin-bottom:4px">ASML Monopoly</div>
+        <div style="font-size:0.85rem;font-weight:600;line-height:1.4">100% EUV market share<br>ASML = <span style="color:#fbbf24">~27%</span> of global WFE revenue<br>Gross margin: ~52%</div>
+      </div>
+      <div class="gc">
+        <div style="font-size:0.67rem;color:#5a7290;text-transform:uppercase;margin-bottom:4px">Geopolitical Risk</div>
+        <div style="font-size:0.78rem;color:#f87171;line-height:1.4">Dutch government restricted ASML EUV exports to China since 2023. This limits China's ability to advance beyond 7nm indefinitely — a structural moat.</div>
+      </div>
+    </div>
+    <div style="font-size:0.68rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem">Key Equities — 1-Year Price Return</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:0.8rem">
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">ASML Holding (ASML)</div>
+        <div style="font-size:0.75rem;color:#9aafc8;margin-bottom:6px">Absolute EUV monopolist. Orders booked years in advance. High-NA EUV at $400M/unit — the only tool for sub-2nm. Gross margin 52%. Export restrictions weigh on China revenue but competitors have none.</div>
+        <div style="font-size:1rem;font-weight:700;color:#ef4444">-13.8%</div>
+        <div style="font-size:0.67rem;color:#5a7290">Down from Oct 2024 earnings shock; order timing lumpy</div>
+      </div>
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">Applied Materials (AMAT)</div>
+        <div style="font-size:0.75rem;color:#9aafc8;margin-bottom:6px">Largest WFE company by revenue. Deposition, etch, ion implant. Critical for advanced packaging as well as wafer fab. Revenue ~$27B. Gross margin ~47%.</div>
+        <div style="font-size:1rem;font-weight:700;color:#ef4444">-5.1%</div>
+        <div style="font-size:0.67rem;color:#5a7290">China export controls drag on orders</div>
+      </div>
+    </div>
+    <div style="padding:0.55rem 0.9rem;background:rgba(251,191,36,0.07);border-left:3px solid #fbbf24;border-radius:0 6px 6px 0;font-size:0.76rem;color:#fde68a">
+      <strong>What depends on this layer:</strong> Every foundry's capacity expansion. Without new EUV machines, TSMC cannot build more CoWoS packaging bays, Micron cannot shrink HBM, and Intel cannot advance its process nodes. Equipment is the pace-setter for Moore's Law.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 6 — LAYER 4: FOUNDRY
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="6">
+  <div class="content scroll">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.8rem">
+      <div class="layer-pill" style="background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3)">Layer 4</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.3rem,2.5vw,1.8rem);margin:0">Wafer Foundry / "Foundry 2.0"</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.9rem">
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Why it Exists</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">Fabs cost $20–30B to build and 3–5 years to qualify. No chip designer can afford this. TSMC's model — manufacture chips for anyone, never compete in design — gave fabless companies the confidence to outsource. This separation of design and manufacturing is the structural foundation of the modern semiconductor industry.</p>
+      </div>
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Bottleneck</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">TSMC holds <strong style="color:#34d399">~62% of global pure-play foundry revenue</strong> and 90%+ of all advanced-node (sub-5nm) capacity. There is no viable alternative for NVIDIA's H-series or Apple's A-series. Samsung Foundry is years behind on yield. Intel Foundry is unproven commercially.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.7rem;margin-bottom:0.8rem">
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">Market Size (2025)</div>
+        <div class="stat-n" style="color:#34d399">$320B</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">Foundry 2.0 (incl. IDM outsource)</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">TSMC Share</div>
+        <div class="stat-n" style="color:#34d399">~62%</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">Revenue; 90%+ at sub-5nm</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">TSMC Gross Margin</div>
+        <div class="stat-n" style="color:#34d399">~58%</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">2025; up from 53% in 2023</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">New Fab Capex</div>
+        <div class="stat-n" style="color:#fbbf24">$38–42B</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">TSMC annual 2025 capex plan</div>
+      </div>
+    </div>
+    <!-- Foundry market share bar -->
+    <div style="font-size:0.68rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem">2025 Foundry Revenue Share</div>
+    <div style="margin-bottom:0.4rem"><div class="ret-row" style="grid-template-columns:120px 1fr 55px"><span class="ret-label" style="font-size:0.75rem;color:#e8edf5">TSMC</span><div class="ret-track"><div class="ret-bar-pos" style="width:62%;background:linear-gradient(90deg,#059669,#34d399)"></div></div><span class="ret-val" style="color:#34d399">62%</span></div></div>
+    <div style="margin-bottom:0.4rem"><div class="ret-row" style="grid-template-columns:120px 1fr 55px"><span class="ret-label" style="font-size:0.75rem;color:#e8edf5">Samsung Foundry</span><div class="ret-track"><div class="ret-bar-pos" style="width:13%;background:linear-gradient(90deg,#1d4ed8,#60a5fa)"></div></div><span class="ret-val" style="color:#60a5fa">13%</span></div></div>
+    <div style="margin-bottom:0.4rem"><div class="ret-row" style="grid-template-columns:120px 1fr 55px"><span class="ret-label" style="font-size:0.75rem;color:#e8edf5">SMIC (China)</span><div class="ret-track"><div class="ret-bar-pos" style="width:6%;background:linear-gradient(90deg,#92400e,#fbbf24)"></div></div><span class="ret-val" style="color:#fbbf24">6%</span></div></div>
+    <div style="margin-bottom:0.4rem"><div class="ret-row" style="grid-template-columns:120px 1fr 55px"><span class="ret-label" style="font-size:0.75rem;color:#e8edf5">GlobalFoundries</span><div class="ret-track"><div class="ret-bar-pos" style="width:5%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div><span class="ret-val" style="color:#a78bfa">5%</span></div></div>
+    <div style="margin-bottom:0.8rem"><div class="ret-row" style="grid-template-columns:120px 1fr 55px"><span class="ret-label" style="font-size:0.75rem;color:#e8edf5">Intel Foundry + Others</span><div class="ret-track"><div class="ret-bar-pos" style="width:14%;background:linear-gradient(90deg,#374151,#9ca3af)"></div></div><span class="ret-val" style="color:#9aafc8">14%</span></div></div>
+    <div style="font-size:0.68rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.4rem">TSMC (TSM) 1-Yr Return vs Intel (INTC)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem">
+      <div class="gc"><div style="font-weight:600;font-size:0.82rem;margin-bottom:3px">TSMC (TSM)</div><div style="font-size:0.73rem;color:#9aafc8;margin-bottom:5px">Pure-play foundry. AI demand + price hikes driving margin expansion. Plans Arizona fabs + CoWoS ramp.</div><div style="font-size:1rem;font-weight:700;color:#22c55e">+40.0%</div></div>
+      <div class="gc"><div style="font-weight:600;font-size:0.82rem;margin-bottom:3px">Intel (INTC) — IDM</div><div style="font-size:0.73rem;color:#9aafc8;margin-bottom:5px">Own fabs, own design. 18A node delayed. Losing share in PC CPUs (AMD) and datacenter (NVIDIA). Foundry pivot unproven.</div><div style="font-size:1rem;font-weight:700;color:#ef4444">-23.9%</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 7 — LAYER 5: MEMORY
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="7">
+  <div class="content scroll">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.8rem">
+      <div class="layer-pill" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3)">Layer 5</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.3rem,2.5vw,1.8rem);margin:0">Memory — DRAM, NAND &amp; HBM</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.9rem">
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Why it Exists</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">Logic chips process data; memory chips store it. DRAM feeds data to CPUs/GPUs at high speed. NAND stores it persistently. High-Bandwidth Memory (HBM) is a critical AI-specific innovation — DRAM dies stacked 3D and integrated directly alongside GPU dies via silicon interposer, giving 8–12× the bandwidth of conventional DRAM.</p>
+      </div>
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">The HBM Bottleneck</div>
+        <p style="font-size:0.8rem;color:#f87171;line-height:1.5;margin:0">HBM is the <strong>#1 AI supply chain bottleneck in 2025–2027.</strong> All three HBM suppliers (SK Hynix, Samsung, Micron) are sold out through 2026. NVIDIA's B300 carries 288GB HBM3E — more than double the H200. HBM now accounts for ~2/3 of AI chip component cost. Customers are directly funding supplier capex to secure allocations.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.7rem;margin-bottom:0.8rem">
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">Memory Market 2025</div>
+        <div class="stat-n" style="color:#f87171">$203B</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">+20% YoY; CAGR +12%</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">DRAM Market</div>
+        <div class="stat-n" style="color:#f87171">~$100B</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">Samsung 41%, SK Hynix 31%, Micron 24%</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">HBM Spend (Top 4)</div>
+        <div class="stat-n" style="color:#fbbf24">$35B</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">2025 component spend, 2× from 2024</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">NAND Market</div>
+        <div class="stat-n" style="color:#f87171">~$70B</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">Samsung, Kioxia/SanDisk, Micron, SK Hynix</div>
+      </div>
+    </div>
+    <!-- Memory company comparison -->
+    <div style="font-size:0.68rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem">Key Equities — 1-Year Price Return</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.7rem">
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">Micron (MU)</div>
+        <div style="font-size:0.73rem;color:#9aafc8;margin-bottom:6px">Only US-listed DRAM+NAND pure-play. HBM3E ramping aggressively. Sole-source on some HBM3E allocations for NVIDIA. Gross margin inflecting from 22% (2024) toward 40%+ as HBM ASPs hold.</div>
+        <div style="font-size:1rem;font-weight:700;color:#22c55e">+9.6%</div>
+      </div>
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">SanDisk (SNDK)</div>
+        <div style="font-size:0.73rem;color:#9aafc8;margin-bottom:6px">Spun out from Western Digital in 2025. Pure-play NAND (QLC, enterprise SSD). AI inference storage demand growing but NAND oversupply cycles remain a risk. Recently listed.</div>
+        <div style="font-size:1rem;font-weight:700;color:#ef4444">-1.3%</div>
+        <div style="font-size:0.67rem;color:#5a7290">Limited history since Feb 2025 listing</div>
+      </div>
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">Samsung (SSUN.F)</div>
+        <div style="font-size:0.73rem;color:#9aafc8;margin-bottom:6px">Largest memory maker globally. HBM3E qualification delays cost it NVIDIA allocation to SK Hynix. Foundry also losing ground to TSMC. Both businesses under pressure simultaneously.</div>
+        <div style="font-size:1rem;font-weight:700;color:#ef4444">-24.3%</div>
+      </div>
+    </div>
+    <div style="margin-top:0.6rem;padding:0.55rem 0.9rem;background:rgba(248,113,113,0.08);border-left:3px solid #f87171;border-radius:0 6px 6px 0;font-size:0.76rem;color:#fca5a5">
+      <strong>What depends on this layer:</strong> AI compute throughput. No HBM = no H100/B200/B300. Memory is no longer a commodity — it is the #1 gating factor for frontier AI infrastructure deployment through 2027.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 8 — LAYER 6: PACKAGING / OSAT
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="8">
+  <div class="content scroll">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.8rem">
+      <div class="layer-pill" style="background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.3)">Layer 6</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.3rem,2.5vw,1.8rem);margin:0">Advanced Packaging &amp; OSAT</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.9rem">
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Why it Exists</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">After a wafer is fabricated, individual dies must be cut, tested, and packaged to connect to a circuit board. Traditional packaging is commodity. Advanced packaging (CoWoS, InFO, HBM stacking) is now strategic — it enables AI chips to integrate multiple dies with extreme bandwidth densities impossible in a single silicon die.</p>
+      </div>
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Bottleneck (Solved mid-2025)</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">CoWoS was the <strong style="color:#fb923c">primary AI supply chain bottleneck in late 2024–early 2025.</strong> The top four AI chip designers consumed nearly 100% of TSMC's CoWoS output. TSMC doubled CoWoS capacity through 2025; by mid-2025 the bottleneck shifted to HBM. AI packaging demand requires 40–50K CoWoS wafers/month by 2026.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-bottom:0.8rem">
+      <div class="gc">
+        <div style="font-size:0.67rem;color:#5a7290;text-transform:uppercase;margin-bottom:4px">Packaging Market 2025</div>
+        <div class="stat-n" style="color:#fb923c">$77B</div>
+        <div style="font-size:0.72rem;color:#9aafc8;margin-top:4px">Advanced packaging: $33.5B | CAGR +11%</div>
+      </div>
+      <div class="gc">
+        <div style="font-size:0.67rem;color:#5a7290;text-transform:uppercase;margin-bottom:4px">CoWoS Dynamics</div>
+        <div style="font-size:0.8rem;line-height:1.4">TSMC controls <span style="color:#fb923c;font-weight:700">CoWoS monopoly</span>. No OSAT has comparable interposer technology. Pricing power: CoWoS has seen repeated ASP increases as AI demand outstrips capacity.</div>
+      </div>
+      <div class="gc">
+        <div style="font-size:0.67rem;color:#5a7290;text-transform:uppercase;margin-bottom:4px">OSAT Market Structure</div>
+        <div style="font-size:0.8rem;line-height:1.4">ASE Technology: <span style="color:#fb923c;font-weight:700">world's largest OSAT</span>, ~24% share.<br>Amkor: ~13% global share.<br>Commodity packaging under margin pressure from Asian competition.</div>
+      </div>
+    </div>
+    <div style="font-size:0.68rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem">Key Equities — 1-Year Price Return</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:0.7rem">
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">ASE Technology (ASX)</div>
+        <div style="font-size:0.73rem;color:#9aafc8;margin-bottom:6px">World's largest OSAT. Advanced packaging (SiP, flip chip) growing. Beneficiary of chiplet trend. Revenue ~$22B. Gross margin ~15% (commodity mix weighs).</div>
+        <div style="font-size:1rem;font-weight:700;color:#22c55e">+4.6%</div>
+      </div>
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">Amkor Technology (AMKR)</div>
+        <div style="font-size:0.73rem;color:#9aafc8;margin-bottom:6px">US-listed OSAT. Packaging partner for Apple, Qualcomm, AMD. Advanced SiP capacity in Vietnam. Revenue ~$6.5B. Gross margin ~14%. Cyclical.</div>
+        <div style="font-size:1rem;font-weight:700;color:#ef4444">-32.0%</div>
+        <div style="font-size:0.67rem;color:#5a7290">Consumer electronics exposure + inventory correction</div>
+      </div>
+    </div>
+    <div style="padding:0.55rem 0.9rem;background:rgba(251,146,60,0.07);border-left:3px solid #fb923c;border-radius:0 6px 6px 0;font-size:0.76rem;color:#fed7aa">
+      <strong>What depends on this layer:</strong> AI chip assembly. TSMC's CoWoS is the only technology that can integrate GPU dies + HBM stacks at the density required for H100/B200/B300. OSAT handles the volume of conventional chips (smartphones, consumer) — ~80% of all chips shipped.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 9 — LAYER 7: SYSTEMS / AI INFRA
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="9">
+  <div class="content scroll">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.8rem">
+      <div class="layer-pill" style="background:rgba(232,121,249,0.15);color:#e879f9;border:1px solid rgba(232,121,249,0.3)">Layer 7</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.3rem,2.5vw,1.8rem);margin:0">Systems, AI Infrastructure &amp; End Markets</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.9rem">
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Why it Exists</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">This layer converts chips into deployed computing — data center servers, networking gear, edge AI devices, smartphones, automotive. Hyperscalers (AWS, Azure, Google Cloud, Meta) have become the dominant AI infrastructure buyers, representing 60%+ of NVIDIA data center revenue.</p>
+      </div>
+      <div>
+        <div style="font-size:0.7rem;color:#5a7290;text-transform:uppercase;margin-bottom:0.4rem">Demand Driver</div>
+        <p style="font-size:0.8rem;color:#9aafc8;line-height:1.5;margin:0">AI model training and inference is the defining demand pull of this cycle. Hyperscalers announced $300B+ in 2025 capex. ASIC momentum (Google TPU, Amazon Trainium, Meta MTIA) is creating custom chip demand via Broadcom and Marvell. This is the layer that sets the pace for all layers above.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;margin-bottom:0.8rem">
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">AI Infra Market 2025</div>
+        <div class="stat-n" style="color:#e879f9">$158B</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">CAGR +21.5% → $419B by 2030</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">Hyperscaler Capex 2025</div>
+        <div class="stat-n" style="color:#e879f9">$300B+</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">AWS, Azure, GCP, Meta combined</div>
+      </div>
+      <div class="gc" style="text-align:center">
+        <div style="font-size:0.65rem;color:#5a7290;margin-bottom:3px">NVIDIA Datacenter Rev</div>
+        <div class="stat-n" style="color:#e879f9">$115B+</div>
+        <div style="font-size:0.65rem;color:#9aafc8;margin-top:3px">FY2025; +142% YoY</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:0.7rem">
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">Qualcomm (QCOM)</div>
+        <div style="font-size:0.73rem;color:#9aafc8;margin-bottom:6px">Mobile SoC leader (Snapdragon). Diversifying into AI PCs (Copilot+), automotive ($3.5B pipeline). Edge AI inference is a future growth vector. Still 70% mobile revenue. 1-yr: <strong style="color:#ef4444">-10.9%</strong></div>
+        <div style="font-size:0.72rem;color:#5a7290">Pressure from Apple silicon gains in high-end mobile + ARM licensing uncertainty</div>
+      </div>
+      <div class="gc">
+        <div style="font-weight:600;font-size:0.85rem;margin-bottom:4px">Broadcom (AVGO)</div>
+        <div style="font-size:0.73rem;color:#9aafc8;margin-bottom:6px">Custom AI ASIC leader (Google TPU, Meta MTIA). Networking (Tomahawk). VMware acquisition adds enterprise software. AI semiconductor revenue >$15B in 2025. 1-yr: <strong style="color:#22c55e">+81.0%</strong></div>
+        <div style="font-size:0.72rem;color:#5a7290">Best performing large-cap in the space over 1 year</div>
+      </div>
+    </div>
+    <div style="padding:0.55rem 0.9rem;background:rgba(232,121,249,0.07);border-left:3px solid #e879f9;border-radius:0 6px 6px 0;font-size:0.76rem;color:#f0abfc">
+      <strong>Key insight:</strong> This layer sets all upstream demand. When hyperscalers buy $300B+ in capex, that signal propagates through foundry, equipment, memory, and EDA spending. The AI infrastructure super-cycle is the dominant force reshaping every layer of the semiconductor value chain.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 10 — ALL COMPANIES: 1-YR RETURN
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="10">
+  <div class="content">
+    <div class="slide-header">
+      <span style="font-size:1.4rem">📊</span>
+      <h2>Value Chain — 1-Year Stock Return by Layer</h2>
+      <span style="font-size:0.72rem;color:#5a7290;margin-left:auto">Jul 2024 → Jul 2025</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem 1.2rem">
+      <!-- EDA/IP -->
+      <div>
+        <div style="font-size:0.65rem;color:#a78bfa;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem">L1 — EDA &amp; IP</div>
+        <div class="ret-row"><span class="ret-label">Synopsys</span><div class="ret-track"><div class="ret-bar-pos" style="width:5%"></div></div><span class="ret-val" style="color:#22c55e">+4.0%</span></div>
+        <div class="ret-row"><span class="ret-label">Cadence</span><div class="ret-track"><div class="ret-bar-pos" style="width:26%"></div></div><span class="ret-val" style="color:#22c55e">+21.2%</span></div>
+        <div class="ret-row"><span class="ret-label">Arm Holdings</span><div class="ret-track"><div class="ret-bar-pos" style="width:2%"></div></div><span class="ret-val" style="color:#22c55e">+1.8%</span></div>
+      </div>
+      <!-- Design -->
+      <div>
+        <div style="font-size:0.65rem;color:#60a5fa;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem">L2 — Chip Design</div>
+        <div class="ret-row"><span class="ret-label">NVIDIA</span><div class="ret-track"><div class="ret-bar-pos" style="width:57%"></div></div><span class="ret-val" style="color:#22c55e">+46.5%</span></div>
+        <div class="ret-row"><span class="ret-label">Broadcom</span><div class="ret-track"><div class="ret-bar-pos" style="width:100%"></div></div><span class="ret-val" style="color:#22c55e">+81.0%</span></div>
+        <div class="ret-row"><span class="ret-label">AMD</span><div class="ret-track"><div class="ret-bar-neg" style="width:5%"></div></div><span class="ret-val" style="color:#ef4444">-3.7%</span></div>
+        <div class="ret-row"><span class="ret-label">Qualcomm</span><div class="ret-track"><div class="ret-bar-neg" style="width:13%"></div></div><span class="ret-val" style="color:#ef4444">-10.9%</span></div>
+        <div class="ret-row"><span class="ret-label">Intel</span><div class="ret-track"><div class="ret-bar-neg" style="width:30%"></div></div><span class="ret-val" style="color:#ef4444">-23.9%</span></div>
+      </div>
+      <!-- Equipment + Foundry + Memory + Packaging -->
+      <div>
+        <div style="font-size:0.65rem;color:#fbbf24;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem">L3 — Equipment</div>
+        <div class="ret-row"><span class="ret-label">ASML</span><div class="ret-track"><div class="ret-bar-neg" style="width:17%"></div></div><span class="ret-val" style="color:#ef4444">-13.8%</span></div>
+        <div class="ret-row"><span class="ret-label">Appl. Materials</span><div class="ret-track"><div class="ret-bar-neg" style="width:6%"></div></div><span class="ret-val" style="color:#ef4444">-5.1%</span></div>
+        <div style="font-size:0.65rem;color:#34d399;text-transform:uppercase;letter-spacing:0.08em;margin:0.5rem 0 0.3rem">L4 — Foundry</div>
+        <div class="ret-row"><span class="ret-label">TSMC</span><div class="ret-track"><div class="ret-bar-pos" style="width:49%"></div></div><span class="ret-val" style="color:#22c55e">+40.0%</span></div>
+        <div style="font-size:0.65rem;color:#f87171;text-transform:uppercase;letter-spacing:0.08em;margin:0.5rem 0 0.3rem">L5 — Memory</div>
+        <div class="ret-row"><span class="ret-label">Micron</span><div class="ret-track"><div class="ret-bar-pos" style="width:12%"></div></div><span class="ret-val" style="color:#22c55e">+9.6%</span></div>
+        <div class="ret-row"><span class="ret-label">Samsung</span><div class="ret-track"><div class="ret-bar-neg" style="width:30%"></div></div><span class="ret-val" style="color:#ef4444">-24.3%</span></div>
+        <div class="ret-row"><span class="ret-label">SanDisk</span><div class="ret-track"><div class="ret-bar-neg" style="width:2%"></div></div><span class="ret-val" style="color:#ef4444">-1.3%</span></div>
+        <div style="font-size:0.65rem;color:#fb923c;text-transform:uppercase;letter-spacing:0.08em;margin:0.5rem 0 0.3rem">L6 — Packaging</div>
+        <div class="ret-row"><span class="ret-label">ASE Tech</span><div class="ret-track"><div class="ret-bar-pos" style="width:6%"></div></div><span class="ret-val" style="color:#22c55e">+4.6%</span></div>
+        <div class="ret-row"><span class="ret-label">Amkor</span><div class="ret-track"><div class="ret-bar-neg" style="width:40%"></div></div><span class="ret-val" style="color:#ef4444">-32.0%</span></div>
+      </div>
+    </div>
+    <div style="margin-top:0.8rem;display:flex;gap:1rem;flex-wrap:wrap">
+      <div style="padding:0.4rem 0.9rem;background:rgba(34,197,94,0.09);border:1px solid rgba(34,197,94,0.2);border-radius:6px;font-size:0.74rem;color:#86efac">🏆 Best: Broadcom <strong>+81%</strong> — AI ASIC + networking + VMware</div>
+      <div style="padding:0.4rem 0.9rem;background:rgba(239,68,68,0.09);border:1px solid rgba(239,68,68,0.2);border-radius:6px;font-size:0.74rem;color:#fca5a5">⚠️ Worst: Amkor <strong>-32%</strong> — consumer cycle + no AI exposure</div>
+      <div style="padding:0.4rem 0.9rem;background:rgba(59,130,246,0.09);border:1px solid rgba(59,130,246,0.2);border-radius:6px;font-size:0.74rem;color:#93c5fd">🔑 Theme: AI ≠ all semis. Equipment &amp; legacy packaging lagged despite AI boom</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 11 — BOTTLENECKS & MARGIN GAINERS
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="11">
+  <div class="content scroll">
+    <div class="slide-header">
+      <span style="font-size:1.4rem">⚡</span>
+      <h2>Critical Bottlenecks &amp; Margin Expansion Leaders</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.9rem">
+      <!-- Bottlenecks -->
+      <div>
+        <div style="font-size:0.68rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.6rem">Current Bottlenecks (2025–2027)</div>
+        <div class="btn-card" style="border-color:#f87171;margin-bottom:0.6rem">
+          <div style="font-weight:700;font-size:0.85rem;color:#f87171;margin-bottom:3px">🔴 HBM Memory — CRITICAL (2025–2027)</div>
+          <div style="font-size:0.76rem;color:#9aafc8;line-height:1.45">All three suppliers (SK Hynix, Samsung, Micron) are sold out. HBM = 2/3 of AI chip component cost. NVIDIA's B300 carries 288GB HBM3E. Customers financing supplier capex directly. No relief before 2027.</div>
+        </div>
+        <div class="btn-card" style="border-color:#fbbf24;margin-bottom:0.6rem">
+          <div style="font-weight:700;font-size:0.85rem;color:#fbbf24;margin-bottom:3px">🟡 Advanced Logic (3nm/2nm) — Rising</div>
+          <div style="font-size:0.76rem;color:#9aafc8;line-height:1.45">NVIDIA's Rubin generation moves to 3nm N3P. AI chip designers will consume a growing share of advanced node capacity. TSMC Arizona capacity insufficient to meet demand alone. Risk of tighter allocation by 2027.</div>
+        </div>
+        <div class="btn-card" style="border-color:#fb923c;margin-bottom:0.6rem">
+          <div style="font-weight:700;font-size:0.85rem;color:#fb923c;margin-bottom:3px">🟠 CoWoS Packaging — Easing (2025)</div>
+          <div style="font-size:0.76rem;color:#9aafc8;line-height:1.45">Was the #1 bottleneck in late 2024. TSMC doubled capacity by mid-2025. The top 4 AI designers still consume 80–85% of total CoWoS output but headroom has improved. Will retighten as GB300/Rubin ramp.</div>
+        </div>
+        <div class="btn-card" style="border-color:#34d399">
+          <div style="font-weight:700;font-size:0.85rem;color:#34d399;margin-bottom:3px">🟢 EUV Equipment — Structural Scarcity</div>
+          <div style="font-size:0.76rem;color:#9aafc8;line-height:1.45">ASML 12–18 month lead times. High-NA EUV at $400M/unit. No competitor. US/Dutch export controls permanently exclude China from advanced nodes. Scarcity is by design and geopolitical guarantee.</div>
+        </div>
+      </div>
+      <!-- Margin gainers -->
+      <div>
+        <div style="font-size:0.68rem;color:#5a7290;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.6rem">Companies Raising Prices &amp; Expanding Margins</div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden">
+          <div class="co-row co-head" style="grid-template-columns:90px 1.3fr 70px 65px;background:rgba(255,255,255,0.04)">
+            <div>Company</div><div>Pricing Power Source</div><div>Gross Margin</div><div>Trend</div>
+          </div>
+          <div class="co-row" style="grid-template-columns:90px 1.3fr 70px 65px">
+            <div style="color:#e8edf5;font-weight:600">NVIDIA</div>
+            <div style="color:#9aafc8">H100→H200→B200 ASP ladder; ~$30K→$40K per GPU</div>
+            <div style="color:#22c55e;font-weight:700">71%</div>
+            <div style="color:#22c55e">↑ Rising</div>
+          </div>
+          <div class="co-row" style="grid-template-columns:90px 1.3fr 70px 65px">
+            <div style="color:#e8edf5;font-weight:600">TSMC</div>
+            <div style="color:#9aafc8">Advanced node scarcity + CoWoS capacity = pricing power; 5–10% hikes</div>
+            <div style="color:#22c55e;font-weight:700">58%</div>
+            <div style="color:#22c55e">↑ Rising</div>
+          </div>
+          <div class="co-row" style="grid-template-columns:90px 1.3fr 70px 65px">
+            <div style="color:#e8edf5;font-weight:600">SK Hynix</div>
+            <div style="color:#9aafc8">HBM3E sole-source to NVIDIA; commanding premium ASPs</div>
+            <div style="color:#22c55e;font-weight:700">~60%+</div>
+            <div style="color:#22c55e">↑ Rising</div>
+          </div>
+          <div class="co-row" style="grid-template-columns:90px 1.3fr 70px 65px">
+            <div style="color:#e8edf5;font-weight:600">Broadcom</div>
+            <div style="color:#9aafc8">Custom AI ASIC sole-source designs; networking ASICs pricing power</div>
+            <div style="color:#22c55e;font-weight:700">65%</div>
+            <div style="color:#22c55e">↑ Rising</div>
+          </div>
+          <div class="co-row" style="grid-template-columns:90px 1.3fr 70px 65px">
+            <div style="color:#e8edf5;font-weight:600">ASML</div>
+            <div style="color:#9aafc8">EUV monopoly; High-NA EUV at $400M/unit vs $200M DUV EUV</div>
+            <div style="color:#fbbf24;font-weight:700">52%</div>
+            <div style="color:#fbbf24">→ Stable high</div>
+          </div>
+          <div class="co-row" style="grid-template-columns:90px 1.3fr 70px 65px">
+            <div style="color:#e8edf5;font-weight:600">Micron</div>
+            <div style="color:#9aafc8">HBM3E ramp; inflecting from commodity DRAM to AI memory premium</div>
+            <div style="color:#fbbf24;font-weight:700">~40%</div>
+            <div style="color:#22c55e">↑ Inflecting</div>
+          </div>
+          <div class="co-row" style="grid-template-columns:90px 1.3fr 70px 65px">
+            <div style="color:#ef4444;font-weight:600">Intel</div>
+            <div style="color:#9aafc8">Losing x86 server share; foundry losses; no AI compute product</div>
+            <div style="color:#ef4444;font-weight:700">35%</div>
+            <div style="color:#ef4444">↓ Declining</div>
+          </div>
+          <div class="co-row" style="grid-template-columns:90px 1.3fr 70px 65px">
+            <div style="color:#ef4444;font-weight:600">Samsung</div>
+            <div style="color:#9aafc8">HBM3E qual delays lost NVIDIA allocation; foundry yield issues</div>
+            <div style="color:#ef4444;font-weight:700">~38%</div>
+            <div style="color:#ef4444">↓ Declining</div>
+          </div>
+        </div>
+        <div style="margin-top:0.6rem;padding:0.5rem 0.8rem;background:rgba(59,130,246,0.07);border-radius:6px;font-size:0.74rem;color:#93c5fd">
+          💡 <strong>Margin insight:</strong> The strongest margin expansion is happening at the intersection of monopoly + AI demand: NVIDIA (GPU architecture), TSMC (leading-edge fab + CoWoS), and SK Hynix (HBM3E first-mover). These three companies form the irreplaceable core of the AI infrastructure supply chain.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 12 — CLOSING / KEY TAKEAWAYS
+════════════════════════════════════════════ -->
+<div class="slide" data-slide="12">
+  <div class="content">
+    <div class="slide-header">
+      <span style="font-size:1.4rem">🎯</span>
+      <h2>Key Investment Takeaways</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem">
+      <div class="btn-card" style="border-color:#22c55e">
+        <div style="font-weight:700;font-size:0.85rem;color:#22c55e;margin-bottom:5px">✅ Structural Winners</div>
+        <ul style="font-size:0.78rem;color:#9aafc8;line-height:1.5;padding-left:1.1rem;margin:0">
+          <li><strong style="color:#e8edf5">NVIDIA:</strong> GPU monopoly in AI training. 71% gross margin. $130B+ revenue with pricing power.</li>
+          <li><strong style="color:#e8edf5">TSMC:</strong> Irreplaceable foundry. Pricing hikes annual. CoWoS monopoly. AI capex beneficiary.</li>
+          <li><strong style="color:#e8edf5">Broadcom:</strong> Custom ASIC + networking + software (VMware). Best risk-adjusted AI exposure.</li>
+          <li><strong style="color:#e8edf5">Micron:</strong> HBM3E inflection is secular. AI memory is a 5-year structural tailwind.</li>
+        </ul>
+      </div>
+      <div class="btn-card" style="border-color:#fbbf24">
+        <div style="font-weight:700;font-size:0.85rem;color:#fbbf24;margin-bottom:5px">⚠️ Watch List</div>
+        <ul style="font-size:0.78rem;color:#9aafc8;line-height:1.5;padding-left:1.1rem;margin:0">
+          <li><strong style="color:#e8edf5">ASML:</strong> Monopoly is intact but earnings lumpy. High-NA ramp is the multi-year catalyst. Entry points matter.</li>
+          <li><strong style="color:#e8edf5">AMD:</strong> MI300X AI GPU showing traction but NVIDIA's software moat (CUDA) remains the dominant obstacle.</li>
+          <li><strong style="color:#e8edf5">Arm Holdings:</strong> Royalty leverage to AI chips is real but valuation pricing in optimistic scenarios.</li>
+          <li><strong style="color:#e8edf5">Cadence / Synopsys:</strong> Stable compounder; AI-EDA is a new growth vector worth monitoring.</li>
+        </ul>
+      </div>
+      <div class="btn-card" style="border-color:#ef4444">
+        <div style="font-weight:700;font-size:0.85rem;color:#ef4444;margin-bottom:5px">🔴 Structural Challenges</div>
+        <ul style="font-size:0.78rem;color:#9aafc8;line-height:1.5;padding-left:1.1rem;margin:0">
+          <li><strong style="color:#e8edf5">Intel:</strong> 18A node delays, foundry losses, no AI accelerator. Turnaround is multi-year with no clear catalyst.</li>
+          <li><strong style="color:#e8edf5">Samsung:</strong> HBM3E yield issues + foundry share loss = margin contraction in both key businesses simultaneously.</li>
+          <li><strong style="color:#e8edf5">Amkor / commodity OSAT:</strong> Consumer cycle + Asia competition. No differentiation in advanced packaging.</li>
+          <li><strong style="color:#e8edf5">Qualcomm:</strong> Mobile TAM stagnant; AI PC &amp; auto upside is real but timeline uncertain.</li>
+        </ul>
+      </div>
+      <div class="btn-card" style="border-color:#3b82f6">
+        <div style="font-weight:700;font-size:0.85rem;color:#3b82f6;margin-bottom:5px">🔑 Core Thesis</div>
+        <ul style="font-size:0.78rem;color:#9aafc8;line-height:1.5;padding-left:1.1rem;margin:0">
+          <li>AI is not a uniform semiconductor boom — it is highly concentrated at <strong style="color:#e8edf5">3 nodes:</strong> NVIDIA (GPU), TSMC (fab+packaging), SK Hynix (HBM).</li>
+          <li>The bottleneck has migrated: Packaging (2024) → HBM (2025) → Logic nodes (2026+). Track the bottleneck to find the next pricing power company.</li>
+          <li>$800B semiconductor TAM is growing to $1T+ by 2030, but returns will be heavily skewed to monopoly positions and AI-native revenue exposure.</li>
+          <li>Geopolitics (US-China export controls) create permanent structural moats for ASML, TSMC, and US-based memory — an underappreciated floor on pricing power.</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:0.67rem;color:#5a7290;text-align:center;margin-top:0.8rem">Sources: SIA, Epoch AI, TechInsights, Counterpoint Research, GlobeNewswire, DataM Intelligence, EnkiAI | Data as of May 2026</p>
+  </div>
+</div>
+
+</div><!-- end .deck -->
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 12</span>
+</div>
+
+<script>
+let current=1;
+const total=document.querySelectorAll('.slide').length;
+const dotsC=document.getElementById('dots');
+const counter=document.getElementById('counter');
+for(let i=1;i<=total;i++){const d=document.createElement('div');d.className='dot'+(i===1?' active':'');d.onclick=()=>goToSlide(i);dotsC.appendChild(d);}
+function goToSlide(n){
+  document.querySelector('.slide.active')?.classList.remove('active');
+  document.querySelector(`.slide[data-slide="${n}"]`)?.classList.add('active');
+  current=n;updateNav();
+}
+function changeSlide(dir){let n=current+dir;if(n<1)n=total;if(n>total)n=1;goToSlide(n);}
+function updateNav(){document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i+1===current));counter.textContent=current+' / '+total;}
+document.addEventListener('keydown',(e)=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();changeSlide(1);}if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1);}});
+let tx=0;
+document.addEventListener('touchstart',(e)=>{tx=e.touches[0].clientX;});
+document.addEventListener('touchend',(e)=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>50)changeSlide(d>0?1:-1);});
+</script>
+</body>
+</html>
