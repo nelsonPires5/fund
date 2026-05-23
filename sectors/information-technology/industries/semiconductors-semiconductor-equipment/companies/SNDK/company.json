@@ -1,0 +1,16 @@
+{
+  "company_name": "SanDisk Corporation",
+  "ticker": "SNDK",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "flash memory / NAND",
+  "currency": "USD",
+  "fiscal_year_end": "12-31",
+  "koyfin_id": "SNDK US",
+  "sec_cik": "0001004980",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-13-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "semiconductors-semiconductor-equipment"
+}

@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="slides-format" content="viewport">
+    <title>SanDisk (SNDK) — Investment Committee Presentation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --color-bg: #06091a;
+            --color-bg-deep: #020410;
+            --color-surface: #0d1235;
+            --color-text: #f0f4ff;
+            --color-text-secondary: #a8b8d8;
+            --color-text-muted: #5a6a8a;
+            --color-accent-1: #C9A84C;
+            --color-accent-2: #E8D5A3;
+            --color-accent-3: #7B5EA7;
+            --color-glass-bg: rgba(255,255,255,0.05);
+            --color-glass-border: rgba(201,168,76,0.18);
+            --color-vignette: rgba(0,0,0,0.55);
+            --font-display: "Cormorant", Georgia, serif;
+            --font-body: "Manrope", system-ui, sans-serif;
+        }
+    </style>
+
+    <style>
+        :root {
+            --color-bg: #06091a;
+            --color-text: #f0f4ff;
+            --glow-color-rgb: 201,168,76;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { background: var(--color-bg); margin: 0; }
+        body { font-family: "Manrope", system-ui, sans-serif; color: var(--color-text); overflow: hidden; height: 100vh; width: 100vw; }
+        .deck { width: 100vw; height: 100vh; position: relative; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: scale(0.96); transition: opacity 0.65s ease, transform 0.65s ease; pointer-events: none; overflow: hidden; }
+        .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+        .slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1120px; padding: clamp(1.2rem, 3.5vw, 3.5rem); }
+        .nav-controls { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; z-index: 100; background: rgba(6,9,26,0.85); backdrop-filter: blur(12px); padding: 8px 20px; border-radius: 40px; border: 1px solid rgba(201,168,76,0.2); }
+        .nav-btn { width: 36px; height: 36px; border: none; background: rgba(201,168,76,0.1); color: #C9A84C; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.25s; }
+        .nav-btn:hover { background: rgba(201,168,76,0.22); }
+        .slide-dots { display: flex; gap: 7px; }
+        .slide-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(201,168,76,0.2); cursor: pointer; transition: background 0.3s, transform 0.3s; }
+        .slide-dots .dot.active { background: #C9A84C; transform: scale(1.4); }
+        .slide-counter { font-size: 0.75rem; color: #5a6a8a; min-width: 38px; text-align: center; font-family: "Manrope", sans-serif; letter-spacing: 0.05em; }
+        .reveal { opacity: 0; transform: translateY(18px); }
+
+        /* Glow */
+        .text-glow { text-shadow: 0 0 24px rgba(201,168,76,0.55), 0 0 48px rgba(201,168,76,0.22); }
+        .stat-glow { text-shadow: 0 0 32px rgba(201,168,76,0.65), 0 0 64px rgba(201,168,76,0.28); }
+        @keyframes glow-pulse { 0%,100%{text-shadow:0 0 22px rgba(201,168,76,0.5),0 0 44px rgba(201,168,76,0.2);} 50%{text-shadow:0 0 36px rgba(201,168,76,0.85),0 0 70px rgba(201,168,76,0.35);} }
+        .glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+
+        /* Blobs */
+        @keyframes float-slow { 0%{transform:translate(0,0) scale(1);} 25%{transform:translate(55px,-45px) scale(1.1);} 50%{transform:translate(-35px,35px) scale(0.92);} 75%{transform:translate(45px,18px) scale(1.07);} 100%{transform:translate(0,0) scale(1);} }
+        @keyframes float-drift { 0%{transform:translate(0,0) scale(1) rotate(0deg);} 33%{transform:translate(-45px,-55px) scale(1.14) rotate(2.5deg);} 66%{transform:translate(38px,28px) scale(0.9) rotate(-2deg);} 100%{transform:translate(0,0) scale(1) rotate(0deg);} }
+        @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
+        .gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(90px); animation: float-slow 12s ease-in-out infinite; }
+        .blob:nth-child(2) { animation: float-drift 16s ease-in-out infinite; }
+        .blob:nth-child(3) { animation: float-slow 20s ease-in-out infinite reverse; }
+        .blob:nth-child(4) { animation: float-drift 14s ease-in-out infinite reverse; }
+
+        /* Vignette / noise */
+        .slide::before { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); background-repeat:repeat; background-size:256px 256px; opacity:0.03; mix-blend-mode:overlay; }
+        .slide::after { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background:radial-gradient(ellipse at center, transparent 50%, var(--color-vignette) 100%); }
+
+        /* Gold divider line */
+        .gold-line { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #C9A84C, transparent); margin: 0.75rem auto; }
+        .gold-line-left { width: 48px; height: 2px; background: linear-gradient(90deg, #C9A84C, transparent); margin: 0.5rem 0 1rem 0; }
+
+        /* Rating badge */
+        .rating-badge { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.06)); border: 1px solid rgba(201,168,76,0.45); border-radius: 100px; padding: 10px 24px; }
+
+        /* Glass card */
+        .glass-card { background: rgba(255,255,255,0.04); backdrop-filter: blur(14px); border: 1px solid rgba(201,168,76,0.15); border-radius: 14px; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+        .glass-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(201,168,76,0.1); }
+
+        /* KPI accent card */
+        .kpi-card { border-left: 3px solid #C9A84C; background: rgba(201,168,76,0.06); border-radius: 0 12px 12px 0; padding: 1rem 1.5rem; }
+
+        /* Bull/base/bear pills */
+        .pill-bull { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.35); border-radius: 100px; padding: 4px 16px; color: #86efac; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; }
+        .pill-base { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.35); border-radius: 100px; padding: 4px 16px; color: #fde68a; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; }
+        .pill-bear { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.35); border-radius: 100px; padding: 4px 16px; color: #fca5a5; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; }
+
+        /* Horizontal bar fills */
+        .bar-track { background: rgba(255,255,255,0.06); border-radius: 100px; height: 10px; width: 100%; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #C9A84C, #E8D5A3); width: 0%; transition: width 0.8s ease; }
+
+        /* Risk badge */
+        .risk-critical { background: rgba(239,68,68,0.18); border: 1px solid rgba(239,68,68,0.4); }
+        .risk-high { background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.35); }
+        .risk-med { background: rgba(250,204,21,0.12); border: 1px solid rgba(250,204,21,0.3); }
+
+        /* Football field bar */
+        .ff-bar { height: 18px; border-radius: 4px; background: linear-gradient(90deg, rgba(201,168,76,0.3), rgba(201,168,76,0.7)); position: relative; transition: width 0.9s ease; }
+        .ff-bar-pt { position: absolute; top: -24px; font-size: 0.7rem; color: #C9A84C; font-weight: 700; }
+        .ff-bar-line { position: absolute; right: 0; top: -4px; width: 3px; height: 26px; background: #C9A84C; border-radius: 2px; }
+
+        /* SVG donut */
+        .donut-ring { stroke-dasharray: 251.3; stroke-dashoffset: 251.3; stroke-linecap: round; transition: stroke-dashoffset 1.1s ease; }
+
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } }
+    </style>
+</head>
+<body>
+
+<div class="mouse-spotlight" style="position:fixed;inset:0;z-index:99;pointer-events:none;"></div>
+
+<div class="deck">
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 1 — TITLE
+═══════════════════════════════════════════════ -->
+<div class="slide active" data-slide="1">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:520px;height:520px;top:-120px;right:-80px;background:#C9A84C;opacity:0.12;"></div>
+        <div class="blob" style="width:380px;height:380px;bottom:-100px;left:-60px;background:#7B5EA7;opacity:0.1;"></div>
+        <div class="blob" style="width:240px;height:240px;top:42%;left:14%;background:#E8D5A3;opacity:0.07;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+        <div style="font-size:4.5rem;animation:float 3.2s ease-in-out infinite;margin-bottom:1.2rem;" class="reveal">💾</div>
+        <div class="rating-badge reveal" style="margin:0 auto 1.5rem;">
+            <span style="font-family:Manrope;font-size:0.85rem;font-weight:700;letter-spacing:0.12em;color:#C9A84C;">INITIATING COVERAGE</span>
+            <span style="width:1px;height:18px;background:rgba(201,168,76,0.4);"></span>
+            <span style="font-family:Manrope;font-size:0.85rem;font-weight:700;letter-spacing:0.12em;color:#86efac;">BUY</span>
+            <span style="width:1px;height:18px;background:rgba(201,168,76,0.4);"></span>
+            <span style="font-family:Manrope;font-size:0.85rem;font-weight:700;letter-spacing:0.12em;color:#C9A84C;">PT: $1,900</span>
+        </div>
+        <h1 class="font-display reveal" style="font-size:clamp(3rem,7vw,5.6rem);font-weight:700;background:linear-gradient(135deg,#C9A84C,#E8D5A3,#C9A84C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:1rem;">SanDisk Corporation</h1>
+        <p class="reveal" style="font-size:clamp(0.85rem,1.5vw,1.2rem);font-weight:300;color:#5a6a8a;letter-spacing:0.32em;text-transform:uppercase;">NASDAQ: SNDK &nbsp;|&nbsp; Investment Committee Presentation &nbsp;|&nbsp; May 13, 2026</p>
+        <div class="gold-line reveal"></div>
+        <p class="reveal" style="font-size:0.9rem;color:#a8b8d8;font-weight:400;margin-top:0.6rem;">The AI-Era Pure-Play NAND Flash Investment</p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 2 — INVESTMENT SNAPSHOT
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="2">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:340px;height:340px;top:-80px;right:-70px;background:#C9A84C;opacity:0.09;"></div>
+        <div class="blob" style="width:260px;height:260px;bottom:-60px;left:-40px;background:#7B5EA7;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="reveal" style="display:flex;align-items:center;gap:12px;margin-bottom:0.4rem;">
+            <span style="font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Investment Summary</span>
+        </div>
+        <h2 class="font-display reveal" style="font-size:clamp(2rem,4.2vw,3rem);font-weight:700;margin-bottom:0.3rem;">One-Page Investment Case</h2>
+        <div class="gold-line-left reveal"></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;" class="reveal">
+            <!-- Left: thesis -->
+            <div class="glass-card" style="padding:1.4rem;">
+                <p style="font-size:0.7rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#C9A84C;margin-bottom:0.7rem;">Thesis in 3 Lines</p>
+                <p style="font-size:0.92rem;color:#a8b8d8;line-height:1.65;margin-bottom:0.6rem;">SanDisk is the purest AI NAND investment in US equity markets — a spin-off from Western Digital (Feb 2025) trading at an <strong style="color:#E8D5A3;">11.7× NTM EV/EBITDA</strong> discount to the structural earnings inflection underway.</p>
+                <p style="font-size:0.92rem;color:#a8b8d8;line-height:1.65;">Q3 FY26 revenues +97% QoQ; data center +233% QoQ. Q4 guidance $7.75–8.25B. Full debt repaid. <strong style="color:#E8D5A3;">$6B buyback</strong> initiated.</p>
+            </div>
+            <!-- Right: key metrics grid -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+                <div class="glass-card" style="padding:1rem;text-align:center;">
+                    <p class="stat-glow glow-pulse" style="font-size:1.9rem;font-weight:800;color:#C9A84C;font-family:Cormorant,serif;">$1,900</p>
+                    <p style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#5a6a8a;">Price Target</p>
+                </div>
+                <div class="glass-card" style="padding:1rem;text-align:center;">
+                    <p style="font-size:1.9rem;font-weight:800;color:#86efac;font-family:Cormorant,serif;">+31%</p>
+                    <p style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#5a6a8a;">Upside</p>
+                </div>
+                <div class="glass-card" style="padding:1rem;text-align:center;">
+                    <p style="font-size:1.9rem;font-weight:800;color:#E8D5A3;font-family:Cormorant,serif;">$1,447</p>
+                    <p style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#5a6a8a;">Current Price</p>
+                </div>
+                <div class="glass-card" style="padding:1rem;text-align:center;">
+                    <p style="font-size:1.9rem;font-weight:800;color:#c4b5fd;font-family:Cormorant,serif;">$211B</p>
+                    <p style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#5a6a8a;">Mkt Cap</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom KPI row -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;" class="reveal">
+            <div class="kpi-card">
+                <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#5a6a8a;margin-bottom:0.25rem;">FY2026E Rev</p>
+                <p style="font-size:1.2rem;font-weight:700;color:#E8D5A3;">$19.4B</p>
+                <p style="font-size:0.72rem;color:#86efac;">+164% YoY</p>
+            </div>
+            <div class="kpi-card">
+                <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#5a6a8a;margin-bottom:0.25rem;">FY2027E Rev</p>
+                <p style="font-size:1.2rem;font-weight:700;color:#E8D5A3;">$41.2B</p>
+                <p style="font-size:0.72rem;color:#86efac;">+112% YoY</p>
+            </div>
+            <div class="kpi-card">
+                <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#5a6a8a;margin-bottom:0.25rem;">FY2027E EBITDA Mg</p>
+                <p style="font-size:1.2rem;font-weight:700;color:#E8D5A3;">74.5%</p>
+                <p style="font-size:0.72rem;color:#86efac;">vs. –16.5% FY25A</p>
+            </div>
+            <div class="kpi-card">
+                <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#5a6a8a;margin-bottom:0.25rem;">FY2027E FCF</p>
+                <p style="font-size:1.2rem;font-weight:700;color:#E8D5A3;">$19.1B</p>
+                <p style="font-size:0.72rem;color:#86efac;">8.9% FCF yield</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 3 — COMPANY OVERVIEW
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="3">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:350px;height:350px;top:-90px;right:-60px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:220px;height:220px;bottom:-50px;left:-30px;background:#7B5EA7;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="reveal" style="display:flex;align-items:center;gap:12px;margin-bottom:0.3rem;">
+            <span style="font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Company Overview</span>
+        </div>
+        <h2 class="font-display reveal" style="font-size:clamp(1.8rem,3.8vw,2.8rem);font-weight:700;margin-bottom:0.3rem;">From WDC Spin-Off to Pure-Play AI NAND Leader</h2>
+        <div class="gold-line-left reveal"></div>
+
+        <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:1.2rem;" class="reveal">
+            <div>
+                <!-- Timeline milestones -->
+                <div style="position:relative;padding-left:28px;margin-bottom:0.8rem;">
+                    <div style="position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#C9A84C,rgba(201,168,76,0.1));"></div>
+                    <div style="margin-bottom:0.9rem;position:relative;">
+                        <div style="width:12px;height:12px;border-radius:50%;background:#C9A84C;position:absolute;left:-24px;top:4px;box-shadow:0 0 8px rgba(201,168,76,0.6);"></div>
+                        <p style="font-size:0.72rem;color:#C9A84C;font-weight:700;letter-spacing:0.1em;margin:0;">1988</p>
+                        <p style="font-size:0.88rem;color:#a8b8d8;margin:0.1rem 0 0;">Founded by Eli Harari, Sanjay Mehrotra, Jack Yuan as SunDisk</p>
+                    </div>
+                    <div style="margin-bottom:0.9rem;position:relative;">
+                        <div style="width:12px;height:12px;border-radius:50%;background:#C9A84C;position:absolute;left:-24px;top:4px;box-shadow:0 0 8px rgba(201,168,76,0.6);"></div>
+                        <p style="font-size:0.72rem;color:#C9A84C;font-weight:700;letter-spacing:0.1em;margin:0;">2016</p>
+                        <p style="font-size:0.88rem;color:#a8b8d8;margin:0.1rem 0 0;">Acquired by Western Digital for $19B; integrated into WDC NAND division</p>
+                    </div>
+                    <div style="margin-bottom:0.9rem;position:relative;">
+                        <div style="width:12px;height:12px;border-radius:50%;background:#86efac;position:absolute;left:-24px;top:4px;box-shadow:0 0 8px rgba(134,239,172,0.5);"></div>
+                        <p style="font-size:0.72rem;color:#86efac;font-weight:700;letter-spacing:0.1em;margin:0;">Feb 21, 2025</p>
+                        <p style="font-size:0.88rem;color:#a8b8d8;margin:0.1rem 0 0;">Spin-off completes; SNDK begins NASDAQ trading Feb 24, 2025 (1-for-3 distribution)</p>
+                    </div>
+                    <div style="position:relative;">
+                        <div style="width:12px;height:12px;border-radius:50%;background:#C9A84C;position:absolute;left:-24px;top:4px;box-shadow:0 0 8px rgba(201,168,76,0.7);"></div>
+                        <p style="font-size:0.72rem;color:#C9A84C;font-weight:700;letter-spacing:0.1em;margin:0;">Q3 FY2026</p>
+                        <p style="font-size:0.88rem;color:#a8b8d8;margin:0.1rem 0 0;">Debt fully repaid; $6B buyback announced; BiCS8 hyperscaler qualification advancing</p>
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.7rem;">
+                <div class="glass-card" style="padding:1rem;">
+                    <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C9A84C;margin-bottom:0.5rem;">Business Model</p>
+                    <p style="font-size:0.82rem;color:#a8b8d8;line-height:1.6;margin:0;">IDM model: BiCS NAND designed in-house, manufactured 100% via Flash Ventures JV with Kioxia in Japan. ~12.4% global NAND share; ~27% combined w/ Kioxia JV partner.</p>
+                </div>
+                <div class="glass-card" style="padding:1rem;">
+                    <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C9A84C;margin-bottom:0.5rem;">Revenue Segments</p>
+                    <div style="display:flex;flex-direction:column;gap:0.4rem;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:0.82rem;color:#a8b8d8;">Enterprise SSD (Data Center)</span>
+                            <span style="font-size:0.82rem;font-weight:700;color:#86efac;">~25% → 40%+</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:0.82rem;color:#a8b8d8;">Client SSD (PC/Laptop)</span>
+                            <span style="font-size:0.82rem;font-weight:700;color:#E8D5A3;">~40%</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:0.82rem;color:#a8b8d8;">Consumer Flash (SD/USB)</span>
+                            <span style="font-size:0.82rem;font-weight:700;color:#a8b8d8;">~35%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card" style="padding:1rem;">
+                    <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C9A84C;margin-bottom:0.5rem;">WDC Overhang</p>
+                    <p style="font-size:0.82rem;color:#a8b8d8;line-height:1.5;margin:0;">WDC retains 19.9% stake; 2-year tax restriction expires <strong style="color:#E8D5A3;">Feb 2027</strong>. Incentivized to sell at favorable prices. Decreasing overhang as date approaches.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 4 — 5 THESIS PILLARS
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="4">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:400px;height:400px;top:-100px;right:-90px;background:#7B5EA7;opacity:0.1;"></div>
+        <div class="blob" style="width:280px;height:280px;bottom:-70px;left:-50px;background:#C9A84C;opacity:0.08;"></div>
+    </div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+        <div class="reveal" style="display:flex;align-items:center;gap:12px;margin-bottom:0.3rem;">
+            <span style="font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Investment Thesis</span>
+        </div>
+        <h2 class="font-display reveal" style="font-size:clamp(1.8rem,3.8vw,2.7rem);font-weight:700;margin-bottom:0.3rem;">Five Pillars Supporting the BUY Rating</h2>
+        <div class="gold-line-left reveal"></div>
+
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.75rem;" class="reveal">
+            <div class="glass-card" style="padding:1rem;text-align:center;">
+                <div style="font-size:2rem;margin-bottom:0.5rem;">🤖</div>
+                <p style="font-size:0.72rem;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">P1: AI Demand</p>
+                <p style="font-size:0.78rem;color:#a8b8d8;line-height:1.5;">DC NAND TAM surpassing HDD in 2026. Q3 FY26 DC rev <strong style="color:#86efac;">+233% QoQ</strong>. $500B+ hyperscaler capex.</p>
+                <div style="margin-top:0.6rem;padding:3px 10px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);border-radius:20px;display:inline-block;">
+                    <span style="font-size:0.68rem;color:#86efac;font-weight:700;">✓ CONFIRMED</span>
+                </div>
+            </div>
+            <div class="glass-card" style="padding:1rem;text-align:center;">
+                <div style="font-size:2rem;margin-bottom:0.5rem;">📋</div>
+                <p style="font-size:0.72rem;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">P2: LT Contracts</p>
+                <p style="font-size:0.78rem;color:#a8b8d8;line-height:1.5;">Pivot from spot-pricing to 1–5 yr supply agreements. Floors revenue in down-cycles.</p>
+                <div style="margin-top:0.6rem;padding:3px 10px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);border-radius:20px;display:inline-block;">
+                    <span style="font-size:0.68rem;color:#86efac;font-weight:700;">✓ IN PROGRESS</span>
+                </div>
+            </div>
+            <div class="glass-card" style="padding:1rem;text-align:center;">
+                <div style="font-size:2rem;margin-bottom:0.5rem;">🔬</div>
+                <p style="font-size:0.72rem;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">P3: BiCS8/10</p>
+                <p style="font-size:0.78rem;color:#a8b8d8;line-height:1.5;">218-layer BiCS8 = lowest cost NAND. QLC Stargate Q4 FY26. BiCS10 (332L) 2027.</p>
+                <div style="margin-top:0.6rem;padding:3px 10px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);border-radius:20px;display:inline-block;">
+                    <span style="font-size:0.68rem;color:#86efac;font-weight:700;">✓ ON TRACK</span>
+                </div>
+            </div>
+            <div class="glass-card" style="padding:1rem;text-align:center;">
+                <div style="font-size:2rem;margin-bottom:0.5rem;">🤝</div>
+                <p style="font-size:0.72rem;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">P4: Kioxia JV</p>
+                <p style="font-size:0.78rem;color:#a8b8d8;line-height:1.5;">JV extended through 2034. ~27% combined share. Shared R&D, capex &amp; fab scale.</p>
+                <div style="margin-top:0.6rem;padding:3px 10px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);border-radius:20px;display:inline-block;">
+                    <span style="font-size:0.68rem;color:#86efac;font-weight:700;">✓ EXTENDED</span>
+                </div>
+            </div>
+            <div class="glass-card" style="padding:1rem;text-align:center;">
+                <div style="font-size:2rem;margin-bottom:0.5rem;">💰</div>
+                <p style="font-size:0.72rem;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">P5: Cap Return</p>
+                <p style="font-size:0.78rem;color:#a8b8d8;line-height:1.5;">$6B buyback (~2.8% yield). FY27E FCF $19B >> buyback. Debt fully repaid Q3 FY26.</p>
+                <div style="margin-top:0.6rem;padding:3px 10px;background:rgba(250,204,21,0.12);border:1px solid rgba(250,204,21,0.3);border-radius:20px;display:inline-block;">
+                    <span style="font-size:0.68rem;color:#fde68a;font-weight:700;">🟡 MONITORING</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal" style="margin-top:0.85rem;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:0.75rem 1.2rem;">
+            <p style="font-size:0.83rem;color:#a8b8d8;margin:0;line-height:1.6;"><strong style="color:#C9A84C;">Bull Thesis Conviction:</strong> A near-fabless FCF structure (CapEx/Revenue ~7% vs. Micron 42%) at peak cycle, combined with AI-driven structural demand, creates an asymmetric setup. 4 of 5 pillars already validated by operational data. The fifth (capital return) is self-executing given debt repayment.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 5 — FINANCIAL PERFORMANCE
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="5">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:320px;height:320px;top:-70px;right:-60px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:230px;height:230px;bottom:-50px;left:-30px;background:#7B5EA7;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="reveal" style="display:flex;align-items:center;gap:12px;margin-bottom:0.3rem;">
+            <span style="font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Financials</span>
+        </div>
+        <h2 class="font-display reveal" style="font-size:clamp(1.8rem,3.8vw,2.7rem);font-weight:700;margin-bottom:0.3rem;">From Trough to Supercycle: Revenue & Margin Inflection</h2>
+        <div class="gold-line-left reveal"></div>
+
+        <!-- Revenue bar chart SVG -->
+        <div class="reveal" style="margin-bottom:0.75rem;">
+            <p style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#5a6a8a;margin-bottom:0.5rem;">Revenue ($B) — FY2022A to FY2027E</p>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:100px;padding:0 4px;">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                    <span style="font-size:0.68rem;color:#a8b8d8;">$9.8</span>
+                    <div class="bar" data-height="65" style="width:100%;background:linear-gradient(to top,rgba(201,168,76,0.3),rgba(201,168,76,0.55));border-radius:4px 4px 0 0;height:0%;"></div>
+                    <span style="font-size:0.65rem;color:#5a6a8a;">FY22A</span>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                    <span style="font-size:0.68rem;color:#fca5a5;">$6.1</span>
+                    <div class="bar" data-height="25" style="width:100%;background:linear-gradient(to top,rgba(239,68,68,0.3),rgba(239,68,68,0.5));border-radius:4px 4px 0 0;height:0%;"></div>
+                    <span style="font-size:0.65rem;color:#5a6a8a;">FY23A</span>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                    <span style="font-size:0.68rem;color:#fca5a5;">$6.7</span>
+                    <div class="bar" data-height="28" style="width:100%;background:linear-gradient(to top,rgba(239,68,68,0.3),rgba(239,68,68,0.5));border-radius:4px 4px 0 0;height:0%;"></div>
+                    <span style="font-size:0.65rem;color:#5a6a8a;">FY24A</span>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                    <span style="font-size:0.68rem;color:#a8b8d8;">$7.4</span>
+                    <div class="bar" data-height="32" style="width:100%;background:linear-gradient(to top,rgba(201,168,76,0.35),rgba(201,168,76,0.55));border-radius:4px 4px 0 0;height:0%;"></div>
+                    <span style="font-size:0.65rem;color:#5a6a8a;">FY25A</span>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                    <span style="font-size:0.68rem;color:#86efac;">$19.4</span>
+                    <div class="bar" data-height="58" style="width:100%;background:linear-gradient(to top,rgba(34,197,94,0.4),rgba(34,197,94,0.7));border-radius:4px 4px 0 0;height:0%;"></div>
+                    <span style="font-size:0.65rem;color:#5a6a8a;">FY26E</span>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                    <span style="font-size:0.68rem;color:#86efac;font-weight:700;">$41.2</span>
+                    <div class="bar" data-height="100" style="width:100%;background:linear-gradient(to top,rgba(34,197,94,0.55),rgba(34,197,94,0.9));border-radius:4px 4px 0 0;height:0%;"></div>
+                    <span style="font-size:0.65rem;color:#5a6a8a;font-weight:700;">FY27E</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Margin table -->
+        <div class="reveal" style="display:grid;grid-template-columns:1.2fr repeat(6,1fr);gap:3px;font-size:0.74rem;">
+            <div style="padding:6px 8px;color:#5a6a8a;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;font-size:0.65rem;"></div>
+            <div style="padding:6px 4px;text-align:center;color:#5a6a8a;font-size:0.65rem;font-weight:600;">FY22A</div>
+            <div style="padding:6px 4px;text-align:center;color:#5a6a8a;font-size:0.65rem;font-weight:600;">FY23A</div>
+            <div style="padding:6px 4px;text-align:center;color:#5a6a8a;font-size:0.65rem;font-weight:600;">FY24A</div>
+            <div style="padding:6px 4px;text-align:center;color:#5a6a8a;font-size:0.65rem;font-weight:600;">FY25A</div>
+            <div style="padding:6px 4px;text-align:center;color:#86efac;font-size:0.65rem;font-weight:700;">FY26E</div>
+            <div style="padding:6px 4px;text-align:center;color:#86efac;font-size:0.65rem;font-weight:700;">FY27E</div>
+
+            <div style="padding:5px 8px;color:#a8b8d8;background:rgba(255,255,255,0.03);border-radius:4px;">Gross Margin</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);border-radius:4px;">33.3%</div>
+            <div style="padding:5px 4px;text-align:center;color:#fca5a5;background:rgba(239,68,68,0.08);border-radius:4px;">7.1%</div>
+            <div style="padding:5px 4px;text-align:center;color:#fca5a5;background:rgba(239,68,68,0.08);border-radius:4px;">16.1%</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);border-radius:4px;">30.1%</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(34,197,94,0.12);border-radius:4px;font-weight:700;">60.9%</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(34,197,94,0.15);border-radius:4px;font-weight:700;">75.0%</div>
+
+            <div style="padding:5px 8px;color:#a8b8d8;background:rgba(255,255,255,0.02);border-radius:4px;">EBITDA Mg</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);border-radius:4px;">21.7%</div>
+            <div style="padding:5px 4px;text-align:center;color:#fca5a5;background:rgba(239,68,68,0.07);border-radius:4px;">(10.9%)</div>
+            <div style="padding:5px 4px;text-align:center;color:#fca5a5;background:rgba(239,68,68,0.07);border-radius:4px;">(0.7%)</div>
+            <div style="padding:5px 4px;text-align:center;color:#fca5a5;background:rgba(239,68,68,0.07);border-radius:4px;">(16.5%)</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(34,197,94,0.12);border-radius:4px;font-weight:700;">60.8%</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(34,197,94,0.15);border-radius:4px;font-weight:700;">74.5%</div>
+
+            <div style="padding:5px 8px;color:#a8b8d8;background:rgba(255,255,255,0.03);border-radius:4px;">Adj. EPS</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);border-radius:4px;">$8.37</div>
+            <div style="padding:5px 4px;text-align:center;color:#fca5a5;background:rgba(239,68,68,0.08);border-radius:4px;">($3.56)</div>
+            <div style="padding:5px 4px;text-align:center;color:#fca5a5;background:rgba(239,68,68,0.08);border-radius:4px;">($3.46)</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);border-radius:4px;">$2.99</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(34,197,94,0.12);border-radius:4px;font-weight:700;">$66.98</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(34,197,94,0.15);border-radius:4px;font-weight:700;">$189.25</div>
+
+            <div style="padding:5px 8px;color:#a8b8d8;background:rgba(255,255,255,0.02);border-radius:4px;">FCF ($B)</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);border-radius:4px;">$0.65</div>
+            <div style="padding:5px 4px;text-align:center;color:#fca5a5;background:rgba(239,68,68,0.07);border-radius:4px;">($0.92)</div>
+            <div style="padding:5px 4px;text-align:center;color:#fca5a5;background:rgba(239,68,68,0.07);border-radius:4px;">($0.10)</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);border-radius:4px;">$0.24</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(34,197,94,0.12);border-radius:4px;font-weight:700;">$7.95</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(34,197,94,0.15);border-radius:4px;font-weight:700;">$19.09</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 6 — SCENARIOS
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="6">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-90px;right:-80px;background:#C9A84C;opacity:0.09;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-60px;left:-40px;background:#7B5EA7;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+        <div class="reveal" style="display:flex;align-items:center;gap:12px;margin-bottom:0.3rem;">
+            <span style="font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Scenario Analysis</span>
+        </div>
+        <h2 class="font-display reveal" style="font-size:clamp(1.8rem,3.8vw,2.7rem);font-weight:700;margin-bottom:0.3rem;">Bull / Base / Bear Scenario Framework</h2>
+        <div class="gold-line-left reveal"></div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:0.9rem;" class="reveal">
+            <!-- Bull -->
+            <div class="glass-card" style="padding:1.2rem;border-color:rgba(34,197,94,0.3);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.7rem;">
+                    <span class="pill-bull">BULL</span>
+                    <span style="font-size:1.5rem;font-weight:800;color:#86efac;font-family:Cormorant,serif;">$3,200</span>
+                </div>
+                <p style="font-size:0.72rem;color:#5a6a8a;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem;">FY2026E / FY2027E</p>
+                <p style="font-size:0.88rem;color:#a8b8d8;margin:0.2rem 0;">Rev: <strong style="color:#86efac;">$21.0B / $47.0B</strong></p>
+                <p style="font-size:0.88rem;color:#a8b8d8;margin:0.2rem 0;">EBITDA: <strong style="color:#86efac;">$13.7B / $37.6B</strong></p>
+                <p style="font-size:0.88rem;color:#a8b8d8;margin:0.2rem 0;">EPS: <strong style="color:#86efac;">$78 / $230</strong></p>
+                <p style="font-size:0.75rem;color:#5a6a8a;margin-top:0.6rem;line-height:1.5;">Requires: Samsung/SK Hynix cap restraint, hyperscaler exclusive LT deal, BiCS8 rapid qual</p>
+            </div>
+            <!-- Base -->
+            <div class="glass-card" style="padding:1.2rem;border-color:rgba(201,168,76,0.4);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.7rem;">
+                    <span class="pill-base">BASE ★</span>
+                    <span style="font-size:1.5rem;font-weight:800;color:#C9A84C;font-family:Cormorant,serif;">$1,900</span>
+                </div>
+                <p style="font-size:0.72rem;color:#5a6a8a;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem;">FY2026E / FY2027E</p>
+                <p style="font-size:0.88rem;color:#a8b8d8;margin:0.2rem 0;">Rev: <strong style="color:#E8D5A3;">$19.4B / $41.2B</strong></p>
+                <p style="font-size:0.88rem;color:#a8b8d8;margin:0.2rem 0;">EBITDA: <strong style="color:#E8D5A3;">$11.8B / $30.7B</strong></p>
+                <p style="font-size:0.88rem;color:#a8b8d8;margin:0.2rem 0;">EPS: <strong style="color:#E8D5A3;">$67 / $189</strong></p>
+                <p style="font-size:0.75rem;color:#5a6a8a;margin-top:0.6rem;line-height:1.5;">Consensus-aligned; assumes cycle normalization post FY27; LT contracts ramp toward 50%+ of rev</p>
+            </div>
+            <!-- Bear -->
+            <div class="glass-card" style="padding:1.2rem;border-color:rgba(239,68,68,0.3);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.7rem;">
+                    <span class="pill-bear">BEAR</span>
+                    <span style="font-size:1.5rem;font-weight:800;color:#fca5a5;font-family:Cormorant,serif;">$750</span>
+                </div>
+                <p style="font-size:0.72rem;color:#5a6a8a;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem;">FY2026E / FY2027E</p>
+                <p style="font-size:0.88rem;color:#a8b8d8;margin:0.2rem 0;">Rev: <strong style="color:#fca5a5;">$16.0B / $28.0B</strong></p>
+                <p style="font-size:0.88rem;color:#a8b8d8;margin:0.2rem 0;">EBITDA: <strong style="color:#fca5a5;">$7.2B / $15.4B</strong></p>
+                <p style="font-size:0.88rem;color:#a8b8d8;margin:0.2rem 0;">EPS: <strong style="color:#fca5a5;">$45 / $105</strong></p>
+                <p style="font-size:0.75rem;color:#5a6a8a;margin-top:0.6rem;line-height:1.5;">Triggered by Samsung cap addition, AI capex pause, or NAND ASP –30%+ decline in H2 2026</p>
+            </div>
+        </div>
+
+        <div style="background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:0.75rem 1.2rem;" class="reveal">
+            <p style="font-size:0.8rem;color:#a8b8d8;margin:0;line-height:1.6;"><strong style="color:#C9A84C;">Primary Swing Factors:</strong> (1) Samsung/SK Hynix CapEx discipline — single biggest determinant of NAND pricing; (2) percentage of SNDK revenue locked into LT supply contracts (target ≥50%); (3) BiCS8 qualification speed and Stargate QLC ramp at hyperscalers; (4) Duration of AI infrastructure build (any of the Big 4 hyperscalers pausing is bear trigger).</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 7 — VALUATION FRAMEWORK
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="7">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-80px;right:-70px;background:#C9A84C;opacity:0.1;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-60px;left:-40px;background:#7B5EA7;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+        <div class="reveal" style="display:flex;align-items:center;gap:12px;margin-bottom:0.3rem;">
+            <span style="font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Valuation</span>
+        </div>
+        <h2 class="font-display reveal" style="font-size:clamp(1.8rem,3.8vw,2.7rem);font-weight:700;margin-bottom:0.3rem;">Football Field: Multi-Method Price Target Derivation</h2>
+        <div class="gold-line-left reveal"></div>
+
+        <!-- Football field bars -->
+        <div style="display:flex;flex-direction:column;gap:0.7rem;margin-bottom:0.9rem;" class="reveal">
+            <!-- Scale row -->
+            <div style="display:flex;align-items:center;gap:0.8rem;padding-left:160px;">
+                <span style="font-size:0.65rem;color:#5a6a8a;flex:1;text-align:left;">$750</span>
+                <span style="font-size:0.65rem;color:#5a6a8a;flex:1;text-align:center;">$1,200</span>
+                <span style="font-size:0.65rem;color:#C9A84C;font-weight:700;flex:1;text-align:center;">$1,447 (Current)</span>
+                <span style="font-size:0.65rem;color:#86efac;font-weight:700;flex:1;text-align:center;">$1,900 (PT)</span>
+                <span style="font-size:0.65rem;color:#5a6a8a;flex:1;text-align:right;">$2,500+</span>
+            </div>
+            <!-- DCF row -->
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+                <span style="min-width:160px;font-size:0.78rem;color:#a8b8d8;font-weight:500;">DCF (WACC 15.4%)</span>
+                <div style="flex:1;position:relative;height:22px;background:rgba(255,255,255,0.05);border-radius:4px;">
+                    <div style="position:absolute;left:20%;width:60%;height:100%;background:linear-gradient(90deg,rgba(201,168,76,0.35),rgba(201,168,76,0.7));border-radius:4px;display:flex;align-items:center;justify-content:space-between;padding:0 6px;">
+                        <span style="font-size:0.65rem;color:#E8D5A3;font-weight:600;">$1,108</span>
+                        <span style="font-size:0.7rem;color:#C9A84C;font-weight:700;">$1,502 mid</span>
+                        <span style="font-size:0.65rem;color:#E8D5A3;font-weight:600;">$2,224</span>
+                    </div>
+                    <div style="position:absolute;left:47.5%;width:2px;height:130%;top:-15%;background:#C9A84C;opacity:0.6;"></div>
+                </div>
+            </div>
+            <!-- EV/Rev comps -->
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+                <span style="min-width:160px;font-size:0.78rem;color:#a8b8d8;font-weight:500;">EV/Revenue (7.4x)</span>
+                <div style="flex:1;position:relative;height:22px;background:rgba(255,255,255,0.05);border-radius:4px;">
+                    <div style="position:absolute;left:12%;width:55%;height:100%;background:linear-gradient(90deg,rgba(123,94,167,0.35),rgba(123,94,167,0.6));border-radius:4px;display:flex;align-items:center;justify-content:space-between;padding:0 6px;">
+                        <span style="font-size:0.65rem;color:#c4b5fd;font-weight:600;">$800</span>
+                        <span style="font-size:0.7rem;color:#c4b5fd;font-weight:700;">$1,519</span>
+                        <span style="font-size:0.65rem;color:#c4b5fd;font-weight:600;">$2,200</span>
+                    </div>
+                </div>
+            </div>
+            <!-- P/E comps -->
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+                <span style="min-width:160px;font-size:0.78rem;color:#a8b8d8;font-weight:500;">P/E Comps (24×)</span>
+                <div style="flex:1;position:relative;height:22px;background:rgba(255,255,255,0.05);border-radius:4px;">
+                    <div style="position:absolute;left:15%;width:60%;height:100%;background:linear-gradient(90deg,rgba(56,189,248,0.25),rgba(56,189,248,0.55));border-radius:4px;display:flex;align-items:center;justify-content:space-between;padding:0 6px;">
+                        <span style="font-size:0.65rem;color:#7dd3fc;font-weight:600;">$900</span>
+                        <span style="font-size:0.7rem;color:#7dd3fc;font-weight:700;">$1,607</span>
+                        <span style="font-size:0.65rem;color:#7dd3fc;font-weight:600;">$2,500</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Price target line -->
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+                <span style="min-width:160px;font-size:0.78rem;color:#86efac;font-weight:700;">★ Blended PT</span>
+                <div style="flex:1;position:relative;height:22px;background:rgba(255,255,255,0.05);border-radius:4px;">
+                    <div style="position:absolute;left:0%;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+                        <div style="position:absolute;left:60%;transform:translateX(-50%);width:3px;height:200%;top:-50%;background:#86efac;border-radius:2px;box-shadow:0 0 8px rgba(134,239,172,0.6);"></div>
+                        <span style="font-size:0.78rem;font-weight:800;color:#86efac;font-family:Cormorant,serif;position:relative;z-index:2;background:rgba(6,9,26,0.8);padding:2px 8px;border-radius:4px;">$1,900 → +31%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WACC / methodology note -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.6rem;" class="reveal">
+            <div class="glass-card" style="padding:0.8rem;text-align:center;">
+                <p style="font-size:1.1rem;font-weight:700;color:#C9A84C;font-family:Cormorant,serif;margin:0;">15.4%</p>
+                <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#5a6a8a;margin:0.2rem 0 0;">WACC</p>
+                <p style="font-size:0.65rem;color:#5a6a8a;margin:0;">Rf 4.42% + β 2.0 × ERP 5.5%</p>
+            </div>
+            <div class="glass-card" style="padding:0.8rem;text-align:center;">
+                <p style="font-size:1.1rem;font-weight:700;color:#C9A84C;font-family:Cormorant,serif;margin:0;">4.0%</p>
+                <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#5a6a8a;margin:0.2rem 0 0;">Terminal Growth</p>
+                <p style="font-size:0.65rem;color:#5a6a8a;margin:0;">NAND TAM CAGR ~5.3%</p>
+            </div>
+            <div class="glass-card" style="padding:0.8rem;text-align:center;">
+                <p style="font-size:1.1rem;font-weight:700;color:#C9A84C;font-family:Cormorant,serif;margin:0;">66.6%</p>
+                <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#5a6a8a;margin:0.2rem 0 0;">TV / EV</p>
+                <p style="font-size:0.65rem;color:#5a6a8a;margin:0;">Below 75% threshold ✓</p>
+            </div>
+            <div class="glass-card" style="padding:0.8rem;text-align:center;">
+                <p style="font-size:1.1rem;font-weight:700;color:#C9A84C;font-family:Cormorant,serif;margin:0;">50/50</p>
+                <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#5a6a8a;margin:0.2rem 0 0;">DCF / Comps</p>
+                <p style="font-size:0.65rem;color:#5a6a8a;margin:0;">Balanced methodology</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 8 — COMPETITIVE LANDSCAPE
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="8">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:340px;height:340px;top:-80px;right:-60px;background:#C9A84C;opacity:0.08;"></div>
+        <div class="blob" style="width:220px;height:220px;bottom:-50px;left:-30px;background:#7B5EA7;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="reveal" style="display:flex;align-items:center;gap:12px;margin-bottom:0.3rem;">
+            <span style="font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Comps</span>
+        </div>
+        <h2 class="font-display reveal" style="font-size:clamp(1.8rem,3.8vw,2.7rem);font-weight:700;margin-bottom:0.3rem;">Peer Comparison &amp; SNDK Relative Positioning</h2>
+        <div class="gold-line-left reveal"></div>
+
+        <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr 1fr 1fr;gap:3px;font-size:0.74rem;" class="reveal">
+            <!-- Header -->
+            <div style="padding:6px 8px;color:#C9A84C;font-weight:700;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;background:rgba(201,168,76,0.1);border-radius:4px 0 0 4px;">Company</div>
+            <div style="padding:6px 4px;text-align:center;color:#C9A84C;font-weight:700;font-size:0.65rem;background:rgba(201,168,76,0.1);">Mkt Cap</div>
+            <div style="padding:6px 4px;text-align:center;color:#C9A84C;font-weight:700;font-size:0.65rem;background:rgba(201,168,76,0.1);">P/E (NTM)</div>
+            <div style="padding:6px 4px;text-align:center;color:#C9A84C;font-weight:700;font-size:0.65rem;background:rgba(201,168,76,0.1);">EV/EBITDA</div>
+            <div style="padding:6px 4px;text-align:center;color:#C9A84C;font-weight:700;font-size:0.65rem;background:rgba(201,168,76,0.1);">EV/Rev</div>
+            <div style="padding:6px 4px;text-align:center;color:#C9A84C;font-weight:700;font-size:0.65rem;background:rgba(201,168,76,0.1);">EBITDA Mg</div>
+            <div style="padding:6px 4px;text-align:center;color:#C9A84C;font-weight:700;font-size:0.65rem;background:rgba(201,168,76,0.1);border-radius:0 4px 4px 0;">Rev Growth</div>
+
+            <!-- Micron -->
+            <div style="padding:5px 8px;color:#a8b8d8;background:rgba(255,255,255,0.02);">Micron (MU)</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">$906B</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">38.0×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">45.3×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">19.7×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">43.5%</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(255,255,255,0.02);">+23.4%</div>
+
+            <!-- Seagate -->
+            <div style="padding:5px 8px;color:#a8b8d8;background:rgba(255,255,255,0.03);">Seagate (STX)</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">$183B</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">22.0×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">33.3×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">7.8×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">23.4%</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">+8.9%</div>
+
+            <!-- WDC -->
+            <div style="padding:5px 8px;color:#a8b8d8;background:rgba(255,255,255,0.02);">Western Digital (WDC)</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">$170B</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">24.0×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">28.4×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">7.1×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">25.0%</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">+7.5%</div>
+
+            <!-- NTAP -->
+            <div style="padding:5px 8px;color:#a8b8d8;background:rgba(255,255,255,0.03);">NetApp (NTAP)</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">$23.5B</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">16.0×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">13.1×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">3.7×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">28.1%</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.03);">+5.5%</div>
+
+            <!-- Pure Storage -->
+            <div style="padding:5px 8px;color:#a8b8d8;background:rgba(255,255,255,0.02);">Pure Storage (PSTG)</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">$22.1B</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">42.0×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">24.6×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">5.8×</div>
+            <div style="padding:5px 4px;text-align:center;color:#a8b8d8;background:rgba(255,255,255,0.02);">23.7%</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;background:rgba(255,255,255,0.02);">+13.0%</div>
+
+            <!-- Peer Median -->
+            <div style="padding:5px 8px;color:#E8D5A3;font-weight:700;background:rgba(201,168,76,0.07);">Peer Median</div>
+            <div style="padding:5px 4px;text-align:center;color:#E8D5A3;font-weight:700;background:rgba(201,168,76,0.07);">$170B</div>
+            <div style="padding:5px 4px;text-align:center;color:#E8D5A3;font-weight:700;background:rgba(201,168,76,0.07);">24.0×</div>
+            <div style="padding:5px 4px;text-align:center;color:#E8D5A3;font-weight:700;background:rgba(201,168,76,0.07);">28.4×</div>
+            <div style="padding:5px 4px;text-align:center;color:#E8D5A3;font-weight:700;background:rgba(201,168,76,0.07);">7.4×</div>
+            <div style="padding:5px 4px;text-align:center;color:#E8D5A3;font-weight:700;background:rgba(201,168,76,0.07);">25.0%</div>
+            <div style="padding:5px 4px;text-align:center;color:#E8D5A3;font-weight:700;background:rgba(201,168,76,0.07);">+8.9%</div>
+
+            <!-- SNDK -->
+            <div style="padding:5px 8px;color:#86efac;font-weight:700;background:rgba(34,197,94,0.1);">★ SNDK (Subject)</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;font-weight:700;background:rgba(34,197,94,0.1);">$211B</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;font-weight:700;background:rgba(34,197,94,0.12);">21.6×</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;font-weight:700;background:rgba(34,197,94,0.12);">11.7×</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;font-weight:700;background:rgba(34,197,94,0.1);">7.0×</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;font-weight:700;background:rgba(34,197,94,0.15);">60.0%</div>
+            <div style="padding:5px 4px;text-align:center;color:#86efac;font-weight:700;background:rgba(34,197,94,0.15);">+164%</div>
+        </div>
+        <p style="font-size:0.7rem;color:#5a6a8a;margin-top:0.5rem;" class="reveal">SNDK EV/EBITDA discount to peer median (28.4×) reflects spin-off recency, WDC overhang, and cycle peak uncertainty — a re-rating catalyst as these factors resolve.</p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 9 — RISKS
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="9">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:350px;height:350px;top:-90px;right:-70px;background:#ef4444;opacity:0.06;"></div>
+        <div class="blob" style="width:230px;height:230px;bottom:-50px;left:-30px;background:#C9A84C;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="reveal" style="display:flex;align-items:center;gap:12px;margin-bottom:0.3rem;">
+            <span style="font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#fca5a5;">Risk Assessment</span>
+        </div>
+        <h2 class="font-display reveal" style="font-size:clamp(1.8rem,3.8vw,2.7rem);font-weight:700;margin-bottom:0.3rem;">Key Risks — Ranked by Severity × Probability</h2>
+        <div style="width:48px;height:2px;background:linear-gradient(90deg,#ef4444,transparent);margin:0.5rem 0 1rem;" class="reveal"></div>
+
+        <div style="display:flex;flex-direction:column;gap:0.6rem;" class="reveal">
+            <div class="glass-card risk-critical" style="padding:0.85rem 1.1rem;display:grid;grid-template-columns:180px 1fr 200px;align-items:center;gap:1rem;">
+                <div>
+                    <span style="font-size:0.65rem;font-weight:700;color:#fca5a5;text-transform:uppercase;letter-spacing:0.1em;background:rgba(239,68,68,0.2);border-radius:20px;padding:2px 10px;">CRITICAL</span>
+                    <p style="font-size:0.82rem;font-weight:700;color:#f1f5f9;margin:0.3rem 0 0;">NAND Pricing Reversal</p>
+                </div>
+                <p style="font-size:0.78rem;color:#a8b8d8;margin:0;line-height:1.5;">Samsung/SK Hynix capacity additions trigger 30%+ ASP decline. GM could collapse to teens as in 2023. Primary cycle risk vector.</p>
+                <p style="font-size:0.75rem;color:#a8b8d8;margin:0;"><strong style="color:#E8D5A3;">Mitigant:</strong> LT contracts; BiCS8 cost floor; GM buffer above cost</p>
+            </div>
+            <div class="glass-card risk-high" style="padding:0.85rem 1.1rem;display:grid;grid-template-columns:180px 1fr 200px;align-items:center;gap:1rem;">
+                <div>
+                    <span style="font-size:0.65rem;font-weight:700;color:#fdba74;text-transform:uppercase;letter-spacing:0.1em;background:rgba(249,115,22,0.15);border-radius:20px;padding:2px 10px;">HIGH</span>
+                    <p style="font-size:0.82rem;font-weight:700;color:#f1f5f9;margin:0.3rem 0 0;">AI CapEx Concentration</p>
+                </div>
+                <p style="font-size:0.78rem;color:#a8b8d8;margin:0;line-height:1.5;">~70–80% of AI NAND demand concentrated in 4 hyperscalers. Any capex pause creates a demand cliff with minimal notice.</p>
+                <p style="font-size:0.75rem;color:#a8b8d8;margin:0;"><strong style="color:#E8D5A3;">Mitigant:</strong> Multi-customer diversification; edge AI + 5G secondary vectors</p>
+            </div>
+            <div class="glass-card risk-high" style="padding:0.85rem 1.1rem;display:grid;grid-template-columns:180px 1fr 200px;align-items:center;gap:1rem;">
+                <div>
+                    <span style="font-size:0.65rem;font-weight:700;color:#fdba74;text-transform:uppercase;letter-spacing:0.1em;background:rgba(249,115,22,0.15);border-radius:20px;padding:2px 10px;">HIGH</span>
+                    <p style="font-size:0.82rem;font-weight:700;color:#f1f5f9;margin:0.3rem 0 0;">Samsung Cap Expansion</p>
+                </div>
+                <p style="font-size:0.78rem;color:#a8b8d8;margin:0;line-height:1.5;">Korean NAND producers accelerating bit growth beyond demand. Samsung's discipline is single biggest external variable for SNDK margins.</p>
+                <p style="font-size:0.75rem;color:#a8b8d8;margin:0;"><strong style="color:#E8D5A3;">Mitigant:</strong> BiCS8 cost advantage; hyperscaler qualification head start</p>
+            </div>
+            <div class="glass-card risk-med" style="padding:0.85rem 1.1rem;display:grid;grid-template-columns:180px 1fr 200px;align-items:center;gap:1rem;">
+                <div>
+                    <span style="font-size:0.65rem;font-weight:700;color:#fde68a;text-transform:uppercase;letter-spacing:0.1em;background:rgba(250,204,21,0.12);border-radius:20px;padding:2px 10px;">MED-HIGH</span>
+                    <p style="font-size:0.82rem;font-weight:700;color:#f1f5f9;margin:0.3rem 0 0;">Kioxia JV / Japan FX Risk</p>
+                </div>
+                <p style="font-size:0.78rem;color:#a8b8d8;margin:0;line-height:1.5;">100% NAND wafers from Japan JV. Yen appreciation raises manufacturing costs. $1.165B fixed payment obligation 2026–29.</p>
+                <p style="font-size:0.75rem;color:#a8b8d8;margin:0;"><strong style="color:#E8D5A3;">Mitigant:</strong> JV locked 2034; Japan CHIPS Act funding; yen hedges</p>
+            </div>
+            <div class="glass-card risk-med" style="padding:0.85rem 1.1rem;display:grid;grid-template-columns:180px 1fr 200px;align-items:center;gap:1rem;">
+                <div>
+                    <span style="font-size:0.65rem;font-weight:700;color:#fde68a;text-transform:uppercase;letter-spacing:0.1em;background:rgba(250,204,21,0.12);border-radius:20px;padding:2px 10px;">MEDIUM</span>
+                    <p style="font-size:0.82rem;font-weight:700;color:#f1f5f9;margin:0.3rem 0 0;">WDC 19.9% Overhang</p>
+                </div>
+                <p style="font-size:0.78rem;color:#a8b8d8;margin:0;line-height:1.5;">WDC stake subject to 2-yr tax restriction expiring Feb 2027. Secondary offering potential could pressure shares and multiple.</p>
+                <p style="font-size:0.75rem;color:#a8b8d8;margin:0;"><strong style="color:#E8D5A3;">Mitigant:</strong> WDC incentivized to sell at premium; overhang reducing as date nears</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 10 — CATALYSTS & KPIs
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="10">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:360px;height:360px;top:-90px;right:-70px;background:#C9A84C;opacity:0.09;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-60px;left:-40px;background:#7B5EA7;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="reveal" style="display:flex;align-items:center;gap:12px;margin-bottom:0.3rem;">
+            <span style="font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;">Catalysts &amp; KPIs</span>
+        </div>
+        <h2 class="font-display reveal" style="font-size:clamp(1.8rem,3.8vw,2.7rem);font-weight:700;margin-bottom:0.3rem;">Near-Term Catalysts &amp; KPI Monitoring Dashboard</h2>
+        <div class="gold-line-left reveal"></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;" class="reveal">
+            <!-- Catalysts -->
+            <div>
+                <p style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.14em;color:#C9A84C;font-weight:700;margin-bottom:0.6rem;">Upside Catalysts</p>
+                <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                    <div style="display:flex;align-items:flex-start;gap:0.7rem;background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.15);border-radius:10px;padding:0.7rem 0.9rem;">
+                        <span style="font-size:1.1rem;margin-top:1px;">📈</span>
+                        <div>
+                            <p style="font-size:0.8rem;font-weight:700;color:#86efac;margin:0;">Q4 FY26 Rev above $8.0B <span style="font-weight:400;color:#5a6a8a;font-size:0.72rem;">Aug 2026 | Prob: 80%</span></p>
+                            <p style="font-size:0.75rem;color:#a8b8d8;margin:0.2rem 0 0;">Q4 guidance $7.75–8.25B; beat would confirm AI NAND supercycle and drive multiple expansion</p>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:0.7rem;background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.15);border-radius:10px;padding:0.7rem 0.9rem;">
+                        <span style="font-size:1.1rem;margin-top:1px;">🏭</span>
+                        <div>
+                            <p style="font-size:0.8rem;font-weight:700;color:#86efac;margin:0;">Hyperscaler Exclusive LT Deal <span style="font-weight:400;color:#5a6a8a;font-size:0.72rem;">Q4'26–Q1'27 | Prob: 60%</span></p>
+                            <p style="font-size:0.75rem;color:#a8b8d8;margin:0.2rem 0 0;">AWS/Google/MSFT/Meta multiyear supply deal de-risks 2027–28 revenue estimates significantly</p>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:0.7rem;background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.15);border-radius:10px;padding:0.7rem 0.9rem;">
+                        <span style="font-size:1.1rem;margin-top:1px;">💾</span>
+                        <div>
+                            <p style="font-size:0.8rem;font-weight:700;color:#86efac;margin:0;">BiCS10 Roadmap Reveal <span style="font-weight:400;color:#5a6a8a;font-size:0.72rem;">Late 2026 | Prob: 65%</span></p>
+                            <p style="font-size:0.75rem;color:#a8b8d8;margin:0.2rem 0 0;">332-layer BiCS10 confirms 2027–28 cost-per-bit leadership over Samsung/SK Hynix</p>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:0.7rem;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:0.7rem 0.9rem;">
+                        <span style="font-size:1.1rem;margin-top:1px;">🔄</span>
+                        <div>
+                            <p style="font-size:0.8rem;font-weight:700;color:#E8D5A3;margin:0;">$6B Buyback Acceleration <span style="font-weight:400;color:#5a6a8a;font-size:0.72rem;">FY2027 | Prob: 75%</span></p>
+                            <p style="font-size:0.75rem;color:#a8b8d8;margin:0.2rem 0 0;">FY27 FCF $19.1B >> $6B buyback; EPS accretion signals management conviction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPIs -->
+            <div>
+                <p style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.14em;color:#C9A84C;font-weight:700;margin-bottom:0.6rem;">KPIs to Monitor (Quarterly)</p>
+                <div style="display:flex;flex-direction:column;gap:0.45rem;">
+                    <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:0.4rem;font-size:0.72rem;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.3rem;">
+                        <span style="color:#5a6a8a;font-weight:600;text-transform:uppercase;font-size:0.62rem;letter-spacing:0.08em;">KPI</span>
+                        <span style="text-align:center;color:#86efac;font-weight:600;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;">Bull Target</span>
+                        <span style="text-align:center;color:#fca5a5;font-weight:600;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;">Bear Warning</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:0.4rem;font-size:0.74rem;padding:0.3rem 0;">
+                        <span style="color:#a8b8d8;">Enterprise SSD % Rev</span>
+                        <span style="text-align:center;color:#86efac;">≥40%</span>
+                        <span style="text-align:center;color:#fca5a5;">&lt;15%</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:0.4rem;font-size:0.74rem;padding:0.3rem 0;background:rgba(255,255,255,0.02);border-radius:4px;">
+                        <span style="color:#a8b8d8;">Gross Margin</span>
+                        <span style="text-align:center;color:#86efac;">≥80%</span>
+                        <span style="text-align:center;color:#fca5a5;">&lt;50%</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:0.4rem;font-size:0.74rem;padding:0.3rem 0;">
+                        <span style="color:#a8b8d8;">LT Contract Rev %</span>
+                        <span style="text-align:center;color:#86efac;">≥60%</span>
+                        <span style="text-align:center;color:#fca5a5;">&lt;20%</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:0.4rem;font-size:0.74rem;padding:0.3rem 0;background:rgba(255,255,255,0.02);border-radius:4px;">
+                        <span style="color:#a8b8d8;">Adj. EBITDA Margin</span>
+                        <span style="text-align:center;color:#86efac;">≥75%</span>
+                        <span style="text-align:center;color:#fca5a5;">&lt;55%</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:0.4rem;font-size:0.74rem;padding:0.3rem 0;">
+                        <span style="color:#a8b8d8;">FCF Margin</span>
+                        <span style="text-align:center;color:#86efac;">≥50%</span>
+                        <span style="text-align:center;color:#fca5a5;">&lt;20%</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:0.4rem;font-size:0.74rem;padding:0.3rem 0;background:rgba(255,255,255,0.02);border-radius:4px;">
+                        <span style="color:#a8b8d8;">NAND Mkt Share</span>
+                        <span style="text-align:center;color:#86efac;">≥14%</span>
+                        <span style="text-align:center;color:#fca5a5;">&lt;10%</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:0.4rem;font-size:0.74rem;padding:0.3rem 0;">
+                        <span style="color:#a8b8d8;">Net Debt / EBITDA</span>
+                        <span style="text-align:center;color:#86efac;">Net Cash</span>
+                        <span style="text-align:center;color:#fca5a5;">≥1.5×</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:0.4rem;font-size:0.74rem;padding:0.3rem 0;background:rgba(255,255,255,0.02);border-radius:4px;">
+                        <span style="color:#a8b8d8;">Hyperscaler CapEx Guide</span>
+                        <span style="text-align:center;color:#86efac;">$600B+ 2027</span>
+                        <span style="text-align:center;color:#fca5a5;">Any freeze</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 11 — RECOMMENDATION
+═══════════════════════════════════════════════ -->
+<div class="slide" data-slide="11">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:500px;height:500px;top:-120px;right:-90px;background:#C9A84C;opacity:0.13;"></div>
+        <div class="blob" style="width:350px;height:350px;bottom:-90px;left:-70px;background:#7B5EA7;opacity:0.1;"></div>
+        <div class="blob" style="width:200px;height:200px;top:45%;left:12%;background:#86efac;opacity:0.06;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+        <p class="reveal" style="font-size:0.78rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#C9A84C;margin-bottom:1rem;">Investment Committee Recommendation</p>
+        <h1 class="font-display reveal" style="font-size:clamp(2.5rem,6.5vw,5rem);font-weight:700;background:linear-gradient(135deg,#C9A84C,#E8D5A3,#C9A84C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:1rem;">Initiating Coverage:<br>SanDisk Corp. — BUY</h1>
+        <div class="gold-line reveal"></div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin:1.2rem 0;" class="reveal">
+            <div class="glass-card" style="padding:1.2rem;text-align:center;">
+                <p class="stat-glow glow-pulse" style="font-size:2.5rem;font-weight:800;color:#C9A84C;font-family:Cormorant,serif;line-height:1;">$1,900</p>
+                <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#5a6a8a;margin-top:0.4rem;">12-Month Price Target</p>
+            </div>
+            <div class="glass-card" style="padding:1.2rem;text-align:center;">
+                <p style="font-size:2.5rem;font-weight:800;color:#86efac;font-family:Cormorant,serif;line-height:1;">+31%</p>
+                <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#5a6a8a;margin-top:0.4rem;">Upside from $1,447</p>
+            </div>
+            <div class="glass-card" style="padding:1.2rem;text-align:center;">
+                <p style="font-size:2.5rem;font-weight:800;color:#c4b5fd;font-family:Cormorant,serif;line-height:1;">BUY</p>
+                <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#5a6a8a;margin-top:0.4rem;">Rating (Threshold &gt;15%)</p>
+            </div>
+        </div>
+
+        <div style="max-width:680px;margin:0 auto;" class="reveal">
+            <p style="font-size:0.9rem;color:#a8b8d8;line-height:1.7;margin-bottom:0.8rem;">SanDisk represents the most direct way to invest in the AI NAND supercycle via a pure-play IDM with near-fabless FCF economics, technology node leadership, and a management team executing a structural pivot away from commodity spot-pricing toward durable long-term supply agreements.</p>
+            <p style="font-size:0.83rem;color:#5a6a8a;margin:0;">Methodology: 50% DCF (WACC 15.4%, g=4.0%) + 50% Comps (P/E 24× + EV/Rev 7.4×) &nbsp;|&nbsp; Change our view: Miss Q4 guidance low-end ($7.75B) or GM &lt;60%</p>
+        </div>
+    </div>
+</div>
+
+</div><!-- end .deck -->
+
+<!-- NAVIGATION -->
+<div class="nav-controls">
+    <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+    <div class="slide-dots" id="dots"></div>
+    <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+    <span class="slide-counter" id="counter">1 / 11</span>
+</div>
+
+<script>
+    let current = 1;
+    const total = document.querySelectorAll('.slide').length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    for (let i = 1; i <= total; i++) { const dot = document.createElement('div'); dot.className = 'dot' + (i === 1 ? ' active' : ''); dot.onclick = () => goToSlide(i); dotsContainer.appendChild(dot); }
+    function goToSlide(n) {
+        const prev = document.querySelector('.slide.active');
+        const next = document.querySelector(`.slide[data-slide="${n}"]`);
+        if (prev) prev.classList.remove('active');
+        if (next) { next.classList.add('active'); animateSlide(next); }
+        current = n; updateNav();
+    }
+    function changeSlide(dir) { let next = current + dir; if (next < 1) next = total; if (next > total) next = 1; goToSlide(next); }
+    function updateNav() { document.querySelectorAll('.dot').forEach((d, i) => { d.classList.toggle('active', i + 1 === current); }); counter.textContent = current + ' / ' + total; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); } });
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', (e) => { const diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1); });
+
+    function animateSlide(slide) {
+        slide.querySelectorAll('.reveal').forEach((el, i) => {
+            el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = 'translateY(18px)';
+            el.offsetHeight;
+            const delay = i * 0.07;
+            el.style.transition = `opacity 0.32s ease ${delay}s, transform 0.32s ease ${delay}s`;
+            el.style.opacity = '1'; el.style.transform = 'translateY(0)';
+        });
+        animateSlideEffects(slide);
+    }
+
+    function animateSlideEffects(slide) {
+        slide.querySelectorAll('[data-count]:not(.counted)').forEach(el => {
+            el.classList.add('counted');
+            const target = parseInt(el.dataset.count), suffix = el.dataset.suffix || '', prefix = el.dataset.prefix || '';
+            let cur = 0; const step = target / 40;
+            const timer = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(timer); } el.textContent = prefix + Math.round(cur).toLocaleString() + suffix; }, 28);
+        });
+        slide.querySelectorAll('.bar:not(.bar-init)').forEach((bar, i) => {
+            bar.classList.add('bar-init');
+            bar.style.height = '0%'; bar.style.transition = `height 0.55s ease ${i * 0.07}s`; bar.offsetHeight; bar.style.height = bar.dataset.height + '%';
+        });
+        slide.querySelectorAll('.bar-fill:not(.fill-init)').forEach((bar, i) => {
+            bar.classList.add('fill-init');
+            bar.style.width = '0%'; bar.style.transition = `width 0.65s ease ${i * 0.1}s`; bar.offsetHeight; bar.style.width = bar.dataset.width + '%';
+        });
+        slide.querySelectorAll('.donut-ring:not(.ring-init)').forEach(ring => {
+            ring.classList.add('ring-init');
+            ring.style.strokeDashoffset = '251.3'; ring.offsetHeight; ring.style.strokeDashoffset = 251.3 - (parseInt(ring.dataset.percent) / 100) * 251.3;
+        });
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        const spotlight = document.querySelector('.mouse-spotlight');
+        if (spotlight) spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(201,168,76,0.055), transparent 40%)`;
+    });
+
+    (function() {
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        (function tick() {
+            const ox = (mouseX - cx) / cx, oy = (mouseY - cy) / cy;
+            document.querySelectorAll('.deco-shape').forEach(shape => {
+                const speed = parseFloat(shape.dataset.speed) || 0.03;
+                shape.style.transform = `translate(${ox * speed * 100}px, ${oy * speed * 100}px)`;
+            });
+            requestAnimationFrame(tick);
+        })();
+    })();
+
+    window.initParticles = function(canvas, options) {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+        const interactive = options.interactive !== false;
+        const count = options.count || (interactive ? 45 : 14);
+        let mx = -1000, my = -1000;
+        const particles = Array.from({ length: count }, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28, size: Math.random() * 2.2 + 0.7, alpha: Math.random() * 0.3 + 0.08 }));
+        if (interactive) { canvas.addEventListener('mousemove', (e) => { const r = canvas.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; }); canvas.addEventListener('mouseleave', () => { mx = -1000; my = -1000; }); }
+        (function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                if (interactive) { const dx = p.x - mx, dy = p.y - my, d = Math.sqrt(dx * dx + dy * dy); if (d < 110) { const f = (110 - d) / 110 * 1.8; p.vx += (dx / d) * f * 0.1; p.vy += (dy / d) * f * 0.1; } }
+                p.vx *= 0.98; p.vy *= 0.98; p.x += p.vx; p.y += p.vy;
+                if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(201,168,76,${p.alpha})`; ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        })();
+    };
+    document.querySelectorAll('.particle-canvas').forEach(c => window.initParticles(c, { interactive: true, count: 45 }));
+    document.querySelectorAll('.particle-canvas-ambient').forEach(c => window.initParticles(c, { interactive: false, count: 14 }));
+
+    try { animateSlide(document.querySelector('.slide.active')); } catch(e) { console.warn(e); }
+</script>
+</body>
+</html>
