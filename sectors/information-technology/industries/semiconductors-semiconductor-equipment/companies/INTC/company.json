@@ -1,0 +1,16 @@
+{
+  "company_name": "Intel Corporation",
+  "ticker": "INTC",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "foundry services / CPUs / GPUs",
+  "currency": "USD",
+  "fiscal_year_end": "12-31",
+  "koyfin_id": "INTC US",
+  "sec_cik": "0000050863",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-13-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "semiconductors-semiconductor-equipment"
+}
