@@ -4,3 +4,4 @@
 # Current convention is run-local raw data; the company-level rule prevents old layouts from leaking.
 sectors/*/companies/*/runs/*/data/
 sectors/*/companies/*/data/
+examples/*
