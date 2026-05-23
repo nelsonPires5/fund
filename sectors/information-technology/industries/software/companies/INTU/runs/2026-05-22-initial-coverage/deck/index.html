@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="slides-format" content="viewport">
+    <title>INTU – Investment Committee Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --color-bg: #0a0f1e;
+            --color-bg-deep: #040810;
+            --color-surface: #111827;
+            --color-text: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-text-muted: #64748b;
+            --color-accent-1: #2f7cf6;
+            --color-accent-2: #00d4aa;
+            --color-accent-3: #7b5ea7;
+            --color-glass-bg: rgba(255,255,255,0.05);
+            --color-glass-border: rgba(255,255,255,0.09);
+            --color-vignette: rgba(0,0,0,0.45);
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+        }
+    </style>
+    <style>
+        :root {
+            --color-bg: #0a0f1e;
+            --color-text: #f1f5f9;
+            --glow-color-rgb: 47,124,246;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { background: var(--color-bg); margin: 0; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--color-text); overflow: hidden; height: 100vh; width: 100vw; }
+        .deck { width: 100vw; height: 100vh; position: relative; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: scale(0.96); transition: opacity 0.65s ease, transform 0.65s ease; pointer-events: none; overflow: hidden; }
+        .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+        .slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1140px; padding: clamp(1.2rem, 3.5vw, 3.5rem); }
+        .nav-controls { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; z-index: 100; background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); padding: 9px 22px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.09); }
+        .nav-btn { width: 36px; height: 36px; border: none; background: rgba(255,255,255,0.06); color: #2f7cf6; border-radius: 50%; font-size: 1.15rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .nav-btn:hover { background: rgba(47,124,246,0.2); }
+        .slide-dots { display: flex; gap: 7px; }
+        .slide-dots .dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.15); cursor: pointer; transition: background 0.3s, transform 0.3s; }
+        .slide-dots .dot.active { background: #2f7cf6; transform: scale(1.35); }
+        .slide-counter { font-size: 0.75rem; color: #64748b; min-width: 38px; text-align: center; }
+        .reveal { opacity: 0; transform: translateY(18px); }
+        .text-glow { text-shadow: 0 0 22px rgba(47,124,246,0.55), 0 0 44px rgba(47,124,246,0.22); }
+        .stat-glow { text-shadow: 0 0 30px rgba(47,124,246,0.65), 0 0 60px rgba(47,124,246,0.28); }
+        .accent2-glow { text-shadow: 0 0 22px rgba(0,212,170,0.55), 0 0 44px rgba(0,212,170,0.22); }
+        @keyframes glow-pulse {
+            0%, 100% { text-shadow: 0 0 22px rgba(47,124,246,0.55), 0 0 44px rgba(47,124,246,0.22); }
+            50% { text-shadow: 0 0 35px rgba(47,124,246,0.85), 0 0 70px rgba(47,124,246,0.35); }
+        }
+        .glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+        @keyframes float-slow {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(55px, -45px) scale(1.10); }
+            50% { transform: translate(-35px, 35px) scale(0.92); }
+            75% { transform: translate(45px, 18px) scale(1.07); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes float-drift {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(-45px, -55px) scale(1.13) rotate(3deg); }
+            66% { transform: translate(35px, 28px) scale(0.89) rotate(-2deg); }
+            100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+        .gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float-slow 11s ease-in-out infinite; }
+        .blob:nth-child(2) { animation: float-drift 15s ease-in-out infinite; }
+        .blob:nth-child(3) { animation: float-slow 19s ease-in-out infinite reverse; }
+        .blob:nth-child(4) { animation: float-drift 23s ease-in-out infinite reverse; }
+        .slide::before {
+            content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-repeat: repeat; background-size: 256px 256px; opacity: 0.03; mix-blend-mode: overlay;
+        }
+        .slide::after {
+            content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 48%, var(--color-vignette) 100%);
+        }
+        .bar-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 0.7s ease; }
+        .bar-track { background: rgba(255,255,255,0.07); border-radius: 4px; height: 10px; overflow: hidden; flex: 1; }
+        .donut-ring { stroke-dasharray: 251.3; stroke-dashoffset: 251.3; stroke-linecap: round; transition: stroke-dashoffset 0.9s ease; }
+        .line-path { stroke-dashoffset: 0; }
+        .section-badge { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; background: rgba(47,124,246,0.15); border: 1px solid rgba(47,124,246,0.3); color: #2f7cf6; margin-bottom: 0.75rem; }
+        .kpi-pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 500; }
+        .pill-buy { background: rgba(0,212,170,0.15); border: 1px solid rgba(0,212,170,0.4); color: #00d4aa; }
+        .pill-risk { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.35); color: #f87171; }
+        .divider-line { height: 1px; background: linear-gradient(to right, transparent, rgba(47,124,246,0.4), transparent); margin: 0.75rem 0; }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="mouse-spotlight" style="position:fixed;inset:0;z-index:99;pointer-events:none;"></div>
+<div class="deck">
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 1 — COVER
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-1 active" data-slide="1">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:550px;height:550px;top:-120px;right:-80px;background:#2f7cf6;opacity:0.14;"></div>
+        <div class="blob" style="width:380px;height:380px;bottom:-100px;left:-60px;background:#00d4aa;opacity:0.10;"></div>
+        <div class="blob" style="width:260px;height:260px;top:42%;left:12%;background:#7b5ea7;opacity:0.09;"></div>
+        <div class="blob" style="width:180px;height:180px;top:20%;left:50%;background:#2f7cf6;opacity:0.07;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+        <div class="reveal" style="margin-bottom:1.5rem;">
+            <svg width="160" height="50" viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto;display:block;filter:drop-shadow(0 0 18px rgba(47,124,246,0.45))">
+                <rect x="0" y="10" width="8" height="32" rx="4" fill="#2f7cf6"/>
+                <path d="M18 28 Q18 10 36 10 Q54 10 54 28 Q54 42 36 42" stroke="#2f7cf6" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <text x="66" y="38" font-family="DM Sans, sans-serif" font-weight="700" font-size="28" fill="white" letter-spacing="-0.5">intuit</text>
+            </svg>
+        </div>
+        <div class="section-badge reveal">NASDAQ: INTU &nbsp;|&nbsp; Investment Committee Presentation &nbsp;|&nbsp; May 2026</div>
+        <h1 class="font-display text-[clamp(2.4rem,5.5vw,4.6rem)] font-black tracking-tight mb-3 reveal"
+            style="background:linear-gradient(135deg,#2f7cf6 0%,#00d4aa 55%,#2f7cf6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+            Initiating Coverage
+        </h1>
+        <p class="text-[clamp(1rem,1.8vw,1.5rem)] font-light text-text-muted tracking-[5px] uppercase reveal mb-6">The AI Compounding Machine</p>
+        <div class="flex items-center justify-center gap-5 flex-wrap reveal">
+            <div class="kpi-pill pill-buy" style="font-size:0.92rem;padding:8px 20px;">⬆ BUY</div>
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:8px 20px;font-size:0.92rem;font-weight:600;">PT: <span style="color:#00d4aa;">$560</span></div>
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:8px 20px;font-size:0.92rem;font-weight:600;">Current: <span style="color:#f1f5f9;">$307</span></div>
+            <div style="background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:24px;padding:8px 20px;font-size:0.92rem;font-weight:600;color:#00d4aa;">Upside: +82.4%</div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 2 — AGENDA
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-2" data-slide="2">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:350px;height:350px;top:-80px;right:-70px;background:#2f7cf6;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-60px;left:-40px;background:#00d4aa;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="section-badge reveal">Agenda</div>
+        <h2 class="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold mb-6 reveal">Presentation Roadmap</h2>
+        <div class="grid grid-cols-2 gap-4 reveal">
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 20px;border-left:3px solid #2f7cf6;">
+                <div style="font-size:0.7rem;color:#2f7cf6;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">01</div>
+                <div style="font-weight:600;margin-bottom:4px;">Investment Thesis</div>
+                <div style="font-size:0.82rem;color:#64748b;">5 Pillars · BUY Rationale · Conviction Level</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 20px;border-left:3px solid #00d4aa;">
+                <div style="font-size:0.7rem;color:#00d4aa;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">02</div>
+                <div style="font-weight:600;margin-bottom:4px;">Business Overview</div>
+                <div style="font-size:0.82rem;color:#64748b;">Revenue Segments · AI Products · TAM</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 20px;border-left:3px solid #7b5ea7;">
+                <div style="font-size:0.7rem;color:#7b5ea7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">03</div>
+                <div style="font-weight:600;margin-bottom:4px;">Financial Analysis</div>
+                <div style="font-size:0.82rem;color:#64748b;">Revenue CAGR · Margins · FCF · ROIC</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 20px;border-left:3px solid #f59e0b;">
+                <div style="font-size:0.7rem;color:#f59e0b;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">04</div>
+                <div style="font-weight:600;margin-bottom:4px;">Valuation</div>
+                <div style="font-size:0.82rem;color:#64748b;">DCF · Comps · Sensitivity · PT Derivation</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 20px;border-left:3px solid #ef4444;">
+                <div style="font-size:0.7rem;color:#ef4444;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">05</div>
+                <div style="font-weight:600;margin-bottom:4px;">Risks &amp; Mitigants</div>
+                <div style="font-size:0.82rem;color:#64748b;">6 Ranked Risks · Probability · Impact</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 20px;border-left:3px solid #2f7cf6;">
+                <div style="font-size:0.7rem;color:#2f7cf6;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">06</div>
+                <div style="font-weight:600;margin-bottom:4px;">Thesis Tracker &amp; KPIs</div>
+                <div style="font-size:0.82rem;color:#64748b;">Catalysts · Monitor Dashboard · Triggers</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 3 — INVESTMENT THESIS
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-3" data-slide="3">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:400px;height:400px;top:-90px;right:-90px;background:#2f7cf6;opacity:0.09;"></div>
+        <div class="blob" style="width:280px;height:280px;bottom:-70px;left:-50px;background:#00d4aa;opacity:0.07;"></div>
+    </div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+        <div class="section-badge reveal">§1 — Investment Thesis</div>
+        <h2 class="font-display text-[clamp(1.6rem,3vw,2.4rem)] font-bold mb-5 reveal">Five Pillars of Conviction</h2>
+        <div class="grid grid-cols-1 gap-3 reveal" style="gap:10px;">
+            <div style="display:flex;align-items:flex-start;gap:14px;background:rgba(47,124,246,0.07);border:1px solid rgba(47,124,246,0.2);border-radius:12px;padding:14px 16px;">
+                <div style="font-size:1.4rem;flex-shrink:0;">🧠</div>
+                <div>
+                    <div style="font-weight:700;font-size:0.95rem;margin-bottom:3px;color:#93c5fd;">Pillar 1: Proprietary AI Data Moat</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;">300M+ consumer financial records train INTU's GenOS platform. No competitor can replicate 50+ years of tax, payroll &amp; spend data. This compounds: more users → better AI → higher retention.</div>
+                </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.18);border-radius:12px;padding:14px 16px;">
+                <div style="font-size:1.4rem;flex-shrink:0;">🔒</div>
+                <div>
+                    <div style="font-weight:700;font-size:0.95rem;margin-bottom:3px;color:#6ee7b7;">Pillar 2: Regulatory-Grade Switching Costs</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;">Tax code compliance, payroll filings &amp; bookkeeping create multi-year data lock-in. TurboTax churn &lt;5% annually; QBO SMB retention exceeds 85%. Customers don't leave; they accumulate.</div>
+                </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;background:rgba(123,94,167,0.07);border:1px solid rgba(123,94,167,0.2);border-radius:12px;padding:14px 16px;">
+                <div style="font-size:1.4rem;flex-shrink:0;">💼</div>
+                <div>
+                    <div style="font-weight:700;font-size:0.95rem;margin-bottom:3px;color:#c4b5fd;">Pillar 3: TurboTax Live — Mix-Shift to High-ARPU</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;">Live Assisted &amp; Full-Service grew 17% YoY, now ~35% of Consumer revenue. ARPU 4–8× the DIY tier. As AI reduces cost-to-serve, Live margins expand beyond 50% — a structural P&amp;L upgrade.</div>
+                </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.18);border-radius:12px;padding:14px 16px;">
+                <div style="font-size:1.4rem;flex-shrink:0;">💳</div>
+                <div>
+                    <div style="font-weight:700;font-size:0.95rem;margin-bottom:3px;color:#fcd34d;">Pillar 4: Credit Karma Recovery &amp; Fintech Optionality</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;">CK suffered a 3-year ZIRP hangover. With normalizing credit markets, CK revenue re-accelerates toward 15%+ growth. At 137M members it remains the world's largest free credit platform — severely under-monetized.</div>
+                </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.18);border-radius:12px;padding:14px 16px;">
+                <div style="font-size:1.4rem;flex-shrink:0;">⚙️</div>
+                <div>
+                    <div style="font-weight:700;font-size:0.95rem;margin-bottom:3px;color:#6ee7b7;">Pillar 5: Structural Margin Expansion</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;">May 2026 RIF (17% headcount cut, ~3,700 roles) = $500–700M annualized savings. Adj. EBITDA margin guide 34–35% by FY28E vs. 30.4% in FY25. Operating leverage on a $21B revenue base is enormous.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 4 — BUSINESS OVERVIEW
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-4" data-slide="4">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:370px;height:370px;top:-80px;right:-80px;background:#00d4aa;opacity:0.08;"></div>
+        <div class="blob" style="width:260px;height:260px;bottom:-60px;left:-40px;background:#2f7cf6;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="section-badge reveal">§2 — Business Overview</div>
+        <h2 class="font-display text-[clamp(1.6rem,3vw,2.4rem)] font-bold mb-4 reveal">Four Revenue Engines</h2>
+        <div class="grid grid-cols-2 gap-4 reveal" style="margin-bottom:14px;">
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(47,124,246,0.25);border-radius:14px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span style="font-weight:700;font-size:1rem;">📊 Small Business &amp; Self-Employed</span>
+                    <span style="color:#2f7cf6;font-weight:700;font-size:0.95rem;">~54%</span>
+                </div>
+                <div style="font-size:0.8rem;color:#94a3b8;margin-bottom:8px;">QuickBooks Online, Payroll, Payments, Time Tracking. 8.5M QBO subs globally. 23% QBO Online rev growth FY25E.</div>
+                <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;"><div class="bar-fill" data-width="54" style="background:linear-gradient(90deg,#2f7cf6,#60a5fa);"></div></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(0,212,170,0.22);border-radius:14px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span style="font-weight:700;font-size:1rem;">🧾 Consumer (Tax)</span>
+                    <span style="color:#00d4aa;font-weight:700;font-size:0.95rem;">~29%</span>
+                </div>
+                <div style="font-size:0.8rem;color:#94a3b8;margin-bottom:8px;">TurboTax DIY, Live Assisted, Full-Service. 37M+ federal returns filed FY25. Live tier = 35%+ of mix, growing 17% YoY.</div>
+                <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;"><div class="bar-fill" data-width="29" style="background:linear-gradient(90deg,#00d4aa,#34d399);"></div></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(245,158,11,0.22);border-radius:14px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span style="font-weight:700;font-size:1rem;">💳 Credit Karma</span>
+                    <span style="color:#f59e0b;font-weight:700;font-size:0.95rem;">~12%</span>
+                </div>
+                <div style="font-size:0.8rem;color:#94a3b8;margin-bottom:8px;">137M members; credit cards, personal loans, auto, mortgages. Recovery play: +9% Q3 FY26 YoY after 2yr contraction. Normalizing credit = re-acceleration.</div>
+                <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;"><div class="bar-fill" data-width="12" style="background:linear-gradient(90deg,#f59e0b,#fcd34d);"></div></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(123,94,167,0.22);border-radius:14px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span style="font-weight:700;font-size:1rem;">💼 ProTax (Accountants)</span>
+                    <span style="color:#7b5ea7;font-weight:700;font-size:0.95rem;">~5%</span>
+                </div>
+                <div style="font-size:0.8rem;color:#94a3b8;margin-bottom:8px;">Lacerte, ProSeries, ProConnect. 90%+ of US CPAs use INTU software. Sticky ARR base; critical compliance workflow integration.</div>
+                <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;"><div class="bar-fill" data-width="5" style="background:linear-gradient(90deg,#7b5ea7,#a78bfa);"></div></div>
+            </div>
+        </div>
+        <div class="reveal" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+            <div style="font-size:0.78rem;color:#64748b;">FY26E TAM:</div>
+            <span style="background:rgba(47,124,246,0.1);border:1px solid rgba(47,124,246,0.25);border-radius:20px;padding:3px 12px;font-size:0.78rem;font-weight:600;">SMB Software $85B+</span>
+            <span style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.25);border-radius:20px;padding:3px 12px;font-size:0.78rem;font-weight:600;">Tax Prep $10B+</span>
+            <span style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:20px;padding:3px 12px;font-size:0.78rem;font-weight:600;">Personal Finance $20B+</span>
+            <span style="background:rgba(123,94,167,0.1);border:1px solid rgba(123,94,167,0.25);border-radius:20px;padding:3px 12px;font-size:0.78rem;font-weight:600;">Total TAM ~$120B</span>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 5 — FINANCIALS: KEY METRICS
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-5" data-slide="5">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:420px;height:420px;top:-100px;right:-80px;background:#7b5ea7;opacity:0.09;"></div>
+        <div class="blob" style="width:280px;height:280px;bottom:-70px;left:-50px;background:#2f7cf6;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="section-badge reveal">§3 — Financial Snapshot</div>
+        <h2 class="font-display text-[clamp(1.6rem,3vw,2.4rem)] font-bold mb-5 reveal">FY2025 Actuals &amp; FY2026E Outlook</h2>
+        <div class="grid grid-cols-4 gap-3 reveal" style="margin-bottom:16px;">
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;text-align:center;">
+                <div style="font-size:0.68rem;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">FY25 Revenue</div>
+                <div class="stat-glow" data-count="18000" data-prefix="$" data-suffix="M" style="font-size:1.8rem;font-weight:900;color:#2f7cf6;">$18B</div>
+                <div style="font-size:0.72rem;color:#00d4aa;margin-top:4px;">+15% YoY</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;text-align:center;">
+                <div style="font-size:0.68rem;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">FY25 Adj. EPS</div>
+                <div class="stat-glow" style="font-size:1.8rem;font-weight:900;color:#00d4aa;">$20.15</div>
+                <div style="font-size:0.72rem;color:#00d4aa;margin-top:4px;">+19% YoY</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;text-align:center;">
+                <div style="font-size:0.68rem;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Adj. EBITDA Mgn</div>
+                <div class="stat-glow" style="font-size:1.8rem;font-weight:900;color:#7b5ea7;">30.4%</div>
+                <div style="font-size:0.72rem;color:#00d4aa;margin-top:4px;">+210bps YoY</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;text-align:center;">
+                <div style="font-size:0.68rem;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">FCF Yield</div>
+                <div class="stat-glow" style="font-size:1.8rem;font-weight:900;color:#f59e0b;">7.3%</div>
+                <div style="font-size:0.72rem;color:#f59e0b;margin-top:4px;">At $307/sh</div>
+            </div>
+        </div>
+        <div class="divider-line reveal"></div>
+        <div class="reveal" style="margin-top:12px;">
+            <div style="font-size:0.78rem;color:#64748b;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em;">Revenue Growth Trend (FY22–FY27E)</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:90px;">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                    <div style="font-size:0.65rem;color:#64748b;">+29%</div>
+                    <div class="bar-fill" data-width="100" style="background:linear-gradient(0deg,#2f7cf6,#60a5fa);border-radius:4px 4px 0 0;height:0%;width:100%;transition:height 0.7s ease 0.1s;"></div>
+                    <div style="font-size:0.65rem;color:#64748b;">FY22</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                    <div style="font-size:0.65rem;color:#64748b;">+13%</div>
+                    <div class="bar-fill" data-width="100" style="background:linear-gradient(0deg,#2f7cf6,#60a5fa);border-radius:4px 4px 0 0;height:0%;width:100%;transition:height 0.7s ease 0.15s;"></div>
+                    <div style="font-size:0.65rem;color:#64748b;">FY23</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                    <div style="font-size:0.65rem;color:#64748b;">+13%</div>
+                    <div class="bar-fill" data-width="100" style="background:linear-gradient(0deg,#2f7cf6,#60a5fa);border-radius:4px 4px 0 0;height:0%;width:100%;transition:height 0.7s ease 0.2s;"></div>
+                    <div style="font-size:0.65rem;color:#64748b;">FY24</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                    <div style="font-size:0.65rem;color:#64748b;">+15%</div>
+                    <div class="bar-fill" data-width="100" style="background:linear-gradient(0deg,#00d4aa,#34d399);border-radius:4px 4px 0 0;height:0%;width:100%;transition:height 0.7s ease 0.25s;"></div>
+                    <div style="font-size:0.65rem;color:#94a3b8;font-weight:600;">FY25A</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                    <div style="font-size:0.65rem;color:#00d4aa;">+18%E</div>
+                    <div class="bar-fill" data-width="100" style="background:linear-gradient(0deg,#f59e0b,#fcd34d);border-radius:4px 4px 0 0;height:0%;width:100%;transition:height 0.7s ease 0.3s;opacity:0.75;"></div>
+                    <div style="font-size:0.65rem;color:#f59e0b;">FY26E</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+                    <div style="font-size:0.65rem;color:#f59e0b;">+12%E</div>
+                    <div class="bar-fill" data-width="100" style="background:linear-gradient(0deg,#f59e0b,#fcd34d);border-radius:4px 4px 0 0;height:0%;width:100%;transition:height 0.7s ease 0.35s;opacity:0.5;"></div>
+                    <div style="font-size:0.65rem;color:#f59e0b;">FY27E</div>
+                </div>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:8px;margin-top:2px;">
+                <div style="flex:1;text-align:center;font-size:0.65rem;color:#64748b;">$12.7B</div>
+                <div style="flex:1;text-align:center;font-size:0.65rem;color:#64748b;">$14.4B</div>
+                <div style="flex:1;text-align:center;font-size:0.65rem;color:#64748b;">$16.3B</div>
+                <div style="flex:1;text-align:center;font-size:0.65rem;color:#f1f5f9;font-weight:600;">$18.0B</div>
+                <div style="flex:1;text-align:center;font-size:0.65rem;color:#f59e0b;">$21.4B</div>
+                <div style="flex:1;text-align:center;font-size:0.65rem;color:#f59e0b;">$23.9B</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 6 — MARGIN & CASH FLOW PROFILE
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-6" data-slide="6">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-80px;right:-60px;background:#00d4aa;opacity:0.08;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-60px;left:-40px;background:#7b5ea7;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="section-badge reveal">§3 — Margin &amp; Cash Flow</div>
+        <h2 class="font-display text-[clamp(1.5rem,2.8vw,2.2rem)] font-bold mb-4 reveal">Profitability Architecture</h2>
+        <div class="grid grid-cols-2 gap-5 reveal">
+            <div>
+                <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Margin Stack (FY25 Actuals)</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:0.82rem;">Gross Margin</span><span style="font-size:0.82rem;color:#2f7cf6;font-weight:700;">79.2%</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="79.2" style="background:linear-gradient(90deg,#2f7cf6,#60a5fa);"></div></div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:0.82rem;">Adj. Operating Margin</span><span style="font-size:0.82rem;color:#00d4aa;font-weight:700;">28.4%</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="28.4" style="background:linear-gradient(90deg,#00d4aa,#34d399);"></div></div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:0.82rem;">Adj. EBITDA Margin</span><span style="font-size:0.82rem;color:#7b5ea7;font-weight:700;">30.4%</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="30.4" style="background:linear-gradient(90deg,#7b5ea7,#a78bfa);"></div></div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:0.82rem;">FCF Margin</span><span style="font-size:0.82rem;color:#f59e0b;font-weight:700;">24.1%</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="24.1" style="background:linear-gradient(90deg,#f59e0b,#fcd34d);"></div></div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:0.82rem;">R&amp;D / Revenue</span><span style="font-size:0.82rem;color:#f87171;font-weight:700;">20.3%</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="20.3" style="background:linear-gradient(90deg,#f87171,#fca5a5);"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Cash Flow &amp; Capital Returns</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.18);border-radius:10px;padding:12px 14px;">
+                        <div style="font-size:0.72rem;color:#64748b;margin-bottom:3px;">FY25 FCF</div>
+                        <div style="font-size:1.3rem;font-weight:800;color:#00d4aa;">~$4.3B</div>
+                        <div style="font-size:0.72rem;color:#94a3b8;">OCF $5.1B · CapEx $0.8B</div>
+                    </div>
+                    <div style="background:rgba(47,124,246,0.07);border:1px solid rgba(47,124,246,0.18);border-radius:10px;padding:12px 14px;">
+                        <div style="font-size:0.72rem;color:#64748b;margin-bottom:3px;">Buybacks (FY25)</div>
+                        <div style="font-size:1.3rem;font-weight:800;color:#2f7cf6;">~$2.8B</div>
+                        <div style="font-size:0.72rem;color:#94a3b8;">~65% of FCF returned</div>
+                    </div>
+                    <div style="background:rgba(123,94,167,0.07);border:1px solid rgba(123,94,167,0.18);border-radius:10px;padding:12px 14px;">
+                        <div style="font-size:0.72rem;color:#64748b;margin-bottom:3px;">ROIC (FY25)</div>
+                        <div style="font-size:1.3rem;font-weight:800;color:#a78bfa;">~17%</div>
+                        <div style="font-size:0.72rem;color:#94a3b8;">WACC 8.3% → significant value creation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 7 — VALUATION: DCF
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-7" data-slide="7">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:400px;height:400px;top:-90px;right:-70px;background:#2f7cf6;opacity:0.10;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-60px;left:-40px;background:#00d4aa;opacity:0.08;"></div>
+    </div>
+    <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content">
+        <div class="section-badge reveal">§4 — Valuation</div>
+        <h2 class="font-display text-[clamp(1.5rem,2.8vw,2.2rem)] font-bold mb-4 reveal">DCF Model — Base Case</h2>
+        <div class="grid grid-cols-2 gap-5 reveal">
+            <div>
+                <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">WACC Build</div>
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">Risk-Free Rate (10Y UST)</span><span style="font-weight:600;color:#f1f5f9;">4.42%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">Equity Risk Premium</span><span style="font-weight:600;color:#f1f5f9;">4.18%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">Beta (5Y weekly)</span><span style="font-weight:600;color:#f1f5f9;">0.97×</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">Cost of Equity (CAPM)</span><span style="font-weight:600;color:#2f7cf6;">8.47%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">After-Tax Cost of Debt</span><span style="font-weight:600;color:#f1f5f9;">2.8%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:9px 12px;background:rgba(47,124,246,0.12);border:1px solid rgba(47,124,246,0.3);border-radius:8px;font-size:0.88rem;">
+                        <span style="color:#93c5fd;font-weight:700;">WACC</span><span style="font-weight:800;color:#2f7cf6;font-size:1rem;">8.27%</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Enterprise Value Bridge</div>
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">PV of 5-Year UFCF</span><span style="font-weight:600;color:#f1f5f9;">~$22.5B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">Terminal Value (TGR 3.5%)</span><span style="font-weight:600;color:#f1f5f9;">~$152B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">PV of Terminal Value</span><span style="font-weight:600;color:#f1f5f9;">~$102B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">Enterprise Value</span><span style="font-weight:600;color:#00d4aa;">~$124B</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.82rem;">
+                        <span style="color:#94a3b8;">Less: Net Debt</span><span style="font-weight:600;color:#f1f5f9;">($4.1B)</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:9px 12px;background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:8px;font-size:0.88rem;">
+                        <span style="color:#6ee7b7;font-weight:700;">DCF Implied Price</span><span style="font-weight:800;color:#00d4aa;font-size:1rem;">~$690</span>
+                    </div>
+                </div>
+                <div style="font-size:0.7rem;color:#475569;margin-top:6px;">TV = 68.1% of EV · Terminal EBITDA exit: 14x → $620 cross-check</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 8 — VALUATION: COMPS & SENSITIVITY
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-8" data-slide="8">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-80px;right:-60px;background:#f59e0b;opacity:0.07;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-60px;left:-40px;background:#2f7cf6;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="section-badge reveal">§4 — Comps &amp; Sensitivity</div>
+        <h2 class="font-display text-[clamp(1.5rem,2.8vw,2.2rem)] font-bold mb-3 reveal">Peer Benchmarking</h2>
+        <div class="reveal" style="overflow-x:auto;margin-bottom:14px;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.78rem;">
+                <thead>
+                    <tr style="background:rgba(47,124,246,0.12);border-bottom:1px solid rgba(47,124,246,0.25);">
+                        <th style="text-align:left;padding:7px 10px;color:#93c5fd;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;">Company</th>
+                        <th style="text-align:right;padding:7px 10px;color:#93c5fd;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;">Mkt Cap</th>
+                        <th style="text-align:right;padding:7px 10px;color:#93c5fd;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;">NTM P/E</th>
+                        <th style="text-align:right;padding:7px 10px;color:#93c5fd;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;">EV/EBITDA</th>
+                        <th style="text-align:right;padding:7px 10px;color:#93c5fd;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;">Rev Growth</th>
+                        <th style="text-align:right;padding:7px 10px;color:#93c5fd;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;">FCF Mgn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(47,124,246,0.08);">
+                        <td style="padding:7px 10px;font-weight:700;color:#93c5fd;">INTU (Current)</td>
+                        <td style="text-align:right;padding:7px 10px;">$84B</td>
+                        <td style="text-align:right;padding:7px 10px;">12.5×</td>
+                        <td style="text-align:right;padding:7px 10px;">9.3×</td>
+                        <td style="text-align:right;padding:7px 10px;color:#00d4aa;">+18%E</td>
+                        <td style="text-align:right;padding:7px 10px;color:#00d4aa;">24%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                        <td style="padding:7px 10px;color:#94a3b8;">Salesforce (CRM)</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">$255B</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">22.4×</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">16.1×</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">+9%E</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">26%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                        <td style="padding:7px 10px;color:#94a3b8;">Workday (WDAY)</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">$65B</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">20.8×</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">14.9×</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">+14%E</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">22%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                        <td style="padding:7px 10px;color:#94a3b8;">H&amp;R Block (HRB)</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">$7B</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">10.2×</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">7.8×</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">+4%E</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">19%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                        <td style="padding:7px 10px;color:#94a3b8;">Block Inc. (SQ)</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">$35B</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">15.1×</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">11.2×</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">+11%E</td>
+                        <td style="text-align:right;padding:7px 10px;color:#94a3b8;">14%</td>
+                    </tr>
+                    <tr style="background:rgba(255,255,255,0.05);border-top:1px solid rgba(255,255,255,0.1);">
+                        <td style="padding:7px 10px;font-weight:700;color:#f59e0b;">Peer Median</td>
+                        <td style="text-align:right;padding:7px 10px;font-weight:600;color:#f59e0b;">—</td>
+                        <td style="text-align:right;padding:7px 10px;font-weight:700;color:#f59e0b;">~21×</td>
+                        <td style="text-align:right;padding:7px 10px;font-weight:700;color:#f59e0b;">~14×</td>
+                        <td style="text-align:right;padding:7px 10px;font-weight:600;color:#f59e0b;">~11%E</td>
+                        <td style="text-align:right;padding:7px 10px;font-weight:600;color:#f59e0b;">22%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="reveal" style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.22);border-radius:10px;padding:10px 14px;flex:1;min-width:130px;">
+                <div style="font-size:0.68rem;color:#64748b;margin-bottom:3px;">P/E Comps Implied</div>
+                <div style="font-weight:800;font-size:1.1rem;color:#00d4aa;">~$515</div>
+                <div style="font-size:0.7rem;color:#475569;">21× × $24.55E EPS</div>
+            </div>
+            <div style="background:rgba(47,124,246,0.08);border:1px solid rgba(47,124,246,0.22);border-radius:10px;padding:10px 14px;flex:1;min-width:130px;">
+                <div style="font-size:0.68rem;color:#64748b;margin-bottom:3px;">EV/EBITDA Implied</div>
+                <div style="font-weight:800;font-size:1.1rem;color:#2f7cf6;">~$584</div>
+                <div style="font-size:0.7rem;color:#475569;">14× × $9.05B EBITDA</div>
+            </div>
+            <div style="background:rgba(123,94,167,0.08);border:1px solid rgba(123,94,167,0.22);border-radius:10px;padding:10px 14px;flex:1;min-width:130px;">
+                <div style="font-size:0.68rem;color:#64748b;margin-bottom:3px;">DCF Base Case</div>
+                <div style="font-weight:800;font-size:1.1rem;color:#a78bfa;">~$690</div>
+                <div style="font-size:0.7rem;color:#475569;">WACC 8.27% / TGR 3.5%</div>
+            </div>
+            <div style="background:rgba(0,212,170,0.14);border:1px solid rgba(0,212,170,0.4);border-radius:10px;padding:10px 14px;flex:1;min-width:130px;">
+                <div style="font-size:0.68rem;color:#64748b;margin-bottom:3px;">Blended PT (50/25/25)</div>
+                <div style="font-weight:900;font-size:1.3rem;color:#00d4aa;">$560</div>
+                <div style="font-size:0.7rem;color:#475569;">+82% upside</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 9 — SENSITIVITY TABLE
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-9" data-slide="9">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:370px;height:370px;top:-80px;right:-60px;background:#7b5ea7;opacity:0.09;"></div>
+        <div class="blob" style="width:240px;height:240px;bottom:-60px;left:-40px;background:#2f7cf6;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="section-badge reveal">§4 — Sensitivity</div>
+        <h2 class="font-display text-[clamp(1.5rem,2.8vw,2.2rem)] font-bold mb-3 reveal">WACC × Terminal Growth Rate → Implied Price</h2>
+        <div class="reveal" style="overflow-x:auto;margin-bottom:12px;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.8rem;text-align:center;">
+                <thead>
+                    <tr>
+                        <th style="padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);font-size:0.72rem;color:#64748b;text-align:left;">WACC \ TGR</th>
+                        <th style="padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);font-size:0.72rem;color:#64748b;">2.5%</th>
+                        <th style="padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);font-size:0.72rem;color:#64748b;">3.0%</th>
+                        <th style="padding:8px 10px;background:rgba(0,212,170,0.15);border:1px solid rgba(0,212,170,0.3);font-size:0.72rem;color:#00d4aa;">3.5% ★</th>
+                        <th style="padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);font-size:0.72rem;color:#64748b;">4.0%</th>
+                        <th style="padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);font-size:0.72rem;color:#64748b;">4.5%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-weight:600;color:#94a3b8;text-align:left;">7.0%</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.2);font-weight:700;color:#00d4aa;">$786</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.16);border:1px solid rgba(0,212,170,0.25);font-weight:700;color:#00d4aa;">$851</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.22);border:1px solid rgba(0,212,170,0.35);font-weight:700;color:#00d4aa;">$935</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.14);border:1px solid rgba(0,212,170,0.22);font-weight:700;color:#00d4aa;">$1,042</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.18);font-weight:700;color:#6ee7b7;">$1,184</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-weight:600;color:#94a3b8;text-align:left;">7.5%</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.09);border:1px solid rgba(0,212,170,0.18);font-weight:700;color:#6ee7b7;">$691</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.22);font-weight:700;color:#00d4aa;">$742</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.16);border:1px solid rgba(0,212,170,0.28);font-weight:700;color:#00d4aa;">$803</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.22);font-weight:700;color:#00d4aa;">$879</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.09);border:1px solid rgba(0,212,170,0.18);font-weight:700;color:#6ee7b7;">$974</td>
+                    </tr>
+                    <tr style="outline:2px solid rgba(0,212,170,0.4);">
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.25);font-weight:700;color:#00d4aa;text-align:left;">8.27% ★</td>
+                        <td style="padding:8px 10px;background:rgba(47,124,246,0.08);border:1px solid rgba(47,124,246,0.18);font-weight:700;color:#93c5fd;">$572</td>
+                        <td style="padding:8px 10px;background:rgba(47,124,246,0.10);border:1px solid rgba(47,124,246,0.22);font-weight:700;color:#93c5fd;">$609</td>
+                        <td style="padding:8px 10px;background:rgba(0,212,170,0.22);border:2px solid rgba(0,212,170,0.55);font-weight:900;color:#00d4aa;font-size:0.92rem;">$690 ★</td>
+                        <td style="padding:8px 10px;background:rgba(47,124,246,0.10);border:1px solid rgba(47,124,246,0.22);font-weight:700;color:#93c5fd;">$720</td>
+                        <td style="padding:8px 10px;background:rgba(47,124,246,0.08);border:1px solid rgba(47,124,246,0.18);font-weight:700;color:#93c5fd;">$790</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-weight:600;color:#94a3b8;text-align:left;">9.0%</td>
+                        <td style="padding:8px 10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.12);font-weight:600;color:#fca5a5;">$476</td>
+                        <td style="padding:8px 10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.12);font-weight:600;color:#fca5a5;">$502</td>
+                        <td style="padding:8px 10px;background:rgba(47,124,246,0.08);border:1px solid rgba(47,124,246,0.18);font-weight:700;color:#93c5fd;">$553</td>
+                        <td style="padding:8px 10px;background:rgba(47,124,246,0.08);border:1px solid rgba(47,124,246,0.18);font-weight:700;color:#93c5fd;">$582</td>
+                        <td style="padding:8px 10px;background:rgba(47,124,246,0.08);border:1px solid rgba(47,124,246,0.18);font-weight:700;color:#93c5fd;">$624</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-weight:600;color:#94a3b8;text-align:left;">10.0%</td>
+                        <td style="padding:8px 10px;background:rgba(239,68,68,0.10);border:1px solid rgba(239,68,68,0.2);font-weight:600;color:#f87171;">$380</td>
+                        <td style="padding:8px 10px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.16);font-weight:600;color:#fca5a5;">$398</td>
+                        <td style="padding:8px 10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.12);font-weight:600;color:#fca5a5;">$420</td>
+                        <td style="padding:8px 10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.12);font-weight:600;color:#fca5a5;">$445</td>
+                        <td style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-weight:600;color:#94a3b8;">$475</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="reveal" style="display:flex;gap:10px;font-size:0.75rem;flex-wrap:wrap;">
+            <span style="color:#64748b;">Color key:</span>
+            <span style="color:#00d4aa;">■ Strong Buy (&gt;$560)</span>
+            <span style="color:#93c5fd;">■ Buy ($400–$560)</span>
+            <span style="color:#f87171;">■ Below PT (&lt;$400)</span>
+            <span style="color:#f59e0b;margin-left:auto;">★ = Base Case WACC 8.27% / TGR 3.5% → $690</span>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 10 — RISKS & MITIGANTS
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-10" data-slide="10">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-80px;right:-60px;background:#ef4444;opacity:0.07;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-60px;left:-40px;background:#2f7cf6;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="section-badge reveal">§5 — Risks</div>
+        <h2 class="font-display text-[clamp(1.5rem,2.8vw,2.2rem)] font-bold mb-3 reveal">Key Risks &amp; Mitigants</h2>
+        <div class="grid grid-cols-2 gap-3 reveal">
+            <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.18);border-radius:12px;padding:13px 15px;border-left:3px solid #ef4444;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                    <span style="font-weight:700;font-size:0.85rem;">IRS Free File Expansion</span>
+                    <span style="font-size:0.7rem;background:rgba(239,68,68,0.15);padding:2px 8px;border-radius:10px;color:#f87171;">HIGH</span>
+                </div>
+                <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:5px;">Direct File program threatens TurboTax's ~40M DIY users; IRS rollout accelerating.</div>
+                <div style="font-size:0.72rem;color:#6ee7b7;">✓ Live tier is IRS-immune; ARPU mix-shift offsets volume loss. INTU has survived every prior IRS attempt.</div>
+            </div>
+            <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.14);border-radius:12px;padding:13px 15px;border-left:3px solid #f97316;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                    <span style="font-weight:700;font-size:0.85rem;">AI Disruption (GenAI Tax Tools)</span>
+                    <span style="font-size:0.7rem;background:rgba(249,115,22,0.15);padding:2px 8px;border-radius:10px;color:#fdba74;">MEDIUM</span>
+                </div>
+                <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:5px;">ChatGPT and open-source models could commoditize basic tax advice and bookkeeping.</div>
+                <div style="font-size:0.72rem;color:#6ee7b7;">✓ INTU is building its own GenOS on proprietary data. Incumbent data advantage is durable.</div>
+            </div>
+            <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.14);border-radius:12px;padding:13px 15px;border-left:3px solid #f97316;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                    <span style="font-weight:700;font-size:0.85rem;">CK Macro / Credit Cycle</span>
+                    <span style="font-size:0.7rem;background:rgba(249,115,22,0.15);padding:2px 8px;border-radius:10px;color:#fdba74;">MEDIUM</span>
+                </div>
+                <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:5px;">A recession or credit tightening re-depresses CK advertising revenue from financial partners.</div>
+                <div style="font-size:0.72rem;color:#6ee7b7;">✓ CK is now &lt;12% of revenue; SMB &amp; Consumer tax segments provide revenue ballast.</div>
+            </div>
+            <div style="background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.12);border-radius:12px;padding:13px 15px;border-left:3px solid #f59e0b;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                    <span style="font-weight:700;font-size:0.85rem;">QBO SMB Competition</span>
+                    <span style="font-size:0.7rem;background:rgba(245,158,11,0.15);padding:2px 8px;border-radius:10px;color:#fcd34d;">LOW–MED</span>
+                </div>
+                <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:5px;">Xero, FreshBooks, Sage pressuring QBO in international markets; pricing competition in SMB.</div>
+                <div style="font-size:0.72rem;color:#6ee7b7;">✓ QBO has 85%+ US SMB retention. Ecosystem lock-in (payroll + payments + banking) is decisive.</div>
+            </div>
+            <div style="background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.12);border-radius:12px;padding:13px 15px;border-left:3px solid #f59e0b;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                    <span style="font-weight:700;font-size:0.85rem;">Execution Risk: RIF &amp; Reorg</span>
+                    <span style="font-size:0.7rem;background:rgba(245,158,11,0.15);padding:2px 8px;border-radius:10px;color:#fcd34d;">LOW–MED</span>
+                </div>
+                <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:5px;">17% headcount reduction could disrupt product development velocity and talent retention.</div>
+                <div style="font-size:0.72rem;color:#6ee7b7;">✓ Reorg is AI-for-jobs reallocation. FY26 guidance raised despite the cut — mgmt credibility intact.</div>
+            </div>
+            <div style="background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.10);border-radius:12px;padding:13px 15px;border-left:3px solid #94a3b8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                    <span style="font-weight:700;font-size:0.85rem;">Valuation Re-rating / Rate Risk</span>
+                    <span style="font-size:0.7rem;background:rgba(148,163,184,0.15);padding:2px 8px;border-radius:10px;color:#cbd5e1;">LOW</span>
+                </div>
+                <div style="font-size:0.75rem;color:#94a3b8;margin-bottom:5px;">If rates stay elevated or re-rate higher, long-duration SaaS multiples compress further.</div>
+                <div style="font-size:0.72rem;color:#6ee7b7;">✓ At 12.5× NTM P/E vs. 35–45× hist. avg, most rate risk is already priced. FCF yield 7.3% is value territory.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 11 — THESIS TRACKER & KPIs
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-11" data-slide="11">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-80px;right:-60px;background:#2f7cf6;opacity:0.09;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-60px;left:-40px;background:#00d4aa;opacity:0.07;"></div>
+    </div>
+    <div class="content">
+        <div class="section-badge reveal">§6 — Thesis Tracker</div>
+        <h2 class="font-display text-[clamp(1.5rem,2.8vw,2.2rem)] font-bold mb-3 reveal">KPI Monitor Dashboard</h2>
+        <div class="reveal" style="overflow-x:auto;margin-bottom:12px;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.76rem;">
+                <thead>
+                    <tr style="background:rgba(47,124,246,0.12);">
+                        <th style="text-align:left;padding:7px 10px;color:#93c5fd;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.07em;border-bottom:1px solid rgba(47,124,246,0.25);">KPI</th>
+                        <th style="text-align:center;padding:7px 10px;color:#93c5fd;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.07em;border-bottom:1px solid rgba(47,124,246,0.25);">Bear</th>
+                        <th style="text-align:center;padding:7px 10px;color:#93c5fd;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.07em;border-bottom:1px solid rgba(47,124,246,0.25);">Base</th>
+                        <th style="text-align:center;padding:7px 10px;color:#93c5fd;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.07em;border-bottom:1px solid rgba(47,124,246,0.25);">Bull</th>
+                        <th style="text-align:center;padding:7px 10px;color:#93c5fd;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.07em;border-bottom:1px solid rgba(47,124,246,0.25);">Track</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <td style="padding:7px 10px;font-weight:600;">QBO Online Revenue Growth</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f87171;">&lt;15%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f1f5f9;">18–22%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#00d4aa;">&gt;25%</td>
+                        <td style="padding:7px 10px;text-align:center;"><span style="background:rgba(0,212,170,0.15);color:#00d4aa;border-radius:8px;padding:2px 8px;font-size:0.7rem;">Q/Q</span></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);">
+                        <td style="padding:7px 10px;font-weight:600;">TurboTax Live % Mix</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f87171;">&lt;30%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f1f5f9;">35–38%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#00d4aa;">&gt;42%</td>
+                        <td style="padding:7px 10px;text-align:center;"><span style="background:rgba(245,158,11,0.15);color:#f59e0b;border-radius:8px;padding:2px 8px;font-size:0.7rem;">Ann.</span></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <td style="padding:7px 10px;font-weight:600;">Credit Karma Revenue Growth</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f87171;">&lt;5%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f1f5f9;">10–15%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#00d4aa;">&gt;20%</td>
+                        <td style="padding:7px 10px;text-align:center;"><span style="background:rgba(0,212,170,0.15);color:#00d4aa;border-radius:8px;padding:2px 8px;font-size:0.7rem;">Q/Q</span></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);">
+                        <td style="padding:7px 10px;font-weight:600;">Adj. EBITDA Margin</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f87171;">&lt;28%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f1f5f9;">31–33%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#00d4aa;">&gt;35%</td>
+                        <td style="padding:7px 10px;text-align:center;"><span style="background:rgba(0,212,170,0.15);color:#00d4aa;border-radius:8px;padding:2px 8px;font-size:0.7rem;">Q/Q</span></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <td style="padding:7px 10px;font-weight:600;">FCF Margin</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f87171;">&lt;20%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f1f5f9;">24–27%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#00d4aa;">&gt;30%</td>
+                        <td style="padding:7px 10px;text-align:center;"><span style="background:rgba(245,158,11,0.15);color:#f59e0b;border-radius:8px;padding:2px 8px;font-size:0.7rem;">Ann.</span></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);">
+                        <td style="padding:7px 10px;font-weight:600;">Total Revenue Growth (YoY)</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f87171;">&lt;12%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#f1f5f9;">16–19%</td>
+                        <td style="padding:7px 10px;text-align:center;color:#00d4aa;">&gt;22%</td>
+                        <td style="padding:7px 10px;text-align:center;"><span style="background:rgba(0,212,170,0.15);color:#00d4aa;border-radius:8px;padding:2px 8px;font-size:0.7rem;">Q/Q</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="divider-line reveal"></div>
+        <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+            <div>
+                <div style="font-size:0.72rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Near-Term Catalysts (0–6 Months)</div>
+                <div style="font-size:0.78rem;display:flex;flex-direction:column;gap:4px;">
+                    <div>🟢 FY26 Q4 earnings (Aug 2026) — margin inflection proof point</div>
+                    <div>🟢 RIF savings flowing into adj. EBITDA guidance upgrade</div>
+                    <div>🟢 QBO pricing realization at higher tiers</div>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:0.72rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Medium-Term Catalysts (6–18 Months)</div>
+                <div style="font-size:0.78rem;display:flex;flex-direction:column;gap:4px;">
+                    <div>🔵 GenOS AI product monetization (Intuit Assist expansion)</div>
+                    <div>🔵 Credit Karma re-acceleration to 15%+ growth</div>
+                    <div>🔵 International QBO penetration (currently ~20% of sub base)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 12 — SCENARIOS
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-12" data-slide="12">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:380px;height:380px;top:-80px;right:-60px;background:#2f7cf6;opacity:0.09;"></div>
+        <div class="blob" style="width:250px;height:250px;bottom:-60px;left:-40px;background:#7b5ea7;opacity:0.08;"></div>
+    </div>
+    <div class="content">
+        <div class="section-badge reveal">§4 — Scenario Analysis</div>
+        <h2 class="font-display text-[clamp(1.5rem,2.8vw,2.2rem)] font-bold mb-4 reveal">Bull / Base / Bear Return Profiles</h2>
+        <div class="grid grid-cols-3 gap-4 reveal">
+            <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.22);border-radius:14px;padding:20px;text-align:center;">
+                <div style="font-size:0.7rem;color:#f87171;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">🐻 Bear Case</div>
+                <div style="font-size:2rem;font-weight:900;color:#f87171;margin-bottom:6px;">$280</div>
+                <div style="font-size:0.75rem;color:#64748b;margin-bottom:10px;">-9% from today</div>
+                <div class="divider-line"></div>
+                <div style="font-size:0.75rem;color:#94a3b8;text-align:left;margin-top:10px;display:flex;flex-direction:column;gap:5px;">
+                    <div>Rev growth slows to &lt;10%</div>
+                    <div>EBITDA margin &lt;28%</div>
+                    <div>IRS Direct File + AI disruption</div>
+                    <div>CK stays depressed</div>
+                    <div style="color:#f87171;font-weight:600;margin-top:5px;">FY27E EPS: ~$18</div>
+                </div>
+            </div>
+            <div style="background:rgba(0,212,170,0.07);border:2px solid rgba(0,212,170,0.35);border-radius:14px;padding:20px;text-align:center;position:relative;">
+                <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#00d4aa;color:#0a0f1e;font-size:0.68rem;font-weight:700;padding:3px 12px;border-radius:10px;text-transform:uppercase;letter-spacing:0.08em;">Base Case</div>
+                <div style="font-size:0.7rem;color:#00d4aa;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">🎯 Base Case</div>
+                <div style="font-size:2rem;font-weight:900;color:#00d4aa;margin-bottom:6px;">$560</div>
+                <div style="font-size:0.75rem;color:#6ee7b7;margin-bottom:10px;">+82% upside</div>
+                <div class="divider-line"></div>
+                <div style="font-size:0.75rem;color:#94a3b8;text-align:left;margin-top:10px;display:flex;flex-direction:column;gap:5px;">
+                    <div>Rev CAGR ~15% FY26–30</div>
+                    <div>EBITDA margin 32–34%</div>
+                    <div>Live mix reaches 40%+</div>
+                    <div>CK recovers to 12% growth</div>
+                    <div style="color:#00d4aa;font-weight:600;margin-top:5px;">FY27E EPS: ~$28</div>
+                </div>
+            </div>
+            <div style="background:rgba(47,124,246,0.06);border:1px solid rgba(47,124,246,0.22);border-radius:14px;padding:20px;text-align:center;">
+                <div style="font-size:0.7rem;color:#2f7cf6;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">🚀 Bull Case</div>
+                <div style="font-size:2rem;font-weight:900;color:#2f7cf6;margin-bottom:6px;">$820</div>
+                <div style="font-size:0.75rem;color:#93c5fd;margin-bottom:10px;">+167% upside</div>
+                <div class="divider-line"></div>
+                <div style="font-size:0.75rem;color:#94a3b8;text-align:left;margin-top:10px;display:flex;flex-direction:column;gap:5px;">
+                    <div>Rev CAGR ~20%+ FY26–30</div>
+                    <div>EBITDA margin &gt;37%</div>
+                    <div>GenOS AI monetized at scale</div>
+                    <div>CK inflects to 20%+ growth</div>
+                    <div style="color:#2f7cf6;font-weight:600;margin-top:5px;">FY27E EPS: ~$34</div>
+                </div>
+            </div>
+        </div>
+        <div class="reveal" style="margin-top:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <div style="font-size:0.8rem;color:#94a3b8;">Risk/Reward: <span style="color:#f1f5f9;font-weight:600;">+82% upside (Base) vs. -9% downside (Bear)</span> → asymmetric entry at $307</div>
+            <div class="kpi-pill pill-buy" style="font-size:0.82rem;">9:1 Reward/Risk Ratio ⬆ BUY</div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 13 — RECOMMENDATION
+══════════════════════════════════════════════════════════════ -->
+<div class="slide slide-13" data-slide="13">
+    <div class="gradient-mesh">
+        <div class="blob" style="width:500px;height:500px;top:-100px;right:-80px;background:#2f7cf6;opacity:0.14;"></div>
+        <div class="blob" style="width:360px;height:360px;bottom:-90px;left:-60px;background:#00d4aa;opacity:0.11;"></div>
+        <div class="blob" style="width:220px;height:220px;top:40%;left:10%;background:#7b5ea7;opacity:0.09;"></div>
+    </div>
+    <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+    <div class="content text-center">
+        <div class="section-badge reveal">Investment Committee Recommendation</div>
+        <h2 class="font-display text-[clamp(1.8rem,3.5vw,3rem)] font-bold mb-4 reveal"
+            style="background:linear-gradient(135deg,#2f7cf6 0%,#00d4aa 55%,#2f7cf6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+            Initiate Coverage: BUY
+        </h2>
+        <div class="grid grid-cols-3 gap-4 reveal" style="margin-bottom:16px;">
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px;">
+                <div style="font-size:0.68rem;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Current Price</div>
+                <div style="font-size:1.8rem;font-weight:900;color:#f1f5f9;">$307</div>
+                <div style="font-size:0.72rem;color:#64748b;">NASDAQ: INTU</div>
+            </div>
+            <div style="background:rgba(0,212,170,0.1);border:2px solid rgba(0,212,170,0.4);border-radius:14px;padding:16px;">
+                <div style="font-size:0.68rem;color:#00d4aa;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">12-Month Price Target</div>
+                <div style="font-size:1.8rem;font-weight:900;color:#00d4aa;" class="accent2-glow">$560</div>
+                <div style="font-size:0.72rem;color:#6ee7b7;">+82.4% Upside</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px;">
+                <div style="font-size:0.68rem;color:#64748b;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Market Cap</div>
+                <div style="font-size:1.8rem;font-weight:900;color:#f1f5f9;">$84B</div>
+                <div style="font-size:0.72rem;color:#64748b;">52-wk: $305–$700</div>
+            </div>
+        </div>
+        <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:12px;text-align:left;">
+            <div style="font-size:0.72rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">What Would Change Our View</div>
+            <div class="grid grid-cols-2 gap-4" style="font-size:0.78rem;">
+                <div>
+                    <div style="color:#f87171;font-weight:600;margin-bottom:4px;">Downgrade Triggers</div>
+                    <div style="color:#94a3b8;display:flex;flex-direction:column;gap:3px;">
+                        <div>• IRS Direct File mandated for all taxpayers</div>
+                        <div>• QBO growth decelerates below 12% for 2+ qtrs</div>
+                        <div>• AI incumbent (MSFT/Google) enters tax at scale</div>
+                    </div>
+                </div>
+                <div>
+                    <div style="color:#00d4aa;font-weight:600;margin-bottom:4px;">Upgrade Catalysts</div>
+                    <div style="color:#94a3b8;display:flex;flex-direction:column;gap:3px;">
+                        <div>• GenOS AI monetized at $2B+ ARR run-rate</div>
+                        <div>• CK inflects to 20%+ growth for 2+ quarters</div>
+                        <div>• EBITDA margin guidance raised to 36%+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="reveal" style="font-size:0.75rem;color:#475569;text-align:center;">
+            PT derived: 50% DCF ($690) + 25% EV/EBITDA ($584) + 25% P/E ($515) = $560 blended &nbsp;|&nbsp; WACC 8.27% · TGR 3.5% · FY27E EPS $24.55E
+        </div>
+    </div>
+</div>
+
+</div><!-- end .deck -->
+
+<div class="nav-controls">
+    <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+    <div class="slide-dots" id="dots"></div>
+    <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+    <span class="slide-counter" id="counter">1 / 13</span>
+</div>
+
+<script>
+    let current = 1;
+    const total = document.querySelectorAll('.slide').length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    for (let i = 1; i <= total; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 1 ? ' active' : '');
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+    }
+    function goToSlide(n) {
+        const prev = document.querySelector('.slide.active');
+        const next = document.querySelector(`.slide[data-slide="${n}"]`);
+        if (prev) prev.classList.remove('active');
+        if (next) { next.classList.add('active'); animateSlide(next); }
+        current = n; updateNav();
+    }
+    function changeSlide(dir) { let n = current + dir; if (n < 1) n = total; if (n > total) n = 1; goToSlide(n); }
+    function updateNav() {
+        document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i + 1 === current));
+        counter.textContent = current + ' / ' + total;
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+    });
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', (e) => { const diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1); });
+
+    function animateSlide(slide) {
+        slide.querySelectorAll('.reveal').forEach((el, i) => {
+            el.style.transition = 'none';
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(18px)';
+            el.offsetHeight;
+            const delay = i * 0.075;
+            el.style.transition = `opacity 0.32s ease ${delay}s, transform 0.32s ease ${delay}s`;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        });
+        animateSlideEffects(slide);
+    }
+
+    function animateSlideEffects(slide) {
+        slide.querySelectorAll('[data-count]:not(.counted)').forEach(el => {
+            el.classList.add('counted');
+            const target = parseFloat(el.dataset.count);
+            const suffix = el.dataset.suffix || '', prefix = el.dataset.prefix || '';
+            let cur = 0; const step = target / 40;
+            const timer = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(timer); } el.textContent = prefix + Math.round(cur).toLocaleString() + suffix; }, 30);
+        });
+        slide.querySelectorAll('.bar-fill:not(.fill-init)').forEach((bar, idx) => {
+            bar.classList.add('fill-init');
+            const tw = bar.dataset.width;
+            if (tw !== undefined) {
+                bar.style.width = '0%';
+                bar.offsetHeight;
+                setTimeout(() => { bar.style.width = tw + '%'; }, idx * 60);
+            } else {
+                bar.style.height = '0%';
+                bar.offsetHeight;
+                setTimeout(() => { bar.style.height = '100%'; }, idx * 60);
+            }
+        });
+        slide.querySelectorAll('.donut-ring:not(.ring-init)').forEach(ring => {
+            ring.classList.add('ring-init');
+            ring.style.strokeDashoffset = '251.3';
+            ring.offsetHeight;
+            setTimeout(() => { ring.style.strokeDashoffset = 251.3 - (parseInt(ring.dataset.percent) / 100) * 251.3; }, 300);
+        });
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        const sp = document.querySelector('.mouse-spotlight');
+        if (sp) sp.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(47,124,246,0.06), transparent 40%)`;
+    });
+
+    window.initParticles = function(canvas, opts) {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth || window.innerWidth;
+        canvas.height = canvas.offsetHeight || window.innerHeight;
+        const interactive = opts.interactive !== false;
+        const count = opts.count || (interactive ? 50 : 16);
+        let mx = -1000, my = -1000;
+        const particles = Array.from({ length: count }, () => ({
+            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28,
+            size: Math.random() * 2.2 + 0.7, alpha: Math.random() * 0.3 + 0.08
+        }));
+        if (interactive) {
+            canvas.addEventListener('mousemove', (e) => { const r = canvas.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; });
+            canvas.addEventListener('mouseleave', () => { mx = -1000; my = -1000; });
+        }
+        (function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                if (interactive) { const dx = p.x - mx, dy = p.y - my, d = Math.sqrt(dx*dx+dy*dy); if (d < 110) { const f = (110-d)/110*1.8; p.vx += (dx/d)*f*0.09; p.vy += (dy/d)*f*0.09; } }
+                p.vx *= 0.98; p.vy *= 0.98; p.x += p.vx; p.y += p.vy;
+                if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(47,124,246,${p.alpha})`; ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        })();
+    };
+    document.querySelectorAll('.particle-canvas').forEach(c => window.initParticles(c, { interactive: true, count: 50 }));
+    document.querySelectorAll('.particle-canvas-ambient').forEach(c => window.initParticles(c, { interactive: false, count: 16 }));
+
+    try { animateSlide(document.querySelector('.slide.active')); } catch(e) { console.warn(e); }
+</script>
+</body>
+</html>

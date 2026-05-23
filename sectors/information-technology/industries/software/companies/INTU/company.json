@@ -1,0 +1,16 @@
+{
+  "company_name": "Intuit Inc.",
+  "ticker": "INTU",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "financial software / tax software",
+  "currency": "USD",
+  "fiscal_year_end": "07-31",
+  "koyfin_id": "INTU US",
+  "sec_cik": "0000896878",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-22-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "software"
+}
