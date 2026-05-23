@@ -1,29 +1,4 @@
-
-# Prompts para utilizar
-
-## Initiating Coverage
-```markdown
-Use the initiating-coverage workflow for [TICKER]. Produce:
-1. a complete investment report;
-2. a thesis tracker with pillars, risks, catalysts and KPIs;
-3. a valuation framework;
-4. a list of assumptions required for the DCF model.
-
-Use the initiating-coverage skill, but grab the info first from koyfin (using the koyfin skill). Grab all at once, using the script and next if have info missing search the web for additional information or use manual tab-by-tab extraction.
-Use one subagent only to grab the koyfin info.
-Use multiple subagents to search the web.
-```
-
-## Create the DCF
-```markdown
-Now I want that you create the DCF model in xlsx for [TICKER].
-load all skills needed to do this
-```
-
-## Creating the Presentation
-```markdown
-Create an investment committee html presentation for [TICKER] based on the report, thesis tracker and valuation model.
-```
+# Prompts
 
 ## Initiating Coverage Prompt
 ```markdown
@@ -31,11 +6,27 @@ Run a full model-first initiating coverage workflow for [TICKER].
 
 Important: do not write the final report or presentation until the data package is complete, the DCF/model workbook is built, outputs are extracted, and charts/diagrams are generated.
 
+At least use the skills below; use any additional relevant skills if needed:
+- workspace-manager: create the company/run folder, organize data/assets/scripts, and maintain manifest.
+- initiating-coverage: orchestrate the initial coverage workflow and final report structure.
+- koyfin-company-research: extract quantitative and qualitative Koyfin data before modeling.
+- model-builder-workflow: Orchestrate public-equity financial modeling and valuation workflows.
+- dcf-model: build the DCF/model logic, valuation, scenarios, sensitivities, and outputs.
+- xlsx-author: create/update <run>/model.xlsx and keep workbook conventions/auditability.
+- comps-analysis: build peer comps, valuation multiples, and implied valuation cross-checks.
+- competitive-analysis: analyze competitors, positioning, market map, and strategic dynamics.
+- sector-overview: build market/industry overview, TAM, regulation, and thematic context.
+- thesis-tracker: create thesis pillars, risks, catalysts, KPIs, and watch items.
+- equity-news-reaction: classify recent news, filings, and market developments for thesis/model impact.
+- html-presentation-author: create the HTML presentation if requested.
+- pptx-author: use only if I explicitly ask for PPTX.
+
 Workflow order:
 1. Fetch and organize all required data first.
    - Quantitative data: use Koyfin for financial statements, estimates, valuation multiples, profitability, ROIC, solvency, ownership, price target, historical performance, comparison/peers, enterprise value, and any other relevant ticker tabs.
    - Qualitative data: use Koyfin ticker news, filings, press releases, transcripts, description/highlights, and web research.
    - Web sources should cover industry structure, competitors, market size/TAM, regulation, recent news, management commentary, product strategy, macro/industry trends, and relevant press from sources like Bloomberg, Yahoo Finance/news, Reuters, company IR, SEC/SEDAR/filings, and other credible publications.
+   - You can use the koyfin to extract data from the peers of the company.
    - Save raw captures under the run's data/raw/ subfolders and cleaned/model-ready data under data/normalized/.
 2. Create written research artifacts about the main company and industry subjects before modeling:
    - business overview;
@@ -74,7 +65,7 @@ Run a thesis tracker / thesis check update for [TICKER].
 Prerequisite: [TICKER] must already have an initial coverage run. Start by locating the latest initial coverage or the run I specify, and use its report.md, model.xlsx, outputs.json, thesis tracker, valuation framework, and presentation as the baseline.
 
 At least use the skills below; use any additional relevant skills if needed:
-- company-workspace-manager: locate/create the new run folder and update manifest.
+- workspace-manager: locate/create the new run folder and update manifest.
 - thesis-tracker: update thesis pillars, KPI thresholds, risks, catalysts, and watch items.
 - koyfin-company-research: extract Koyfin changes in sell-side estimates, price targets, revisions, news, filings, transcripts, and relevant ticker tabs.
 - equity-news-reaction: classify important news and estimate thesis/model impact.
@@ -117,7 +108,7 @@ Run a model update for [TICKER].
 Prerequisite: [TICKER] must already have an initial coverage run. Locate the latest initial coverage run or use the run I specify as the baseline. Do not modify the old run; create a new model-update run.
 
 At least use the skills below; use any additional relevant skills if needed:
-- company-workspace-manager: create the model-update run and update manifest.
+- workspace-manager: create the model-update run and update manifest.
 - koyfin-company-research: pull updated financials, estimates, multiples, price targets, news, filings, transcripts, and peer comparison data.
 - model-update: update the model with new actuals/guidance/assumptions.
 - dcf-model: update DCF valuation logic and sensitivity if assumptions changed materially.
@@ -154,7 +145,7 @@ Output:
 - <run>/data/normalized/model_extracts/
 - <run>/assets/charts/ and/or assets/diagrams/
 - <run>/report.md
-- optional <run>/deck/index.html or deck.pptx if requested
+- optional <run>/deck.html or deck.pptx if requested
 ```
 
 ## Changes Since Last Presentation / Given Run Prompt
@@ -164,7 +155,7 @@ Create a report and presentation for [TICKER] showing what changed since the las
 Prerequisite: [TICKER] must already have an initial coverage run. Use the latest presentation/run as the baseline unless I specify [RUN_ID]. Create a new thesis-update or model-update run; do not modify the old run.
 
 At least use the skills below; use any additional relevant skills if needed:
-- company-workspace-manager: create the comparison/update run and update manifest.
+- workspace-manager: create the comparison/update run and update manifest.
 - thesis-tracker: compare thesis pillars, risks, catalysts, and KPI status vs baseline.
 - koyfin-company-research: fetch updated estimates, price target, financials, multiples, news, filings, transcripts, and peer data since baseline.
 - equity-news-reaction: classify news and filings that explain the changes.
@@ -204,7 +195,7 @@ Workflow:
 
 Output:
 - <run>/report.md
-- <run>/deck/index.html or deck.pptx if requested
+- <run>/deck.html or deck.pptx if requested
 - updated charts/diagrams under assets/
 - source captures and change-log tables under data/
 ```
@@ -216,7 +207,7 @@ Run an earnings flash analysis for [TICKER].
 Prerequisite: [TICKER] must already have an initial coverage run. Use the latest initial coverage/model as baseline. This is a fast first reaction, usually before a full call transcript is available.
 
 At least use the skills below; use any additional relevant skills if needed:
-- company-workspace-manager: create the earnings-flash run and update manifest.
+- workspace-manager: create the earnings-flash run and update manifest.
 - earnings-flash-reaction: produce the fast post-release read.
 - koyfin-company-research: pull Koyfin actuals/consensus, earnings history, news, estimates, price targets, and available filings/transcripts.
 - equity-news-reaction: classify market/news reaction and thesis impact.
@@ -254,7 +245,7 @@ Run an earnings preview for [TICKER] ahead of the upcoming results.
 Prerequisite: [TICKER] must already have an initial coverage run. Use the latest initial coverage/model as baseline. Create a new earnings-preview run.
 
 At least use the skills below; use any additional relevant skills if needed:
-- company-workspace-manager: create the earnings-preview run and update manifest.
+- workspace-manager: create the earnings-preview run and update manifest.
 - earnings-preview: build the pre-earnings setup, scenario framework, and key metrics to watch.
 - koyfin-company-research: pull current consensus, estimate revisions, price target/rating changes, news, filings, transcripts, and multiples.
 - thesis-tracker: connect watch items to thesis pillars and KPI thresholds.
@@ -294,7 +285,7 @@ Run a full post-earnings analysis and model update for [TICKER].
 Prerequisite: [TICKER] must already have an initial coverage run. Use the latest initial coverage/model or the run I specify as baseline. Create a new earnings-review or model-update run; do not modify old runs.
 
 At least use the skills below; use any additional relevant skills if needed:
-- company-workspace-manager: create the earnings-review/model-update run and update manifest.
+- workspace-manager: create the earnings-review/model-update run and update manifest.
 - earnings-analysis: write the full post-call earnings review.
 - earnings-reviewer-workflow: orchestrate the complete earnings process when useful.
 - koyfin-company-research: pull actuals/consensus, revisions, price targets, news, filings, transcripts, financials, multiples, and peer data.
@@ -342,4 +333,30 @@ Output:
 - <run>/assets/charts/ and/or assets/diagrams/
 - <run>/report.md
 - optional presentation if requested
+```
+
+# Old
+
+## Initiating Coverage
+```markdown
+Use the initiating-coverage workflow for [TICKER]. Produce:
+1. a complete investment report;
+2. a thesis tracker with pillars, risks, catalysts and KPIs;
+3. a valuation framework;
+4. a list of assumptions required for the DCF model.
+
+Use the initiating-coverage skill, but grab the info first from koyfin (using the koyfin skill). Grab all at once, using the script and next if have info missing search the web for additional information or use manual tab-by-tab extraction.
+Use one subagent only to grab the koyfin info.
+Use multiple subagents to search the web.
+```
+
+## Create the DCF
+```markdown
+Now I want that you create the DCF model in xlsx for [TICKER].
+load all skills needed to do this
+```
+
+## Creating the Presentation
+```markdown
+Create an investment committee html presentation for [TICKER] based on the report, thesis tracker and valuation model.
 ```
