@@ -1,0 +1,24 @@
+{
+  "run_id": "2026-05-14-initial-coverage",
+  "run_type": "initial-coverage",
+  "company_ticker": "AVGO",
+  "created_at": "2026-05-14",
+  "source_files": [
+    "AVGO_Initiation_Model_2026-05-14.xlsx",
+    "Broadcom Inc. (AVGO) \u2014 Initiating Coverage.md",
+    "AVGO_IC_Presentation_2026-05-14.html"
+  ],
+  "artifacts": {
+    "raw_data": "data/raw/",
+    "scripts": "data/scripts/",
+    "intermediate": "data/intermediate/",
+    "normalized_data": "data/normalized/",
+    "model_extracts": "data/normalized/model_extracts/",
+    "assets": "assets/",
+    "model": "model.xlsx",
+    "outputs": "outputs.json",
+    "report": "report.md",
+    "deck": "deck/index.html"
+  },
+  "notes": "Imported from legacy financial reports folder."
+}

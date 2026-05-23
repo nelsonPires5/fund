@@ -1,0 +1,16 @@
+{
+  "company_name": "Broadcom Inc.",
+  "ticker": "AVGO",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "AI networking / custom silicon / infrastructure software",
+  "currency": "USD",
+  "fiscal_year_end": "11-03",
+  "koyfin_id": "AVGO US",
+  "sec_cik": "0001730168",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-14-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "semiconductors-semiconductor-equipment"
+}
