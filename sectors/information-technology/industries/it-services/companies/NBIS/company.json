@@ -1,0 +1,16 @@
+{
+  "company_name": "Nebius Group N.V.",
+  "ticker": "NBIS",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "AI cloud platform / GPU computing",
+  "currency": "USD",
+  "fiscal_year_end": "12-31",
+  "koyfin_id": "NBIS US",
+  "sec_cik": "0001058290",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-22-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "it-services"
+}

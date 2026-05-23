@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="slides-format" content="viewport">
+  <title>NBIS — Investment Committee Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #070b14;
+      --color-bg-deep: #030508;
+      --color-surface: #0e1627;
+      --color-text: #e8edf5;
+      --color-text-secondary: #9baec8;
+      --color-text-muted: #576b88;
+      --color-accent-1: #C9A84C;
+      --color-accent-2: #4B8FD4;
+      --color-accent-3: #E8D5A0;
+      --color-green: #22c55e;
+      --color-red: #ef4444;
+      --color-glass-bg: rgba(255,255,255,0.05);
+      --color-glass-border: rgba(255,255,255,0.08);
+      --color-vignette: rgba(0,0,0,0.5);
+      --font-display: 'Cormorant', serif;
+      --font-body: 'Manrope', sans-serif;
+    }
+  </style>
+  <style>
+    :root { --color-bg: #070b14; --color-text: #e8edf5; --glow-color-rgb: 201,168,76; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { background: var(--color-bg); margin: 0; }
+    body { font-family: 'Manrope', sans-serif; color: var(--color-text); overflow: hidden; height: 100vh; width: 100vw; }
+    .deck { width: 100vw; height: 100vh; position: relative; }
+    .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transform: scale(0.96); transition: opacity 0.65s ease, transform 0.65s ease; pointer-events: none; overflow: hidden; }
+    .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+    .slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1140px; padding: clamp(1.5rem, 3.5vw, 3.5rem); }
+    .nav-controls { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; z-index: 100; background: rgba(14,22,39,0.85); backdrop-filter: blur(12px); padding: 9px 22px; border-radius: 40px; border: 1px solid rgba(201,168,76,0.15); }
+    .nav-btn { width: 36px; height: 36px; border: none; background: rgba(255,255,255,0.06); color: #C9A84C; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+    .nav-btn:hover { background: rgba(201,168,76,0.15); }
+    .slide-dots { display: flex; gap: 6px; }
+    .slide-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); cursor: pointer; transition: background 0.3s, transform 0.3s; }
+    .slide-dots .dot.active { background: #C9A84C; transform: scale(1.35); }
+    .slide-counter { font-size: 0.75rem; color: #576b88; min-width: 38px; text-align: center; }
+    .reveal { opacity: 0; transform: translateY(18px); }
+    @keyframes glow-pulse { 0%,100%{text-shadow:0 0 20px rgba(201,168,76,0.5),0 0 40px rgba(201,168,76,0.2);} 50%{text-shadow:0 0 35px rgba(201,168,76,0.85),0 0 70px rgba(201,168,76,0.35);} }
+    .glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+    @keyframes red-pulse { 0%,100%{text-shadow:0 0 20px rgba(239,68,68,0.5);} 50%{text-shadow:0 0 35px rgba(239,68,68,0.85);} }
+    .red-glow { animation: red-pulse 3s ease-in-out infinite; }
+    .stat-glow { text-shadow: 0 0 30px rgba(201,168,76,0.6), 0 0 60px rgba(201,168,76,0.25); }
+    @keyframes float-slow { 0%{transform:translate(0,0) scale(1);} 25%{transform:translate(55px,-45px) scale(1.1);} 50%{transform:translate(-40px,38px) scale(0.9);} 75%{transform:translate(45px,18px) scale(1.07);} 100%{transform:translate(0,0) scale(1);} }
+    @keyframes float-drift { 0%{transform:translate(0,0) scale(1) rotate(0deg);} 33%{transform:translate(-50px,-55px) scale(1.12) rotate(3deg);} 66%{transform:translate(38px,28px) scale(0.88) rotate(-2deg);} 100%{transform:translate(0,0) scale(1) rotate(0deg);} }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
+    .gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float-slow 11s ease-in-out infinite; }
+    .blob:nth-child(2) { animation: float-drift 15s ease-in-out infinite; }
+    .blob:nth-child(3) { animation: float-slow 19s ease-in-out infinite reverse; }
+    .slide::before { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); background-repeat:repeat; background-size:256px 256px; opacity:0.025; mix-blend-mode:overlay; }
+    .slide::after { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background:radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.5) 100%); }
+    .gold-line { width: 60px; height: 2px; background: linear-gradient(90deg, #C9A84C, #E8D5A0); border-radius: 2px; }
+    .section-badge { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; border-radius: 20px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C9A84C; }
+    .glass-card { background: rgba(255,255,255,0.04); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; transition: transform 0.3s, box-shadow 0.3s; }
+    .glass-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(201,168,76,0.12); }
+    .glass-card-gold { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.18); border-radius: 14px; transition: transform 0.3s, box-shadow 0.3s; }
+    .glass-card-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(201,168,76,0.15); }
+    .badge-hold { display: inline-flex; align-items: center; padding: 6px 18px; border-radius: 24px; background: rgba(250,204,21,0.12); border: 1px solid rgba(250,204,21,0.3); color: #facc15; font-weight: 800; letter-spacing: 0.06em; }
+    .badge-buy { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: #22c55e; }
+    .badge-sell { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; }
+    .bar-track { background: rgba(255,255,255,0.06); border-radius: 4px; height: 10px; overflow: hidden; flex: 1; }
+    .bar-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
+    .ic-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .ic-table th { padding: 8px 12px; text-align: left; color: #576b88; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.65rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .ic-table td { padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.78rem; }
+    .ic-table tr:last-child td { border-bottom: none; }
+    .ic-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .ff-fill { height: 100%; border-radius: 6px; position: absolute; }
+    .ff-dot { width: 10px; height: 22px; background: #C9A84C; position: absolute; top: 0; border-radius: 3px; z-index: 2; }
+    .tl-dot { width: 10px; height: 10px; border-radius: 50%; background: #C9A84C; flex-shrink: 0; margin-top: 4px; box-shadow: 0 0 8px rgba(201,168,76,0.5); }
+    .kpi-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+    .kpi-green { background: #22c55e; box-shadow: 0 0 6px rgba(34,197,94,0.6); }
+    .kpi-amber { background: #facc15; box-shadow: 0 0 6px rgba(250,204,21,0.6); }
+    .kpi-red { background: #ef4444; box-shadow: 0 0 6px rgba(239,68,68,0.6); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } }
+  </style>
+</head>
+<body>
+<div class="mouse-spotlight" style="position:fixed;inset:0;z-index:99;pointer-events:none;"></div>
+<div class="deck">
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide active" data-slide="1">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:520px;height:520px;top:-120px;right:-80px;background:#C9A84C;opacity:0.13;"></div>
+    <div class="blob" style="width:380px;height:380px;bottom:-100px;left:-60px;background:#4B8FD4;opacity:0.1;"></div>
+    <div class="blob" style="width:260px;height:260px;top:38%;left:12%;background:#E8D5A0;opacity:0.08;"></div>
+  </div>
+  <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+  <div class="content" style="text-align:center;">
+    <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/c7a5bac6a7acb8f1e662bd4bd05a8f1b44a0e393.jpg" alt="Nebius" style="height:clamp(3rem,7vh,5.5rem);object-fit:contain;margin-bottom:1.8rem;animation:float 3s ease-in-out infinite;filter:brightness(0) invert(1);opacity:0.88;" class="mx-auto reveal">
+    <div class="section-badge reveal" style="margin-bottom:1.2rem;display:inline-flex;">Investment Committee Presentation</div>
+    <h1 class="font-display reveal" style="font-size:clamp(2.8rem,6.5vw,5.2rem);font-weight:700;background:linear-gradient(135deg,#C9A84C 0%,#E8D5A0 45%,#C9A84C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em;line-height:1.05;margin-bottom:0.6rem;">Nebius Group N.V.</h1>
+    <p class="reveal" style="font-size:clamp(0.85rem,1.4vw,1.15rem);color:#576b88;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:2rem;font-weight:500;">NASDAQ: NBIS &nbsp;|&nbsp; Initiating Coverage &nbsp;|&nbsp; May 22, 2026</p>
+    <div class="reveal" style="display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
+      <span class="badge-hold" style="font-size:1.1rem;padding:8px 22px;">HOLD</span>
+      <span style="color:#576b88;font-size:0.85rem;">Price Target: <strong style="color:#C9A84C;font-size:1.1rem;">$180</strong></span>
+      <span style="color:#576b88;font-size:0.85rem;">Current: <strong style="color:#e8edf5;">$216.24</strong></span>
+      <span style="color:#ef4444;font-size:0.85rem;">Downside: <strong>–16.8%</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: AGENDA -->
+<div class="slide" data-slide="2">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:320px;height:320px;top:-60px;right:-60px;background:#C9A84C;opacity:0.07;"></div>
+    <div class="blob" style="width:220px;height:220px;bottom:-40px;left:-30px;background:#4B8FD4;opacity:0.06;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Agenda</div>
+    <h2 class="font-display reveal" style="font-size:clamp(2rem,4vw,3rem);font-weight:700;color:#e8edf5;margin:0.5rem 0 0.3rem;">Today's Presentation</h2>
+    <div class="gold-line reveal" style="margin-bottom:1.6rem;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;">
+      <div class="glass-card-gold reveal" style="padding:1rem 1.2rem;display:flex;align-items:flex-start;gap:0.9rem;"><span style="font-size:1.5rem;flex-shrink:0;">🏢</span><div><p style="font-weight:700;color:#C9A84C;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">1. Company Overview</p><p style="color:#576b88;font-size:0.75rem;">Business model, segments, management & strategic position</p></div></div>
+      <div class="glass-card-gold reveal" style="padding:1rem 1.2rem;display:flex;align-items:flex-start;gap:0.9rem;"><span style="font-size:1.5rem;flex-shrink:0;">📊</span><div><p style="font-weight:700;color:#C9A84C;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">2. Financial Analysis</p><p style="color:#576b88;font-size:0.75rem;">Revenue growth, margins, FCF trajectory & balance sheet</p></div></div>
+      <div class="glass-card-gold reveal" style="padding:1rem 1.2rem;display:flex;align-items:flex-start;gap:0.9rem;"><span style="font-size:1.5rem;flex-shrink:0;">🎯</span><div><p style="font-weight:700;color:#C9A84C;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">3. Investment Thesis</p><p style="color:#576b88;font-size:0.75rem;">6 pillars, key risks & near-term catalysts</p></div></div>
+      <div class="glass-card-gold reveal" style="padding:1rem 1.2rem;display:flex;align-items:flex-start;gap:0.9rem;"><span style="font-size:1.5rem;flex-shrink:0;">💰</span><div><p style="font-weight:700;color:#C9A84C;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">4. Valuation & Scenarios</p><p style="color:#576b88;font-size:0.75rem;">DCF, comps, football field & Bull/Base/Bear</p></div></div>
+      <div class="glass-card-gold reveal" style="padding:1rem 1.2rem;display:flex;align-items:flex-start;gap:0.9rem;"><span style="font-size:1.5rem;flex-shrink:0;">⚖️</span><div><p style="font-weight:700;color:#C9A84C;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">5. Risk Framework</p><p style="color:#576b88;font-size:0.75rem;">Key risks ranked by severity with mitigants</p></div></div>
+      <div class="glass-card-gold reveal" style="padding:1rem 1.2rem;display:flex;align-items:flex-start;gap:0.9rem;"><span style="font-size:1.5rem;flex-shrink:0;">📋</span><div><p style="font-weight:700;color:#C9A84C;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">6. Recommendation</p><p style="color:#576b88;font-size:0.75rem;">Rating, PT, KPIs to watch & path to BUY</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: COMPANY OVERVIEW -->
+<div class="slide" data-slide="3">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:350px;height:350px;top:-70px;right:-50px;background:#C9A84C;opacity:0.07;"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:-30px;left:-30px;background:#4B8FD4;opacity:0.06;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Company Overview</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;margin:0.5rem 0 0.3rem;">What Is Nebius Group?</h2>
+    <div class="gold-line reveal" style="margin-bottom:1.3rem;"></div>
+    <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:1.2rem;align-items:start;">
+      <div>
+        <p class="reveal" style="color:#9baec8;font-size:0.82rem;line-height:1.65;margin-bottom:1rem;">Nebius is an <strong style="color:#C9A84C;">AI-native cloud infrastructure company</strong> spun out of Yandex N.V. in 2024. It provides full-stack GPU cloud compute, MLOps tooling, managed AI services, and developer AI products including Toloka (data labeling) and TripleTen (AI-skills training). HQ in Amsterdam with data centers in Europe, North America, and expanding globally.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;">
+          <div class="glass-card reveal" style="padding:0.8rem 1rem;"><p style="font-size:0.65rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;">FY2025 Revenue</p><p style="font-size:1.4rem;font-weight:800;color:#C9A84C;" data-count="248" data-prefix="$" data-suffix="M">$0M</p></div>
+          <div class="glass-card reveal" style="padding:0.8rem 1rem;"><p style="font-size:0.65rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;">YoY Growth</p><p style="font-size:1.4rem;font-weight:800;color:#22c55e;">+112%</p></div>
+          <div class="glass-card reveal" style="padding:0.8rem 1rem;"><p style="font-size:0.65rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;">GPU Capacity</p><p style="font-size:1.4rem;font-weight:800;color:#4B8FD4;">~6,200</p><p style="font-size:0.65rem;color:#576b88;">H100/A100 equiv.</p></div>
+          <div class="glass-card reveal" style="padding:0.8rem 1rem;"><p style="font-size:0.65rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;">Market Cap</p><p style="font-size:1.4rem;font-weight:800;color:#E8D5A0;">~$9.8B</p></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:0.65rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.7rem;" class="reveal">Revenue Mix (FY2025)</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;" class="reveal">
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:0.75rem;color:#9baec8;">AI Cloud (GPU IaaS)</span><span style="font-size:0.75rem;color:#C9A84C;font-weight:700;">~76%</span></div><div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#C9A84C,#E8D5A0);" data-width="76%"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:0.75rem;color:#9baec8;">Toloka (Data Labeling)</span><span style="font-size:0.75rem;color:#4B8FD4;font-weight:700;">~14%</span></div><div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#4B8FD4,#6CAEE8);" data-width="14%"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:0.75rem;color:#9baec8;">TripleTen (EdTech AI)</span><span style="font-size:0.75rem;color:#E8D5A0;font-weight:700;">~6%</span></div><div class="bar-track"><div class="bar-fill" style="background:linear-gradient(90deg,#E8D5A0,#C9A84C);" data-width="6%"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:0.75rem;color:#9baec8;">Other</span><span style="font-size:0.75rem;color:#576b88;font-weight:700;">~4%</span></div><div class="bar-track"><div class="bar-fill" style="background:rgba(87,107,136,0.6);" data-width="4%"></div></div></div>
+        </div>
+        <div class="glass-card-gold reveal" style="padding:0.8rem 1rem;margin-top:0.9rem;"><p style="font-size:0.68rem;color:#576b88;margin-bottom:3px;">Data Centers</p><p style="font-size:0.78rem;color:#e8edf5;font-weight:600;">🇫🇮 Finland &nbsp;|&nbsp; 🇫🇷 France &nbsp;|&nbsp; 🇺🇸 USA &nbsp;|&nbsp; 🇮🇱 Israel</p><p style="font-size:0.68rem;color:#576b88;margin-top:3px;">+ Kazakhstan expansion announced Q1-2026</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: REVENUE CHART -->
+<div class="slide" data-slide="4">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:300px;height:300px;top:-50px;right:-50px;background:#C9A84C;opacity:0.07;"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:-30px;left:-30px;background:#4B8FD4;opacity:0.05;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Financial Analysis</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin:0.5rem 0 0.2rem;">Explosive Revenue Ramp</h2>
+    <div class="gold-line reveal" style="margin-bottom:1rem;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:0.7rem;margin-bottom:1rem;" class="reveal">
+      <div class="glass-card" style="padding:0.75rem;text-align:center;"><p style="font-size:0.6rem;color:#576b88;text-transform:uppercase;">FY2021</p><p style="font-size:1rem;font-weight:800;color:#576b88;">$44M</p><p style="font-size:0.62rem;color:#576b88;">Pre-spinoff</p></div>
+      <div class="glass-card" style="padding:0.75rem;text-align:center;"><p style="font-size:0.6rem;color:#576b88;text-transform:uppercase;">FY2022</p><p style="font-size:1rem;font-weight:800;color:#9baec8;">$42M</p><p style="font-size:0.62rem;color:#ef4444;">–5%</p></div>
+      <div class="glass-card" style="padding:0.75rem;text-align:center;"><p style="font-size:0.6rem;color:#576b88;text-transform:uppercase;">FY2023</p><p style="font-size:1rem;font-weight:800;color:#9baec8;">$44M</p><p style="font-size:0.62rem;color:#22c55e;">+5%</p></div>
+      <div class="glass-card" style="padding:0.75rem;text-align:center;"><p style="font-size:0.6rem;color:#576b88;text-transform:uppercase;">FY2024</p><p style="font-size:1rem;font-weight:800;color:#E8D5A0;">$117M</p><p style="font-size:0.62rem;color:#22c55e;">+166%</p></div>
+      <div class="glass-card-gold" style="padding:0.75rem;text-align:center;"><p style="font-size:0.6rem;color:#C9A84C;text-transform:uppercase;">FY2025</p><p style="font-size:1rem;font-weight:800;color:#C9A84C;" data-count="248" data-prefix="$" data-suffix="M">$0M</p><p style="font-size:0.62rem;color:#22c55e;">+112%</p></div>
+    </div>
+    <div class="reveal" style="width:100%;max-width:700px;margin:0 auto;">
+      <svg viewBox="0 0 660 175" style="width:100%;height:auto;">
+        <defs>
+          <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" style="stop-color:#C9A84C;stop-opacity:0.35"/><stop offset="100%" style="stop-color:#C9A84C;stop-opacity:0.02"/></linearGradient>
+          <linearGradient id="strokeRevGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#4B8FD4"/><stop offset="100%" style="stop-color:#C9A84C"/></linearGradient>
+        </defs>
+        <line x1="50" y1="15" x2="50" y2="150" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <line x1="50" y1="150" x2="640" y2="150" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <line x1="50" y1="50" x2="640" y2="50" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+        <line x1="50" y1="90" x2="640" y2="90" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+        <line x1="50" y1="120" x2="640" y2="120" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+        <text x="44" y="18" text-anchor="end" style="fill:#576b88;font-size:0.55rem;font-family:Manrope;">$250M</text>
+        <text x="44" y="54" text-anchor="end" style="fill:#576b88;font-size:0.55rem;font-family:Manrope;">$175M</text>
+        <text x="44" y="94" text-anchor="end" style="fill:#576b88;font-size:0.55rem;font-family:Manrope;">$110M</text>
+        <text x="44" y="124" text-anchor="end" style="fill:#576b88;font-size:0.55rem;font-family:Manrope;">$55M</text>
+        <text x="120" y="165" text-anchor="middle" style="fill:#576b88;font-size:0.58rem;font-family:Manrope;">FY2021</text>
+        <text x="240" y="165" text-anchor="middle" style="fill:#576b88;font-size:0.58rem;font-family:Manrope;">FY2022</text>
+        <text x="360" y="165" text-anchor="middle" style="fill:#576b88;font-size:0.58rem;font-family:Manrope;">FY2023</text>
+        <text x="480" y="165" text-anchor="middle" style="fill:#576b88;font-size:0.58rem;font-family:Manrope;">FY2024</text>
+        <text x="600" y="165" text-anchor="middle" style="fill:#C9A84C;font-size:0.58rem;font-family:Manrope;font-weight:700;">FY2025</text>
+        <polygon class="line-area" points="120,143 240,144 360,143 480,107 600,20 600,150 120,150" fill="url(#revGrad)" style="opacity:0;transition:opacity 1s ease 0.5s;"/>
+        <polyline class="line-path" points="120,143 240,144 360,143 480,107 600,20" fill="none" stroke="url(#strokeRevGrad)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="700" stroke-dashoffset="700" style="transition:stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1);"/>
+        <g class="line-dots" style="opacity:0;transition:opacity 0.5s ease 1.8s;">
+          <circle cx="120" cy="143" r="4" fill="#4B8FD4"/><circle cx="240" cy="144" r="4" fill="#4B8FD4"/>
+          <circle cx="360" cy="143" r="4" fill="#4B8FD4"/><circle cx="480" cy="107" r="4" fill="#E8D5A0"/>
+          <circle cx="600" cy="20" r="6" fill="#C9A84C"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: FINANCIAL METRICS -->
+<div class="slide" data-slide="5">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:320px;height:320px;top:-50px;right:-50px;background:#C9A84C;opacity:0.07;"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:-30px;left:-30px;background:#4B8FD4;opacity:0.05;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Financial Snapshot</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin:0.5rem 0 0.3rem;">Key Financial Metrics (FY2025)</h2>
+    <div class="gold-line reveal" style="margin-bottom:1.1rem;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-bottom:0.9rem;" class="reveal">
+      <div class="glass-card" style="padding:1rem 1.1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Gross Margin</p><p style="font-size:1.6rem;font-weight:800;color:#22c55e;" data-count="48" data-suffix="%">0%</p><p style="font-size:0.68rem;color:#576b88;">vs 44% FY2024 — expanding</p></div>
+      <div class="glass-card" style="padding:1rem 1.1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Adj. EBITDA Margin</p><p style="font-size:1.6rem;font-weight:800;color:#ef4444;">–72%</p><p style="font-size:0.68rem;color:#576b88;">Path to breakeven FY2027E</p></div>
+      <div class="glass-card" style="padding:1rem 1.1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Cash & Equivalents</p><p style="font-size:1.6rem;font-weight:800;color:#4B8FD4;">$1.6B</p><p style="font-size:0.68rem;color:#576b88;">~5–6 quarters runway</p></div>
+      <div class="glass-card" style="padding:1rem 1.1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">CapEx / Revenue</p><p style="font-size:1.6rem;font-weight:800;color:#E8D5A0;" data-count="320" data-suffix="%">0%</p><p style="font-size:0.68rem;color:#576b88;">$793M capex; build-out phase</p></div>
+      <div class="glass-card" style="padding:1rem 1.1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Net Position</p><p style="font-size:1.6rem;font-weight:800;color:#22c55e;">Net Cash</p><p style="font-size:0.68rem;color:#576b88;">$1.6B cash vs $310M LT debt</p></div>
+      <div class="glass-card" style="padding:1rem 1.1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Q1-2026 ARR</p><p style="font-size:1.6rem;font-weight:800;color:#C9A84C;">~$2.5B</p><p style="font-size:0.68rem;color:#576b88;">Annualized run-rate from Q1</p></div>
+    </div>
+    <div class="glass-card-gold reveal" style="padding:0.8rem 1.2rem;display:flex;align-items:center;gap:0.8rem;"><span style="font-size:1.2rem;">⚡</span><p style="font-size:0.78rem;color:#9baec8;"><strong style="color:#C9A84C;">KEY WATCH:</strong> ARR must surpass $3B+ in Q2-2026 (Aug 6 earnings) to validate hyperscaler narrative and trigger a potential upgrade to BUY.</p></div>
+  </div>
+</div>
+
+<!-- SLIDE 6: THESIS PILLARS -->
+<div class="slide" data-slide="6">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:320px;height:320px;top:-50px;right:-50px;background:#C9A84C;opacity:0.07;"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:-30px;left:-40px;background:#4B8FD4;opacity:0.06;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Investment Thesis</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin:0.5rem 0 0.3rem;">6 Pillars of the Bull Case</h2>
+    <div class="gold-line reveal" style="margin-bottom:1.1rem;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.7rem;">
+      <div class="glass-card reveal" style="padding:0.9rem 1rem;border-left:3px solid #C9A84C;"><p style="font-size:0.7rem;font-weight:700;color:#C9A84C;margin-bottom:5px;">① AI Cloud TAM Expansion</p><p style="font-size:0.72rem;color:#9baec8;line-height:1.5;">GPU cloud market ~45% CAGR through 2028. Nebius captures EU & EM sovereignty demand where hyperscalers face regulatory friction.</p></div>
+      <div class="glass-card reveal" style="padding:0.9rem 1rem;border-left:3px solid #4B8FD4;"><p style="font-size:0.7rem;font-weight:700;color:#4B8FD4;margin-bottom:5px;">② Meta Hyperscaler Anchor</p><p style="font-size:0.72rem;color:#9baec8;line-height:1.5;">$27B 2-year GPU supply agreement with Meta (Feb 2026) provides revenue certainty and de-risks the 2026–27 ramp substantially.</p></div>
+      <div class="glass-card reveal" style="padding:0.9rem 1rem;border-left:3px solid #E8D5A0;"><p style="font-size:0.7rem;font-weight:700;color:#E8D5A0;margin-bottom:5px;">③ Yandex DNA Moat</p><p style="font-size:0.72rem;color:#9baec8;line-height:1.5;">Team built & operated Russia's largest AI cloud at scale. Deep ML/infra engineering talent creates a defensible tech moat.</p></div>
+      <div class="glass-card reveal" style="padding:0.9rem 1rem;border-left:3px solid #22c55e;"><p style="font-size:0.7rem;font-weight:700;color:#22c55e;margin-bottom:5px;">④ Margin Inflection Coming</p><p style="font-size:0.72rem;color:#9baec8;line-height:1.5;">Gross margin 44%→48% (FY2024–25). Leveraged fixed base means EBITDA inflection above $600M revenue.</p></div>
+      <div class="glass-card reveal" style="padding:0.9rem 1rem;border-left:3px solid #facc15;"><p style="font-size:0.7rem;font-weight:700;color:#facc15;margin-bottom:5px;">⑤ Platform Flywheel</p><p style="font-size:0.72rem;color:#9baec8;line-height:1.5;">GPU IaaS → MLOps → Toloka → TripleTen: closed AI development ecosystem with high switching costs and data moats.</p></div>
+      <div class="glass-card reveal" style="padding:0.9rem 1rem;border-left:3px solid #f97316;"><p style="font-size:0.7rem;font-weight:700;color:#f97316;margin-bottom:5px;">⑥ Geopolitical Tailwind</p><p style="font-size:0.72rem;color:#9baec8;line-height:1.5;">EU AI Act & data sovereignty regs push enterprises toward European-domiciled cloud providers. Nebius uniquely positioned.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: COMPETITIVE RADAR -->
+<div class="slide" data-slide="7">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:300px;height:300px;top:-50px;right:-40px;background:#C9A84C;opacity:0.07;"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:-30px;left:-30px;background:#4B8FD4;opacity:0.05;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Competitive Analysis</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin:0.5rem 0 0.3rem;">Competitive Positioning</h2>
+    <div class="gold-line reveal" style="margin-bottom:0.9rem;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1.3fr;gap:1.2rem;align-items:center;">
+      <div class="reveal">
+        <svg viewBox="0 0 300 300" style="width:260px;height:260px;margin:0 auto;display:block;">
+          <defs><linearGradient id="radarGrad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#C9A84C;stop-opacity:0.45"/><stop offset="100%" style="stop-color:#E8D5A0;stop-opacity:0.15"/></linearGradient></defs>
+          <polygon points="150,50 238,110 210,210 90,210 62,110" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <polygon points="150,70 218,118 196,198 104,198 82,118" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <polygon points="150,90 198,126 182,186 118,186 102,126" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <polygon points="150,110 178,134 168,174 132,174 122,134" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="150" y1="150" x2="150" y2="50" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+          <line x1="150" y1="150" x2="238" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+          <line x1="150" y1="150" x2="210" y2="210" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+          <line x1="150" y1="150" x2="90" y2="210" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+          <line x1="150" y1="150" x2="62" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+          <polygon class="radar-shape" points="150,55 230,112 196,200 100,197 70,114" fill="url(#radarGrad1)" stroke="#C9A84C" stroke-width="2" stroke-dasharray="900" stroke-dashoffset="900" style="transition:stroke-dashoffset 1.5s cubic-bezier(0.16,1,0.3,1);"/>
+          <g class="radar-dots" style="opacity:0;transition:opacity 0.5s ease 1.2s;">
+            <circle cx="150" cy="55" r="4" fill="#C9A84C"/><circle cx="230" cy="112" r="4" fill="#C9A84C"/>
+            <circle cx="196" cy="200" r="4" fill="#C9A84C"/><circle cx="100" cy="197" r="4" fill="#C9A84C"/>
+            <circle cx="70" cy="114" r="4" fill="#C9A84C"/>
+          </g>
+          <text x="150" y="38" text-anchor="middle" style="fill:#C9A84C;font-size:0.62rem;font-family:Manrope;font-weight:700;">GPU Infra</text>
+          <text x="252" y="108" text-anchor="start" style="fill:#9baec8;font-size:0.58rem;font-family:Manrope;">Sovereignty</text>
+          <text x="218" y="220" text-anchor="start" style="fill:#9baec8;font-size:0.58rem;font-family:Manrope;">Pricing</text>
+          <text x="78" y="220" text-anchor="end" style="fill:#9baec8;font-size:0.58rem;font-family:Manrope;">MLOps</text>
+          <text x="48" y="108" text-anchor="end" style="fill:#9baec8;font-size:0.58rem;font-family:Manrope;">Scale</text>
+          <text x="150" y="155" text-anchor="middle" style="fill:#C9A84C;font-size:0.6rem;font-family:Manrope;font-weight:700;">NBIS</text>
+        </svg>
+      </div>
+      <div>
+        <table class="ic-table reveal">
+          <thead><tr><th>Competitor</th><th>Strength vs NBIS</th><th>Weakness vs NBIS</th></tr></thead>
+          <tbody>
+            <tr><td style="color:#e8edf5;font-weight:600;">AWS / Azure / GCP</td><td style="color:#22c55e;">Scale, ecosystem</td><td style="color:#ef4444;font-size:0.72rem;">EU data reg friction</td></tr>
+            <tr><td style="color:#e8edf5;font-weight:600;">CoreWeave (CRWV)</td><td style="color:#22c55e;">US client base</td><td style="color:#ef4444;font-size:0.72rem;">No EU sovereignty</td></tr>
+            <tr><td style="color:#e8edf5;font-weight:600;">Lambda Labs</td><td style="color:#facc15;">Developer brand</td><td style="color:#ef4444;font-size:0.72rem;">Limited MLOps stack</td></tr>
+            <tr><td style="color:#e8edf5;font-weight:600;">OVHcloud</td><td style="color:#22c55e;">EU native footprint</td><td style="color:#ef4444;font-size:0.72rem;">GPU density, AI tooling</td></tr>
+            <tr><td style="color:#e8edf5;font-weight:600;">Applied Digital (APLD)</td><td style="color:#facc15;">Low-cost compute</td><td style="color:#ef4444;font-size:0.72rem;">No integrated AI stack</td></tr>
+          </tbody>
+        </table>
+        <div class="glass-card-gold reveal" style="padding:0.7rem 0.9rem;margin-top:0.7rem;"><p style="font-size:0.72rem;color:#9baec8;"><strong style="color:#C9A84C;">Moat:</strong> Nebius competes in structural white-space — sovereign AI cloud with full MLOps layer. Neither hyperscalers nor bare-metal GPU leasing offer this combination.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: FOOTBALL FIELD -->
+<div class="slide" data-slide="8">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:350px;height:350px;top:-70px;right:-60px;background:#C9A84C;opacity:0.08;"></div>
+    <div class="blob" style="width:220px;height:220px;bottom:-40px;left:-30px;background:#4B8FD4;opacity:0.06;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Valuation</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin:0.5rem 0 0.3rem;">Valuation Football Field</h2>
+    <div class="gold-line reveal" style="margin-bottom:1.1rem;"></div>
+    <div class="reveal" style="width:100%;max-width:780px;margin:0 auto;">
+      <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:0.9rem;font-size:0.68rem;color:#576b88;">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:rgba(75,143,212,0.4);display:inline-block;"></span>Range</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#C9A84C;display:inline-block;"></span>PT $180</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:14px;background:#ef4444;display:inline-block;"></span>Current $216</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#576b88;margin-bottom:4px;"><span>$0</span><span>$70</span><span>$140</span><span>$210</span><span>$280</span><span>$350</span></div>
+      <div style="display:flex;flex-direction:column;gap:9px;">
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:120px;flex-shrink:0;font-size:0.68rem;color:#9baec8;text-align:right;padding-right:6px;">DCF (Base)</div><div style="flex:1;height:22px;background:rgba(255,255,255,0.04);border-radius:5px;position:relative;"><div class="ff-fill bar-fill" style="left:27%;background:rgba(75,143,212,0.35);border-radius:5px;" data-width="28.7%"></div><div class="ff-dot" style="left:51.4%;"></div><div style="position:absolute;left:61.7%;top:-4px;width:2px;height:30px;background:#ef4444;z-index:3;"></div><span style="position:absolute;left:27%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;padding-left:3px;">$95</span><span style="position:absolute;left:54%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;">$195</span></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:120px;flex-shrink:0;font-size:0.68rem;color:#9baec8;text-align:right;padding-right:6px;">DCF (Bull)</div><div style="flex:1;height:22px;background:rgba(255,255,255,0.04);border-radius:5px;position:relative;"><div class="ff-fill bar-fill" style="left:40%;background:rgba(34,197,94,0.3);border-radius:5px;" data-width="36%"></div><div class="ff-dot" style="left:51.4%;"></div><div style="position:absolute;left:61.7%;top:-4px;width:2px;height:30px;background:#ef4444;z-index:3;"></div><span style="position:absolute;left:40%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;padding-left:3px;">$140</span><span style="position:absolute;left:74%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;">$266</span></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:120px;flex-shrink:0;font-size:0.68rem;color:#9baec8;text-align:right;padding-right:6px;">DCF (Bear)</div><div style="flex:1;height:22px;background:rgba(255,255,255,0.04);border-radius:5px;position:relative;"><div class="ff-fill bar-fill" style="left:11.4%;background:rgba(239,68,68,0.3);border-radius:5px;" data-width="17.1%"></div><div class="ff-dot" style="left:51.4%;"></div><div style="position:absolute;left:61.7%;top:-4px;width:2px;height:30px;background:#ef4444;z-index:3;"></div><span style="position:absolute;left:11.4%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;padding-left:3px;">$40</span><span style="position:absolute;left:27%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;">$100</span></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:120px;flex-shrink:0;font-size:0.68rem;color:#9baec8;text-align:right;padding-right:6px;">EV/Rev Comps</div><div style="flex:1;height:22px;background:rgba(255,255,255,0.04);border-radius:5px;position:relative;"><div class="ff-fill bar-fill" style="left:22.8%;background:rgba(232,213,160,0.3);border-radius:5px;" data-width="30%"></div><div class="ff-dot" style="left:51.4%;"></div><div style="position:absolute;left:61.7%;top:-4px;width:2px;height:30px;background:#ef4444;z-index:3;"></div><span style="position:absolute;left:22.8%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;padding-left:3px;">$80</span><span style="position:absolute;left:51%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;">$185</span></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:120px;flex-shrink:0;font-size:0.68rem;color:#9baec8;text-align:right;padding-right:6px;">52-Week Range</div><div style="flex:1;height:22px;background:rgba(255,255,255,0.04);border-radius:5px;position:relative;"><div class="ff-fill bar-fill" style="left:13.1%;background:rgba(201,168,76,0.2);border-radius:5px;" data-width="55.1%"></div><div class="ff-dot" style="left:51.4%;"></div><div style="position:absolute;left:61.7%;top:-4px;width:2px;height:30px;background:#ef4444;z-index:3;"></div><span style="position:absolute;left:13.1%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;padding-left:3px;">$46</span><span style="position:absolute;left:66%;top:50%;transform:translateY(-50%);font-size:0.6rem;color:#576b88;">$243</span></div></div>
+      </div>
+      <div style="display:flex;justify-content:center;margin-top:0.9rem;font-size:0.72rem;"><span><strong style="color:#C9A84C;">PT: $180</strong> &nbsp;|&nbsp; <span style="color:#ef4444;">Current: $216.24</span> &nbsp;|&nbsp; <span style="color:#ef4444;">Downside: –16.8%</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: SCENARIOS -->
+<div class="slide" data-slide="9">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:300px;height:300px;top:-50px;right:-50px;background:#C9A84C;opacity:0.07;"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:-30px;left:-30px;background:#4B8FD4;opacity:0.05;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Scenarios</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin:0.5rem 0 0.3rem;">Bull / Base / Bear Analysis</h2>
+    <div class="gold-line reveal" style="margin-bottom:1rem;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.9rem;">
+      <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:14px;padding:1.1rem;" class="reveal">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem;"><p style="font-weight:800;color:#22c55e;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;">BULL</p><span class="badge-buy" style="font-size:0.75rem;padding:3px 10px;">$266</span></div>
+        <div style="font-size:0.73rem;color:#9baec8;display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;justify-content:space-between;"><span>FY2026 Rev.</span><span style="color:#22c55e;font-weight:700;">$1.25B</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>FY2028 Rev.</span><span style="color:#22c55e;font-weight:700;">$3.8B</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>EBITDA Margin '28</span><span style="color:#22c55e;font-weight:700;">+28%</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>Implied Upside</span><span style="color:#22c55e;font-weight:700;">+23%</span></div>
+        </div>
+        <div style="margin-top:0.7rem;padding-top:0.7rem;border-top:1px solid rgba(34,197,94,0.1);"><p style="font-size:0.68rem;color:#576b88;">Meta fully absorbed + new hyperscaler contracts; EBITDA breakeven H1-2027</p></div>
+      </div>
+      <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:14px;padding:1.1rem;" class="reveal">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem;"><p style="font-weight:800;color:#C9A84C;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;">BASE</p><span class="badge-hold" style="font-size:0.75rem;padding:3px 10px;">$180</span></div>
+        <div style="font-size:0.73rem;color:#9baec8;display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;justify-content:space-between;"><span>FY2026 Rev.</span><span style="color:#C9A84C;font-weight:700;">$900M</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>FY2028 Rev.</span><span style="color:#C9A84C;font-weight:700;">$2.4B</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>EBITDA Margin '28</span><span style="color:#C9A84C;font-weight:700;">+18%</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>Implied Return</span><span style="color:#ef4444;font-weight:700;">–16.8%</span></div>
+        </div>
+        <div style="margin-top:0.7rem;padding-top:0.7rem;border-top:1px solid rgba(201,168,76,0.1);"><p style="font-size:0.68rem;color:#576b88;">Meta executes on schedule; GM 52–54%; EBITDA breakeven H2-2027</p></div>
+      </div>
+      <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:14px;padding:1.1rem;" class="reveal">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem;"><p style="font-weight:800;color:#ef4444;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;">BEAR</p><span class="badge-sell" style="font-size:0.75rem;padding:3px 10px;">$70</span></div>
+        <div style="font-size:0.73rem;color:#9baec8;display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;justify-content:space-between;"><span>FY2026 Rev.</span><span style="color:#ef4444;font-weight:700;">$580M</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>FY2028 Rev.</span><span style="color:#ef4444;font-weight:700;">$1.1B</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>EBITDA Margin '28</span><span style="color:#ef4444;font-weight:700;">+4%</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>Implied Downside</span><span style="color:#ef4444;font-weight:700;">–68%</span></div>
+        </div>
+        <div style="margin-top:0.7rem;padding-top:0.7rem;border-top:1px solid rgba(239,68,68,0.1);"><p style="font-size:0.68rem;color:#576b88;">Meta delayed/revised; pricing compression; equity dilution required</p></div>
+      </div>
+    </div>
+    <div class="reveal glass-card" style="padding:0.7rem 1rem;margin-top:0.8rem;display:flex;align-items:center;gap:0.8rem;"><span>🎯</span><p style="font-size:0.73rem;color:#9baec8;"><strong style="color:#C9A84C;">Key swing:</strong> Whether Meta deal generates $2.0B+ of recognized revenue in FY2026–2027. This single variable drives ~70% of the Bull–Bear spread.</p></div>
+  </div>
+</div>
+
+<!-- SLIDE 10: DCF ASSUMPTIONS -->
+<div class="slide" data-slide="10">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:300px;height:300px;top:-50px;right:-50px;background:#4B8FD4;opacity:0.07;"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:-30px;left:-30px;background:#C9A84C;opacity:0.06;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">DCF Model</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin:0.5rem 0 0.3rem;">Key DCF Assumptions</h2>
+    <div class="gold-line reveal" style="margin-bottom:1rem;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;">
+      <div class="glass-card reveal" style="padding:1rem;">
+        <p style="font-size:0.65rem;color:#C9A84C;text-transform:uppercase;letter-spacing:0.09em;font-weight:700;margin-bottom:0.6rem;">WACC Build-Up</p>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:0.74rem;">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:4px;"><span style="color:#9baec8;">Risk-Free Rate (10Y UST)</span><span style="color:#e8edf5;font-weight:600;">4.50%</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:4px;"><span style="color:#9baec8;">Equity Risk Premium</span><span style="color:#e8edf5;font-weight:600;">5.50%</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:4px;"><span style="color:#9baec8;">Beta (adjusted)</span><span style="color:#e8edf5;font-weight:600;">2.64x</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:4px;"><span style="color:#9baec8;">Cost of Equity</span><span style="color:#C9A84C;font-weight:700;">19.0%</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:4px;"><span style="color:#9baec8;">Pre-Tax Cost of Debt</span><span style="color:#e8edf5;font-weight:600;">7.50%</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:4px;"><span style="color:#9baec8;">Tax Rate</span><span style="color:#e8edf5;font-weight:600;">21%</span></div>
+          <div style="display:flex;justify-content:space-between;background:rgba(201,168,76,0.08);border-radius:6px;padding:5px 8px;margin-top:4px;"><strong style="color:#C9A84C;">WACC (Base)</strong><strong style="color:#C9A84C;">19.03%</strong></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.7rem;">
+        <div class="glass-card reveal" style="padding:0.9rem 1rem;">
+          <p style="font-size:0.65rem;color:#C9A84C;text-transform:uppercase;letter-spacing:0.09em;font-weight:700;margin-bottom:0.5rem;">Revenue Growth Assumptions</p>
+          <div style="display:flex;flex-direction:column;gap:4px;font-size:0.72rem;">
+            <div style="display:flex;justify-content:space-between;"><span style="color:#9baec8;">FY2026E (Base)</span><span style="color:#e8edf5;font-weight:600;">+263%</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#9baec8;">FY2027E</span><span style="color:#e8edf5;font-weight:600;">+85%</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#9baec8;">FY2028–30E (fade)</span><span style="color:#e8edf5;font-weight:600;">50% → 25%</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#9baec8;">Terminal Growth</span><span style="color:#e8edf5;font-weight:600;">3.0%</span></div>
+          </div>
+        </div>
+        <div class="glass-card reveal" style="padding:0.9rem 1rem;">
+          <p style="font-size:0.65rem;color:#4B8FD4;text-transform:uppercase;letter-spacing:0.09em;font-weight:700;margin-bottom:0.5rem;">Margin Assumptions (Base)</p>
+          <div style="display:flex;flex-direction:column;gap:4px;font-size:0.72rem;">
+            <div style="display:flex;justify-content:space-between;"><span style="color:#9baec8;">Gross Margin (stable)</span><span style="color:#e8edf5;font-weight:600;">50–54%</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#9baec8;">EBITDA Margin FY2028</span><span style="color:#e8edf5;font-weight:600;">18–22%</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#9baec8;">CapEx / Rev (declining)</span><span style="color:#e8edf5;font-weight:600;">38% → 15%</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#9baec8;">Exit EV/EBITDA (FY2032)</span><span style="color:#e8edf5;font-weight:600;">18x</span></div>
+          </div>
+        </div>
+        <div class="glass-card-gold reveal" style="padding:0.75rem 0.9rem;"><p style="font-size:0.7rem;color:#9baec8;"><strong style="color:#C9A84C;">Sensitivity:</strong> At WACC=16%, PT ~$260. At WACC=22%, PT ~$120. Beta is the single largest model driver.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: RISKS -->
+<div class="slide" data-slide="11">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:300px;height:300px;top:-50px;right:-50px;background:#ef4444;opacity:0.06;"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:-30px;left:-30px;background:#C9A84C;opacity:0.06;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Risk Framework</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin:0.5rem 0 0.3rem;">Key Risks — Ranked by Severity</h2>
+    <div class="gold-line reveal" style="margin-bottom:1rem;"></div>
+    <div style="display:flex;flex-direction:column;gap:0.55rem;">
+      <div class="glass-card reveal" style="padding:0.7rem 1rem;display:grid;grid-template-columns:140px 1fr 80px;gap:0.7rem;align-items:center;"><div style="display:flex;align-items:center;gap:6px;"><span class="kpi-red" style="width:8px;height:8px;"></span><p style="font-size:0.72rem;font-weight:700;color:#ef4444;">Capital Requirements</p></div><p style="font-size:0.7rem;color:#9baec8;">$793M capex FY2025; $1.6B cash may require dilutive raise if Meta slow. <em style="color:#576b88;">Mitigant: $27B deal visibility.</em></p><div style="text-align:center;"><p style="font-size:0.62rem;color:#576b88;">Severity</p><p style="font-size:1rem;font-weight:800;color:#ef4444;">HIGH</p></div></div>
+      <div class="glass-card reveal" style="padding:0.7rem 1rem;display:grid;grid-template-columns:140px 1fr 80px;gap:0.7rem;align-items:center;"><div style="display:flex;align-items:center;gap:6px;"><span class="kpi-red" style="width:8px;height:8px;"></span><p style="font-size:0.72rem;font-weight:700;color:#ef4444;">Customer Concentration</p></div><p style="font-size:0.7rem;color:#9baec8;">Meta = est. 40–60% of 2026 revenue. Any revision catastrophic. <em style="color:#576b88;">Mitigant: 2-year contract.</em></p><div style="text-align:center;"><p style="font-size:0.62rem;color:#576b88;">Severity</p><p style="font-size:1rem;font-weight:800;color:#ef4444;">HIGH</p></div></div>
+      <div class="glass-card reveal" style="padding:0.7rem 1rem;display:grid;grid-template-columns:140px 1fr 80px;gap:0.7rem;align-items:center;"><div style="display:flex;align-items:center;gap:6px;"><span class="kpi-amber" style="width:8px;height:8px;"></span><p style="font-size:0.72rem;font-weight:700;color:#facc15;">GPU Supply Constraints</p></div><p style="font-size:0.7rem;color:#9baec8;">NVDA allocation risk for H200/Blackwell. <em style="color:#576b88;">Mitigant: Strategic NVDA relationship + advance purchase commitments.</em></p><div style="text-align:center;"><p style="font-size:0.62rem;color:#576b88;">Severity</p><p style="font-size:1rem;font-weight:800;color:#facc15;">MED</p></div></div>
+      <div class="glass-card reveal" style="padding:0.7rem 1rem;display:grid;grid-template-columns:140px 1fr 80px;gap:0.7rem;align-items:center;"><div style="display:flex;align-items:center;gap:6px;"><span class="kpi-amber" style="width:8px;height:8px;"></span><p style="font-size:0.72rem;font-weight:700;color:#facc15;">Execution / Talent Risk</p></div><p style="font-size:0.7rem;color:#9baec8;">Rapid headcount scaling; Yandex diaspora integration across AMS, TLV, SFO. <em style="color:#576b88;">Mitigant: Strong engineering DNA.</em></p><div style="text-align:center;"><p style="font-size:0.62rem;color:#576b88;">Severity</p><p style="font-size:1rem;font-weight:800;color:#facc15;">MED</p></div></div>
+      <div class="glass-card reveal" style="padding:0.7rem 1rem;display:grid;grid-template-columns:140px 1fr 80px;gap:0.7rem;align-items:center;"><div style="display:flex;align-items:center;gap:6px;"><span class="kpi-green" style="width:8px;height:8px;"></span><p style="font-size:0.72rem;font-weight:700;color:#22c55e;">Regulatory / Geopolitical</p></div><p style="font-size:0.7rem;color:#9baec8;">Residual Yandex association. <em style="color:#576b88;">Mitigant: Full legal separation complete; Amsterdam HQ; management 100% non-Russian domicile.</em></p><div style="text-align:center;"><p style="font-size:0.62rem;color:#576b88;">Severity</p><p style="font-size:1rem;font-weight:800;color:#22c55e;">LOW</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: KPIs & CATALYSTS -->
+<div class="slide" data-slide="12">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:300px;height:300px;top:-50px;right:-50px;background:#C9A84C;opacity:0.07;"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:-30px;left:-30px;background:#4B8FD4;opacity:0.05;"></div>
+  </div>
+  <div class="content">
+    <div class="section-badge reveal">Catalysts & KPIs</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;margin:0.5rem 0 0.3rem;">What to Watch — Thesis Tracker</h2>
+    <div class="gold-line reveal" style="margin-bottom:1rem;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;">
+      <div>
+        <p style="font-size:0.65rem;color:#C9A84C;text-transform:uppercase;letter-spacing:0.09em;font-weight:700;margin-bottom:0.7rem;" class="reveal">Near-Term Catalysts</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <div style="display:flex;align-items:flex-start;gap:0.6rem;" class="reveal"><div class="tl-dot" style="margin-top:3px;"></div><div><p style="font-size:0.72rem;font-weight:700;color:#e8edf5;">Q2-2026 Earnings — Aug 6, 2026</p><p style="font-size:0.68rem;color:#576b88;">ARR must cross $3B to trigger BUY upgrade. Key: Meta revenue recognition pace.</p></div></div>
+          <div style="display:flex;align-items:flex-start;gap:0.6rem;" class="reveal"><div class="tl-dot" style="background:#4B8FD4;box-shadow:0 0 8px rgba(75,143,212,0.5);margin-top:3px;"></div><div><p style="font-size:0.72rem;font-weight:700;color:#e8edf5;">New Hyperscaler Contract</p><p style="font-size:0.68rem;color:#576b88;">Any 2nd anchor client materially reduces concentration risk and expands TAM narrative.</p></div></div>
+          <div style="display:flex;align-items:flex-start;gap:0.6rem;" class="reveal"><div class="tl-dot" style="background:#E8D5A0;box-shadow:0 0 8px rgba(232,213,160,0.4);margin-top:3px;"></div><div><p style="font-size:0.72rem;font-weight:700;color:#e8edf5;">Kazakhstan DC Commission (Q3-2026)</p><p style="font-size:0.68rem;color:#576b88;">Adds significant GPU capacity; validates geographic diversification strategy.</p></div></div>
+          <div style="display:flex;align-items:flex-start;gap:0.6rem;" class="reveal"><div class="tl-dot" style="background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,0.5);margin-top:3px;"></div><div><p style="font-size:0.72rem;font-weight:700;color:#e8edf5;">Gross Margin >52% Sustained</p><p style="font-size:0.68rem;color:#576b88;">2 consecutive quarters at >52% confirms operating leverage; removes bear case on economics.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:0.65rem;color:#4B8FD4;text-transform:uppercase;letter-spacing:0.09em;font-weight:700;margin-bottom:0.7rem;" class="reveal">KPIs to Monitor</p>
+        <table class="ic-table reveal">
+          <thead><tr><th>KPI</th><th>Watch Level</th><th>Now</th></tr></thead>
+          <tbody>
+            <tr><td style="color:#e8edf5;">ARR Run-Rate</td><td style="color:#C9A84C;">$3B+ = BUY</td><td><span class="kpi-status kpi-amber"></span></td></tr>
+            <tr><td style="color:#e8edf5;">Gross Margin</td><td style="color:#C9A84C;">&gt;50%</td><td><span class="kpi-status kpi-amber"></span></td></tr>
+            <tr><td style="color:#e8edf5;">CapEx / Rev</td><td style="color:#C9A84C;">&lt;200%</td><td><span class="kpi-status kpi-red"></span></td></tr>
+            <tr><td style="color:#e8edf5;">Top-1 Customer %</td><td style="color:#C9A84C;">&lt;40% rev</td><td><span class="kpi-status kpi-red"></span></td></tr>
+            <tr><td style="color:#e8edf5;">Cash Runway</td><td style="color:#C9A84C;">&gt;6 quarters</td><td><span class="kpi-status kpi-amber"></span></td></tr>
+            <tr><td style="color:#e8edf5;">NTM EV/Rev</td><td style="color:#C9A84C;">&lt;15x</td><td><span class="kpi-status kpi-red"></span></td></tr>
+          </tbody>
+        </table>
+        <div style="display:flex;gap:1rem;margin-top:0.5rem;font-size:0.65rem;color:#576b88;" class="reveal">
+          <span><span class="kpi-status kpi-green"></span> On Track</span>
+          <span><span class="kpi-status kpi-amber"></span> Watch</span>
+          <span><span class="kpi-status kpi-red"></span> Caution</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: RECOMMENDATION -->
+<div class="slide" data-slide="13">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:500px;height:500px;top:-100px;right:-80px;background:#C9A84C;opacity:0.11;"></div>
+    <div class="blob" style="width:320px;height:320px;bottom:-80px;left:-50px;background:#4B8FD4;opacity:0.09;"></div>
+    <div class="blob" style="width:220px;height:220px;top:35%;left:10%;background:#E8D5A0;opacity:0.07;"></div>
+  </div>
+  <canvas class="particle-canvas-ambient" style="position:absolute;inset:0;z-index:1;"></canvas>
+  <div class="content" style="text-align:center;">
+    <div class="section-badge reveal" style="display:inline-flex;margin-bottom:1rem;">Recommendation</div>
+    <h2 class="font-display reveal" style="font-size:clamp(1.8rem,4vw,3.2rem);font-weight:700;margin-bottom:0.4rem;">Investment Committee Decision</h2>
+    <div class="gold-line reveal" style="margin:0 auto 1.3rem auto;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0.9rem;margin-bottom:1.1rem;" class="reveal">
+      <div class="glass-card-gold" style="padding:1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Rating</p><span class="badge-hold glow-pulse" style="font-size:1.2rem;padding:8px 20px;">HOLD</span></div>
+      <div class="glass-card" style="padding:1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Price Target</p><p class="stat-glow" style="font-size:1.8rem;font-weight:800;color:#C9A84C;">$180</p></div>
+      <div class="glass-card" style="padding:1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Current Price</p><p style="font-size:1.8rem;font-weight:800;color:#e8edf5;">$216</p></div>
+      <div class="glass-card" style="padding:1rem;"><p style="font-size:0.62rem;color:#576b88;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Implied Return</p><p class="red-glow" style="font-size:1.8rem;font-weight:800;color:#ef4444;">–16.8%</p></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:750px;margin:0 auto;" class="reveal">
+      <div class="glass-card" style="padding:1rem;text-align:left;"><p style="font-size:0.68rem;color:#22c55e;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">✅ Path to BUY</p><ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;"><li style="font-size:0.7rem;color:#9baec8;display:flex;gap:5px;"><span style="color:#22c55e;">→</span>ARR surpasses $3B in Q2-2026</li><li style="font-size:0.7rem;color:#9baec8;display:flex;gap:5px;"><span style="color:#22c55e;">→</span>Second hyperscaler anchor client signed</li><li style="font-size:0.7rem;color:#9baec8;display:flex;gap:5px;"><span style="color:#22c55e;">→</span>Gross margin sustainably >52%</li><li style="font-size:0.7rem;color:#9baec8;display:flex;gap:5px;"><span style="color:#22c55e;">→</span>Stock corrects to $140–155 range</li></ul></div>
+      <div class="glass-card" style="padding:1rem;text-align:left;"><p style="font-size:0.68rem;color:#ef4444;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">⚠️ Path to SELL</p><ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;"><li style="font-size:0.7rem;color:#9baec8;display:flex;gap:5px;"><span style="color:#ef4444;">→</span>Meta contract delayed or revenue reduced</li><li style="font-size:0.7rem;color:#9baec8;display:flex;gap:5px;"><span style="color:#ef4444;">→</span>Equity raise at significant discount</li><li style="font-size:0.7rem;color:#9baec8;display:flex;gap:5px;"><span style="color:#ef4444;">→</span>Cash runway falls below 4 quarters</li><li style="font-size:0.7rem;color:#9baec8;display:flex;gap:5px;"><span style="color:#ef4444;">→</span>Gross margin below 42%</li></ul></div>
+    </div>
+    <p class="reveal" style="font-size:0.7rem;color:#576b88;margin-top:1rem;">WACC 19.03%  |  Terminal Growth 3.0%  |  Exit Multiple 18x EV/EBITDA (FY2032)  |  Next Catalyst: Aug 6, 2026</p>
+  </div>
+</div>
+
+<!-- SLIDE 14: CLOSING -->
+<div class="slide" data-slide="14">
+  <div class="gradient-mesh">
+    <div class="blob" style="width:480px;height:480px;top:-100px;right:-80px;background:#C9A84C;opacity:0.12;"></div>
+    <div class="blob" style="width:320px;height:320px;bottom:-80px;left:-60px;background:#4B8FD4;opacity:0.09;"></div>
+    <div class="blob" style="width:200px;height:200px;top:40%;left:8%;background:#E8D5A0;opacity:0.07;"></div>
+  </div>
+  <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:1;"></canvas>
+  <div class="content" style="text-align:center;">
+    <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/c7a5bac6a7acb8f1e662bd4bd05a8f1b44a0e393.jpg" alt="Nebius" style="height:clamp(2.5rem,5vh,4rem);object-fit:contain;margin-bottom:1.5rem;filter:brightness(0) invert(1);opacity:0.7;animation:float 3s ease-in-out infinite;" class="mx-auto reveal">
+    <h2 class="font-display reveal" style="font-size:clamp(2rem,4.5vw,3.8rem);font-weight:700;background:linear-gradient(135deg,#C9A84C 0%,#E8D5A0 45%,#C9A84C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.5rem;">Questions & Discussion</h2>
+    <p class="reveal" style="color:#576b88;letter-spacing:0.14em;text-transform:uppercase;font-size:0.82rem;margin-bottom:2rem;">Nebius Group (NBIS) · Initiating Coverage · May 22, 2026</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;max-width:650px;margin:0 auto;" class="reveal">
+      <div class="glass-card-gold" style="padding:0.75rem;"><p style="font-size:0.62rem;color:#576b88;margin-bottom:3px;">Rating</p><p style="font-weight:800;color:#facc15;">HOLD</p></div>
+      <div class="glass-card-gold" style="padding:0.75rem;"><p style="font-size:0.62rem;color:#576b88;margin-bottom:3px;">Price Target</p><p style="font-weight:800;color:#C9A84C;">$180</p></div>
+      <div class="glass-card-gold" style="padding:0.75rem;"><p style="font-size:0.62rem;color:#576b88;margin-bottom:3px;">Next Catalyst</p><p style="font-weight:800;color:#e8edf5;font-size:0.75rem;">Aug 6, 2026</p></div>
+    </div>
+    <p class="reveal" style="font-size:0.62rem;color:#576b88;margin-top:1.5rem;max-width:600px;margin-left:auto;margin-right:auto;">For internal investment committee use only. All projections are estimates based on publicly available data. Not investment advice.</p>
+  </div>
+</div>
+
+</div><!-- end .deck -->
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 14</span>
+</div>
+
+<script>
+  let current = 1;
+  const total = document.querySelectorAll('.slide').length;
+  const dotsContainer = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  for (let i = 1; i <= total; i++) { const dot = document.createElement('div'); dot.className = 'dot' + (i === 1 ? ' active' : ''); dot.onclick = () => goToSlide(i); dotsContainer.appendChild(dot); }
+  function goToSlide(n) { const prev = document.querySelector('.slide.active'); const next = document.querySelector(`.slide[data-slide="${n}"]`); if (prev) prev.classList.remove('active'); if (next) { next.classList.add('active'); animateSlide(next); } current = n; updateNav(); }
+  function changeSlide(dir) { let n = current + dir; if (n < 1) n = total; if (n > total) n = 1; goToSlide(n); }
+  function updateNav() { document.querySelectorAll('.dot').forEach((d, i) => { d.classList.toggle('active', i + 1 === current); }); counter.textContent = current + ' / ' + total; }
+  document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); } });
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => { const diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1); });
+  function animateSlide(slide) {
+    slide.querySelectorAll('.reveal').forEach((el, i) => { el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = 'translateY(18px)'; el.offsetHeight; const delay = i * 0.075; el.style.transition = `opacity 0.35s ease ${delay}s, transform 0.35s ease ${delay}s`; el.style.opacity = '1'; el.style.transform = 'translateY(0px)'; });
+    animateSlideEffects(slide);
+  }
+  function animateSlideEffects(slide) {
+    slide.querySelectorAll('[data-count]:not(.counted)').forEach(el => { el.classList.add('counted'); const target = parseInt(el.dataset.count); const suffix = el.dataset.suffix || '', prefix = el.dataset.prefix || ''; let cur = 0; const step = target / 40; const timer = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(timer); } el.textContent = prefix + Math.round(cur).toLocaleString() + suffix; }, 30); });
+    slide.querySelectorAll('.bar-fill:not(.fill-init)').forEach((bar, i) => { bar.classList.add('fill-init'); const targetW = bar.dataset.width || bar.style.width; bar.style.width = '0%'; bar.style.transition = `width 1.2s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s`; bar.offsetHeight; bar.style.width = targetW; });
+    slide.querySelectorAll('.line-path:not(.line-init)').forEach(line => { line.classList.add('line-init'); line.style.transition = 'stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1)'; line.style.strokeDashoffset = '0'; const svg = line.closest('svg'); if (svg) { const area = svg.querySelector('.line-area'); if (area) area.style.opacity = '1'; const dots = svg.querySelector('.line-dots'); if (dots) setTimeout(() => { dots.style.opacity = '1'; }, 1800); } });
+    slide.querySelectorAll('.radar-shape:not(.radar-init)').forEach(shape => { shape.classList.add('radar-init'); shape.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.16,1,0.3,1)'; shape.style.strokeDashoffset = '0'; const dots = shape.closest('svg')?.querySelector('.radar-dots'); if (dots) setTimeout(() => { dots.style.opacity = '1'; }, 1200); });
+  }
+  document.addEventListener('mousemove', (e) => { const s = document.querySelector('.mouse-spotlight'); if (s) s.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(201,168,76,0.055), transparent 40%)`; });
+  (function() { let mx = window.innerWidth / 2, my = window.innerHeight / 2; const cx = window.innerWidth / 2, cy = window.innerHeight / 2; document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; }); (function tick() { const ox = (mx - cx) / cx, oy = (my - cy) / cy; document.querySelectorAll('.deco-shape').forEach(s => { const speed = parseFloat(s.dataset.speed) || 0.03; s.style.transform = `translate(${ox * speed * 100}px, ${oy * speed * 100}px)`; }); requestAnimationFrame(tick); })(); })();
+  window.initParticles = function(canvas, opts) { if (!canvas) return; const ctx = canvas.getContext('2d'); canvas.width = canvas.offsetWidth || window.innerWidth; canvas.height = canvas.offsetHeight || window.innerHeight; const interactive = opts.interactive !== false; const count = opts.count || (interactive ? 50 : 18); let mx = -1000, my = -1000; const particles = Array.from({ length: count }, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, size: Math.random() * 2.2 + 0.8, alpha: Math.random() * 0.3 + 0.08 })); if (interactive) { canvas.addEventListener('mousemove', (e) => { const r = canvas.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; }); canvas.addEventListener('mouseleave', () => { mx = -1000; my = -1000; }); } (function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { if (interactive) { const dx = p.x - mx, dy = p.y - my, dist = Math.sqrt(dx * dx + dy * dy); if (dist < 110) { const f = (110 - dist) / 110 * 2; p.vx += (dx / dist) * f * 0.1; p.vy += (dy / dist) * f * 0.1; } } p.vx *= 0.98; p.vy *= 0.98; p.x += p.vx; p.y += p.vy; if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0; if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fillStyle = `rgba(201,168,76,${p.alpha})`; ctx.fill(); }); requestAnimationFrame(animate); })(); };
+  document.querySelectorAll('.particle-canvas').forEach(c => window.initParticles(c, { interactive: true, count: 50 }));
+  document.querySelectorAll('.particle-canvas-ambient').forEach(c => window.initParticles(c, { interactive: false, count: 18 }));
+  try { animateSlide(document.querySelector('.slide.active')); } catch(e) { console.warn(e); }
+</script>
+</body>
+</html>
