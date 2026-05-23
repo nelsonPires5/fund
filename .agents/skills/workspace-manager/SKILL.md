@@ -93,6 +93,7 @@ Each run gets a manifest:
     "model": "model.xlsx",
     "outputs": "outputs.json",
     "report": "report.md",
+    "deck_html": "deck.html",
     "deck": "deck.pptx"
   },
   "notes": ""
