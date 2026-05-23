@@ -3,7 +3,7 @@
 Build a standalone HTML presentation from a small JSON spec.
 
 Usage:
-  node skills/html-presentation-author/scripts/build-deck.js deck.spec.json deck/index.html
+  node skills/html-presentation-author/scripts/build-deck.js deck.spec.json deck.html
 
 Spec shape:
 {
@@ -21,7 +21,7 @@ const path = require('path');
 
 const [specArg, htmlArg] = process.argv.slice(2);
 if (!specArg || !htmlArg) {
-  console.error('Usage: node skills/html-presentation-author/scripts/build-deck.js <deck.spec.json> <deck/index.html>');
+  console.error('Usage: node skills/html-presentation-author/scripts/build-deck.js <deck.spec.json> <deck.html>');
   process.exit(2);
 }
 
