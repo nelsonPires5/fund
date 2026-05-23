@@ -80,9 +80,27 @@ Recalculate valuation with updated estimates:
 - New price target (if changed) with methodology
 - Upside/downside to current price
 
-### Step 6: Output
+### Step 6: Validation and Output
+
+After updating the workbook:
+
+1. Run workbook recalculation and formula-error scan (`recalc.py`).
+2. Run `validate_model.py` to catch model-sanity errors:
+   - active output cells contain no Excel errors
+   - Summary target/base case ties to active DCF/Scenarios outputs
+   - scenario ordering is logical (Bear ≤ Base ≤ Bull for values/returns)
+   - rating/recommendation is consistent with base upside and 1Y/3Y return thresholds, unless an explicit override note is documented
+   - 1Y return and 3Y IRR math ties
+   - terminal value, WACC/Ke, revenue-driver, BS, and CF checks pass
+3. Regenerate `outputs.json` from recalculated workbook cells only.
+4. Run `validate_outputs.py` to verify `outputs.json` equals workbook cells.
+5. If `report.md`, `deck.spec.json`, `deck.html`, or `deck.pptx` exists, run `validate_artifacts.py` and update downstream artifacts or flag that they are stale.
+
+Outputs:
 
 - Updated Excel model (if user provides the existing model)
+- Regenerated `<run>/outputs.json` and model extracts when a run folder exists
+- Passing validation scripts under `<run>/data/scripts/validation/`
 - Estimate change summary (markdown or Word)
 - Updated price target derivation
 
@@ -94,3 +112,5 @@ Recalculate valuation with updated estimates:
 - If the quarter was noisy, separate signal from noise in your estimate changes
 - Check consensus after updating — how do your revised estimates compare to the Street?
 - Share count matters — dilution from stock comp, converts, or buybacks can materially affect EPS
+- Do not leave a stale rating/price-target mismatch: if the update creates a Buy with base-case downside or a Sell with base-case upside, either change the rating/target or document an explicit override and flag it in validation output
+- Do not deliver updated reports/decks until `outputs.json` and downstream artifact validations pass
