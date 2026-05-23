@@ -1,1 +1,6 @@
 .antigravitycli
+.DS_Store
+# Raw source captures are reproducible / large and should not be committed.
+# Current convention is run-local raw data; the company-level rule prevents old layouts from leaking.
+sectors/*/companies/*/runs/*/data/
+sectors/*/companies/*/data/

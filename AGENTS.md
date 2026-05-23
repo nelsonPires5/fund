@@ -17,20 +17,23 @@ Use this layout:
 ```text
 sectors/<sector>/companies/<ticker>/
   company.json
-  data/
-    raw/
-      koyfin/
-    normalized/
   runs/
     <yyyy-mm-dd>-<run-type>/
       manifest.json
+      data/
+        raw/              # source captures; do not commit
+          koyfin/
+        normalized/       # optional cleaned/model-ready data
+      assets/
+        charts/           # report/deck-ready charts and analysis images
+        screenshots/      # selected screenshots used as visuals
       model.xlsx
       outputs.json
       report.md
       deck.pptx
 ```
 
-`deck.pptx` is optional and only present when a presentation is requested.
+`deck.pptx` is optional and only present when a presentation is requested. `assets/` is for curated visuals used in `report.md` and presentations; raw captures stay under run-local `data/raw/`.
 
 ## `company.json`
 
@@ -87,12 +90,15 @@ Use descriptive run ids:
 - Every material number in a deck should trace to the model or `outputs.json`.
 - Treat presentations as point-in-time snapshots. Do not make them the source of truth.
 
-## Data conventions
+## Data and asset conventions
 
-- Put downloaded/source files under `data/raw/`.
-- Put cleaned model-ready CSVs under `data/normalized/`.
-- Koyfin exports should live under `data/raw/koyfin/` unless normalized.
+- Put downloaded/source files under the active run's `data/raw/`.
+- Do not commit `runs/*/data/raw/`; it is ignored by `.gitignore`.
+- Put cleaned model-ready CSVs under the active run's `data/normalized/` when they are stable enough to audit or reuse.
+- Koyfin exports should live under `<run>/data/raw/koyfin/` unless normalized.
 - Preserve source filenames where possible.
+- Put report/deck-ready visuals under `<run>/assets/charts/` or `<run>/assets/screenshots/`.
+- Do not embed raw screenshots directly from `data/raw/` in deliverables; copy/select/generate the final visual under `assets/` first.
 
 ## Agent rules
 
