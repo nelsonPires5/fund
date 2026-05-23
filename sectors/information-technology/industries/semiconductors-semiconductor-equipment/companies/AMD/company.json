@@ -1,0 +1,16 @@
+{
+  "company_name": "Advanced Micro Devices, Inc.",
+  "ticker": "AMD",
+  "exchange": "NASDAQ",
+  "sector": "information-technology",
+  "subsector": "processors / GPUs / CPUs",
+  "currency": "USD",
+  "fiscal_year_end": "12-31",
+  "koyfin_id": "AMD US",
+  "sec_cik": "0000002488",
+  "status": "active",
+  "owned": false,
+  "latest_run_id": "2026-05-13-initial-coverage",
+  "notes": "Use USD millions unless stated otherwise.",
+  "industry": "semiconductors-semiconductor-equipment"
+}

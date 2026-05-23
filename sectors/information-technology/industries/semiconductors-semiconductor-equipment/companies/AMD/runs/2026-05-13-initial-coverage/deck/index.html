@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="slides-format" content="viewport">
+    <title>AMD Investment Committee – Initiating Coverage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #020617;
+            --color-surface: #0f172a;
+            --color-text: #e5e7eb;
+            --color-text-muted: #94a3b8;
+            --color-accent-1: #f97316;
+            --color-accent-2: #22c55e;
+            --color-accent-3: #38bdf8;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; height: 100%; width: 100%; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top left, #1e293b 0, #020617 55%);
+            color: var(--color-text);
+            overflow: hidden;
+        }
+        .deck { position: relative; width: 100vw; height: 100vh; }
+        .slide {
+            position: absolute;
+            inset: 0;
+            padding: clamp(1.5rem,4vw,3.5rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.97) translateY(10px);
+            transition: opacity .6s ease, transform .6s ease;
+            pointer-events: none;
+        }
+        .slide.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+        .slide-inner {
+            max-width: 1120px;
+            width: 100%;
+            background: radial-gradient(circle at top left, rgba(15,23,42,0.96), rgba(15,23,42,0.92));
+            border-radius: 24px;
+            padding: clamp(1.8rem,3vw,2.8rem);
+            border: 1px solid rgba(148,163,184,0.35);
+            box-shadow: 0 28px 80px rgba(15,23,42,0.9);
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-inner::before {
+            content: '';
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle at 0 0, rgba(56,189,248,0.08), transparent 55%),
+                        radial-gradient(circle at 100% 100%, rgba(249,115,22,0.1), transparent 55%);
+            opacity: 0.9;
+            z-index: -1;
+        }
+        h1, h2 { font-family: 'Instrument Serif', 'Times New Roman', serif; margin: 0 0 .75rem; }
+        h1 { font-size: clamp(2.6rem, 4.5vw, 3.6rem); letter-spacing: .02em; }
+        h2 { font-size: clamp(2rem, 3vw, 2.4rem); }
+        p { margin: 0 0 .5rem; line-height: 1.4; font-size: .98rem; }
+        .kicker { text-transform: uppercase; letter-spacing: .28em; font-size: .7rem; color: var(--color-text-muted); margin-bottom: .75rem; }
+        .muted { color: var(--color-text-muted); }
+        .pill { display: inline-flex; align-items: center; gap: .4rem; padding: .25rem .75rem; border-radius: 999px; font-size: .75rem; border: 1px solid rgba(148,163,184,0.5); background: rgba(15,23,42,0.85); }
+        .pill-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--color-accent-2); }
+        .grid-2 { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.6rem; margin-top: 1.4rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.4rem; margin-top: 1.4rem; }
+        .card {
+            background: radial-gradient(circle at top left, rgba(15,23,42,0.9), rgba(15,23,42,0.96));
+            border-radius: 18px;
+            border: 1px solid rgba(148,163,184,0.35);
+            padding: 1rem 1.1rem;
+            font-size: .9rem;
+        }
+        .card h3 { margin: 0 0 .35rem; font-size: 1rem; }
+        .stat { font-size: 1.8rem; font-weight: 800; color: var(--color-accent-2); margin-bottom: .25rem; }
+        .stat-label { font-size: .8rem; text-transform: uppercase; letter-spacing: .16em; color: var(--color-text-muted); }
+        ul { padding-left: 1.2rem; margin: .4rem 0 0; }
+        li { margin-bottom: .28rem; font-size: .9rem; }
+        .nav-controls {
+            position: fixed;
+            left: 50%;
+            bottom: 18px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.94);
+            border: 1px solid rgba(148,163,184,0.5);
+            box-shadow: 0 14px 40px rgba(15,23,42,0.9);
+            z-index: 40;
+        }
+        .nav-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15,23,42,0.9);
+            color: var(--color-text);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        .nav-btn:hover { background: rgba(30,64,175,0.9); }
+        .dots { display: flex; gap: 6px; }
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(148,163,184,0.7);
+            cursor: pointer;
+            transition: transform .2s ease, background .2s ease;
+        }
+        .dot.active { transform: scale(1.35); background: var(--color-accent-1); }
+        .counter { font-size: .75rem; color: var(--color-text-muted); min-width: 52px; text-align: center; }
+        .reveal { opacity: 0; transform: translateY(10px); }
+        @media (max-width: 900px) {
+            .slide-inner { border-radius: 18px; padding: 1.4rem 1.35rem; }
+            .grid-2 { grid-template-columns: minmax(0,1fr); }
+            .grid-3 { grid-template-columns: minmax(0,1fr); }
+        }
+    </style>
+</head>
+<body>
+<div class="deck">
+    <section class="slide active" data-slide="1">
+        <div class="slide-inner">
+            <div class="kicker reveal">Investment Committee — Semiconductors / AI Infrastructure</div>
+            <h1 class="reveal">AMD Initiating Coverage</h1>
+            <p class="muted reveal" style="max-width:640px; font-size:.95rem;">BUY rating, 12–18 month price target of 540, implying ~21% upside from the current price of 445.50. Thesis driven by AI accelerator share gains, EPYC server CPU dominance, and accelerating free cash flow generation.</p>
+            <div style="margin-top:1.6rem; display:flex; flex-wrap:wrap; gap:.7rem; align-items:center;" class="reveal">
+                <span class="pill"><span class="pill-dot"></span> NASDAQ: AMD</span>
+                <span class="pill"><span class="pill-dot" style="background:var(--color-accent-1);"></span> As of 13 May 2026</span>
+                <span class="pill"><span class="pill-dot" style="background:var(--color-accent-3);"></span> IC Presentation Draft</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="2">
+        <div class="slide-inner">
+            <div class="kicker reveal">Agenda</div>
+            <h2 class="reveal">Session Objectives & Flow</h2>
+            <div class="grid-2">
+                <div class="card reveal">
+                    <h3>Session Objectives</h3>
+                    <ul>
+                        <li>Review AMD's positioning in AI infrastructure and server compute.</li>
+                        <li>Walk through Base / Bull / Bear cases and valuation framework.</li>
+                        <li>Debate key risks, position sizing, and portfolio fit.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>Agenda</h3>
+                    <ul>
+                        <li>Company snapshot & industry context.</li>
+                        <li>Investment thesis & pillars tracker.</li>
+                        <li>Financials, DCF and comps valuation.</li>
+                        <li>Scenarios, risks, and IC discussion points.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="3">
+        <div class="slide-inner">
+            <div class="kicker reveal">Company Snapshot</div>
+            <h2 class="reveal">AMD at a Glance</h2>
+            <div class="grid-3">
+                <div class="card reveal">
+                    <div class="stat">~726B</div>
+                    <div class="stat-label">Equity Value (USD)</div>
+                    <p class="muted">Fabless CPU / GPU leader with Data Center now ~48% of revenue (FY2025) and the primary growth engine.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="stat">34.6B</div>
+                    <div class="stat-label">FY2025 Revenue</div>
+                    <p class="muted">Revenue +34% YoY in 2025, driven by Data Center and Xilinx uplift; Q1 2026 revenue 10.25B, +38% YoY.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="stat">52–53%</div>
+                    <div class="stat-label">Non-GAAP Gross Margin</div>
+                    <p class="muted">Mix shifting rapidly toward high-margin Data Center accelerators and EPYC server CPUs.</p>
+                </div>
+            </div>
+            <p class="muted reveal" style="margin-top:1.4rem; font-size:.85rem;">Business mix: Data Center, Client, Gaming and Embedded; manufacturing outsourced to TSMC (2.9% CapEx / revenue fabless model).</p>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="4">
+        <div class="slide-inner">
+            <div class="kicker reveal">Investment Thesis</div>
+            <h2 class="reveal">Three-Pillar AMD Thesis</h2>
+            <div class="grid-3">
+                <div class="card reveal">
+                    <h3>Pillar 1: AI Accelerators</h3>
+                    <p>AMD is the credible #2 AI GPU vendor. Instinct MI300 / MI400 qualified at major hyperscalers (Meta, OpenAI, Azure, Google, Oracle), with Meta alone planning up to 6 GW of Instinct deployments.</p>
+                </div>
+                <div class="card reveal">
+                    <h3>Pillar 2: EPYC CPUs</h3>
+                    <p>EPYC server CPUs have surpassed ~40% revenue share, with AMD projecting server CPU TAM growing &gt;35% annually to 120B+ by 2030; 2026 EPYC inventory is effectively sold out.</p>
+                </div>
+                <div class="card reveal">
+                    <h3>Pillar 3: FCF & Margins</h3>
+                    <p>Fabless model and Data Center mix drive FCF from 1.1B (2023) to 6.7B (2025) and a modeled &gt;13B in 2026E, with non-GAAP gross margin trending to mid-50s.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="5">
+        <div class="slide-inner">
+            <div class="kicker reveal">Industry Context</div>
+            <h2 class="reveal">AI Infrastructure Super-Cycle</h2>
+            <div class="grid-2">
+                <div class="card reveal">
+                    <h3>Market Backdrop</h3>
+                    <ul>
+                        <li>Global semiconductor revenue ~800B in 2025, +17.6% YoY, driven largely by AI infrastructure.</li>
+                        <li>AI-in-semiconductor was 71.9B in 2024 and is projected to exceed 320B by 2033 (18%+ CAGR).</li>
+                        <li>Fabless model offers structurally higher margins and lower CapEx vs IDMs / foundries.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>AMD's Role</h3>
+                    <ul>
+                        <li>Primary alternative to NVIDIA in AI accelerators and to Intel in server CPUs.</li>
+                        <li>Leverages TSMC leading-edge nodes without owning fabs; benefits from industry capex without balance sheet drag.</li>
+                        <li>Well positioned across AI GPUs, server CPUs, adaptive SoCs and embedded compute.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="6">
+        <div class="slide-inner">
+            <div class="kicker reveal">Business Mix</div>
+            <h2 class="reveal">Shift to Data Center Economics</h2>
+            <div class="grid-2">
+                <div class="card reveal">
+                    <h3>Segment Revenue (FY2025)</h3>
+                    <ul>
+                        <li>Data Center: ~16.6B (~48% of total), +30%+ 2Y CAGR.</li>
+                        <li>Client: ~10.6B, recovering on AI PC cycle.</li>
+                        <li>Gaming: ~3.9B, steady to slightly down as consoles mature.</li>
+                        <li>Embedded: ~3.5B, normalizing post-Xilinx-led inventory digestion.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>Q1 2026 Run-Rate</h3>
+                    <ul>
+                        <li>Total revenue 10.25B (+38% YoY); Data Center 5.8B (+57% YoY), now 57% of mix.</li>
+                        <li>Q2 2026 guidance 11.2B (+46% YoY), ahead of consensus, with Data Center as primary driver.</li>
+                        <li>Mix shift underpins gross margin and FCF expansion in Base and Bull cases.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="7">
+        <div class="slide-inner">
+            <div class="kicker reveal">Financials</div>
+            <h2 class="reveal">Growth, Margins & Cash Generation</h2>
+            <div class="grid-3">
+                <div class="card reveal">
+                    <div class="stat">23.5%</div>
+                    <div class="stat-label">3Y Revenue CAGR</div>
+                    <p class="muted">Revenue grew from 22.7B (2023) to 34.6B (2025) as AI and EPYC scaled.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="stat">19%</div>
+                    <div class="stat-label">FY2025 FCF Margin</div>
+                    <p class="muted">FCF rose from 1.1B (2023) to 6.7B (2025); Base case &gt;26% FCF margin by 2026E.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="stat">&lt;3%</div>
+                    <div class="stat-label">CapEx / Revenue</div>
+                    <p class="muted">Fabless model keeps CapEx low (2.8–4% of sales), allowing growth to fund itself.</p>
+                </div>
+            </div>
+            <p class="muted reveal" style="margin-top:1.1rem; font-size:.85rem;">Balance sheet: effectively net cash, with goodwill / intangibles from Xilinx depressing GAAP ROE but not cash economics.</p>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="8">
+        <div class="slide-inner">
+            <div class="kicker reveal">Valuation</div>
+            <h2 class="reveal">DCF & Comps – 540 Target Price</h2>
+            <div class="grid-2">
+                <div class="card reveal">
+                    <h3>DCF (Base Case)</h3>
+                    <ul>
+                        <li>WACC 9.54%, terminal growth 3.0% (nominal GDP anchor).</li>
+                        <li>UFCF grows from ~6.8B (2026E) to ~32B (2030E).</li>
+                        <li>Perpetuity method implies ~553 per share; exit multiple cross-check (25x 2030E EBITDA) supports upside.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>Trading Comps</h3>
+                    <ul>
+                        <li>Peer set: NVIDIA, Broadcom, Qualcomm, Micron, Arm.</li>
+                        <li>Applying 60x FY2026E EPS and 37x FY2026E EBITDA yields implied value ~544 per share.</li>
+                        <li>50 / 50 blend of DCF and comps underpins 540 12–18 month target.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="9">
+        <div class="slide-inner">
+            <div class="kicker reveal">Scenarios</div>
+            <h2 class="reveal">Bull / Base / Bear Valuation Range</h2>
+            <div class="grid-3">
+                <div class="card reveal">
+                    <h3>Bull Case</h3>
+                    <ul>
+                        <li>Faster MI400 ramp; second OpenAI-scale win; EPYC &gt;50% server share.</li>
+                        <li>2026E revenue ~56B; 2027E ~98B.</li>
+                        <li>Terminal EBITDA margin ~38%; implied value ~740 per share.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>Base Case</h3>
+                    <ul>
+                        <li>MI400 ramps on plan; EPYC share gains continue; AI capex normalizes but remains strong.</li>
+                        <li>2026E revenue ~49B; 2027E ~75B.</li>
+                        <li>FCF &gt;13B in 2026E; implied value ~540 per share.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>Bear Case</h3>
+                    <ul>
+                        <li>CUDA moat widens, export controls tighten, AI capex slows sharply.</li>
+                        <li>2026E revenue ~40B; slower margin expansion.</li>
+                        <li>Valuation compresses toward ~280 per share.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="10">
+        <div class="slide-inner">
+            <div class="kicker reveal">Thesis Tracker</div>
+            <h2 class="reveal">Key Pillars & KPIs to Monitor</h2>
+            <div class="grid-2">
+                <div class="card reveal">
+                    <h3>AI Accelerators</h3>
+                    <ul>
+                        <li>Data Center revenue per quarter: Base &gt;7.5B, Bull &gt;10B; Bear signal &lt;4.5B.</li>
+                        <li>AI GPU revenue: Base &gt;5B by 2027; Instinct share &gt;10% (Bull &gt;12%).</li>
+                        <li>MI400 Helios qual progress and volume deployments at hyperscalers.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>EPYC & Margins</h3>
+                    <ul>
+                        <li>Server CPU share: Base &gt;45%, Bull &gt;50%; any sustained decline is a red flag.</li>
+                        <li>Non-GAAP gross margin: Base 55–56%; Bear signal &lt;53%.</li>
+                        <li>FCF: Base &gt;13B 2026E; Bear signal &lt;8B.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="11">
+        <div class="slide-inner">
+            <div class="kicker reveal">Risks</div>
+            <h2 class="reveal">What Can Go Wrong?</h2>
+            <div class="grid-2">
+                <div class="card reveal">
+                    <h3>Strategic & Competitive</h3>
+                    <ul>
+                        <li>NVIDIA's CUDA ecosystem remains dominant; hyperscalers under-invest in ROCm, capping AMD GPU share &lt;8%.</li>
+                        <li>Custom ASICs (Broadcom, in-house TPUs) displace off-the-shelf GPUs faster than expected.</li>
+                        <li>Intel's 18A node recovery slows EPYC share gains in CPUs.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>Macro, Policy & Execution</h3>
+                    <ul>
+                        <li>US export controls on high-end accelerators to China tighten further, limiting TAM.</li>
+                        <li>Hyperscaler AI capex pulls back if AI ROI disappoints beyond 2026.</li>
+                        <li>TSMC / Taiwan geopolitical concentration remains a non-diversifiable tail risk.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="12">
+        <div class="slide-inner">
+            <div class="kicker reveal">IC Discussion</div>
+            <h2 class="reveal">Framing the Decision</h2>
+            <div class="grid-2">
+                <div class="card reveal">
+                    <h3>Key Questions</h3>
+                    <ul>
+                        <li>How much portfolio risk are we willing to allocate to AI infrastructure cyclicality at this stage of the cycle?</li>
+                        <li>Are we comfortable underwriting AMD as a structural #2 in accelerators, or do we view CUDA as an enduring monopoly?</li>
+                        <li>Is current valuation (mid-40s forward P/E) appropriate given 40%+ revenue growth and FCF ramp, or already pricing in the Base case?</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>Preliminary Recommendation</h3>
+                    <ul>
+                        <li>Initiate / maintain a BUY with a 540 12–18 month target.</li>
+                        <li>Size as a core AI infrastructure position, with risk budgeted alongside NVIDIA and Broadcom exposure.</li>
+                        <li>Use KPI-based thesis tracker; revisit sizing if Data Center revenue or EPYC share underperform thresholds.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="13">
+        <div class="slide-inner">
+            <div class="kicker reveal">Closing</div>
+            <h2 class="reveal">AMD: High-Quality Levered Play on AI Infrastructure</h2>
+            <p class="reveal" style="max-width:720px; font-size:.96rem;">AMD offers a leveraged way to participate in the AI infrastructure super-cycle with a diversified CPU / GPU / FPGA portfolio, improving financial quality, and an attractive risk / reward skew around a 540 Base-case valuation. The key to underwriting the name is disciplined tracking of Data Center KPIs, EPYC share, and hyperscaler AI capex trends.</p>
+            <p class="muted reveal" style="margin-top:1.5rem; font-size:.85rem;">Next steps: confirm position size within the AI sleeve, agree on trigger levels for adding / trimming, and align on KPI dashboard cadence for ongoing monitoring.</p>
+        </div>
+    </section>
+</div>
+
+<div class="nav-controls">
+    <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+    <div class="dots" id="dots"></div>
+    <div class="counter" id="counter">1 / 13</div>
+    <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+</div>
+
+<script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let current = 0;
+    const dotsContainer = document.getElementById('dots');
+    const counterEl = document.getElementById('counter');
+
+    slides.forEach((_, idx) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (idx === 0 ? ' active' : '');
+        d.addEventListener('click', () => goTo(idx));
+        dotsContainer.appendChild(d);
+    });
+
+    function updateUI() {
+        slides.forEach((s, i) => s.classList.toggle('active', i === current));
+        Array.from(dotsContainer.children).forEach((d, i) => d.classList.toggle('active', i === current));
+        counterEl.textContent = (current + 1) + ' / ' + slides.length;
+        const active = slides[current];
+        const els = active.querySelectorAll('.reveal');
+        els.forEach((el, i) => {
+            el.style.transition = 'none';
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(10px)';
+            void el.offsetHeight;
+            const delay = 80 * i;
+            setTimeout(() => {
+                el.style.transition = 'opacity .35s ease, transform .35s ease';
+                el.style.opacity = 1;
+                el.style.transform = 'translateY(0)';
+            }, delay);
+        });
+    }
+
+    function goTo(idx) {
+        if (idx < 0) idx = slides.length - 1;
+        if (idx >= slides.length) idx = 0;
+        current = idx;
+        updateUI();
+    }
+
+    function changeSlide(delta) { goTo(current + delta); }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+    });
+
+    let touchStartX = null;
+    document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; });
+    document.addEventListener('touchend', e => {
+        if (touchStartX == null) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 50) changeSlide(dx < 0 ? 1 : -1);
+        touchStartX = null;
+    });
+
+    updateUI();
+</script>
+
+</body>
+</html>

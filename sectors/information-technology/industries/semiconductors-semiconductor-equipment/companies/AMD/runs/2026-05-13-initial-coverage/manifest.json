@@ -1,0 +1,24 @@
+{
+  "run_id": "2026-05-13-initial-coverage",
+  "run_type": "initial-coverage",
+  "company_ticker": "AMD",
+  "created_at": "2026-05-13",
+  "source_files": [
+    "AMD_Initiation_Coverage_May2026.xlsx",
+    "AMD Initiating Coverage \u2014 BUY, $540 Price Target.md",
+    "AMD_IC_Presentation_AMD.html"
+  ],
+  "artifacts": {
+    "raw_data": "data/raw/",
+    "scripts": "data/scripts/",
+    "intermediate": "data/intermediate/",
+    "normalized_data": "data/normalized/",
+    "model_extracts": "data/normalized/model_extracts/",
+    "assets": "assets/",
+    "model": "model.xlsx",
+    "outputs": "outputs.json",
+    "report": "report.md",
+    "deck": "deck/index.html"
+  },
+  "notes": "Imported from legacy financial reports folder."
+}
