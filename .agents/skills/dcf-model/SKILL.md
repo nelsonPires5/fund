@@ -61,14 +61,17 @@ This applies to every merged section header in the DCF (market data, scenario bl
 - **Highlight the center cell** with the medium-blue fill (`#BDD7EE`) + bold font so it's immediately visible which cell is the base case.
 - Populate ALL cells (typically 3 tables × 25 cells = 75) with full DCF recalculation formulas
 - Use openpyxl loops (or Office JS loops) to write formulas programmatically
-- NO placeholder text, NO linear approximations, NO manual steps required
+- NO placeholder text, NO linear/scalar approximations, NO manual steps required
 - Each cell must recalculate full DCF for that assumption combination
+- Center cell must validate against base DCF output; any scalar approximation must be explicitly labeled
+- Stricter number formats: per-share values at 2 decimals in sensitivity grids
 
 **Cell Comments:**
 - Add cell comments AS each hardcoded value is created
-- Format: "Source: [System/Document], [Date], [Reference], [URL if applicable]"
-- Every blue input must have a comment before moving to next section
+- Format: "Source: [System/Document], [Date], [Reference], [URL if applicable] | Rationale: [specific reason for this line+quarter+scenario value]"
+- Every bright blue editable input must have a comment with both source and rationale before moving to next section
 - Do not defer to end or write "TODO: add source"
+- Do not use wide note columns for per-cell assumption rationale; rationale goes in the cell comment
 
 **Model Layout Planning:**
 - Define ALL section row positions BEFORE writing any formulas
@@ -79,18 +82,20 @@ This applies to every merged section header in the DCF (market data, scenario bl
 
 **Formula Recalculation and Validation:**
 - Run `python recalc.py model.xlsx 30` before delivery. Use the bundled script at `scripts/recalc.py` from this skill, or copy it into `<run>/data/scripts/validation/recalc.py` for auditability.
+- `recalc.py` must use **LibreOffice headless** (or native Excel calculation when operating inside live Excel) to open/recalculate/save the workbook first, then inspect recalculated cell values for errors. Do not rely only on openpyxl formula-text scanning for final validation.
 - Fix ALL errors until status is "success".
 - Zero formula errors required (#REF!, #DIV/0!, #VALUE!, etc.).
+- After every fix, rerun LibreOffice headless recalculation and re-scan the recalculated workbook. Validate that prior errors are gone before proceeding.
 - After recalc succeeds, run `validate_model.py` before generating `outputs.json`.
 - After `outputs.json` is generated from recalculated workbook cells, run `validate_outputs.py`.
 - If report/deck artifacts already exist or are being delivered, run `validate_artifacts.py` after they are built.
 
-**Scenario Blocks and Return Framework:**
-- Create separate blocks for Bear/Base/Bull cases.
-- Show assumptions horizontally across projection years within each block.
-- Use IF formulas or a clean case selector/consolidation column: `=IF($B$6=1,[Bear cell],IF($B$6=2,[Base cell],[Bull cell]))`.
-- Verify formulas reference correct scenario block cells.
-- Build a dedicated `Scenarios` sheet for forward-return analysis. It MUST include 1-year return and 3-year return/IRR for Bear/Base/Bull cases, plus exit-multiple scenarios across holding periods.
+**Scenario Architecture:**
+- Three separate scenario model sheets: `Model - Bear`, `Model - Base`, `Model - Bull`, all generated from the same template and all read-only from `Drivers & Assumptions`. User never edits model sheets directly.
+- `Drivers & Assumptions` holds common + company-specific driver assumptions with quarterly, line-item-specific Bear/Base/Bull values.
+- No in-sheet scenario rows or case selectors; each sheet is a self-contained full quarterly P&L/BS/CF for one scenario.
+- The `DCF` sheet references the three model sheets to compute Bear/Base/Bull price targets — one set of DCF calculations that reads from `Model - Bear`, `Model - Base`, `Model - Bull`.
+- Build a dedicated `Scenarios` sheet for forward-return analysis. It MUST include 1-year return and 3-year return/IRR for Bear/Base/Bull cases, plus exit-multiple scenarios across holding periods. Sources DCF values from `DCF`.
 - Surface the same 1-year and 3-year return/IRR outputs at the top of `Summary` so the user sees the return setup before detailed financials.
 
 ## DCF Process Workflow
@@ -136,7 +141,7 @@ FCF margin: X%
 
 **Primitive-first methodology (required):**
 1. Identify the company's revenue primitive before projecting revenue. Do not default to generic CAGR unless data is unavailable.
-2. Build the primitive on the `Drivers` sheet, then link the resulting revenue lines into `Income Statement`.
+2. Build the primitive on the `Drivers & Assumptions` sheet, then link the resulting revenue lines into `Model - Bear`, `Model - Base`, and `Model - Bull`.
 3. Show both operating drivers and dollar amounts: volumes, pricing, mix, unit count, ARPU/ASP, take rate, churn, utilization, tariff, commodity deck, or sector-equivalent.
 4. If only top-down data is available, use revenue CAGR as a fallback and clearly label the hidden primitive it approximates.
 
@@ -183,9 +188,9 @@ Operating expenses should model realistic operating leverage:
 - Model operating leverage: % should decline as revenue scales when justified.
 - Maintain separate line items for S&M, R&D, G&A or sector equivalents.
 - Calculate EBIT = Gross Profit - Total OpEx.
-- Put complex cost logic on `Drivers`; put clean P&L presentation on `Income Statement`.
-  - Example: store-level SG&A, utilization-driven labor, data center cost/MW, claims cost/member, vehicle depreciation/fleet, fuel cost/MWh, cash cost/ton, or R&D capitalization logic belongs in `Drivers`.
-  - The `Income Statement` then links to these calculated outputs and presents COGS, SG&A, R&D, EBITDA, D&A, EBIT, interest, tax, NI, and EPS in a clean financial statement format.
+- Put complex cost logic in `Drivers & Assumptions`; model sheets present the clean quarterly P&L for each scenario.
+  - Example: store-level SG&A, utilization-driven labor, data center cost/MW, claims cost/member, vehicle depreciation/fleet, fuel cost/MWh, cash cost/ton, or R&D capitalization logic belongs in `Drivers & Assumptions`.
+  - Each model sheet then links to these calculated outputs and presents COGS, SG&A, R&D, EBITDA, D&A, EBIT, interest, tax, NI, and EPS — one scenario per sheet.
 
 **Margin expansion framework:**
 ```
@@ -196,17 +201,17 @@ EBIT Margin: X% → Y% (result of revenue growth + opex leverage)
 
 ### Step 5: Free Cash Flow Calculation
 
-**Source of truth:** build the operating forecast in `Income Statement`, `Balance Sheet`, and `Cash Flow`. The `DCF` sheet should reference those forecast outputs; it should not duplicate revenue, SG&A, capex, D&A, or working-capital logic.
+**Source of truth:** build the operating forecast in `Model - Bear`, `Model - Base`, `Model - Bull` (quarterly, each covering P&L, balance sheet, and cash flow). The `DCF` sheet should reference these model sheets; it should not duplicate revenue, SG&A, capex, D&A, or working-capital logic.
 
 **Build FCF in proper sequence:**
 
 ```
-EBIT                    ← linked from Income Statement
-(-) Taxes               ← linked from Assumptions / Income Statement
+EBIT                    ← linked from Model - Bear/Base/Bull
+(-) Taxes               ← linked from Drivers & Assumptions / model sheets
 = NOPAT
-(+) D&A                 ← linked from Cash Flow or Income Statement
-(-) CapEx               ← linked from Cash Flow / Drivers
-(-) Δ NWC               ← linked from Cash Flow / Balance Sheet
+(+) D&A                 ← linked from model sheets
+(-) CapEx               ← linked from model sheets
+(-) Δ NWC               ← linked from model sheets
 = Unlevered Free Cash Flow
 ```
 
@@ -358,7 +363,7 @@ Implied Return = (Implied Price / Current Price) - 1 = XX%
 - **Net Debt = Total Debt - Cash & Equivalents**
   - If positive: Subtract from EV (reduces equity value)
   - If negative (Net Cash): Add to EV (increases equity value)
-- **Use Diluted Shares**: Includes options, RSUs, convertible securities
+- **Use Diluted Shares**: Includes options, RSUs, convertible securities. Format shares as a number (e.g., shares in millions), never as a percentage.
 - **Other adjustments** (if applicable):
   - Minority interests
   - Pension liabilities
@@ -393,85 +398,80 @@ Build sensitivity tables on the dedicated `Sensitivity` sheet for repo workbooks
 
 This section contains all the CORRECT patterns to follow when building DCF models.
 
-### Scenario Block Selection Pattern - Follow This Approach
+### Scenario Row Pattern — Follow This Approach
 
-**Assumptions are organized in separate blocks for each scenario:**
+**Three separate scenario model sheets, one per case:**
 
-**CRITICAL STRUCTURE - Three rows per section header:**
+Structure the workbook with `Model - Bear`, `Model - Base`, and `Model - Bull` as separate sheets, all generated from the same template and all reading exclusively from `Drivers & Assumptions`:
 
 ```csv
-BEAR CASE ASSUMPTIONS (section header, merge cells across)
-Assumption,FY1,FY2,FY3,FY4,FY5
-Revenue Growth (%),12%,10%,9%,8%,7%
-EBIT Margin (%),45%,44%,43%,42%,41%
-
-BASE CASE ASSUMPTIONS (section header, merge cells across)
-Assumption,FY1,FY2,FY3,FY4,FY5
-Revenue Growth (%),16%,14%,12%,10%,9%
-EBIT Margin (%),48%,49%,50%,51%,52%
-
-BULL CASE ASSUMPTIONS (section header, merge cells across)
-Assumption,FY1,FY2,FY3,FY4,FY5
-Revenue Growth (%),20%,18%,15%,13%,11%
-EBIT Margin (%),50%,51%,52%,53%,54%
+MODEL - BASE (section header, quarterly columns Q1 FFY ... Q4 LFY)
+, Q1 FY2025A, Q2 FY2025A, Q3 FY2025A, Q4 FY2025A, Q1 FY2026E, ...
+Revenue - Stream A ($M), 1,200, 1,250, 1,300, 1,350, 1,420, ...
+  Growth % QoQ,    —   ,  4.2%,  4.0%,  3.8%,  5.2%, ...
+  Growth % YoY,    —   ,    — ,    — ,    — , 18.3%, ...
+Revenue - Stream B ($M),   900,   900,   920,   950, 1,000, ...
+  Growth % QoQ,    —   ,  0.0%,  2.2%,  3.3%,  5.3%, ...
+Total Revenue ($M),    2,100,  2,150,  2,220,  2,300,  2,420, ...
+  Growth % QoQ,    —   ,  2.4%,  3.3%,  3.6%,  5.2%, ...
+  Growth % YoY,    —   ,    — ,    — ,    — , 15.2%, ...
+Cost of Revenue - Stream A ($M),   480,   500,   520,   540,   568, ...
+  Margin %,     40.0%, 40.0%, 40.0%, 40.0%, 40.0%, ...
+Gross Profit - Stream A ($M),   720,   750,   780,   810,   852, ...
+  Margin %,     60.0%, 60.0%, 60.0%, 60.0%, 60.0%, ...
+...
+Total Gross Profit ($M), 1,260, 1,290, 1,332, 1,380, 1,452, ...
+  Margin %,     60.0%, 60.0%, 60.0%, 60.0%, 60.0%, ...
+S&M ($M),        315,   323,   333,   345,   363, ...
+  % Revenue,    15.0%, 15.0%, 15.0%, 15.0%, 15.0%, ...
+R&D ($M),        252,   258,   266,   276,   290, ...
+G&A ($M),        168,   172,   178,   184,   194, ...
+EBITDA ($M),     525,   538,   555,   575,   605, ...
+  Margin %,     25.0%, 25.0%, 25.0%, 25.0%, 25.0%, ...
+...
 ```
 
-**Each scenario block MUST have a column header row** showing the projection years (FY2025E, FY2026E, etc.) immediately below the section title. Without this, users cannot tell which assumption value corresponds to which year.
-
-**How to reference assumptions - Create a consolidation column:**
-1. Case selector cell (e.g., B6) contains 1=Bear, 2=Base, or 3=Bull
-2. Create a consolidation column with INDEX or OFFSET formulas to pull from the correct scenario block
-3. Projection formulas reference the consolidation column (clean cell references)
-4. Each scenario block contains full set of DCF assumptions across projection years
-
-**Recommended consolidation column pattern (using INDEX):**
-`=INDEX(B10:D10, 1, $B$6)`
-
-**NOT this - scattered IF statements throughout:**
-`=IF($B$6=1,[Bear block cell],IF($B$6=2,[Base block cell],[Bull block cell]))`
-
-The consolidation column approach centralizes logic and makes the model easier to audit.
+**Key rules:**
+- Actual/historical quarters are identical across all three model sheets (same hardcoded black-font numbers).
+- Projected quarters diverge based on Bear/Base/Bull assumptions from `Drivers & Assumptions`.
+- Revenue is broken out by each reported stream; cost of revenue/gross margin by stream where disclosed.
+- QoQ and YoY growth percentages are visible inline for every material line item.
+- The `DCF` sheet references the three model sheets directly — one set of DCF calculations produces Bear/Base/Bull target prices by reading from `Model - Bear`, `Model - Base`, `Model - Bull`.
+- No consolidation column, no case selector, no INDEX/IF formulas switching between sheets. Each model sheet IS the scenario.
 
 ### Correct Revenue Projection Pattern
 
-**Create a consolidation column with INDEX formulas, then reference it in projections:**
+**Revenue projections reference `Drivers & Assumptions` for forward estimates:**
 
-**Step 1 - Consolidation column for FY1 growth:**
-`=INDEX([Bear FY1 growth]:[Bull FY1 growth], 1, $B$6)`
+- Actual quarters: hardcoded black-font numbers (identical across all three model sheets).
+- Projected quarters: formula referencing `Drivers & Assumptions` scenario column.
 
-**Step 2 - Revenue projection references the consolidation column:**
-- In `Drivers` or compact mode: `Revenue Year 1: =D29*(1+$E$10)`
-- In repo-standard DCF links: `DCF selected revenue: ='Income Statement'!F10`
+Examples:
+- `='Drivers & Assumptions'!C10 * (1 + 'Drivers & Assumptions'!D10)` — driver-based projection for stream A.
+- `='Drivers & Assumptions'!C14 * 'Drivers & Assumptions'!D14` — volume × ASP.
+- `=D29*(1+$E$10)` — fallback growth-rate projection (only when detailed drivers are unavailable).
 
-Where:
-- D29 = Prior year revenue, when building the actual operating forecast on `Drivers` / `Income Statement`
-- $E$10 = Consolidation column cell for FY1 growth (contains INDEX formula)
-- $B$6 = Case selector (1=Bear, 2=Base, 3=Bull)
-
-**This approach is cleaner than embedding IF statements in every projection formula** and makes it much easier to audit which scenario assumptions are being used. Build operating projection formulas in `Drivers` / `Income Statement`; use cross-sheet references in `DCF`.
+The `Drivers & Assumptions` sheet contains separate Bear/Base/Bull scenario columns for each assumption. Each model sheet (`Model - Bear`, `Model - Base`, `Model - Bull`) references only its corresponding Bear, Base, or Bull column.
 
 ### Correct FCF Formula Pattern
 
-**Use consolidation columns with INDEX formulas, then reference them in FCF calculations:**
+**Each model sheet (`Model - Bear`, `Model - Base`, `Model - Bull`) contains its own scenario.** Reference them directly from DCF:
 
-**Consolidation column approach:**
 ```csv
-Item,Formula,Reference
-D&A,=E29*$E$21,$E$21 = consolidation column for D&A %
-CapEx,=E29*$E$22,$E$22 = consolidation column for CapEx %
-Δ NWC,=(E29-D29)*$E$23,$E$23 = consolidation column for NWC %
+Item,Formula (Model - Base example),Reference
+D&A,=E29*$E$21,$E$21 = D&A % from Drivers & Assumptions Base column
+CapEx,=E29*$E$22,$E$22 = CapEx % from Drivers & Assumptions Base column
+Δ NWC,=(E29-D29)*$E$23,$E$23 = NWC % from Drivers & Assumptions Base column
 Unlevered FCF,=E57+E58-E60-E62,E57=NOPAT E58=D&A E60=CapEx E62=Δ NWC
 ```
 
-**Each consolidation column cell contains an INDEX formula** that pulls from the appropriate scenario block based on case selector. This keeps projection formulas clean and auditable.
+Each model sheet references the corresponding Bear/Base/Bull column from `Drivers & Assumptions`. The `DCF` sheet then reads FCF from `Model - Bear`, `Model - Base`, `Model - Bull` directly — no consolidation columns or case selectors needed.
 
-Before writing formulas, confirm scenario block row locations and set up consolidation columns.
+**Cell Comment Format**
 
-### Correct Cell Comment Format
+**Every hardcoded value needs both source and per-cell assumption rationale:**
 
-**Every hardcoded value needs this format:**
-
-"Source: [System/Document], [Date], [Reference], [URL if applicable]"
+"Source: [System/Document], [Date], [Reference], [URL if applicable] | Rationale: [line+quarter+scenario specific reason for this value]"
 
 **Examples:**
 ```csv
@@ -481,43 +481,38 @@ Shares outstanding,Source: 10-K FY2024 Page 45 Note 12
 Historical revenue,Source: 10-K FY2024 Page 32 Consolidated Statements
 Beta,Source: Market data script 2025-10-12 5-year monthly beta
 Consensus estimates,Source: Management guidance Q3 2024 earnings call
+Bear FY26 Q1 Rev Growth,Source: 10-K FY2025 Segment Data | Rationale: 2% seq decline on seasonal weakness and expected competitor launch pressuring Stream A volumes
+Base FY26 Q2 GM Stream B,Source: Q4 FY25 Earnings Call guidance | Rationale: 40bp expansion from supplier consolidation savings flowing through from Q1
 ```
+
+Do not use wide note columns for per-cell assumption rationale. Rationales go in individual cell comments. Keep high-level source/rationale metadata columns on `Drivers & Assumptions` only if useful for overview.
 
 ### Correct Assumption Table Structure
 
-**CRITICAL: Each scenario block requires THREE structural elements:**
+**The `Drivers & Assumptions` sheet is quarterly and line-item specific, with Bear/Base/Bull scenario columns:**
 
-1. **Section header row** (merged cells): e.g., "BEAR CASE ASSUMPTIONS"
-2. **Column header row** showing years - THIS IS REQUIRED, DO NOT SKIP
-3. **Data rows** with assumption values
-
-**Structure:**
 ```csv
-BEAR CASE ASSUMPTIONS (section header - merge across columns A:G)
-Assumption,FY1,FY2,FY3,FY4,FY5
-Revenue Growth (%),X%,X%,X%,X%,X%
-EBIT Margin (%),X%,X%,X%,X%,X%
-Terminal Growth,X%,,,,
-WACC,X%,,,,
-
-BASE CASE ASSUMPTIONS (section header - merge across columns A:G)
-Assumption,FY1,FY2,FY3,FY4,FY5
-Revenue Growth (%),X%,X%,X%,X%,X%
-EBIT Margin (%),X%,X%,X%,X%,X%
-Terminal Growth,X%,,,,
-WACC,X%,,,,
-
-BULL CASE ASSUMPTIONS (section header - merge across columns A:G)
-Assumption,FY1,FY2,FY3,FY4,FY5
-Revenue Growth (%),X%,X%,X%,X%,X%
-EBIT Margin (%),X%,X%,X%,X%,X%
-Terminal Growth,X%,,,,
-WACC,X%,,,,
+DRIVERS & ASSUMPTIONS
+Assumption, Bear, Base, Bull, Source/Reference, Cells Driven, Last Updated
+—— COMMON ASSUMPTIONS ——
+Tax Rate (%), 21.0%, 21.0%, 21.0%, ..., ..., 'Model - Base'!D50, 2025-10-12
+Diluted Shares (M), 1,250, 1,250, 1,250, ..., ..., 'DCF'!B20, 2025-10-12
+WACC (%), 10.0%, 9.0%, 8.0%, ..., ..., 'DCF'!B10, 2025-10-12
+Terminal Growth (%), 2.0%, 3.0%, 4.0%, ..., ..., 'DCF'!B12, 2025-10-12
+—— REVENUE STREAMS (quarterly) ——
+Stream A - FY26 Q1 Growth (%), 2.0%, 5.2%, 10.0%, ..., ..., 'Model - Base'!D8, 2025-10-12
+Stream A - FY26 Q2 Growth (%), 1.5%, 4.8%, 9.5%, ..., ..., 'Model - Base'!E8, 2025-10-12
+Stream B - FY26 Q1 Volume (K), 500, 550, 620, ..., ..., 'Model - Base'!D14, 2025-10-12
+Stream B - FY26 Q1 ASP ($), 180, 190, 200, ..., ..., 'Model - Base'!D15, 2025-10-12
+—— COST OF REVENUE (per stream) ——
+Stream A - FY26 Q1 GM (%), 58.0%, 60.0%, 62.0%, ..., ..., 'Model - Base'!D12, 2025-10-12
+—— EXPENSE LINES (quarterly) ——
+S&M - FY26 Q1 ($M), 365, 345, 320, ..., ..., 'Model - Base'!D32, 2025-10-12
+R&D - FY26 Q1 ($M), 300, 285, 270, ..., ..., 'Model - Base'!D33, 2025-10-12
+...
 ```
 
-**WITHOUT the column header row showing projection years (FY2025E, FY2026E, etc.), users cannot tell which assumption value corresponds to which year. This row is MANDATORY.**
-
-**Then create a consolidation column** (typically the next column to the right) that uses INDEX formulas to pull from the selected scenario block based on the case selector. This consolidation column is what your projection formulas reference.
+Each assumption row shows Bear/Base/Bull values side by side. Each model sheet references only its corresponding Bear, Base, or Bull column from this sheet. No consolidation column or case selector is needed. Per-cell rationale goes in cell comments on the individual quarterly scenario assumption cell, not in wide rationale columns.
 
 ### Correct Row Planning Process
 
@@ -609,15 +604,20 @@ This section contains all the WRONG patterns to avoid when building DCF models.
 
 ### WRONG: Simplified Sensitivity Table Approximations or Placeholder Text
 
-**Don't use linear approximations:**
+**Never use scalar/linear approximations unless explicitly labeled:**
 
 ```
 // WRONG - Linear approximation
-B97: =B88*(1+(0.096-0.116))    // Assumes linear relationship
+B97: =B88*(1+(0.096-0.116))    // Assumes linear relationship — NOT valid for DCF
 
 // WRONG - Division shortcut
-B105: =B88/(1+(E48-0.07))      // Doesn't recalculate full DCF
+B105: =B88/(1+(E48-0.07))      // Doesn't recalculate full DCF — NOT valid
+
+// WRONG - Scalar multiplier
+C97: =B88*1.05                  // Just multiplies by a constant
 ```
+
+**Exception:** If a scalar approximation is absolutely necessary (e.g., extreme time constraints), it MUST be explicitly labeled "SCALAR APPROXIMATION — NOT FULL DCF" and the center cell must still be validated against the base DCF. Prefer full DCF recalculation in all cases.
 
 **Don't leave placeholder text:**
 ```
@@ -653,15 +653,16 @@ B105: =B88/(1+(E48-0.07))      // Doesn't recalculate full DCF
 - Create all hardcoded inputs without comments
 - Think "I'll add them later"
 - Write "TODO: add source"
-- Leave blue inputs without documentation
+- Leave bright blue editable inputs without documentation
+- Add only source without per-cell assumption rationale
 
 **Why it's wrong:**
-- Can't verify where data came from
+- Can't verify where data came from or why a specific value was chosen for this line+quarter+scenario
 - Fails xlsx skill requirements
 - Not audit-ready
 - Wastes time fixing later
 
-**Instead:** Add cell comment AS EACH hardcoded value is created
+**Instead:** Add cell comment AS EACH hardcoded value is created, with both source AND per-cell rationale.
 
 ### WRONG: Formula Row References Off
 
@@ -724,7 +725,7 @@ This vertical layout makes it hard to see the progression across years within ea
 - Auditing becomes impossible
 - Violates xlsx skill requirements
 
-**Instead:** Blue text for ALL hardcoded inputs, black text for ALL formulas, green for sheet links
+**Instead:** Black text for actual hardcodes, bright blue (#0066CC) for ALL editable inputs, dark blue (#1F3864) for formula outputs, purple (#7030A0) for cross-sheet links
 
 ### WRONG: Operating Expenses Based on Gross Profit
 
@@ -742,9 +743,9 @@ This vertical layout makes it hard to see the progression across years within ea
 ### TOP 5 ERRORS SUMMARY
 
 1. **Formula row references off** → Define ALL row positions BEFORE writing formulas
-2. **Missing cell comments** → Add comments AS cells are created, not at end
-3. **Simplified sensitivity tables** → Populate all cells with full DCF recalc formulas, not approximations
-4. **Scenario block references wrong** → Ensure IF formulas pull from correct Bear/Base/Bull blocks
+2. **Missing cell comments** → Add comments with source AND per-cell rationale AS cells are created, not at end
+3. **Simplified sensitivity tables** → Populate all cells with full DCF recalc formulas; no scalar approximations; validate center cell against base DCF
+4. **Scenario block references wrong** → Ensure formulas pull from correct model sheet (`Model - Bear`, `Model - Base`, `Model - Bull`)
 5. **No borders** → Add professional section borders for client-ready appearance
 
 In addition, be aware of these errors:
@@ -799,19 +800,19 @@ Every DCF model must maximize for:
 2. **Appropriate cost of capital calculation** with proper CAPM methodology, current risk-free rate, and reasoned equity risk premium
 3. **Comprehensive sensitivity analysis** showing valuation ranges across WACC/g or sector-equivalent, growth/margin, and at least one sector-native key driver — all sensitivity cells formula-populated
 4. **Clear terminal value calculation** with supporting rationale; terminal value 50-70% of EV; terminal growth < risk-free rate
-5. **Professional model structure** enabling scenario analysis via case selector, consolidation columns, and clean formula references
+5. **Professional model structure** enabling scenario analysis via three separate model sheets (`Model - Bear`, `Model - Base`, `Model - Bull`), all generated from the same template and reading exclusively from `Drivers & Assumptions`, with no case selectors or consolidation columns
 
 ### Workbook Completeness
-6. **Full core tab set** — Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks — populated, not placeholder. Optional tabs: QTracker, MarketData, Ownership.
+6. **Full core tab set** — Summary, Drivers & Assumptions, Model - Bear, Model - Base, Model - Bull, DCF, Scenarios, Sensitivity, Checks — populated, not placeholder. Optional tabs: QTracker, MarketData, Ownership.
 7. **Summary tab is self-contained and return-first** — the beginning of the sheet must show recommendation, current price, target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear values, exit-multiple scenario summary, key metrics, trends, and risk summary; a reader should understand the return setup without opening other sheets.
-8. **Drivers tab exposes the economic primitive** — revenue and major cost drivers are built from sector-native units before flowing to the financial statements.
-9. **No company-comparison tab by default** — do not include Comps/Peer Comps/Comparative sheets in `model.xlsx`. Peer analysis lives in an external comps artifact; the model may include only a small dated peer-derived assumption/output if needed.
+8. **Drivers & Assumptions tab** — quarterly and line-item specific, combining common assumptions (macro/rates/valuation as numbers, not percentages unless inherently a rate) with company-specific drivers (revenue streams, cost of revenue per stream, expense lines); all assumptions have Bear/Base/Bull scenario columns; per-cell assumption rationale in cell comments on individual quarterly scenario assumption cells, not in wide note columns. Diluted Shares / Shares Outstanding must be numeric (shares or shares in millions) and formatted as a number, never as a percentage.
+9. **Model - Bear, Model - Base, Model - Bull tabs** — three separate quarterly integrated model sheets, all generated from the same template; each shows full line-item detail (revenue by stream, QoQ/YoY for every material line, cost of revenue/gross profit/gross margin by stream, expense breakdown, EBITDA/EBIT/NI/EPS/FCF and margins); growth/margin percentages visible inline; actual quarters identical across all three sheets; user never edits model sheets directly.
 10. **Checks tab is functional** — all checks output TRUE/FALSE, not placeholder text; covers active output formula errors, BS balance, CF tie, revenue-driver tie, WACC cross-check, DCF sensitivity center, Summary-to-active-case ties, scenario ordering, rating/recommendation vs return sanity, 1Y/3Y return math, terminal value sanity, share count consistency, outputs.json references, and formula errors.
 
 ### Formula and Color Discipline
 11. **Formulas over hardcodes (non-negotiable)** — every projection, margin, discount factor, PV, and sensitivity cell is a live Excel formula; the only hardcoded numbers are raw inputs, assumption drivers, and current market data
-12. **Semantic colors disciplined** — blue font for inputs, black for formulas, green for cross-sheet links; use the professional blue/grey palette for structure, with limited scenario accents allowed on presentation-facing sheets (green = bull/upside, red/pink = bear/downside, yellow = key editable assumption) when they improve readability
-13. **Cell comments on every hardcoded input** — format "Source: [System/Document], [Date], [Reference], [URL if applicable]" — added AS cells are created, never deferred
+12. **Semantic colors disciplined** — black font for actual/historical hardcodes, bright blue (#0066CC) for editable inputs, dark blue (#1F3864) for formula outputs, purple (#7030A0) for cross-sheet refs, red for errors; scenario fill only on assumption/input cells from Drivers & Assumptions, no scenario fill on formula outputs
+13. **Cell comments on every hardcoded input** — format "Source: [System/Document], [Date], [Reference], [URL if applicable] | Rationale: [line+quarter+scenario specific reason]" — added AS cells are created, never deferred. Per-cell rationale goes in cell comments, not wide note columns.
 
 ### Downstream Readiness
 14. **outputs.json written after successful recalc + model validation** — maps stable keys to sheet/cell locations; includes DCF value, current price, target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear values, exit-multiple scenario outputs, and key driver/financial extracts; regenerated after every model change. Values must be read from recalculated workbook cells, not recomputed independently.
@@ -825,7 +826,7 @@ Every DCF model must maximize for:
 1. **Company identifier**: Ticker symbol or company name.
 2. **Historical actuals**: revenue/segment data, margins, cash flow, cash/debt, share count, and sector KPIs where available.
 3. **Business driver assumptions**: the operating primitive, not just revenue CAGR. Examples: ARR/churn, volume × ASP, stores × SSS, members × ticket, RAB/tariff, commodity deck, utilization/capacity.
-4. **Macro/rate assumptions** for the `Assumptions` sheet when relevant: risk-free rate, ERP, beta, cost of debt, tax rate, FX, CPI, IPCA, inflation, GDP, SELIC/CDI, commodity prices, or sector-specific rates/fees.
+4. **Macro/rate assumptions** for the `Drivers & Assumptions` sheet when relevant: risk-free rate, ERP, beta, cost of debt, tax rate, FX, CPI, IPCA, inflation, GDP, SELIC/CDI, commodity prices, or sector-specific rates/fees.
 5. **Optional parameters**:
    - Projection period (default: 5 years; 7-10 years for long-runway businesses)
    - Scenario cases (Bear/Base/Bull driver, margin, and valuation assumptions)
@@ -840,15 +841,12 @@ Every DCF model must maximize for:
 For this investment research workspace, create the canonical single-company workbook by default:
 
 1. **Summary** - recommendation, current price, target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear values, exit-multiple scenario summary, key metrics, trends, and risk highlights.
-2. **Drivers** - sector-native revenue and major operating/cost driver build. This is the detailed operating logic formerly called `Revenue Model`.
-3. **Income Statement** - historical and projected P&L, linked from Drivers and Assumptions.
-4. **Balance Sheet** - historical and projected balance sheet.
-5. **Cash Flow** - historical and projected cash flow / FCF.
-6. **DCF** - intrinsic valuation engine, referencing Income Statement, Balance Sheet, and Cash Flow forecasts.
-7. **Scenarios** - bull/base/bear values, 1-year and 3-year returns/IRRs, and exit-multiple return frameworks.
-8. **Sensitivity** - WACC/g or sector-equivalent plus sector-native sensitivity grids.
-9. **Assumptions** - explicit assumption register with macro/rates/fees, scenario values, rationale, sources, and cells driven.
-10. **Checks** - formula and cross-artifact checks.
+2. **Drivers & Assumptions** - single source of truth: quarterly and line-item specific. Common assumptions as numbers (tax rate as %, shares in millions, capex in $, D&A in $ or %, SBC in $, WACC, terminal g, risk-free rate, ERP, beta, cost of debt) first. Company-specific drivers follow: quarterly revenue per stream (growth rates or primitive values like volume/ASP/ARR/churn), cost of revenue / gross margin per stream, and expense line assumptions (S&M, R&D, G&A or sector equivalents per quarter). Each row has Bear/Base/Bull scenario columns. Per-cell rationale in cell comments.
+3. **Model - Bear**, **Model - Base**, **Model - Bull** - three separate quarterly integrated operating model sheets, all from the same template and read-only from `Drivers & Assumptions`. Each covers P&L, balance sheet, and cash flow / FCF bridge. Full line-item detail: revenue by stream, total revenue, QoQ/YoY for every material line, cost of revenue by stream, gross profit/gross margin by stream, expense breakdown, EBITDA/EBIT/NI/EPS/FCF and margins. Growth/margin percentages visible inline. Actual quarters identical across all three sheets.
+4. **DCF** - intrinsic valuation engine, referencing `Model - Bear`, `Model - Base`, `Model - Bull`. One set of calculations producing Bear/Base/Bull price targets. Does not duplicate the operating model.
+5. **Scenarios** - bull/base/bear values, 1-year and 3-year returns/IRRs, and exit-multiple return frameworks. Sources DCF values.
+6. **Sensitivity** - WACC/g or sector-equivalent plus sector-native sensitivity grids.
+7. **Checks** - formula and cross-artifact checks.
 
 Optional tabs only when needed:
 - **QTracker** - quarterly actuals, consensus vs actuals, guidance vs actuals, and KPI tracking.
@@ -861,7 +859,7 @@ A compact two-sheet DCF (`DCF`, `WACC`) is acceptable only when the user explici
 
 ### Formula Recalculation (MANDATORY)
 
-After creating or modifying the Excel model, **recalculate all formulas** using the recalc.py script from the xlsx skill:
+After creating or modifying the Excel model, **recalculate all formulas with LibreOffice headless** using the recalc.py script from the xlsx skill:
 
 ```bash
 python .agents/skills/dcf-model/scripts/recalc.py [path_to_excel_file] [timeout_seconds]
@@ -875,9 +873,11 @@ python recalc.py AAPL_DCF_Model_2025-10-12.xlsx 30
 ```
 
 The script will:
-- Recalculate all formulas in all sheets using LibreOffice
-- Scan ALL cells for Excel errors (#REF!, #DIV/0!, #VALUE!, #NAME?, #NULL!, #NUM!, #N/A)
+- Open/recalculate/save all formulas in all sheets using LibreOffice headless
+- Re-open the recalculated workbook and scan ALL calculated cell values for Excel errors (#REF!, #DIV/0!, #VALUE!, #NAME?, #NULL!, #NUM!, #N/A)
 - Return detailed JSON with error locations and counts
+
+**Important:** openpyxl alone does not calculate Excel formulas. A scan of formula text is insufficient for final delivery because runtime errors such as `#VALUE!` may only appear after recalculation.
 
 **Expected output format:**
 ```json
@@ -904,37 +904,28 @@ The script will:
 }
 ```
 
-**Fix all errors** and re-run recalc.py until status is "success" before delivering the model.
+**Fix all errors** and re-run LibreOffice-headless `recalc.py` until status is "success" before delivering the model. After each fix, recalculate again and confirm the previous error locations no longer return error values.
 
 ### Formatting Standards
 
 **IMPORTANT**: Follow the xlsx skill for formula construction rules and number formatting conventions. The DCF skill adds specific visual presentation standards.
 
-**Color Scheme - Two Layers**:
+**Color Scheme:**
 
-**Layer 1: Font Colors (MANDATORY from xlsx skill)**
-- **Blue text (RGB: 0,0,255)**: ALL hardcoded inputs (stock price, shares, historical data, assumptions)
-- **Black text (RGB: 0,0,0)**: ALL formulas and calculations
-- **Green text (RGB: 0,128,0)**: Links to other sheets (WACC sheet references)
+**Font Colors (MANDATORY from xlsx skill):**
+- **Black text**: Actual/historical hardcoded data (past quarters, reported figures)
+- **Bright blue text (#0066CC)**: Editable inputs / forward assumptions (growth rates, margins, WACC, terminal g)
+- **Dark blue text (#1F3864)**: Formula outputs / calculated values
+- **Purple text (#7030A0)**: Cross-sheet or cross-file references
+- **Red text (#FF0000)**: Excel errors (#REF!, #DIV/0!, etc.)
 
-**Layer 2: Fill Colors — Professional Structure Palette + Limited Scenario Accents**
-- **Keep it minimal** — use blues/greys for structural formatting. Add scenario accents only when they improve reader navigation.
-- **Default structure palette:**
-  - **Section headers**: Dark blue (RGB: 31,78,121 / `#1F4E79`) background with white bold text
-  - **Sub-headers/column headers**: Light blue (RGB: 217,225,242 / `#D9E1F2`) background with black bold text
-  - **Input cells**: Light grey (RGB: 242,242,242 / `#F2F2F2`) background with blue font — or just white with blue font if you want maximum minimalism
-  - **Calculated cells**: White background with black font
-  - **Output/summary rows** (per-share value, EV, etc.): Medium blue (RGB: 189,215,238 / `#BDD7EE`) background with black bold font
-- **Optional scenario accents for reader-facing sheets:** bull/upside = soft green, bear/downside = soft red/pink, key editable assumption = pale yellow. Use sparingly, mainly in Summary, Scenarios, Sensitivity, and Assumptions.
+**Fill Colors:**
+- **Scenario fill applies only to scenario assumption/input cells** pulled from `Drivers & Assumptions`. Formula output cells get no scenario fill. Use soft red/pink for Bear, light yellow/amber for Base, and soft green for Bull.
+- Bear = soft red/pink fill, Base = light yellow/amber fill, Bull = soft green fill.
+- **Structural headers**: Dark blue (#1F4E79) fill with white bold text.
+- **Sub-headers/column headers**: Light blue (#D9E1F2) fill with black bold text.
+- **Key outputs** (per-share value, EV, etc.): Medium blue (#BDD7EE) fill with dark blue bold font.
 - User-provided templates or explicit color preferences ALWAYS override these defaults.
-
-**How the layers work together:**
-- Input cell: Blue font + light grey fill = "Hardcoded input"
-- Formula cell: Black font + white background = "Calculated value"
-- Sheet link: Green font + white background = "Reference from another sheet"
-- Key output: Black bold font + medium blue fill = "This is the answer"
-
-**Font color tells you WHAT it is (input/formula/link). Fill color tells you WHERE you are (header/data/output).**
 
 ### Border Standards (REQUIRED for Professional Appearance)
 
@@ -951,7 +942,7 @@ The script will:
 - Growth Assumptions vs EBIT Margin vs FCF Parameters
 
 **Thin borders** (0.5pt) around data tables:
-- Scenario assumption tables (Bear | Base | Bull | Selected)
+- Scenario assumption tables (Bear | Base | Bull)
 - Historical vs projected financials matrix
 
 **No borders:** Individual cells within tables (keep clean, scannable)
@@ -964,17 +955,18 @@ The script will:
 - **Currency**: `$#,##0` for millions; `$#,##0.00` for per-share - ALWAYS specify units in headers ("Revenue ($mm)")
 - **Zeros**: Use number formatting to make all zeros "-" (e.g., `$#,##0;($#,##0);-`)
 - **Large numbers**: `#,##0` with thousands separator
+- **Diluted Shares / Shares Outstanding / share count**: number format such as `#,##0` or `#,##0.0` in millions; never percentage format. EPS must divide by this numeric share count.
 - **Negative numbers**: `(#,##0)` in parentheses (NOT minus sign)
 
 **Cell Comments (MANDATORY for all hardcoded inputs)**:
 
-Per the xlsx skill, ALL hardcoded values must have cell comments documenting the source. Format: "Source: [System/Document], [Date], [Reference], [URL if applicable]"
+Per the xlsx skill, ALL hardcoded values must have cell comments documenting the source AND per-cell assumption rationale. Format: "Source: [System/Document], [Date], [Reference], [URL if applicable] | Rationale: [line+quarter+scenario specific reason]"
 
 **CRITICAL**: Add comments AS CELLS ARE CREATED. Do not defer to the end.
 
 ### DCF Sheet Detailed Structure
 
-**Repo-standard vs compact mode:** In repo-standard 10-tab workbooks, the DCF sheet is the intrinsic valuation engine and should contain cross-sheet links to `Income Statement`, `Balance Sheet`, `Cash Flow`, and `Assumptions`. It must not duplicate the operating model. The inline single-sheet examples below are acceptable only for compact standalone DCF mode; for repo-standard workbooks, translate each operating line into a cross-sheet reference.
+**Repo-standard vs compact mode:** In repo-standard workbooks, the DCF sheet is the intrinsic valuation engine and should contain cross-sheet links to `Model - Bear`, `Model - Base`, `Model - Bull` (for operating forecasts) and `Drivers & Assumptions` (for WACC, terminal g, and other valuation inputs). It must not duplicate the operating model.
 
 **Section 1: Header**
 ```csv
@@ -982,8 +974,7 @@ Row,Content
 1,[Company Name] DCF Model
 2,Ticker: [XXX] | Date: [Date] | Year End: [FYE]
 3,Blank
-4,Case Selector Cell (1=Bear 2=Base 3=Bull)
-5,Case Name Display (formula: =IF([Selector]=1"Bear"IF([Selector]=2"Base""Bull")))
+4,Scenario: Bear / Base / Bull (three-column output from Model)
 ```
 
 **Section 2: Market Data (NOT case dependent)**
@@ -995,60 +986,55 @@ Market Cap ($M),[Formula]
 Net Debt ($M),XXX [or Net Cash if negative]
 ```
 
-**Section 3: DCF Input Links / Selected Case**
+**Section 3: DCF Input Links**
 
-The DCF should link to the selected-case outputs from `Income Statement`, `Balance Sheet`, and `Cash Flow`, plus valuation inputs from `Assumptions` and optional `MarketData`. Do not rebuild operating drivers here.
+The DCF should link to `Model - Bear`, `Model - Base`, `Model - Bull`, plus valuation inputs from `Drivers & Assumptions` and optional `MarketData`. Do not rebuild operating drivers here.
 
 Create a small DCF input/link block showing:
-- Selected scenario name / case selector
-- Linked revenue, EBIT/EBITDA, tax rate, D&A, capex, ΔNWC, FCF
-- WACC or Ke inputs from `Assumptions`
-- Terminal growth and/or terminal multiple assumption from `Assumptions`
-- Current price, shares, net debt from `MarketData`, `Balance Sheet`, or `Assumptions`
+- Bear/Base/Bull scenario labels from `Model - Bear`, `Model - Base`, `Model - Bull`
+- Linked revenue, EBIT/EBITDA, tax rate, D&A, capex, ΔNWC, FCF — three columns, one per scenario, read from the respective model sheet
+- WACC or Ke inputs from `Drivers & Assumptions` (Bear/Base/Bull columns)
+- Terminal growth and/or terminal multiple assumption from `Drivers & Assumptions` (Bear/Base/Bull columns)
+- Current price, shares, net debt from `MarketData`, the scenario model sheets, or `Drivers & Assumptions`
 
-Full Bear/Base/Bull operating assumptions live in `Assumptions` and `Drivers`; full forward-return cases live in `Scenarios`.
+Full Bear/Base/Bull operating assumptions live in `Drivers & Assumptions`; full forward-return cases live in `Scenarios`.
 
 **Section 4: Historical & Projected Financials**
 
-**Reference the selected-case forecast lines from the financial statements**, not scattered IF formulas or duplicated operating-model rows inside DCF.
+**Reference the three model sheets.** DCF reads all three scenarios simultaneously — three columns per financial line, one per scenario.
 
 ```csv
-Selected Financials ($M),2020A,2021A,2022A,2023A,2024E,2025E,2026E
-Revenue,='Income Statement'!B10,='Income Statement'!C10,='Income Statement'!D10,='Income Statement'!E10,='Income Statement'!F10,='Income Statement'!G10,='Income Statement'!H10
-  % growth,='Income Statement'!B11,='Income Statement'!C11,='Income Statement'!D11,='Income Statement'!E11,='Income Statement'!F11,='Income Statement'!G11,='Income Statement'!H11
-Gross Profit,='Income Statement'!B15,='Income Statement'!C15,='Income Statement'!D15,='Income Statement'!E15,='Income Statement'!F15,='Income Statement'!G15,='Income Statement'!H15
-EBITDA,='Income Statement'!B30,='Income Statement'!C30,='Income Statement'!D30,='Income Statement'!E30,='Income Statement'!F30,='Income Statement'!G30,='Income Statement'!H30
-EBIT,='Income Statement'!B35,='Income Statement'!C35,='Income Statement'!D35,='Income Statement'!E35,='Income Statement'!F35,='Income Statement'!G35,='Income Statement'!H35
-Tax Rate,='Income Statement'!B40,='Income Statement'!C40,='Income Statement'!D40,='Income Statement'!E40,='Income Statement'!F40,='Income Statement'!G40,='Income Statement'!H40
-NOPAT,=B6*(1-B7),=C6*(1-C7),=D6*(1-D7),=E6*(1-E7),=F6*(1-F7),=G6*(1-G7),=H6*(1-H7)
+Financials ($M),Bear 2024E,Base 2024E,Bull 2024E,Bear 2025E,Base 2025E,Bull 2025E
+Revenue,='Model - Bear'!F20,='Model - Base'!F20,='Model - Bull'!F20,='Model - Bear'!G20,='Model - Base'!G20,='Model - Bull'!G20
+  % growth,='Model - Bear'!F21,='Model - Base'!F21,='Model - Bull'!F21,='Model - Bear'!G21,='Model - Base'!G21,='Model - Bull'!G21
+Gross Profit,='Model - Bear'!F23,='Model - Base'!F23,='Model - Bull'!F23,='Model - Bear'!G23,='Model - Base'!G23,='Model - Bull'!G23
 ```
 
 **Key Formula Pattern**:
-- Repo-standard operating line: `='Income Statement'!F10` or `='Cash Flow'!F25`.
-- Compact-mode projection only: `=PriorYearRevenue*(1+SelectedGrowth)` where `SelectedGrowth` comes from the consolidation column.
-- NOT: `=E29*(1+IF($B$6=1,$B$10,IF($B$6=2,$C$10,$D$10)))`
+- Repo-standard: `='Model - Bear'!F20` for Bear Revenue FY2026E, `='Model - Base'!F20` for Base, `='Model - Bull'!F20` for Bull.
+- Compact-mode only: `=PriorYearRevenue*(1+GrowthRate)` with growth rate from `Drivers & Assumptions`.
+- NOT: scattered IF/INDEX formulas switching between scenario blocks — all three scenarios are projected simultaneously.
 
-This approach is cleaner, easier to audit, and prevents formula errors by centralizing operating logic outside the DCF sheet.
+This approach is cleaner, easier to audit, and prevents formula errors by centralizing operating logic in the scenario model sheets.
 
 **Section 5: Free Cash Flow Build**
 
-**CRITICAL**: Verify row references point to the CORRECT assumption rows. Test formulas immediately after creation.
+**CRITICAL**: Verify row references point to the correct model sheet. Test formulas immediately after creation.
 
 ```csv
-Cash Flow Links ($M),2020A,2021A,2022A,2023A,2024E,2025E,2026E
-NOPAT,=B6*(1-B7),=C6*(1-C7),=D6*(1-D7),=E6*(1-E7),=F6*(1-F7),=G6*(1-G7),=H6*(1-H7)
-(+) D&A,='Cash Flow'!B18,='Cash Flow'!C18,='Cash Flow'!D18,='Cash Flow'!E18,='Cash Flow'!F18,='Cash Flow'!G18,='Cash Flow'!H18
-(-) CapEx,='Cash Flow'!B25,='Cash Flow'!C25,='Cash Flow'!D25,='Cash Flow'!E25,='Cash Flow'!F25,='Cash Flow'!G25,='Cash Flow'!H25
-(-) Δ NWC,='Cash Flow'!B22,='Cash Flow'!C22,='Cash Flow'!D22,='Cash Flow'!E22,='Cash Flow'!F22,='Cash Flow'!G22,='Cash Flow'!H22
-Unlevered FCF,=B10+B11-B12-B13,=C10+C11-C12-C13,=D10+D11-D12-D13,=E10+E11-E12-E13,=F10+F11-F12-F13,=G10+G11-G12-G13,=H10+H11-H12-H13
+Cash Flow Links ($M),Bear 2024E,Base 2024E,Bull 2024E,Bear 2025E,Base 2025E,Bull 2025E
+NOPAT,=B6*(1-B7),=C6*(1-C7),=D6*(1-D7),=E6*(1-E7),=F6*(1-F7),=G6*(1-G7)
+(+) D&A,='Model - Bear'!F35,='Model - Base'!F35,='Model - Bull'!F35,='Model - Bear'!G35,='Model - Base'!G35,='Model - Bull'!G35
+(-) CapEx,='Model - Bear'!F38,='Model - Base'!F38,='Model - Bull'!F38,='Model - Bear'!G38,='Model - Base'!G38,='Model - Bull'!G38
+(-) Δ NWC,='Model - Bear'!F40,='Model - Base'!F40,='Model - Bull'!F40,='Model - Bear'!G40,='Model - Base'!G40,='Model - Bull'!G40
+Unlevered FCF,=B10+B11-B12-B13,=C10+C11-C12-C13,=D10+D11-D12-D13,=E10+E11-E12-E13,=F10+F11-F12-F13,=G10+G11-G12-G13
 ```
 
 **Reference examples** (based on layout planning):
-- D&A comes from `Cash Flow` or `Income Statement`.
-- CapEx and ΔNWC come from `Cash Flow` / `Balance Sheet`.
-- NOPAT can be calculated in DCF from linked EBIT and linked tax rate.
+- D&A, CapEx, and ΔNWC come from the respective model sheet (`Model - Bear`, `Model - Base`, `Model - Bull`).
+- NOPAT is calculated in DCF from linked EBIT and linked tax rate from the relevant scenario model sheet.
 
-**Before writing formulas**: Confirm these row numbers match the actual workbook layout. Test one column, then copy across.
+**Before writing formulas**: Confirm these row numbers match the actual scenario model sheet layout. Test one column, then copy across.
 
 **Section 6: Discounting & Valuation**
 ```csv
@@ -1077,7 +1063,7 @@ Implied Upside/(Downside),XX%,,,,,
 
 ### WACC Sheet Structure
 
-**Compact standalone DCF mode only:** If the workbook is a quick two-sheet DCF, a separate `WACC` sheet is acceptable. In repo-standard 10-tab workbooks, put WACC/Ke inputs on `Assumptions` and link the DCF to those cells.
+**Compact standalone DCF mode only:** If the workbook is a quick two-sheet DCF, a separate `WACC` sheet is acceptable. In repo-standard workbooks, put WACC/Ke inputs on `Drivers & Assumptions` and link the DCF to those cells.
 
 ```csv
 COST OF EQUITY CALCULATION,,
@@ -1150,9 +1136,9 @@ WACC = (Cost of Equity × Equity Weight) + (After-tax Cost of Debt × Debt Weigh
 
 **No manual intervention required** - the sensitivity tables must be fully functional when the user opens the file.
 
-## Case Selector Implementation
+## Scenario Implementation
 
-**Three-Case Framework:**
+**The workbook projects all three scenarios in separate model sheets: `Model - Bear`, `Model - Base`, and `Model - Bull`.**
 
 ### Bear Case
 - Conservative revenue growth (low end of historical range)
@@ -1175,55 +1161,53 @@ WACC = (Cost of Equity × Equity Weight) + (After-tax Cost of Debt × Debt Weigh
 - Higher terminal growth (3.5-5.0%)
 - Reduced CapEx intensity
 
-**Formula Implementation:**
+**Formula Implementation — quarterly model sheets, one per scenario:**
 
-**DO NOT use nested IF formulas scattered throughout.** Instead, create a consolidation column that uses INDEX or OFFSET formulas to pull from the appropriate scenario block.
+Actual/historical quarters: hardcoded black-font numbers, identical across all three model sheets.
 
-**Recommended pattern (using INDEX):**
-`=INDEX(B10:D10, 1, $B$6)` where `B10:D10` = Bear/Base/Bull values, `1` = row offset, `$B$6` = case selector cell (1, 2, or 3)
+Projected quarters: each model sheet references its corresponding Bear, Base, or Bull assumption column from `Drivers & Assumptions`.
 
-**Then reference the consolidation column** in all projections:
-`Revenue Year 1: =D29*(1+$E$10)` where $E$10 is the consolidation column value for Year 1 growth.
+Example (Model - Base, Revenue Stream A Q1 FY2026E):
+`='Drivers & Assumptions'!C10 * (1 + 'Drivers & Assumptions'!D10)`
 
-This approach centralizes scenario logic, making the model easier to audit and maintain.
+Example (Model - Bear, same cell row, same column):
+`='Drivers & Assumptions'!C10 * (1 + 'Drivers & Assumptions'!E10)`
+
+There is no case selector, no consolidation column, and no INDEX/IF logic. Each model sheet references only its own scenario column from `Drivers & Assumptions`. The `DCF` sheet reads from all three model sheets to produce three price targets.
 
 ## Deliverables Structure
 
 **File naming**: in this repo, write the primary model as `<run>/model.xlsx`.
 
-**Default repo tabs** (10 core tabs for institutional-quality single-company models):
+**Default repo tabs** (7 core tabs for institutional-quality single-company models):
 
 1. **Summary** — investment recommendation and return setup. The beginning of the sheet must show current price vs target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear implied values, exit-multiple scenario summary, key valuation metrics (EV/EBITDA, P/E, FCF yield or sector-equivalent), revenue/EBIT/FCF trends, and key risk highlights. This is the first sheet anyone opens — make it self-contained.
 
-2. **Drivers** — sector-native revenue and operating build. Show unit economics (ASP, volume, subscribers, ARPU, stores, SSS, members, ticket, utilization, capacity, tariff, commodity price, FX, etc.) alongside dollar projections when available. Also include complex cost-driver logic when business-specific: gross margin by segment, SG&A per unit/store/customer, R&D intensity, CAC, claims cost/member, fuel cost, fleet depreciation, cash cost/ton, capex capacity build.
+2. **Drivers & Assumptions** — single source of truth, quarterly and line-item specific. **Common assumptions as numbers** (tax rate as %, diluted shares in millions, capex in $, D&A in $ or %, SBC in $, WACC, terminal g, risk-free rate, ERP, beta, cost of debt, FX, CPI, inflation, commodity decks) come first. **Company-specific drivers** follow: quarterly revenue per stream (growth rates or primitive values like volume/ASP/ARR/churn), cost of revenue / gross margin per stream (dollar costs or margin rates per quarter), and expense line assumptions (S&M, R&D, G&A or sector equivalents per quarter). Each row has Bear/Base/Bull scenario columns. Per-cell assumption rationale goes in cell comments on the individual quarterly scenario assumption cell, not in wide note columns.
 
-3. **Income Statement** — historical (3-5 years) and projected (5+ years) P&L with revenue, COGS, gross profit, OpEx (S&M, R&D, G&A or sector equivalents), EBITDA, D&A, EBIT, interest, taxes, net income, EPS. All projections are live formulas referencing `Drivers` and `Assumptions`.
+3. **Model - Bear**, **Model - Base**, **Model - Bull** — three separate quarterly integrated operating model sheets, all generated from the same template and read-only from `Drivers & Assumptions`. Each sheet shows full line-item detail: revenue by each reported stream, total revenue (formula sum), QoQ/YoY growth for every material line, cost of revenue by stream, gross profit/gross margin by stream, expense breakdown (S&M, R&D, G&A or sector equivalents), EBITDA, D&A, EBIT, interest, tax, net income, EPS, and FCF. Growth rates and margin percentages are visible inline. Covers P&L, balance sheet, and cash flow / FCF bridge in one integrated layout per sheet. Actual/historical quarters are hardcoded black-font numbers (identical across all three sheets). Projected quarters are formulas referencing the respective Bear, Base, or Bull column from `Drivers & Assumptions`.
 
-4. **Balance Sheet** — historical and projected balance sheet with key line items (cash, AR, inventory, PP&E, goodwill, debt, payables, equity, shares, invested capital). Projections driven by revenue ratios, working capital, and CapEx/depreciation schedules.
+4. **DCF** — intrinsic valuation engine. References `Model - Bear`, `Model - Base`, and `Model - Bull` directly to compute three price targets (Bear/Base/Bull). Calculates UFCF/FCFE, WACC/Ke, discount factors, terminal value, enterprise/equity value, and value per share — **one** set of calculations that reads the three model sheets. Does **not** duplicate the full operating model. Does **not** contain its own scenario blocks.
 
-5. **Cash Flow** — historical and projected cash flow statement with operating CF (net income + D&A + working capital changes), investing CF (CapEx, acquisitions), financing CF (debt issuance/repayment, dividends, buybacks), and free cash flow to firm/equity as appropriate.
+5. **Scenarios** — forward-return framework. Computes 1-year return and 3-year return/IRR for Bear/Base/Bull cases, plus exit-multiple scenarios across holding periods (EV/EBITDA, P/E, P/BV, EV/Sales, cap rate, EV/RAB, NAV, etc.). Sources DCF values from `DCF`. Links headline outputs to `Summary`.
 
-6. **DCF** — intrinsic valuation engine. Reference `Income Statement`, `Balance Sheet`, and `Cash Flow` forecasts. Calculate UFCF/FCFE, WACC/Ke, discount factors, terminal value, enterprise/equity value, and value per share. Do not duplicate the operating model.
+6. **Sensitivity** — fully populated sensitivity grids, all formula-driven. Required: WACC vs Terminal Growth or sector-equivalent. Required: at least one sector-native sensitivity (churn × FCF margin, ASP × utilization, NIM × cost of risk, MLR × ticket growth, commodity price × FX, cap rate × NOI). Center cell = base case, highlighted.
 
-7. **Scenarios** — bull/base/bear valuation and forward-return framework. Must include 1-year return and 3-year return/IRR. Must include exit-multiple scenarios across holding periods using sector-appropriate multiples (EV/EBITDA, P/E, P/BV, EV/Sales, cap rate, EV/RAB, NAV, etc.). Link headline scenario outputs to `Summary`.
+7. **Checks** — formula, model-sanity, and cross-artifact integrity checks: active output cells are not Excel errors, BS balances (A = L + E), CF ties to cash, revenue equals sum of drivers, DCF center sensitivity equals base DCF, Summary target/base case ties to active DCF/Scenarios output, scenario ordering (Bear ≤ Base ≤ Bull for value and returns), recommendation/rating is consistent with base upside and 1Y/3Y IRR thresholds, return math ties, share count consistency, WACC cross-check, terminal value sanity (50-70% of EV or sector-equivalent), outputs.json references exist, and any user-defined validation rules. All checks output TRUE/FALSE or pass/fail.
 
-8. **Sensitivity** — sensitivity tables fully populated with formulas. Required: WACC vs Terminal Growth or sector-equivalent. Required: at least one sector-native sensitivity, e.g. churn × FCF margin, ASP × utilization, NIM × cost of risk, MLR × ticket growth, commodity price × FX, cap rate × NOI. Base case centered with highlighted cell.
-
-9. **Assumptions** — explicit assumption register listing every material assumption, base/bear/bull or low/base/high values, rationale/source, sensitivity range, model cells it drives, and last-updated date. Include macro/rate assumptions here: risk-free rate, ERP, beta, cost of debt, tax rate, FX, CPI, IPCA, inflation, GDP, SELIC/CDI, commodity decks, sector rates/fees, and valuation multiples.
-
-10. **Checks** — formula, model-sanity, and cross-artifact integrity checks: active output cells are not Excel errors, BS balances (A = L + E), CF ties to cash, revenue equals sum of drivers, DCF center sensitivity equals base DCF, Summary target/base case ties to active DCF/Scenarios output, scenario ordering (Bear ≤ Base ≤ Bull for value and returns), recommendation/rating is consistent with base upside and 1Y/3Y IRR thresholds, return math ties, share count consistency, WACC cross-check, terminal value sanity (50-70% of EV or sector-equivalent), outputs.json references exist, and any user-defined validation rules. All checks output TRUE/FALSE or pass/fail.
-
-**Optional tabs**: `QTracker` for quarterly actuals/consensus/guidance, `MarketData` for minimal market inputs and company-only trading history, and `Ownership` for shareholder/float/governance reference data.
+**Optional tabs**: `QTracker` for quarterly actuals/consensus/guidance (can serve as audit/reconciliation alongside Model), `MarketData` for minimal market inputs and company-only trading history, and `Ownership` for shareholder/float/governance reference data.
 
 **No default Comps tab**: company comparisons, peer multiples, broker grids, and sector benchmark tables belong in an external comps artifact. If peer analysis informs valuation, use a dated external reference and import only the final peer-derived value/range or terminal-multiple assumption.
 
-**Key features**: Case selector (1/2/3), consolidation column with INDEX/OFFSET formulas, semantic font colors (blue=input, black=formula, green=cross-sheet link), professional fill colors (blue/grey structure plus limited scenario accents where useful), cell comments on all inputs, professional borders around major sections, formatted numbers/tables, and named outputs in outputs.json for downstream consumers (reports, presentations, dashboards).
+**Key features**: Three separate model sheets (`Model - Bear`, `Model - Base`, `Model - Bull`) all from the same template and read-only from `Drivers & Assumptions`, quarterly columns, growth/margin percentages visible inline, no case selectors, no duplicated full model inside DCF, semantic font colors (see below), professional fill colors for headers/structural elements, cell comments with per-cell source + rationale on all inputs, professional borders around major sections, formatted numbers/tables, and named outputs in outputs.json for downstream consumers (reports, presentations, dashboards).
 
-**Semantic colors — two-layer system:**
-- **Font color (WHAT):** blue = hardcoded input, black = formula/calculation, green = cross-sheet or cross-file reference.
-- **Fill color (WHERE):** dark blue (#1F4E79) = section headers with white text, light blue (#D9E1F2) = sub-headers / column headers, light grey (#F2F2F2) = input cells, medium blue (#BDD7EE) = key outputs / base case cells, white = calculated cells.
-- **Scenario accents (limited):** soft green = bull/upside, soft red/pink = bear/downside, pale yellow = key editable assumption. Use sparingly and consistently.
-- **Together:** blue font on light grey fill = "I am an editable assumption"; black font on white = "I am a derived calculation"; green font on white = "I pull from another sheet."
+**Semantic colors:**
+- **Black font** — actual/historical hardcoded data.
+- **Bright blue font (#0066CC)** — editable inputs / forward assumptions.
+- **Dark blue font (#1F3864)** — formula outputs / calculated values.
+- **Purple font (#7030A0)** — cross-sheet or cross-file references.
+- **Red font (#FF0000)** — Excel errors (#REF!, #DIV/0!, etc.).
+- **Fill colors:** scenario fill applies **only** to scenario assumption/input cells pulled from `Drivers & Assumptions`. Formula output cells get **no** scenario fill. Soft red/pink = Bear, light yellow/amber = Base, soft green = Bull. Structural headers use dark blue (#1F4E79) fill with white bold text; sub-headers use light blue (#D9E1F2) fill with black bold text.
 
 ## Outputs JSON
 
@@ -1250,14 +1234,14 @@ Use the array shape below. This matches the repo's run-level `outputs.json` patt
     { "key": "scenario.exit_multiple_3yr_irr", "sheet": "Scenarios", "cell": "F22", "value": 0.095, "unit": "percent" },
     { "key": "valuation.enterprise_value", "sheet": "DCF", "cell": "E81", "value": 125000, "unit": "USD millions" },
     { "key": "valuation.equity_value", "sheet": "DCF", "cell": "E83", "value": 114000, "unit": "USD millions" },
-    { "key": "assumption.wacc", "sheet": "Assumptions", "cell": "C20", "value": 0.092, "unit": "percent" },
-    { "key": "assumption.terminal_growth", "sheet": "Assumptions", "cell": "C21", "value": 0.030, "unit": "percent" },
+    { "key": "assumption.wacc", "sheet": "Drivers & Assumptions", "cell": "C20", "value": 0.092, "unit": "percent" },
+    { "key": "assumption.terminal_growth", "sheet": "Drivers & Assumptions", "cell": "C21", "value": 0.030, "unit": "percent" },
     { "key": "valuation.terminal_value_pct_ev", "sheet": "DCF", "cell": "E78", "value": 0.62, "unit": "percent" },
-    { "key": "financial.revenue_ltm", "sheet": "Income Statement", "cell": "D10", "value": 48500, "unit": "USD millions" },
+    { "key": "financial.revenue_ltm", "sheet": "Model", "cell": "D10", "value": 48500, "unit": "USD millions" },
     { "key": "financial.revenue_5yr_cagr", "sheet": "Summary", "cell": "B20", "value": 0.122, "unit": "percent" },
     { "key": "financial.ebit_margin_terminal", "sheet": "Summary", "cell": "B24", "value": 0.52, "unit": "percent" },
-    { "key": "capital_structure.net_debt", "sheet": "Balance Sheet", "cell": "H35", "value": -8500, "unit": "USD millions" },
-    { "key": "capital_structure.shares_outstanding", "sheet": "Balance Sheet", "cell": "H42", "value": 800, "unit": "millions" }
+    { "key": "capital_structure.net_debt", "sheet": "Model", "cell": "H35", "value": -8500, "unit": "USD millions" },
+    { "key": "capital_structure.shares_outstanding", "sheet": "Model", "cell": "H42", "value": 800, "unit": "millions" }
   ],
   "scenarios": {
     "bear":  { "implied_share_price": 98.00,  "one_year_return": -0.172, "three_year_irr": -0.060, "exit_multiple": 14.0 },
@@ -1447,13 +1431,16 @@ Scripts used to build, recalculate, or validate the model must be saved under th
 ### Before Delivering Model (MANDATORY)
 
 1. **Verify structure**:
-   - Core tabs exist: Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks
-   - Scenario blocks for Bear/Base/Bull with assumptions across projection years
-   - Case selector functional with formulas referencing correct scenario blocks
+   - Core tabs exist: Summary, Drivers & Assumptions, Model - Bear, Model - Base, Model - Bull, DCF, Scenarios, Sensitivity, Checks
+   - `Drivers & Assumptions` is quarterly and line-item specific with Bear/Base/Bull scenario columns; common assumptions as numbers; per-cell rationale in cell comments
+   - Three model sheets all generated from same template, read-only from `Drivers & Assumptions`; full line-item detail (revenue by stream, QoQ/YoY, cost by stream, gross profit/margin by stream, expense breakdown, EBITDA/EBIT/NI/EPS/FCF and margins); growth/margin percentages visible inline
+   - `DCF` references `Model - Bear`, `Model - Base`, `Model - Bull` directly; does not duplicate the operating model or contain its own scenario blocks
    - Scenarios sheet includes 1-year return, 3-year return/IRR, and exit-multiple return framework; headline outputs link to Summary
-   - Sensitivity tables are on `Sensitivity` for repo workbooks (bottom of DCF only in compact mode)
-   - Font colors: Blue inputs, black formulas, green sheet links
-   - Cell comments on ALL hardcoded inputs
+   - Sensitivity tables are on `Sensitivity` for repo workbooks; all cells populated with full DCF recalculation; center cell validated against base case; no scalar approximations unless explicitly labeled
+   - Font colors: black = actuals, bright blue = editable inputs, dark blue = formula outputs, purple = cross-sheet refs, red = errors
+   - Share count / Diluted Shares inputs and linked DCF/EPS cells are number-formatted, not percentage-formatted
+   - Cell comments on ALL inputs with both source AND per-cell assumption rationale
+   - Scenario fill only on assumption/input cells from Drivers & Assumptions; formula outputs get no scenario fill
    - Professional borders around major sections
 
 2. **Recalculate formulas**: Run `python recalc.py model.xlsx 30`
@@ -1462,7 +1449,7 @@ Scripts used to build, recalculate, or validate the model must be saved under th
    - If `status` is `"success"` → Continue to step 4
    - If `status` is `"errors_found"` → Check `error_summary` and read [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for debugging guidance
 
-4. **Fix errors and re-run recalc.py** until status is "success"
+4. **Fix errors and re-run LibreOffice-headless recalc.py** until status is "success"; confirm the recalculated workbook no longer shows the prior `#VALUE!`, `#REF!`, or other error values
 
 5. **Run validation scripts**:
    - `validate_model.py` before generating `outputs.json`
@@ -1471,9 +1458,10 @@ Scripts used to build, recalculate, or validate the model must be saved under th
    - `validate_artifacts.py` if `report.md`, `deck.spec.json`, `deck.html`, or `deck.pptx` exists or is being delivered
 
 6. **Spot-check formulas**:
-   - Test one FCF formula - does it reference the correct assumption rows?
-   - Change case selector - does the consolidation column update properly?
-   - Verify revenue formulas reference consolidation column (not nested IF formulas)
+   - Verify actual/historical quarters are identical across all three model sheets
+   - Verify projected quarters in each model sheet reference the correct Bear, Base, or Bull column from `Drivers & Assumptions`
+   - Verify growth/margin percentages are visible inline in each model sheet
+   - Verify `DCF` references the three model sheets (not duplicated operating logic)
    - Verify recommendation/rating is consistent with base upside and 1Y/3Y return thresholds
    - Verify Summary return outputs tie to active DCF/Scenarios outputs
 
@@ -1491,12 +1479,12 @@ Scripts used to build, recalculate, or validate the model must be saved under th
 Before delivering DCF model:
 
 **Structure:**
-- [ ] Full core tab set populated: Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks
+- [ ] Full core tab set populated: Summary, Drivers & Assumptions, Model - Bear, Model - Base, Model - Bull, DCF, Scenarios, Sensitivity, Checks
 - [ ] Summary tab is self-contained and starts with recommendation, target/current price, upside, 1-year return, 3-year return/IRR, bull/base/bear values, exit-multiple summary, key metrics, and risk highlights
-- [ ] Drivers tab exposes the sector-native revenue primitive and major business-specific cost drivers
-- [ ] DCF references Income Statement, Balance Sheet, Cash Flow, and Assumptions; it does not duplicate the operating model
+- [ ] Drivers & Assumptions tab is quarterly and line-item specific: common assumptions as numbers first, then revenue stream assumptions, cost per stream, expense lines; each row has Bear/Base/Bull scenario columns; per-cell rationale in cell comments, not wide note columns; Diluted Shares / Shares Outstanding formatted as numbers, not percentages
+- [ ] Model - Bear, Model - Base, Model - Bull tabs: all from same template, read-only from Drivers & Assumptions; full line-item detail with revenue by stream, QoQ/YoY, cost/gross profit/gross margin by stream, expense breakdown, EBITDA/EBIT/NI/EPS/FCF and margins; growth/margin percentages visible inline; actual quarters identical across all three sheets
+- [ ] DCF references Model - Bear, Model - Base, Model - Bull directly; does not duplicate the operating model or contain its own scenario blocks
 - [ ] Scenarios tab includes bull/base/bear, 1-year return, 3-year return/IRR, and exit-multiple scenarios across holding periods
-- [ ] Assumptions tab includes company, valuation, macro/rate assumptions (risk-free, ERP, beta, cost of debt, tax, FX, CPI/IPCA/inflation/GDP/SELIC/CDI where relevant), sources, rationale, and cells driven
 - [ ] No Comps/Peer Comps/Comparative sheet in the company model unless explicitly requested; peer analysis is external by default
 - [ ] Checks tab outputs TRUE/FALSE for all integrity checks, including formula-error checks on active outputs and Summary-vs-active-case ties
 
@@ -1504,14 +1492,15 @@ Before delivering DCF model:
 - [ ] Run `python recalc.py model.xlsx 30` until status is "success" (zero formula errors across ALL sheets)
 - [ ] All projections, margins, discount factors, PVs, and sensitivity cells are live formulas — no hardcoded computed values
 - [ ] Sensitivity tables fully populated with formulas (75+ cells across 3 tables, not approximations or placeholders)
-- [ ] Case selector functional; consolidation columns use INDEX/OFFSET, not nested IFs
+- [ ] Bear/Base/Bull references correct across Model - Bear, Model - Base, Model - Bull, DCF, and Scenarios
 
 **Colors & Formatting:**
-- [ ] Font colors: Blue=inputs, Black=formulas, Green=cross-sheet links
-- [ ] Fill colors: professional blue/grey structure palette, with limited consistent scenario accents only where useful
-- [ ] Cell comments on ALL hardcoded inputs with source/date/reference
+- [ ] Font colors: black = actuals, bright blue (#0066CC) = editable inputs, dark blue (#1F3864) = formula outputs, purple (#7030A0) = cross-sheet refs, red = errors
+- [ ] Fill colors: scenario fill only on assumption/input cells from Drivers & Assumptions; formula output cells get no scenario fill
+- [ ] Structural headers: dark blue (#1F4E79) fill with white bold text
+- [ ] Cell comments on ALL inputs (both actual hardcodes and editable assumptions) with source/date/reference
 - [ ] Professional borders around major sections
-- [ ] Number formats: years as text, percentages at 0.0%, currency in millions with units in headers, zeros as "-"
+- [ ] Number formats: years as text, percentages at 0.0%, currency in millions with units in headers, zeros as "-"; Diluted Shares / Shares Outstanding formatted as numbers, not percentages
 
 **Validation:**
 - [ ] OpEx based on revenue (not gross profit)
