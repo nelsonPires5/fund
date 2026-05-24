@@ -21,7 +21,7 @@ Use this skill to research one company ticker in `https://app.koyfin.com` and ex
 1. **Open the ticker.** In Koyfin, search the ticker, select the equity security, and confirm the Security Analysis sidebar is active.
 2. **Start with Snapshots.** Use Overview and Description for business context, then Percentile Rank, Dividend, Ownership, and Earnings History for quick quality/valuation/shareholder checks.
 3. **Read sell-side expectations.** Use Analyst Estimates tabs to compare current fundamentals against consensus, ratings, price targets, estimate level, and estimate revisions.
-4. **Build the financial model view.** Use Financial Analysis tabs to extract statements, multiples, enterprise value, profitability, ROIC, and solvency across annual/quarterly/LTM periods.
+4. **Build the financial model view.** Use Financial Analysis tabs to extract statements, multiples, enterprise value, profitability, ROIC, and solvency across annual/quarterly/LTM periods. **For model-building use, quarterly actuals are the primary data source; annual is a cross-check only.** When extracting Analyst Estimates / Actuals and Consensus, prefer quarterly actuals and quarterly consensus estimates when available.
 5. **Check narrative and disclosures.** Use News, Press Releases, Filings, and Transcripts for recent events, management commentary, and SEC filing cadence.
 6. **Use graphs for time series.** Use Historical, Comparison, Intraday, and Performance for price/return/peer visualizations. Prefer network data; fall back to SVG/table extraction when necessary.
 7. **Handle missing data explicitly.** Some tickers lack sell-side coverage, dividends, filings, transcripts, or chart series. Emit empty data with `status="unavailable"` or clear `errors`; never invent rows.
@@ -80,7 +80,7 @@ Raw Koyfin screenshots are evidence, not final visuals. When a chart/table/scree
 | Snapshots | Dividend | dividend policy, growth, yield, payout, payment history and no-dividend detection | `@references/dividend.md` | `@scripts/dividend/extract.js` |
 | Snapshots | Ownership | insider/institutional ownership, transactions, holders, mutual funds and ETFs | `@references/ownership.md` | `@scripts/ownership/extract.js` |
 | Snapshots | Earnings History | reported revenue versus estimates, surprises, price reactions, valuation at report dates | `@references/earnings-history.md` | `@scripts/earnings-history/extract.js` |
-| Analyst Estimates | Actuals and Consensus | historical actuals and forward consensus by annual/quarterly period | `@references/actuals-and-consensus.md` | `@scripts/actuals-and-consensus/extract.js` |
+| Analyst Estimates | Actuals and Consensus | historical actuals and forward consensus by annual/quarterly period. **For model use, extract quarterly actuals and quarterly consensus as primary data; annual is a cross-check.** | `@references/actuals-and-consensus.md` | `@scripts/actuals-and-consensus/extract.js` |
 | Analyst Estimates | Price Target | sell-side price targets, ratings distribution, return potential and no-coverage detection | `@references/price-target.md` | `@scripts/price-target/extract.js` |
 | Analyst Estimates | Estimates Overview | forward sales/EBITDA/EBIT/EPS estimate matrix and next-quarter summary | `@references/estimates-overview.md` | `@scripts/estimates-overview/extract.js` |
 | Analyst Estimates | Estimates Trends | estimate revisions and analyst-count trend by fiscal year and metric | `@references/estimates-trends.md` | `@scripts/estimates-trends/extract.js` |
