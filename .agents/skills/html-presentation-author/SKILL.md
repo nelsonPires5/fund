@@ -9,11 +9,13 @@ Use this skill when a presentation/deck is requested. Default output is `deck.ht
 
 ## Output contract
 
+**`deck.html` is saved directly in the run root.** Never create a `run/deck/` subfolder.
+
 ```text
 <run>/deck.html
 ```
 
-Optional source file:
+Optional source file (also in run root):
 
 ```text
 <run>/deck.spec.json
