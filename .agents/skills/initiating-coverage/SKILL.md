@@ -32,7 +32,7 @@ sectors/<sector>/companies/<ticker>/runs/<yyyy-mm-dd>-initial-coverage/
   deck.pptx              # optional presentation artifact
 ```
 
-`workbook.html` (Univer) is **not** a default artifact — produce it only when the user explicitly requests Univer/HTML output. Report/deck visuals must be stored under `<run>/assets/` and referenced from the report/deck. Do not reference raw screenshots directly from `data/raw/` in final deliverables.
+`workbook.html` (Univer) is **not** a default artifact - produce it only when the user explicitly requests Univer/HTML output. Report/deck visuals must be stored under `<run>/assets/` and referenced from the report/deck. Do not reference raw screenshots directly from `data/raw/` in final deliverables.
 
 ---
 
@@ -106,11 +106,11 @@ Each task specifies exact deliverables. Do NOT create:
 **Why**: These extras waste context and are not part of the professional workflow.
 
 **What TO deliver**:
-- ✅ Task 1: Research notes / document under the run folder or `data/normalized/` — **NOTHING ELSE**
-- ✅ Task 2: `<run>/model.xlsx`, `<run>/outputs.json`, model extracts, and saved model/validation scripts — **NOTHING ELSE**
-- ✅ Task 3: Updates to `<run>/model.xlsx`, `<run>/outputs.json`, valuation extracts, and optional `valuation_framework.md` — **NOTHING ELSE**
-- ✅ Task 4: Final used charts in `<run>/assets/charts/`, chart scripts in `<run>/data/scripts/charts/`, and chart index — **NOTHING ELSE**
-- ✅ Task 5: `<run>/report.md` by default (`.docx` only if explicitly requested) — **NOTHING ELSE**
+- ✅ Task 1: Research notes / document under the run folder or `data/normalized/` - **NOTHING ELSE**
+- ✅ Task 2: `<run>/model.xlsx`, `<run>/outputs.json`, model extracts, and saved model/validation scripts - **NOTHING ELSE**
+- ✅ Task 3: Updates to `<run>/model.xlsx`, `<run>/outputs.json`, valuation extracts, and optional `valuation_framework.md` - **NOTHING ELSE**
+- ✅ Task 4: Final used charts in `<run>/assets/charts/`, chart scripts in `<run>/data/scripts/charts/`, and chart index - **NOTHING ELSE**
+- ✅ Task 5: `<run>/report.md` by default (`.docx` only if explicitly requested) - **NOTHING ELSE**
 
 **If a deliverable is not listed above, DO NOT CREATE IT.**
 
@@ -264,25 +264,23 @@ Optional:
 1. Verify access to financial data
 2. Load detailed instructions from references/task2-financial-modeling.md
 3. **Step 1**: Extract historical financials (if needed)
-4. **Step 2+**: Build projection model with repo-standard tabs
-5. Deliver Excel model
+4. **Step 2**: Discover company-specific reported drivers/KPIs from filings, earnings releases, presentations, and guidance
+5. **Step 3+**: Build quarterly projection model with repo-standard tabs
+6. Deliver Excel model
 
 **Output**: Run-local quantitative artifacts in `<run>/`:
 - **`<run>/model.xlsx`** — canonical single-company financial model with repo-standard tabs:
-  1. **Summary** - recommendation, current price, target price, upside/downside, 1-year return, 3-year return/IRR, exit-multiple scenarios, key metrics, trends, and valuation bridge
-  2. **Drivers** - sector-native revenue and operating/cost driver build
-  3. **Income Statement** - Full P&L with 40-50 line items, historical (3-5 years) + projected (5 years)
-  4. **Balance Sheet** - Assets/Liabilities/Equity, historical + projected
-  5. **Cash Flow** - Operating/Investing/Financing activities, historical + projected
-  6. **DCF** - Intrinsic valuation model referencing the financial statements
-  7. **Scenarios** - Bull/base/bear, 1-year return, 3-year return/IRR, and exit-multiple return framework
-  8. **Sensitivity** - WACC/g or sector-equivalent plus sector-native sensitivities
-  9. **Assumptions** - Assumption register with macro/rates, scenario values, rationale, sources, and cells driven
-  10. **Checks** - Formula, model-sanity, and cross-artifact checks
+  1. **Summary** — recommendation, current price, target price, upside/downside, 1-year return, 3-year return/IRR, exit-multiple scenarios, key metrics, trends, and valuation bridge
+  2. **Drivers & Assumptions** — single source of truth, quarterly and line-item specific. Common assumptions as numbers (tax rate, capex, D&A, SBC, diluted shares, WACC, terminal g, risk-free rate, ERP, beta, cost of debt). Diluted shares / share count must be formatted as a number, never as a percentage. Revenue streams and cost of revenue/gross margin per stream discovered from filings/releases/presentations/Koyfin. Expense line assumptions per quarter. Bear/Base/Bull scenario columns. Per-cell rationale in cell comments. **Only sheet the user edits.**
+  3. **Model - Bear**, **Model - Base**, **Model - Bull** — three separate quarterly integrated operating model sheets, all from same template and read-only from `Drivers & Assumptions`. Full line-item detail: revenue by each reported stream, total revenue, QoQ/YoY for every material line, cost of revenue by stream, gross profit/gross margin by stream, expense breakdown, EBITDA/EBIT/NI/EPS/FCF and margins. P&L, balance sheet, cash flow, and FCF bridge per sheet.
+  4. **DCF** — Intrinsic valuation model referencing `Model - Bear`, `Model - Base`, `Model - Bull`; computes Bear/Base/Bull price targets without duplicating the full operating model
+  5. **Scenarios** - Bull/base/bear, 1-year return, 3-year return/IRR, and exit-multiple return framework
+  6. **Sensitivity** - WACC/g or sector-equivalent plus sector-native sensitivities
+  7. **Checks** - Formula, model-sanity, and cross-artifact checks
   Optional: **QTracker**, **MarketData**, **Ownership** when needed. No default Comps tab; peer analysis is external by default.
-- **`<run>/outputs.json`** — stable key-value outputs extracted from the model (revenue, EBITDA, EPS, FCF, key multiples, scenario outputs). Every material model output used by reports/presentations must have a stable key in this file.
-- **Model extracts** — clean machine-readable CSVs under `<run>/data/normalized/model_extracts/` for revenue build, P&L, cash flow, balance sheet, and key metrics.
-- **Build and validation scripts** — under `<run>/data/scripts/model/` (scripts that build/populate the model) and `<run>/data/scripts/validation/` (scripts that cross-check/audit model integrity). Required validation scripts: `recalc.py`, `validate_model.py`, `validate_outputs.py`, and `validate_artifacts.py` when report/deck artifacts exist.
+- **`<run>/outputs.json`** - stable key-value outputs extracted from the model (revenue, EBITDA, EPS, FCF, key multiples, scenario outputs). Every material model output used by reports/presentations must have a stable key in this file.
+- **Model extracts** - clean machine-readable CSVs under `<run>/data/normalized/model_extracts/` for revenue build, P&L, cash flow, balance sheet, and key metrics.
+- **Build and validation scripts** - under `<run>/data/scripts/model/` (scripts that build/populate the model) and `<run>/data/scripts/validation/` (scripts that cross-check/audit model integrity). Required validation scripts: `recalc.py`, `validate_model.py`, `validate_outputs.py`, and `validate_artifacts.py` when report/deck artifacts exist.
 
 **Canonical path**: `<run>/model.xlsx`
 
@@ -291,27 +289,29 @@ Optional:
 **⚠️ DO NOT TAKE SHORTCUTS:**
 - ✅ If extracting financials: Extract ALL line items from 3 financial statements (3-5 years)
 - ✅ Build ALL repo-standard projection/model tabs completely with full detail
-- ✅ Create detailed revenue model with 20-30 product rows AND 15-20 geography rows
-- ✅ Build complete income statement with 40-50 line items (not abbreviated)
-- ✅ Include full cash flow statement and balance sheet with all line items
-- ✅ Complete ALL three scenarios (Bull/Base/Bear) with different parameters
+- ✅ Discover reported company-specific drivers/KPIs before modeling and reflect them in `Drivers & Assumptions`
+- ✅ Discover reported revenue streams, KPIs, cost of revenue breakdowns, and expense line details from filings, earnings releases, presentations, and Koyfin before building model assumptions
+- ✅ Create detailed quarterly driver model using company-specific revenue/cost lines where reported; break out each revenue stream and cost stream
+- ✅ Build three complete quarterly model sheets (`Model - Bear`, `Model - Base`, `Model - Bull`) covering P&L, balance sheet, cash flow, and FCF; all from same template, read-only from `Drivers & Assumptions`; full line-item detail with QoQ/YoY
+- ✅ Complete ALL three scenarios (Bull/Base/Bear) with different parameters in `Drivers & Assumptions`
+- ✅ Format Diluted Shares / Shares Outstanding as numeric shares or shares in millions, not percentages; validate EPS/DCF references use the numeric share count
 - ✅ Include 1-year return, 3-year return/IRR, and exit-multiple scenario logic in Scenarios and Summary
 - ✅ Run validation scripts before delivery; rating/target must be consistent with base upside/return unless an explicit override is documented
 - ❌ Do not create simplified/abbreviated versions
-- ❌ Do not skip Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, or Checks in initial coverage models
+- ❌ Do not skip Summary, Drivers & Assumptions, Model - Bear, Model - Base, Model - Bull, DCF, Scenarios, Sensitivity, or Checks in initial coverage models
 - ❌ Do not include a default Comps tab in the company model; peer analysis belongs in an external comps artifact unless explicitly requested
 - ❌ Do not skip historical financials extraction if needed
 
 **Verification before proceeding to Task 3**:
 - [ ] `<run>/model.xlsx` created and opens cleanly
-- [ ] Model has repo-standard tabs (Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks; optional QTracker/MarketData/Ownership only when needed)
-- [ ] `recalc.py` and `validate_model.py` passed before outputs generation
+- [ ] Model has repo-standard tabs (Summary, Drivers & Assumptions, Model - Bear, Model - Base, Model - Bull, DCF, Scenarios, Sensitivity, Checks; optional QTracker/MarketData/Ownership only when needed)
+- [ ] `recalc.py` recalculated the workbook with LibreOffice headless (or native Excel calculation in live Excel), scanned recalculated values, and passed before `validate_model.py`; `validate_model.py` passed before outputs generation
 - [ ] `<run>/outputs.json` generated from recalculated workbook cells with stable keys for all material model outputs
 - [ ] `validate_outputs.py` passed after outputs generation
 - [ ] Model extracts saved under `<run>/data/normalized/model_extracts/`
 - [ ] Build/validation scripts saved under `<run>/data/scripts/model/` and `<run>/data/scripts/validation/`
 - [ ] Historical data (3-5 years) incorporated
-- [ ] Projections complete (5 years forward)
+- [ ] Quarterly projections complete (at least 5 years forward or enough to support valuation)
 - [ ] Scenarios complete (Bull/Base/Bear)
 
 ---
@@ -364,13 +364,13 @@ Required from model:
 - Key catalysts (3-5)
 
 **Files**:
-- **Update `<run>/model.xlsx`** — add or update these tabs:
+- **Update `<run>/model.xlsx`** - add or update these tabs:
   - DCF tab with calculations
   - Sensitivity analysis tab
   - Comparable companies tab
   - Valuation summary tab
-- **Update `<run>/outputs.json`** — add valuation keys (price_target, recommendation, upside_pct, dcf_value, comps_value, football_field_range, catalysts, key_risks)
-- **Valuation extracts** — save clean CSVs of DCF, sensitivity, and comps data under `<run>/data/normalized/model_extracts/`
+- **Update `<run>/outputs.json`** - add valuation keys (price_target, recommendation, upside_pct, dcf_value, comps_value, football_field_range, catalysts, key_risks)
+- **Valuation extracts** - save clean CSVs of DCF, sensitivity, and comps data under `<run>/data/normalized/model_extracts/`
 - `[Company]_Valuation_Analysis_[Date].md` (written analysis document)
 
 **⚠️ DELIVER ONLY: model/outputs.json updates + valuation extracts + 1 markdown file. NO completion summaries, no extra documents.**
