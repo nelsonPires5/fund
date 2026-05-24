@@ -76,7 +76,9 @@ Use `model-update` if any of the following changed:
 
 - Actuals vs prior estimates
 - Forward guidance
-- Segment revenue or margin assumptions
+- Segment revenue or margin assumptions (by stream, not just total)
+- Cost of revenue per stream
+- Expense line assumptions (S&M, R&D, G&A or sector equivalents)
 - Share count
 - Cash/debt
 - Capex
@@ -84,9 +86,11 @@ Use `model-update` if any of the following changed:
 - WACC / FX / commodity assumptions
 - Target multiple or valuation framework
 
+**Update `Drivers & Assumptions` before writing any note or report.** The model sheets (`Model - Bear`, `Model - Base`, `Model - Bull`) are read-only and update automatically when `Drivers & Assumptions` changes.
+
 Produce:
 
-- Actual vs estimate table
+- Actual vs estimate table (by revenue stream and expense line, not just totals)
 - Old vs new estimate table
 - Valuation bridge
 - Price target change, if any
