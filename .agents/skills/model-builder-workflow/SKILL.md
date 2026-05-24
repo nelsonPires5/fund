@@ -37,7 +37,7 @@ All model-builder runs must follow this sequence. Do not skip phases.
 | 5. Report | `report.md`, `validate_artifacts.py` pass if material numbers are hardcoded | Phases 3-4 complete |
 | 6. Presentation (optional) | `deck.pptx` / `deck.html`, `validate_artifacts.py` pass | Phases 3-5 complete |
 
-**Guardrail:** Do not produce `outputs.json` until the workbook is recalculated and `validate_model.py` passes. Do not produce `report.md` before `outputs.json`, model extracts, validations, and charts are ready. Do not produce `deck.pptx`/`deck.html` before `report.md` is complete unless explicitly requested. Every chart and diagram must trace to a value in `outputs.json` or model extracts. Before final delivery, `validate_outputs.py` and, when reports/decks exist, `validate_artifacts.py` must pass.
+**Guardrail:** Do not produce `outputs.json` until the workbook is recalculated with LibreOffice headless (or native Excel calculation in live Excel), formula-error scan is clean, and `validate_model.py` passes. Do not produce `report.md` before `outputs.json`, model extracts, validations, and charts are ready. Do not produce `deck.pptx`/`deck.html` before `report.md` is complete unless explicitly requested. Every chart and diagram must trace to a value in `outputs.json` or model extracts. Before final delivery, `validate_outputs.py` and, when reports/decks exist, `validate_artifacts.py` must pass.
 
 ## Workflow
 
@@ -71,6 +71,15 @@ Required inputs:
 - Preferred model horizon
 - Output format: markdown, Excel, presentation, or report
 
+**For initial-coverage runs**, the first modeling step after gathering basic inputs is to **discover reported company-specific drivers and KPIs** from filings (10-K, 10-Q), earnings releases, management presentations, investor-day materials, and Koyfin. Identify:
+- Each reported revenue stream and its driver primitive (ARR/churn, volume × ASP, stores × SSS, members × ticket, beds × occupancy, RAB/tariff, commodity volume × realized price, etc.)
+- Cost of revenue / gross margin per reported stream where disclosed
+- Reported expense line breakdowns (S&M, R&D, G&A and sector-specific equivalents)
+- Key operating KPIs the company reports and guides on
+- Quarterly actuals and quarterly consensus from Koyfin (annual is a cross-check, not the primary source)
+
+These discovered streams populate the company-specific section of `Drivers & Assumptions` as quarterly, line-item-specific assumptions.
+
 If inputs are missing, use available sources and clearly label assumptions.
 
 ### Step 3: Select Skills
@@ -98,28 +107,32 @@ If preparing an investment deliverable:
 
 ### Step 4: Validate Model Logic
 
-For initial coverage / full DCF workbooks in this repo, use the canonical single-company model structure: Summary, Drivers, Income Statement, Balance Sheet, Cash Flow, DCF, Scenarios, Sensitivity, Assumptions, Checks. Optional tabs: QTracker, MarketData, Ownership. Do not include Comps/Peer Comps/Comparative sheets in the company workbook by default.
+For initial coverage / full DCF workbooks in this repo, use the canonical single-company model structure: **Summary, Drivers & Assumptions, Model - Bear, Model - Base, Model - Bull, DCF, Scenarios, Sensitivity, Checks**. Optional tabs: **QTracker** (audit/reconciliation), MarketData, Ownership. Do not include Comps/Peer Comps/Comparative sheets in the company workbook by default.
+
+The `Model - Bear`, `Model - Base`, `Model - Bull` sheets use **quarterly columns** and are all generated from the same template, reading exclusively from `Drivers & Assumptions`. Each shows full line-item detail: revenue by stream, QoQ/YoY for every material line, cost of revenue/gross profit/gross margin by stream, expense breakdown, and EBITDA/EBIT/NI/EPS/FCF and margins. `Drivers & Assumptions` is the single source of truth — quarterly and line-item specific — with Bear/Base/Bull scenario columns. User only edits `Drivers & Assumptions`; model sheets are read-only.
 
 The Summary tab must show key metrics/trends/scenarios and begin with the return setup: current price, target price, upside/downside, 1-year return, 3-year return/IRR, bull/base/bear values, and exit-multiple scenario summary. The Scenarios tab must include forward-return logic for 1-year and 3-year holding periods and exit multiples.
 
 Check:
 
 * Historical numbers tie to source
-* Forecast assumptions are explicit in Assumptions, including macro/rate assumptions such as risk-free rate, ERP, beta, cost of debt, tax, FX, CPI/IPCA/inflation/GDP/SELIC/CDI where relevant
-* Revenue is driver-first and sector-native; generic CAGR is clearly labeled as fallback
-* Cost breakdown logic is either cleanly in Income Statement or, if business-specific, built in Drivers and linked into Income Statement
-* DCF references Income Statement, Balance Sheet, Cash Flow, and Assumptions; it does not duplicate the operating model
+* Company-specific drivers/KPIs were discovered from filings/releases/presentations and populate `Drivers & Assumptions`
+* Forecast assumptions are explicit in `Drivers & Assumptions`, quarterly and line-item specific including macro/rate assumptions where relevant; each row has Bear/Base/Bull scenario columns; per-cell assumption rationale in cell comments
+* Revenue is driver-first and sector-native, broken out by each reported stream; generic CAGR is clearly labeled as fallback
+* `Model - Bear`, `Model - Base`, `Model - Bull` sheets all from same template, read-only from `Drivers & Assumptions`; full line-item detail with growth/margin percentages visible inline
+* DCF references `Model - Bear`, `Model - Base`, `Model - Bull`; it does not duplicate the operating model or contain its own scenario blocks
 * FCF bridge is coherent
 * WACC/Ke inputs are sourced or clearly marked as assumptions
 * Terminal value does not dominate excessively without explanation
 * Sensitivity tables include the base case and at least one sector-native sensitivity
-* Scenarios include 1-year return, 3-year return/IRR, and exit-multiple cases
-* Share count and net debt are current
+* Scenarios include 1-year return, 3-year return/IRR, and exit-multiple cases; sources DCF values
+* Share count and net debt are current; Diluted Shares / Shares Outstanding are formatted as numbers (shares or millions of shares), not percentages
 * All model outputs are formulas if Excel is created
 * Checks/validation catch rating-vs-return inconsistency, e.g. Buy/Outperform with material base-case downside or Sell/Underperform with material upside
-* `validate_model.py` passes before `outputs.json` is generated
+* LibreOffice-headless recalculation and formula-error scan pass before `validate_model.py`; `validate_model.py` passes before `outputs.json` is generated
 * `validate_outputs.py` passes after `outputs.json` is generated from recalculated workbook cells
 * `validate_artifacts.py` passes before final report/deck delivery when downstream artifacts exist
+* `driver_map.json` may be used as a flexible intermediate schema mapping discovered revenue/cost streams to model rows; model generator expands rows based on discovered streams; do not create a separate skill for this
 
 ### Step 5: Produce Valuation Bridge
 
@@ -185,7 +198,7 @@ Recommend:
 
 * Follow the strict phase order above. Do not produce `report.md` or `deck.pptx` before `outputs.json` and charts are ready.
 * Do not hardcode calculated model outputs.
-* Generate `outputs.json` only after workbook recalc and model validation pass; extract values from workbook cells.
+* Generate `outputs.json` only after LibreOffice-headless workbook recalc, formula-error scan, and model validation pass; extract values from recalculated workbook cells.
 * Clearly distinguish sourced data from assumptions.
 * Do not present a price target without methodology.
 * Do not allow recommendation/rating to contradict valuation outputs without an explicit override note (e.g. Buy with base-case downside or Sell with base-case upside).
