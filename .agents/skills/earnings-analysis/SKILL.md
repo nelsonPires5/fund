@@ -138,10 +138,11 @@ The earnings update process follows 5 phases:
 **See [references/workflow.md](references/workflow.md)** for detailed search procedures and verification steps.
 
 ### Phase 2: Analysis (2-3 hours)
-- Beat/miss analysis for each key metric
+- Beat/miss analysis for each key metric, **broken down by revenue stream, cost stream, and expense line** — not just top-line totals
 - Segment/geographic/product breakdown
 - Margin and guidance analysis
-- Update financial model and estimates
+- **Update `Drivers & Assumptions` before writing the note**: revise the quarterly, line-item-specific assumptions (revenue streams, cost of revenue per stream, expense lines) in Bear/Base/Bull columns based on new actuals and guidance
+- Update financial model and estimates (model sheets read from `Drivers & Assumptions` automatically)
 
 **See [references/workflow.md](references/workflow.md)** for detailed analysis framework.
 
