@@ -20,17 +20,25 @@ Determine the update trigger:
 ### Step 2: Plug New Data
 
 #### After Earnings
-Update the model with reported actuals:
+Update the model with reported actuals. **Actuals go into the quarterly model sheets** (`Model - Bear`, `Model - Base`, `Model - Bull`) and optional `QTracker` for audit/reconciliation. Actual/historical quarters are hardcoded in black font and are identical across all three model sheets.
+
+**Compare by revenue stream, cost stream, and expense line — not just top-line totals:**
 
 | Line Item | Prior Estimate | Actual | Delta | Notes |
 |-----------|---------------|--------|-------|-------|
-| Revenue | | | | |
-| Gross Margin | | | | |
-| Operating Expenses | | | | |
+| Revenue - Stream A | | | | |
+| Revenue - Stream B | | | | |
+| Total Revenue | | | | |
+| Cost of Rev - Stream A | | | | |
+| Gross Profit - Stream A | | | | |
+| Gross Margin - Stream A | | | | |
+| S&M | | | | |
+| R&D | | | | |
+| G&A | | | | |
 | EBITDA | | | | |
 | EPS | | | | |
-| [Key metric 1] | | | | |
-| [Key metric 2] | | | | |
+| [Key KPI 1] | | | | |
+| [Key KPI 2] | | | | |
 
 **Segment Detail** (if applicable):
 - Update each segment's revenue and margin
@@ -44,7 +52,7 @@ Update the model with reported actuals:
 
 ### Step 3: Revise Forward Estimates
 
-Based on the new data, adjust forward estimates:
+Based on the new data, adjust forward estimates. **Estimates change only in `Drivers & Assumptions`** — update the Bear/Base/Bull scenario columns for the affected revenue streams, cost streams, and expense lines. The model sheets (`Model - Bear`, `Model - Base`, `Model - Bull`) are read-only formulas that read from `Drivers & Assumptions`, so they update automatically when assumptions change. **Update Drivers & Assumptions before writing the note.**
 
 | | Old FY Est | New FY Est | Change | Old Next FY | New Next FY | Change |
 |---|-----------|-----------|--------|------------|------------|--------|
@@ -60,13 +68,13 @@ Based on the new data, adjust forward estimates:
 
 ### Step 4: Valuation Impact
 
-Recalculate valuation with updated estimates:
+Recalculate valuation with updated estimates. **Regenerate scenario valuations** — since `Model - Bear`, `Model - Base`, and `Model - Bull` projections are live formulas reading from `Drivers & Assumptions`, DCF and Scenarios recompute automatically after assumption changes. Run `recalc.py` to recalculate the workbook with LibreOffice headless and scan recalculated values for errors.
 
 | Valuation Method | Prior | Updated | Change |
 |-----------------|-------|---------|--------|
-| DCF fair value | | | |
-| P/E (NTM EPS × target multiple) | | | |
-| EV/EBITDA (NTM EBITDA × target multiple) | | | |
+| DCF fair value (Base) | | | |
+| DCF fair value (Bear) | | | |
+| DCF fair value (Bull) | | | |
 | **Price Target** | | | |
 
 ### Step 5: Summary & Action
@@ -84,17 +92,20 @@ Recalculate valuation with updated estimates:
 
 After updating the workbook:
 
-1. Run workbook recalculation and formula-error scan (`recalc.py`).
+1. Run workbook recalculation and formula-error scan (`recalc.py`) using LibreOffice headless (or native Excel in live Excel). The script must open/recalculate/save first, then scan recalculated values for `#REF!`, `#VALUE!`, `#DIV/0!`, etc.
 2. Run `validate_model.py` to catch model-sanity errors:
-   - active output cells contain no Excel errors
-   - Summary target/base case ties to active DCF/Scenarios outputs
+   - output cells contain no Excel errors
+   - Summary target/base case ties to DCF/Scenarios outputs
    - scenario ordering is logical (Bear ≤ Base ≤ Bull for values/returns)
    - rating/recommendation is consistent with base upside and 1Y/3Y return thresholds, unless an explicit override note is documented
    - 1Y return and 3Y IRR math ties
    - terminal value, WACC/Ke, revenue-driver, BS, and CF checks pass
-3. Regenerate `outputs.json` from recalculated workbook cells only.
-4. Run `validate_outputs.py` to verify `outputs.json` equals workbook cells.
-5. If `report.md`, `deck.spec.json`, `deck.html`, or `deck.pptx` exists, run `validate_artifacts.py` and update downstream artifacts or flag that they are stale.
+   - `Model - Bear`, `Model - Base`, `Model - Bull` sheets are consistent: actual quarters identical across all three, projected quarters reference correct Drivers & Assumptions columns
+   - Diluted Shares / Shares Outstanding inputs and linked EPS/DCF cells are number-formatted, not percentage-formatted
+3. If any formula errors are found, fix them, rerun LibreOffice-headless `recalc.py`, and confirm the recalculated workbook is clean before continuing.
+4. Regenerate `outputs.json` from recalculated workbook cells only.
+5. Run `validate_outputs.py` to verify `outputs.json` equals workbook cells.
+6. If `report.md`, `deck.spec.json`, `deck.html`, or `deck.pptx` exists, run `validate_artifacts.py` and update downstream artifacts or flag that they are stale.
 
 Outputs:
 
